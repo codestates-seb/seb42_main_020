@@ -13,7 +13,7 @@
 <br/>
 
 ## ⚙️ Tools ⚙️ 
-| <a href="https://github.com/codestates-seb/seb42_pre_010" target="_blank">Github</a> | Discord |<a href="https://www.notion.so/codestates/7b565b3aa04c4b58afe3d95a3e8cb611" target="_blank">Notion</a>|
+| <a href="https://github.com/codestates-seb/seb42_main_020" target="_blank">Github</a> | Discord |<a href="https://www.notion.so/codestates/6a748265eba041fda45f2d6ddb4eb908" target="_blank">Notion</a>|
 | :---: | :---: |:---:|
 | <img alt="github logo" src="https://techstack-generator.vercel.app/github-icon.svg" width="65" height="65"> | <img alt="Discord logo" src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/62595384e89d1d54d704ece7_3437c10597c1526c3dbd98c737c2bcae.svg" height="65" width="65"> |<img alt="Notion logo" src="https://www.notion.so/cdn-cgi/image/format=auto,width=640,quality=100/front-static/shared/icons/notion-app-icon-3d.png" height="65" width="65">|
 
