@@ -1,0 +1,41 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "amd":  true, // require 해결
+    "node": true // module 해결 
+  },
+  "extends": [ // 확장 기능 
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:import/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": { // 버전과 모듈 사용 여부
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-uses-react": 0,
+    "import/no-unresolved": "off",
+    "prettier/prettier": [ // OS 간 줄바꿈 타입 오류 해결
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/prop-types": "off"
+  },
+  "settings": {
+    "import/resolver": { // 상대 경로 불러오기 오류 해결
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}
