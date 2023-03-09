@@ -128,6 +128,17 @@ const SSignupBtn = styled(SSubmitBtn)`
   border: 1px solid var(--gray-200);
 `;
 
+const SModal = styled.div`
+  position: fixed;
+  width: 50vw;
+  height: 50vh;
+  top: 25vh;
+  right: 25vw;
+  background-color: var(--white);
+  box-shadow: 0 10px 3px 0 var(--gray-200);
+  border-radius: 30px;
+`;
+
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -136,7 +147,7 @@ function Login() {
   const [emailMsg, setEmailMsg] = useState(''); // 유효성 검사 안내 Msg for eamil
   const [passwordMsg, setPasswordMsg] = useState(''); // 유효성 검사 안내 Msg for PW
 
-  console.log(passwordMsg);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const notTobeNull = ({ email, password }) => {
     return email !== null && password !== null;
@@ -199,6 +210,10 @@ function Login() {
   const isNotNull = notTobeNull({ email, password });
   const isAllValid = isEmailValid && isPwdValid && isNotNull;
 
+  const handleClickModal = () => {
+    setIsOpenModal(!isOpenModal);
+  };
+
   return (
     <SMain>
       <SLayout>
@@ -223,7 +238,8 @@ function Login() {
         </SFormSection>
         <SSignupInfo>
           <p>다나아 시작하기</p>
-          <SSignupBtn>회원 가입</SSignupBtn>
+          <SSignupBtn onClick={handleClickModal}>회원 가입</SSignupBtn>
+          {isOpenModal ? <SModal /> : null}
         </SSignupInfo>
       </SLayout>
     </SMain>
