@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Popover, Avatar, Badge, Menu } from 'antd';
+import { Button, Popover, Avatar, Badge } from 'antd';
 import { UserOutlined, BellOutlined } from '@ant-design/icons';
 
 const SHeader = styled.header`
@@ -47,12 +47,17 @@ const SLogo = styled.div`
 `;
 
 const SNav = styled.nav`
-  padding: 0 2rem;
-  ul > a {
+  padding: 1rem 2rem;
+  a {
+    text-decoration: none;
     padding: 1rem;
     font-family: 'TheJamsil';
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1rem;
+    color: var(--blue-600);
+    :hover {
+      color: var(--blue-500);
+    }
   }
 `;
 
@@ -97,7 +102,7 @@ const SLogout = styled.div`
 
 function Header() {
   const [isLogged, setIsLogged] = useState(false); // 로그인 여부
-  const [isNoticed, setIsNoticed] = useState(true); // 답변 알림 유무
+  const [isNoticed, setIsNoticed] = useState(false); // 답변 알림 유무
 
   console.log(setIsNoticed);
 
@@ -115,11 +120,9 @@ function Header() {
               <span>다나아</span>
             </SLogo>
             <SNav>
-              <Menu selectedKeys={'alipay'} mode="horizontal">
-                <a href={'/category'} target="_blank" rel="noopener noreferrer">
-                  커뮤니티
-                </a>
-              </Menu>
+              <a href={'/category'} target="_blank" rel="noopener noreferrer">
+                커뮤니티
+              </a>
             </SNav>
           </div>
           <div>
