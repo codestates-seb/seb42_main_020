@@ -21,6 +21,7 @@ public class DoctorService {
     private final DoctorRepository doctorRepository;
     private final MemberRepository memberRepository;
 
+    // 의사 회원가입
     public Doctor createDoctor(Doctor doctor) {
 
         doctor.setCreatedAt(LocalDateTime.now());
@@ -33,6 +34,7 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
+    // 의사 회원 수정 (로그인 검증 필요)
     public Doctor updateDoctor(Doctor doctor) {
 
         Doctor findDoctor = findVerifiedDoctor(doctor.getDoctorId());
@@ -40,6 +42,22 @@ public class DoctorService {
         // 패스워드 변경 로직 필요
 
         findDoctor.setModifiedAt(LocalDateTime.now());
+
+        return doctorRepository.save(findDoctor);
+    }
+
+    // 특정 의사 찾기
+    public Doctor findDoctor(long doctorId) {
+        return findVerifiedDoctor(doctorId);
+    }
+
+    // 의사 삭제 (로그인 검증 필요)
+    public Doctor deleteDoctor(long doctorId) {
+
+        Doctor findDoctor = findVerifiedDoctor(doctorId);
+
+        findDoctor.setModifiedAt(LocalDateTime.now());
+        findDoctor.setDoctorStatus(Doctor.DoctorStatus.DOCTOR_QUIT);
 
         return doctorRepository.save(findDoctor);
     }
