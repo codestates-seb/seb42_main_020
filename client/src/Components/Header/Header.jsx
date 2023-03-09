@@ -4,11 +4,6 @@ import { Button, Popover, Avatar, Badge } from 'antd';
 import { UserOutlined, BellOutlined } from '@ant-design/icons';
 
 const SHeader = styled.header`
-  @font-face {
-    font-family: 'TheJamsil5Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2')
-      format('woff2');
-  }
   font-family: 'TheJamsil5Bold';
   width: 100%;
   height: 5rem;
@@ -102,7 +97,7 @@ const SLogout = styled.div`
 
 function Header() {
   const [isLogged, setIsLogged] = useState(false); // 로그인 여부
-  const [isNoticed, setIsNoticed] = useState(false); // 답변 알림 유무
+  const [isNoticed, setIsNoticed] = useState(true); // 답변 알림 유무
 
   console.log(setIsNoticed);
 
