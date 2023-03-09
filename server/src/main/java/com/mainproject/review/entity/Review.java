@@ -11,11 +11,27 @@ import java.util.ArrayList;
 @Getter
 @Setter
 @NoArgsConstructor
-public class review {
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
+
+    // 본문
+    @Column(length = 50, nullable = false)
+    private String title;
+
+    // 댓글
+    @Column(length = 1000, nullable = false)
+    private String content;
+
+    // 상태
+
+    // 영수증
+
+    // 신고
+
+    // 좋아요
 
     // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,21 +49,5 @@ public class review {
     // 병원 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Hospital> hospital = new ArrayList<>();
-
-    // 본문
-    @Column(length = 50, nullable = false)
-    private String title;
-
-    // 댓글
-    @Column(length = 1000, nullable = false)
-    private String content;
-
-    // 상태
-
-    // 영수증
-
-    // 신고
-
-    // 좋아요
 
 }
