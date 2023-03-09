@@ -1,28 +1,23 @@
 import { TreeSelect } from 'antd';
-import { useState } from 'react';
 
-const TextInput = ({ treeData }) => {
-  const [value, setValue] = useState();
-  const onChange = (newValue) => {
-    setValue(newValue);
-  };
+const LocationInput = ({ treeData, loaction, locationChangeHandler }) => {
   return (
     <TreeSelect
       showSearch
       style={{
         width: '100%',
       }}
-      value={value}
       dropdownStyle={{
         maxHeight: 400,
         overflow: 'auto',
       }}
-      placeholder="Please select"
+      deafaultValue="select"
       allowClear
       treeDefaultExpandAll
-      onChange={onChange}
+      value={loaction}
+      onChange={locationChangeHandler}
       treeData={treeData}
     />
   );
 };
-export default TextInput;
+export default LocationInput;
