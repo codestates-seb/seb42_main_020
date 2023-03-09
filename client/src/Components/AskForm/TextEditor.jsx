@@ -48,14 +48,16 @@ const TextEditor = ({ text, handleText }) => {
   ];
 
   return (
-    <div className="text-editor">
+    <div className="text-editor" style={{ height: '350px', width: '100%' }}>
       <CustomToolbar />
       <ReactQuill
+        style={{ height: '300px', fontsize: '15px' }}
         modules={modules}
         formats={formats}
         theme="snow"
         value={text}
         onChange={handleText}
+        placeholder="내용을 작성해 주세요"
       />
     </div>
   );
