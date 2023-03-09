@@ -1,8 +1,17 @@
-import { RecoilRoot } from 'recoil';
 import './variables.css';
+import { createGlobalStyle } from 'styled-components';
+import { reset } from 'styled-reset';
+import Footer from './Components/Footer/Footer';
+
+const GlobalStyle = createGlobalStyle`${reset}`;
 
 function App() {
-  return <RecoilRoot></RecoilRoot>;
+  return (
+    <>
+      <GlobalStyle />
+      <Footer />
+    </>
+  );
 }
 
 export default App;
