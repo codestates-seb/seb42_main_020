@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { FcGoogle } from 'react-icons/fc';
+import { BsArrowReturnLeft } from 'react-icons/bs';
 import { message } from 'antd';
 
 const SMain = styled.main`
@@ -13,7 +14,6 @@ const SMain = styled.main`
 `;
 
 const SLayout = styled.div`
-  /* border: 1px solid black; */
   width: 25vw;
   height: 70vh;
   margin-top: 10vh;
@@ -128,15 +128,77 @@ const SSignupBtn = styled(SSubmitBtn)`
   border: 1px solid var(--gray-200);
 `;
 
+const SModalLayout = styled.div`
+  background-color: rgb(0 0 0 / 30%);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+`;
+
 const SModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: fixed;
   width: 50vw;
-  height: 50vh;
+  height: 45vh;
   top: 25vh;
   right: 25vw;
   background-color: var(--white);
-  box-shadow: 0 10px 3px 0 var(--gray-200);
+  box-shadow: 0 1px 3px 0 var(--gray-200);
   border-radius: 30px;
+`;
+
+const SModalInfoSection = styled.div`
+  height: 20%;
+  padding: 0 25px;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  svg {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    :hover {
+      background-color: var(--gray-200);
+      border-radius: 5px;
+    }
+  }
+`;
+
+const SModalBtnSection = styled.div`
+  height: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SModalInfo = styled.div`
+  p {
+    margin: 1rem 0 0 0;
+    font-weight: 600;
+    font-size: 1.4rem;
+  }
+`;
+
+const SModalSignupBtn = styled.button`
+  width: 20rem;
+  height: 10rem;
+  font-family: TheJamsil;
+  font-weight: 600;
+  font-size: 25px !important;
+  margin: 0 20px;
+  border: none;
+  box-shadow: 0 3px 3px 1px var(--gray-400);
+  cursor: pointer;
+  :hover {
+    background-color: var(--mint-100);
+    border: inset;
+  }
 `;
 
 function Login() {
@@ -239,7 +301,23 @@ function Login() {
         <SSignupInfo>
           <p>다나아 시작하기</p>
           <SSignupBtn onClick={handleClickModal}>회원 가입</SSignupBtn>
-          {isOpenModal ? <SModal /> : null}
+          {isOpenModal ? (
+            <SModalLayout>
+              <SModal>
+                <SModalInfoSection>
+                  <SModalInfo>
+                    <p>회원 가입을 통해</p>
+                    <p>다나아의 다양한 서비스를 이용해 보세요</p>
+                  </SModalInfo>
+                  <BsArrowReturnLeft onClick={handleClickModal} />
+                </SModalInfoSection>
+                <SModalBtnSection>
+                  <SModalSignupBtn>회원 가입</SModalSignupBtn>
+                  <SModalSignupBtn>의료인 회원가입</SModalSignupBtn>
+                </SModalBtnSection>
+              </SModal>
+            </SModalLayout>
+          ) : null}
         </SSignupInfo>
       </SLayout>
     </SMain>
