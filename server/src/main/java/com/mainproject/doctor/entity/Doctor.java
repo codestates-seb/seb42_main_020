@@ -1,0 +1,70 @@
+package com.mainproject.doctor.entity;
+
+import com.mainproject.audit.Auditable;
+import com.mainproject.member.entity.Member;
+import lombok.Getter;
+
+import javax.persistence.*;
+
+@Entity
+public class Doctor extends Auditable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long doctorId;
+
+    // 수정 X, 중복 X
+    @Column(nullable = false, updatable = false, unique = true)
+    private String email;
+
+    // 실명
+    @Column(length = 10, nullable = false)
+    private String name;
+
+    @Column(length = 100, nullable = false)
+    private String password;
+
+    // 의사 면허증 사진
+    @Column(nullable = false)
+    private String img;
+
+    @Column
+    private int point;
+
+    // 의사 활동, 휴면, 탈퇴 여부
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "DOCTOR_STATUS", length = 30, nullable = false)
+    private DoctorStatus doctorStatus = DoctorStatus.DOCTOR_ACTIVE;
+
+    // 의사 등급
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "DOCTOR_LATING", length = 30, nullable = false)
+    private DoctorRating doctorRating = DoctorRating.UNRANKED;
+
+    public enum DoctorStatus {
+        DOCTOR_ACTIVE("활동 상태"),
+        DOCTOR_SLEEP("휴면 상태"),
+        DOCTOR_QUIT("탈퇴 상태");
+
+        @Getter
+        private String status;
+
+        DoctorStatus(String status) {
+            this.status = status;
+        }
+    }
+
+    public enum DoctorRating {
+        UNRANKED("등급 없음"),
+        BRONZE("동뱃지"),
+        SLIVER("은뱃지"),
+        GOLD("금뱃지");
+
+        @Getter
+        private String rating;
+
+        DoctorRating(String rating) {
+            this.rating = rating;
+        }
+    }
+}
