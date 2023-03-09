@@ -190,9 +190,11 @@ const SModalSignupBtn = styled.button`
   height: 10rem;
   font-family: TheJamsil;
   font-weight: 600;
-  font-size: 25px !important;
+  font-size: 22px !important;
+  color: var(--gray-00);
   margin: 0 20px;
   border: none;
+  border-radius: 10px;
   box-shadow: 0 3px 3px 1px var(--gray-400);
   cursor: pointer;
   :hover {
