@@ -39,7 +39,9 @@ public class DoctorService {
 
         Doctor findDoctor = findVerifiedDoctor(doctor.getDoctorId());
 
-        // 패스워드 변경 로직 필요
+        findDoctor.setPassword(doctor.getPassword());
+
+        // 패스워드 암호화
 
         findDoctor.setModifiedAt(LocalDateTime.now());
 

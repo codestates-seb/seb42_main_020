@@ -40,12 +40,15 @@ public class MemberDto {
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Patch {
+
         private long memberId;
 
         @NotBlank(message = "닉네임은 공백이 허용되지 않습니다.")
         private String displayName;
 
-        // 보안 적용 후 패스워드 추가 예정
+        @Pattern(regexp = "^[a-zA-Z\\\\d`~!@#$%^&*()-_=+]{8,15}$",
+                message = "영어와 숫자 특수문자를 사용해야 하며 8~15자리를 허용한다.")
+        private String password;
 
         public Patch addMemberId(Long memberId) {
             Assert.notNull(memberId, "member id must not be null.");
@@ -57,6 +60,7 @@ public class MemberDto {
     @AllArgsConstructor
     @Getter
     public static class response {
+
         private long memberId;
         private String email;
         private String name;

@@ -43,8 +43,10 @@ public class MemberService {
 
         Optional.ofNullable(member.getDisplayName())
                 .ifPresent(displayName -> findMember.setDisplayName(displayName));
+        Optional.ofNullable(member.getPassword())
+                .ifPresent(password -> findMember.setPassword(password));
 
-        // 패스워드 변경 로직 필요
+        // 패스워드 암호화
 
         findMember.setModifiedAt(LocalDateTime.now());
 

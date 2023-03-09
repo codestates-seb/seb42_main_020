@@ -20,6 +20,7 @@ public class DoctorDto {
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Post {
+
         @NotBlank
         @Email
         private String email;
@@ -40,9 +41,12 @@ public class DoctorDto {
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Patch {
+
         private long doctorId;
 
-        // 보안 적용 후 패스워드 추가 예정
+        @Pattern(regexp = "^[a-zA-Z\\\\d`~!@#$%^&*()-_=+]{8,15}$",
+                message = "영어와 숫자 특수문자를 사용해야 하며 8~15자리를 허용한다.")
+        private String password;
 
         public Patch addDoctorId(Long doctorId) {
             Assert.notNull(doctorId, "doctor id must not be null.");
@@ -54,6 +58,7 @@ public class DoctorDto {
     @AllArgsConstructor
     @Getter
     public static class response {
+
         private long doctorId;
         private String email;
         private String name;
