@@ -1,6 +1,5 @@
 package com.mainproject.post.entity;
 
-import com.mainproject.review.entity.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
