@@ -1,18 +1,19 @@
 package com.mainproject.review.entity;
 
+import com.mainproject.doctor.entity.Doctor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Review {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
@@ -26,12 +27,21 @@ public class Review {
     private String content;
 
     // 상태
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "REVIEW_STATUS", length = 30, nullable = false)
+    private Review.ReviewStatus reviewStatus = Review.ReviewStatus.REVIEW_REGISTRATION;
 
-    // 영수증
+    public enum ReviewStatus{
+        REVIEW_REGISTRATION("리뷰 등록"),
+        REVIEW_DELETE("리뷰 삭제");
 
-    // 신고
+        @Getter
+        private String string;
 
-    // 좋아요
+        ReviewStatus(String string) {
+            this.string = string;
+        }
+    }
 
     // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
@@ -49,5 +59,16 @@ public class Review {
     // 병원 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Hospital> hospital = new ArrayList<>();
+
+//    // 영수증
+//
+//    // 신고
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Report> reports = new ArrayList<>();
+//
+//    // 좋아요
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Like> likes = new ArrayList<>();
+
 
 }

@@ -1,5 +1,6 @@
 package com.mainproject.post.entity;
 
+import com.mainproject.review.entity.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,10 +27,15 @@ public class Post {
     private String content;
 
     // 상태
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "POST_STATUS", length = 30, nullable = false)
+    private Post.PostStatus postStatus = PostStatus.POST_REGISTRATION;
 
-    // 신고
+    public enum PostStatus{
+        POST_REGISTRATION("게시글 등록"),
+        POST_DELETE("게시글 삭제");
+    }
 
-    // 좋아요
 
     // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,5 +49,14 @@ public class Post {
     // 지역 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Region> region = new ArrayList<>();
+
+
+//    // 신고
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Report> reports = new ArrayList<>();
+//
+//    // 좋아요
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Like> likes = new ArrayList<>();
 
 }
