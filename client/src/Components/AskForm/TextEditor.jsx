@@ -25,10 +25,13 @@ const CustomToolbar = () => (
   </div>
 );
 
-const TextEditor = ({ text, handleText }) => {
+const TextEditor = ({ handleText }) => {
   const modules = {
     toolbar: {
       container: '#toolbar',
+    },
+    clipboard: {
+      matchVisual: false,
     },
   };
 
@@ -55,8 +58,10 @@ const TextEditor = ({ text, handleText }) => {
         modules={modules}
         formats={formats}
         theme="snow"
-        value={text}
-        onChange={handleText}
+        // value={text}
+        onChange={(content, delta, source, editor) =>
+          handleText(editor.getText())
+        }
         placeholder="내용을 작성해 주세요"
       />
     </div>
