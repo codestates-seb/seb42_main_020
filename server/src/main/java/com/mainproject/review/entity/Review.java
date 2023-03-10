@@ -1,10 +1,12 @@
 package com.mainproject.review.entity;
 
+import com.mainproject.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Entity
@@ -16,13 +18,19 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
 
-    // 본문
+    // 제목
     @Column(length = 50, nullable = false)
     private String title;
 
-    // 댓글
+    // 본문
     @Column(length = 1000, nullable = false)
     private String content;
+
+//    // 생성 시간
+//    private LocalDateTime createdAt = LocalDateTime.now();
+//
+//    // 수정 시간
+//    private LocalDateTime modifiedAt = LocalDateTime.now();
 
     // 상태
     @Enumerated(value = EnumType.STRING)
@@ -46,17 +54,17 @@ public class Review {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    // 진료과목 1:n 양방향
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Tag> tag = new ArrayList<>();
-
-    // 지역 1:n 양방향
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Region> region = new ArrayList<>();
-
-    // 병원 1:n 양방향
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Hospital> hospital = new ArrayList<>();
+//    // 진료과목 1:n 양방향
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Tag> tag = new ArrayList<>();
+//
+//    // 지역 1:n 양방향
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Region> region = new ArrayList<>();
+//
+//    // 병원 1:n 양방향
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Hospital> hospital = new ArrayList<>();
 
 //    // 영수증
 //
