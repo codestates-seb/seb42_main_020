@@ -5,11 +5,6 @@ import { GoMarkGithub } from 'react-icons/go';
 function Footer() {
   return (
     <>
-      <div style={{ height: '100%', minHeight: '100%' }}>
-        <div style={{ height: '3000px', background: '#ffffff' }}></div>
-      </div>
-      {/* Footer 위치 테스트용 코드 */}
-
       <FooterStyle>
         <div className="content">
           <div className="footerLogo">
@@ -133,14 +128,14 @@ function Footer() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <RxNotionLogo size={30} />
+                <RxNotionLogo size={25} />
               </a>
               <a
                 href="https://github.com/codestates-seb/seb42_main_020"
                 target="_blank"
                 rel="noreferrer"
               >
-                <GoMarkGithub size={30} />
+                <GoMarkGithub size={25} />
               </a>
             </div>
           </div>
