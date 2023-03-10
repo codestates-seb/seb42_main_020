@@ -2,9 +2,17 @@ import styled from 'styled-components';
 
 export const SAskQuestionContainer = styled.div`
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 1000vh;
+  background-color: var(--blue-200);
+
+  .modal_wrapper {
+    position: fixed;
+    bottom: 60px;
+    right: 100px;
+  }
 `;
 
 export const SAskQuestionBlock = styled.div`
@@ -13,9 +21,11 @@ export const SAskQuestionBlock = styled.div`
   align-items: center;
   justify-content: center;
   margin: 20px 50px;
-  padding: 15px 20px;
+  padding: 15px 20px 40px 20px;
   width: 45%;
   border-radius: 5px;
+  background-color: white;
+  box-shadow: 0 1px 3px 0 var(--gray-400);
 
   > span {
     width: 100%;
@@ -77,6 +87,27 @@ export const SAskQuestionInfo = styled.input`
   font-size: 15px;
 `;
 
+export const SRateStartBlock = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+
+  > span:first-child {
+    margin-right: 15px;
+  }
+
+  > ul {
+    margin-right: 35px;
+  }
+
+  > span:last-child {
+    font-size: 13px;
+    opacity: 0.6;
+    font-style: italic;
+  }
+`;
+
 export const SButtonBlock = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -102,4 +133,10 @@ export const SCancalButton = styled.button`
   width: 80px;
   height: 50px;
   margin-right: 20px;
+`;
+
+export const SOpenModal = styled.div`
+  width: 500px;
+  height: 500px;
+  background-color: red;
 `;

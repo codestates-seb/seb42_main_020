@@ -1,4 +1,5 @@
 import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import TextEditor from '../../Components/AskForm/TextEditor';
 import {
   SAskQuestionContainer,
@@ -8,13 +9,14 @@ import {
   SSubmitButton,
   SButtonBlock,
   SCancalButton,
-} from '../../Style/AskQuestion';
+} from '../../Style/AskQuestionStyle';
 import AskQuestionTitle from '../../Components/AskForm/AskQuestionTitle';
 import { locationData, typeData } from '../../Components/AskForm/QuestionData';
 import LocationInput from '../../Components/AskForm/LocationInput';
 import TypeInput from '../../Components/AskForm/TypeInput';
 
 const AskQuestion = () => {
+  // const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [location, setLocation] = useState('');
@@ -48,6 +50,7 @@ const AskQuestion = () => {
       type,
       text,
     });
+    // navigate('/');
   };
 
   console.log(userInputData);
