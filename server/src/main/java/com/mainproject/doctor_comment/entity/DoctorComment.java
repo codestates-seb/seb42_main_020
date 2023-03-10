@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -20,9 +21,14 @@ public class DoctorComment {
     // 본문
     @Column(length = 50, nullable = false)
     private String content;
+
     // 생성 시간
+    @Column(name = "created_at", columnDefinition = "DATETIME")
+    private LocalDateTime createdAt;
 
     // 수정 시간
+    @Column(name = "modified_at", columnDefinition = "DATETIME")
+    private LocalDateTime modifiedAt;
 
     // 상태
 

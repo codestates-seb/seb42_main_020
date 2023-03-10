@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Entity
@@ -23,8 +24,12 @@ public class MemberComment {
     private String content;
 
     // 생성 시간
+    @Column(name = "created_at", columnDefinition = "DATETIME")
+    private LocalDateTime createdAt;
 
     // 수정 시간
+    @Column(name = "modified_at", columnDefinition = "DATETIME")
+    private LocalDateTime modifiedAt;
 
     // 상태
 
