@@ -51,16 +51,21 @@ public class Member extends Auditable {
     private MemberRating memberRating = MemberRating.UNRANKED;
 
     // Post 클래스 1:n 양방향
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Post> posts = new ArrayList<>();
 
     // Review 클래스 1:n 양방향
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<review> reviews = new ArrayList<>();
 
     // Comment 클래스 1;n 양방향
+<<<<<<< HEAD
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<MemberComment> memberComments = new ArrayList<>();
+=======
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Comment> comments = new ArrayList<>();
+>>>>>>> 685c560ea989998f6208f1092bc802924759f984
 
     // 게시글, 댓글 신고, 좋아요 매핑 필요
 

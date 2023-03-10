@@ -36,24 +36,37 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    // 회원 수정
+    // 회원 수정 (로그인 정보 검증 필요)
     public Member updateMember(Member member) {
 
         Member findMember = findVerifiedMember(member.getMemberId());
 
         Optional.ofNullable(member.getDisplayName())
                 .ifPresent(displayName -> findMember.setDisplayName(displayName));
+        Optional.ofNullable(member.getPassword())
+                .ifPresent(password -> findMember.setPassword(password));
 
-        // 패스워드 변경 로직 필요
+        // 패스워드 암호화
 
         findMember.setModifiedAt(LocalDateTime.now());
 
         return memberRepository.save(findMember);
     }
 
-    // 특정 유저 찾기
+    // 특정 회원 찾기
     public Member findMember(long memberId) {
         return findVerifiedMember(memberId);
+    }
+
+    // 회원 삭제 (로그인 정보 검증 필요)
+    public Member deleteMember(long memberId) {
+
+        Member findMember = findVerifiedMember(memberId);
+
+        findMember.setModifiedAt(LocalDateTime.now());
+        findMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
+
+        return memberRepository.save(findMember);
     }
 
     // 이메일 중복 체크 로직
