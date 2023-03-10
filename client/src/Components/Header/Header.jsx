@@ -6,7 +6,7 @@ import { UserOutlined, BellOutlined } from '@ant-design/icons';
 const SHeader = styled.header`
   font-family: 'TheJamsil5Bold';
   width: 100%;
-  height: 5rem;
+  height: 80px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -21,7 +21,7 @@ const SLayout = styled.div`
     flex-direction: row;
   }
   width: 80%;
-  height: 5rem;
+  height: 80px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -32,23 +32,23 @@ const SLogo = styled.div`
   display: flex;
   align-items: center;
   img {
-    width: 3rem;
-    padding: 0 1rem 0 0;
+    width: 45px;
+    padding: 0 16px 0 0;
   }
   span {
-    font-size: 1.4rem;
+    font-size: 22px;
     margin: 5px 0 0 0;
   }
 `;
 
 const SNav = styled.nav`
-  padding: 1rem 2rem;
+  padding: 16px 32px;
   a {
     text-decoration: none;
-    padding: 1rem;
+    padding: 16px;
     font-family: 'TheJamsil';
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 16px;
     color: var(--blue-600);
     :hover {
       color: var(--blue-500);
@@ -57,7 +57,7 @@ const SNav = styled.nav`
 `;
 
 const SLogin = styled.div`
-  padding: 1rem 1rem;
+  padding: 16px 16px;
   button {
     background-color: var(--blue-600);
     color: var(--white);
@@ -72,8 +72,8 @@ const SPrivateContent = styled.div`
 
 const SNotification = styled.div`
   svg {
-    font-size: 1.5rem;
-    padding: 0 1rem 0 0;
+    font-size: 25px;
+    padding: 0 16px 0 0;
   }
   sup {
     top: -10px !important;
@@ -88,7 +88,7 @@ const SMyInfo = styled.div`
 `;
 
 const SLogout = styled.div`
-  padding: 0 1rem;
+  padding: 0 16px;
   button {
     background-color: var(--blue-600);
     color: var(--white);

@@ -17,7 +17,7 @@ const SMain = styled.main`
 const SLayout = styled.div`
   width: 500px;
   height: 800px;
-  margin-top: 10vh;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,11 +39,11 @@ const SInfoSection = styled.div`
     padding: 10px 0 0 0;
   }
   img {
-    width: 3rem;
+    width: 50px;
   }
   h1 {
     font-family: 'TheJamsil5Bold';
-    font-size: 2rem;
+    font-size: 32px;
   }
   p {
     font-family: 'TheJamsil';
@@ -59,18 +59,18 @@ const SFormSection = styled.div`
   button {
     font-family: 'TheJamsil';
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 16px;
   }
 `;
 
 const SInput = styled.input`
-  width: 98%;
-  height: 2.5rem;
+  width: 400px;
+  height: 40px;
   margin: 10px 0;
   border: 1px solid var(--gray-300);
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 var(--gray-200);
-  font-size: 1rem;
+  font-size: 16px;
   &:focus {
     outline: none;
   }
@@ -121,7 +121,7 @@ const SPolicy = styled.div`
 
 const SSubmitBtn = styled.button`
   width: 100%;
-  height: 2.8rem;
+  height: 40px;
   margin: 10px 0;
   display: flex;
   flex-direction: row;
@@ -148,19 +148,19 @@ const SLoginInfo = styled.div`
   button {
     font-family: 'TheJamsil';
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 16px;
   }
   p {
     font-family: 'TheJamsil';
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 16px;
     color: var(--gray-800);
   }
 `;
 
 const SLoginBtn = styled.button`
   width: 160px;
-  height: 2rem;
+  height: 32px;
   background-color: var(--gray-200);
   border: 1px solid var(--gray-200);
   border-radius: 3px;
@@ -197,7 +197,7 @@ const SModal = styled.div`
   box-shadow: 0 1px 3px 0 var(--gray-200);
   border-radius: 30px;
   svg {
-    margin: 2rem;
+    margin: 32px;
     font-size: 1.5rem;
     cursor: pointer;
     :hover {

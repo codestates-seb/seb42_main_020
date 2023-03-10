@@ -15,9 +15,9 @@ const SMain = styled.main`
 `;
 
 const SLayout = styled.div`
-  width: 25vw;
-  height: 70vh;
-  margin-top: 10vh;
+  width: 500px;
+  height: 800px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -39,11 +39,11 @@ const SInfoSection = styled.div`
     padding: 10px 0 0 0;
   }
   img {
-    width: 3rem;
+    width: 50px;
   }
   h1 {
     font-family: 'TheJamsil5Bold';
-    font-size: 2rem;
+    font-size: 32px;
   }
   p {
     font-family: 'TheJamsil';
@@ -61,7 +61,7 @@ const SFormSection = styled.div`
   button {
     font-family: 'TheJamsil';
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 16px;
   }
 `;
 
@@ -71,7 +71,7 @@ const SInput = styled.input`
   border: 1px solid var(--gray-300);
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 var(--gray-200);
-  font-size: 1rem;
+  font-size: 16px;
   &:focus {
     outline: none;
   }
@@ -79,7 +79,7 @@ const SInput = styled.input`
 
 const SSubmitBtn = styled.button`
   width: 100%;
-  height: 2.8rem;
+  height: 40px;
   margin: 20px 0;
   display: flex;
   flex-direction: row;
@@ -114,12 +114,12 @@ const SSignupInfo = styled.div`
   button {
     font-family: 'TheJamsil';
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 16px;
   }
   p {
     font-family: 'TheJamsil';
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 16px;
     color: var(--gray-800);
   }
 `;
@@ -161,7 +161,7 @@ const SModalInfoSection = styled.div`
   flex-direction: row;
   justify-content: space-between;
   svg {
-    margin-top: 1rem;
+    margin-top: 16px;
     font-size: 1.5rem;
     cursor: pointer;
     :hover {
@@ -181,7 +181,7 @@ const SModalBtnSection = styled.div`
 
 const SModalInfo = styled.div`
   p {
-    margin: 1rem 0 0 0;
+    margin: 16px 0 0 0;
     font-weight: 600;
     font-size: 1.4rem;
   }
@@ -321,7 +321,9 @@ const Login = () => {
                   <SModalSignupBtn>
                     <Link to="/register">회원 가입</Link>
                   </SModalSignupBtn>
-                  <SModalSignupBtn>의료인 회원가입</SModalSignupBtn>
+                  <SModalSignupBtn>
+                    <Link to="/medicalprovider">의료인 회원가입</Link>
+                  </SModalSignupBtn>
                 </SModalBtnSection>
               </SModal>
             </SModalLayout>

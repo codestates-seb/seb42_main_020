@@ -13,9 +13,9 @@ const SMain = styled.main`
 `;
 
 const SLayout = styled.div`
-  width: 25vw;
-  height: 75vh;
-  margin-top: 10vh;
+  width: 450px;
+  height: 800px;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,14 +34,14 @@ const SInfoSection = styled.div`
   img,
   h1,
   p {
-    padding: 10px 0 0 0;
+    padding: 15px 0 0 0;
   }
   img {
-    width: 3rem;
+    width: 50px;
   }
   h1 {
     font-family: 'TheJamsil5Bold';
-    font-size: 2rem;
+    font-size: 32px;
   }
   p {
     font-family: 'TheJamsil';
@@ -68,7 +68,7 @@ const SInput = styled.input`
   border: 1px solid var(--gray-300);
   border-radius: 5px;
   box-shadow: 0 1px 3px 0 var(--gray-200);
-  font-size: 1rem;
+  font-size: 16px;
   &:focus {
     outline: none;
   }
@@ -90,7 +90,7 @@ const STerm = styled.div`
 
 const SSubmitBtn = styled.button`
   width: 100%;
-  height: 2.8rem;
+  height: 40px;
   margin: 10px 0;
   display: flex;
   flex-direction: row;
@@ -117,19 +117,19 @@ const SLoginInfo = styled.div`
   button {
     font-family: 'TheJamsil';
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 16px;
   }
   p {
     font-family: 'TheJamsil';
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 16px;
     color: var(--gray-800);
   }
 `;
 
 const SLoginBtn = styled.button`
   width: 50%;
-  height: 2rem;
+  height: 32px;
   background-color: var(--gray-200);
   border: 1px solid var(--gray-200);
   border-radius: 3px;
@@ -144,6 +144,7 @@ const SLoginBtn = styled.button`
 `;
 
 const Signup = () => {
+  const [name, setName] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -158,9 +159,15 @@ const Signup = () => {
   };
 
   // 닉네임 정규 표현식
-  // 한글, 영어, 숫자만 입력 받기
+  // 한글, 영어만 입력 받기
+  const vaildateName = () => {
+    return name.match(/([a-z|A-Z|ㄱ-ㅎ|가-힣]).{1,15}$/);
+  };
+
+  // 닉네임 정규 표현식
+  // 한글, 영어만 입력 받기
   const vaildateNickname = () => {
-    return nickname.match(/([a-z|A-Z|ㄱ-ㅎ|가-힣]).{2,15}$/);
+    return nickname.match(/([a-z|A-Z|ㄱ-ㅎ|가-힣]).{1,15}$/);
   };
 
   // 이메일 정규 표현식
@@ -178,6 +185,20 @@ const Signup = () => {
     return password
       .toLowerCase()
       .match(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/);
+  };
+
+  // 이름
+  const handleChangeName = (e) => {
+    const currName = e.target.value;
+    setName(currName);
+
+    if (!vaildateName(name)) {
+      setNickmaeMsg(
+        '한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.'
+      );
+    } else {
+      setNickmaeMsg('');
+    }
   };
 
   // 닉네임
@@ -228,11 +249,17 @@ const Signup = () => {
   };
 
   // 유효성 검사를 통과하지 못하면 Submit 비활성화
-  const isNicknameVaild = vaildateNickname(nickname);
+  const isvaildateName = vaildateName(name);
+  const isNicknameVaild = vaildateName(nickname);
   const isEmailValid = validateEmail(email);
   const isPwdValid = validatePwd(password);
   const isNotNull = notTobeNull({ email, password });
-  const isAllValid = isNicknameVaild && isEmailValid && isPwdValid && isNotNull;
+  const isAllValid =
+    isvaildateName &&
+    isNicknameVaild &&
+    isEmailValid &&
+    isPwdValid &&
+    isNotNull;
 
   return (
     <SMain>
@@ -245,6 +272,7 @@ const Signup = () => {
         </SInfoSection>
         <SFormSection>
           <div>
+            <SInput onChange={handleChangeName} placeholder="이름" />
             <SInput onChange={handleChangeNickname} placeholder="닉네임" />
             <SInput onChange={handleChangeEmail} placeholder="이메일" />
             <SInput onChange={handleChangePassword} placeholder="비밀번호" />
@@ -276,7 +304,9 @@ const Signup = () => {
           </div>
           <div>
             <p>의료인이시라면 </p>
-            <SLoginBtn>의료인 회원가입</SLoginBtn>
+            <SLoginBtn>
+              <Link to="/medicalprovider">의료인 회원가입</Link>
+            </SLoginBtn>
           </div>
         </SLoginInfo>
       </SLayout>
