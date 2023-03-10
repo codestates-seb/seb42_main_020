@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Modal, Wrapper, ModalWrapper } from '../../Style/MakeContentStyle';
+import { SModal, SWrapper, SModalWrapper } from '../../Style/MakeContentStyle';
 import { useNavigate } from 'react-router-dom';
 
 const ModalTest = () => {
@@ -23,20 +23,20 @@ const ModalTest = () => {
 
   return (
     <div className="modal_wrapper">
-      <Wrapper>
+      <SWrapper>
         <button onClick={modalHandler}>리뷰 / 질문 작성하기</button>
         {isTrue && (
-          <ModalWrapper>
-            <Modal>
+          <SModalWrapper>
+            <SModal>
               <div>
                 <button onClick={reviewClickHandler}>리뷰 작성하기</button>
                 <button onClick={questionClickHandler}>질문 작성하기</button>
               </div>
               <button onClick={modalHandler}>닫 기</button>
-            </Modal>
-          </ModalWrapper>
+            </SModal>
+          </SModalWrapper>
         )}
-      </Wrapper>
+      </SWrapper>
     </div>
   );
 };
