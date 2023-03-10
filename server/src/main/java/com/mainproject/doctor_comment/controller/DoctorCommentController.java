@@ -16,6 +16,7 @@ public class DoctorCommentController {
     public ResponseEntity postDoctorComment(@RequestParam("content") String content,
                                             @RequestParam("createdAt") LocalDateTime createdAt,
                                             @RequestParam("modifiedAt") LocalDateTime modifiedAt) {
+
         Map<String, String> map = new HashMap<>();
         map.put("content", content);
         map.put("createdAt", String.valueOf(createdAt));

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Entity
 @Getter
@@ -23,12 +24,8 @@ public class DoctorComment {
     private String content;
 
     // 생성 시간
-    @Column(name = "created_at", columnDefinition = "DATETIME")
-    private LocalDateTime createdAt;
 
     // 수정 시간
-    @Column(name = "modified_at", columnDefinition = "DATETIME")
-    private LocalDateTime modifiedAt;
 
     // 상태
 
@@ -48,4 +45,12 @@ public class DoctorComment {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("post_id")
     private Post post;
+
+/*    // 좋아요 1:n
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Like> likes = new ArrayList<>();
+
+    // 신고 1:n
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Report> reports = new ArrayList<>();*/
 }
