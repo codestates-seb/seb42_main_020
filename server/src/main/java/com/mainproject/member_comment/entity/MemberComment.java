@@ -1,6 +1,6 @@
-package com.mainproject.doctor_comment.entity;
+package com.mainproject.member_comment.entity;
 
-import com.mainproject.doctor.entity.Doctor;
+import com.mainproject.member.entity.Member;
 import com.mainproject.post.entity.Post;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,14 +12,14 @@ import java.util.ArrayList;
 @Entity
 @Getter
 @Setter
-public class DoctorComment {
+public class MemberComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "doctor_comment_id", nullable = false)
-    private Long doctorCommentId;
+    @Column(name = "comment_id", nullable = false)
+    private Long commentId;
 
-    // 본문
+    // 댓글 본문
     @Column(length = 50, nullable = false)
     private String content;
 
@@ -29,19 +29,14 @@ public class DoctorComment {
 
     // 상태
 
-    // 신고
-
-    // 좋아요
-
-
     // ----------------------------------- 연관관계 매핑 ----------------------------------- //
 
-    // 의사회원 n:1 양방향
+    // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("doctor_id")
-    private Doctor doctor;
+    @MapsId("member_id")
+    private Member member;
 
-    // 게시글 양방향
+    // 게시글 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("post_id")
     private Post post;

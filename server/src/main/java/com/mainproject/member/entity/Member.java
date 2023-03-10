@@ -1,10 +1,10 @@
 package com.mainproject.member.entity;
 
 import com.mainproject.audit.Auditable;
-import com.mainproject.comment.entity.Comment;
+import com.mainproject.doctor_comment.entity.DoctorComment;
+import com.mainproject.member_comment.entity.MemberComment;
 import com.mainproject.post.entity.Post;
 import com.mainproject.review.entity.review;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -60,8 +60,11 @@ public class Member extends Auditable {
     private List<review> reviews = new ArrayList<>();
 
     // Comment 클래스 1;n 양방향
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
+    private List<MemberComment> memberComments = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<DoctorComment> doctorComments = new ArrayList<>();
 
     // 게시글, 댓글 신고, 좋아요 매핑 필요
 
