@@ -48,7 +48,7 @@ export const SNav = styled.nav`
     font-size: 16px;
     color: var(--blue-600);
     :hover {
-      color: var(--blue-500);
+      color: var(--blue-400);
     }
   }
 `;
@@ -56,8 +56,19 @@ export const SNav = styled.nav`
 export const SLogin = styled.div`
   padding: 16px 16px;
   button {
-    background-color: var(--blue-600);
-    color: var(--white);
+    width: 100px;
+    height: 40px;
+    border: 2px solid var(--gray-200);
+    border-radius: 10px;
+    background-color: var(--white);
+    color: var(--gray-700);
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 2px 3px 0 var(--gray-200);
+    cursor: pointer;
+    :hover {
+      background-color: var(--mint-100);
+    }
   }
 `;
 
@@ -87,7 +98,18 @@ export const SMyInfo = styled.div`
 export const SLogout = styled.div`
   padding: 0 16px;
   button {
-    background-color: var(--blue-600);
-    color: var(--white);
+    width: 100px;
+    height: 40px;
+    border: 2px solid var(--gray-200);
+    border-radius: 10px;
+    background-color: var(--white);
+    color: var(--gray-700);
+    font-size: 15px;
+    font-weight: 600;
+    box-shadow: 0 2px 3px 0 var(--gray-200);
+    cursor: pointer;
+    :hover {
+      background-color: var(--mint-100);
+    }
   }
 `;

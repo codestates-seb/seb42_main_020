@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Button, Popover, Avatar, Badge } from 'antd';
+import { Link } from 'react-router-dom';
+import { Popover, Avatar, Badge } from 'antd';
 import { UserOutlined, BellOutlined } from '@ant-design/icons';
 import {
   SHeader,
@@ -33,18 +34,14 @@ function Header() {
               <span>다나아</span>
             </SLogo>
             <SNav>
-              <a href={'/category'} target="_blank" rel="noopener noreferrer">
-                커뮤니티
-              </a>
+              <Link to="/">커뮤니티</Link>
             </SNav>
           </div>
           <div>
             {!isLogged ? (
               <div>
                 <SLogin>
-                  <Button type="primary" size="middle">
-                    Log in
-                  </Button>
+                  <button>Log in</button>
                 </SLogin>
               </div>
             ) : (
@@ -62,9 +59,7 @@ function Header() {
                   </Popover>
                 </SMyInfo>
                 <SLogout>
-                  <Button type="primary" size="middle">
-                    Log out
-                  </Button>
+                  <button>Log out</button>
                 </SLogout>
               </SPrivateContent>
             )}
