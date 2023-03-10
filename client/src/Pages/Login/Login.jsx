@@ -203,7 +203,7 @@ const SModalSignupBtn = styled.button`
   }
 `;
 
-function Login() {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -324,6 +324,6 @@ function Login() {
       </SLayout>
     </SMain>
   );
-}
+};
 
 export default Login;
