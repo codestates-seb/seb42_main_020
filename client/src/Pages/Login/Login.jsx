@@ -27,7 +27,6 @@ const SLayout = styled.div`
 `;
 
 const SInfoSection = styled.div`
-  /* border: 1px solid black; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +51,6 @@ const SInfoSection = styled.div`
 `;
 
 const SFormSection = styled.div`
-  /* border: 1px solid black; */
   width: 80%;
   display: flex;
   flex-direction: column;
@@ -103,7 +101,7 @@ const SGoogleLoginBtn = styled(SSubmitBtn)`
 `;
 
 const SSignupInfo = styled.div`
-  /* border: 1px solid black; */
+  border: 1px solid black;
   width: 80%;
   display: flex;
   flex-direction: row;
