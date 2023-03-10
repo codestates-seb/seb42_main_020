@@ -1,7 +1,9 @@
 package com.mainproject.post.entity;
 
-import com.mainproject.comment.entity.Comment;
+
+import com.mainproject.doctor_comment.entity.DoctorComment;
 import com.mainproject.member.entity.Member;
+import com.mainproject.member_comment.entity.MemberComment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -58,9 +60,13 @@ public class Post {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    // 댓글 1:n 양방향
+    // 회원 댓글 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Comment> tag = new ArrayList<>();
+    private List<MemberComment> memberComments = new ArrayList<>();
+
+    // 의사 댓글 1:n 양방향
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<DoctorComment>  doctorComments= new ArrayList<>();
 
 //    // 진료과목 1:n 양방향
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
