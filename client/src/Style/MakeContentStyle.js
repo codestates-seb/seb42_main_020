@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const SWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -19,14 +19,14 @@ export const Wrapper = styled.div`
     height: 40px;
   }
 `;
-export const ModalWrapper = styled.div`
+export const SModalWrapper = styled.div`
   position: absolute;
   display: flex;
   justify-content: center;
   width: 100%;
   height: 100vh;
 `;
-export const Modal = styled.div`
+export const SModal = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;

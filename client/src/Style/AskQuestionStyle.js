@@ -122,6 +122,12 @@ export const SButtonBlock = styled.div`
   }
 `;
 
+export const SValidFail = styled.span`
+  color: red;
+  margin-top: 8px;
+  font-size: 13px;
+`;
+
 export const SSubmitButton = styled.button`
   background-color: var(--mint-400);
   width: 80px;
