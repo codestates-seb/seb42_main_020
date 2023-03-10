@@ -1,12 +1,20 @@
 package com.mainproject.doctor.entity;
 
 import com.mainproject.audit.Auditable;
+import com.mainproject.doctor_comment.entity.DoctorComment;
 import com.mainproject.member.entity.Member;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Doctor extends Auditable {
 
     @Id
@@ -38,8 +46,12 @@ public class Doctor extends Auditable {
 
     // 의사 등급
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "DOCTOR_LATING", length = 30, nullable = false)
+    @Column(name = "DOCTOR_RATING", length = 30, nullable = false)
     private DoctorRating doctorRating = DoctorRating.UNRANKED;
+
+    // DoctorComment 클래스 1:n 양방향
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor", cascade = CascadeType.PERSIST)
+    private List<DoctorComment> doctorComments = new ArrayList<>();
 
     public enum DoctorStatus {
         DOCTOR_ACTIVE("활동 상태"),
