@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { FcGoogle } from 'react-icons/fc';
 import { BsArrowReturnLeft } from 'react-icons/bs';
@@ -89,6 +90,10 @@ const SSubmitBtn = styled.button`
   box-shadow: 0 1px 3px 0 var(--gray-200);
   border-radius: 3px;
   cursor: pointer;
+  a {
+    text-decoration: none;
+    color: var(--black);
+  }
 `;
 
 const SGoogleLoginBtn = styled(SSubmitBtn)`
@@ -101,7 +106,6 @@ const SGoogleLoginBtn = styled(SSubmitBtn)`
 `;
 
 const SSignupInfo = styled.div`
-  border: 1px solid black;
   width: 80%;
   display: flex;
   flex-direction: row;
@@ -189,16 +193,19 @@ const SModalSignupBtn = styled.button`
   font-family: TheJamsil;
   font-weight: 600;
   font-size: 22px !important;
-  color: var(--gray-00);
   margin: 0 20px;
   border: none;
   border-radius: 10px;
   box-shadow: 0 3px 3px 1px var(--gray-400);
-  cursor: pointer;
+  a {
+    text-decoration: none;
+    color: var(--gray-800);
+  }
   :hover {
     background-color: var(--mint-100);
     border: inset;
   }
+  cursor: pointer;
 `;
 
 const Login = () => {
@@ -263,7 +270,6 @@ const Login = () => {
       type: 'warning',
       content: emailMsg || passwordMsg || '이메일과 비밀번호를 입력해 주세요',
     });
-    console.log(isNotNull);
   };
 
   // 유효성 검사를 통과하지 못하면 Submit 비활성화
@@ -289,9 +295,9 @@ const Login = () => {
           <SInput onChange={handleChangeEmail} placeholder="이메일" />
           <SInput onChange={handleChangePassword} placeholder="비밀번호" />
           <div>
-            {/* <Link to="/index.html"> */}
-            <SSubmitBtn onClick={handleClickAlert}>로그인</SSubmitBtn>
-            {/* </Link> */}
+            <SSubmitBtn onClick={handleClickAlert}>
+              <Link to="/login">로그인</Link>
+            </SSubmitBtn>
           </div>
           <SGoogleLoginBtn>
             <FcGoogle />
@@ -312,7 +318,9 @@ const Login = () => {
                   <BsArrowReturnLeft onClick={handleClickModal} />
                 </SModalInfoSection>
                 <SModalBtnSection>
-                  <SModalSignupBtn>회원 가입</SModalSignupBtn>
+                  <SModalSignupBtn>
+                    <Link to="/register">회원 가입</Link>
+                  </SModalSignupBtn>
                   <SModalSignupBtn>의료인 회원가입</SModalSignupBtn>
                 </SModalBtnSection>
               </SModal>
