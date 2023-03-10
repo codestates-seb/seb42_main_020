@@ -14,13 +14,13 @@ import java.util.Map;
 public class DoctorCommentController {
     @PostMapping
     public ResponseEntity postDoctorComment(@RequestParam("content") String content,
-                                            @RequestParam("createdAt") LocalDateTime createdAt,
-                                            @RequestParam("modifiedAt") LocalDateTime modifiedAt) {
+                                            @RequestParam("createdAt") String createdAt,
+                                            @RequestParam("modifiedAt") String modifiedAt) {
 
         Map<String, String> map = new HashMap<>();
         map.put("content", content);
-        map.put("createdAt", String.valueOf(createdAt));
-        map.put("modifiedAt", String.valueOf(modifiedAt));
+        map.put("createdAt", createdAt);
+        map.put("modifiedAt", modifiedAt);
 
         return new ResponseEntity<>(map, HttpStatus.CREATED);
     }
