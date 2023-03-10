@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { message } from 'antd';
+import { BsArrowReturnLeft } from 'react-icons/bs';
+import { FcInfo } from 'react-icons/fc';
 
 const SMain = styled.main`
   width: 100vw;
@@ -98,6 +100,23 @@ const SFileInput = styled.div`
     display: inline-block;
     width: 50%;
   }
+  button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    :hover {
+      color: var(--blue-700);
+    }
+  }
+`;
+
+const SPolicy = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  svg {
+    font-size: 20px;
+  }
 `;
 
 const SSubmitBtn = styled.button`
@@ -155,6 +174,49 @@ const SLoginBtn = styled.button`
   cursor: pointer;
 `;
 
+const SModalLayout = styled.div`
+  background-color: rgb(0 0 0 / 30%);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+`;
+
+const SModal = styled.div`
+  display: flex;
+  flex-direction: column !important;
+  justify-content: center;
+  align-items: flex-end !important;
+  position: fixed;
+  width: 50vw;
+  height: 45vh;
+  top: 25vh;
+  right: 25vw;
+  background-color: var(--white);
+  box-shadow: 0 1px 3px 0 var(--gray-200);
+  border-radius: 30px;
+  svg {
+    margin: 2rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    :hover {
+      background-color: var(--gray-200);
+      border-radius: 5px;
+    }
+  }
+`;
+
+const DoctorRegiInfo = styled.div`
+  width: 900px;
+  height: 250px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center !important;
+  margin: 30px;
+`;
+
 const Doctorsignup = () => {
   const [name, setName] = useState('');
   const [hospital, setHospital] = useState('');
@@ -165,6 +227,8 @@ const Doctorsignup = () => {
   const [hospitalMsg, setHospitalMsg] = useState(''); // 유효성 검사 안내 Msg for 병원명
   const [emailMsg, setEmailMsg] = useState(''); // Msg for eamil
   const [passwordMsg, setPasswordMsg] = useState(''); // Msg for PW
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const notTobeNull = ({ hospital, email, password }) => {
     return hospital !== null && email !== null && password !== null;
@@ -274,6 +338,10 @@ const Doctorsignup = () => {
     isPwdValid &&
     isNotNull;
 
+  const handleClickModal = () => {
+    setIsOpenModal(!isOpenModal);
+  };
+
   return (
     <SMain>
       <SLayout>
@@ -292,7 +360,10 @@ const Doctorsignup = () => {
           </div>
           <SFileInput>
             <input type="file" id="profile-upload" accept="image/*" />
-            <p>인증 수단별 상세안내</p>
+            <SPolicy>
+              <FcInfo />
+              <button onClick={handleClickModal}>인증 상세안내</button>
+            </SPolicy>
           </SFileInput>
           <STermSection>
             <STerm>
@@ -325,6 +396,14 @@ const Doctorsignup = () => {
               <Link to="/register">회원가입</Link>
             </SLoginBtn>
           </div>
+          {isOpenModal ? (
+            <SModalLayout>
+              <SModal>
+                <BsArrowReturnLeft onClick={handleClickModal} />
+                <DoctorRegiInfo>안내 이미지 예정</DoctorRegiInfo>
+              </SModal>
+            </SModalLayout>
+          ) : null}
         </SLoginInfo>
       </SLayout>
     </SMain>
