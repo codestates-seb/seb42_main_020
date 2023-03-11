@@ -20,6 +20,7 @@ import {
   SModalInfo,
   SModalSignupBtn,
 } from '../../Style/LoginStyle';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -30,6 +31,28 @@ const Login = () => {
   const [passwordMsg, setPasswordMsg] = useState(''); // 유효성 검사 안내 Msg for PW
 
   const [isOpenModal, setIsOpenModal] = useState(false);
+
+  // * '/members/login' 이나 json-server '/' 인식 불가능으로 '/login' 으로 임시 적용
+
+  const handleSubmit = () => {
+    axios({
+      method: 'post',
+      url: 'http://localhost:3001/login',
+      data: {
+        email,
+        password,
+      },
+      Headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(() => {
+        console.log('Error!');
+      });
+  };
 
   const notTobeNull = ({ email, password }) => {
     return email !== null && password !== null;
@@ -105,11 +128,23 @@ const Login = () => {
           <p>로그인으로 다나아의 다양한 서비스를 경험해 보세요</p>
         </SInfoSection>
         <SFormSection>
-          <SInput onChange={handleChangeEmail} placeholder="이메일" />
-          <SInput onChange={handleChangePassword} placeholder="비밀번호" />
+          <SInput
+            onChange={handleChangeEmail}
+            onClick={handleClickAlert}
+            placeholder="이메일"
+          />
+          <SInput
+            onChange={handleChangePassword}
+            onClick={handleClickAlert}
+            placeholder="비밀번호"
+          />
           <div>
-            <SSubmitBtn onClick={handleClickAlert}>
-              <Link to="/login">로그인</Link>
+            <SSubmitBtn
+              type="submit"
+              disabled={!isAllValid}
+              onClick={handleSubmit}
+            >
+              로그인
             </SSubmitBtn>
           </div>
           <SGoogleLoginBtn>
@@ -119,7 +154,9 @@ const Login = () => {
         </SFormSection>
         <SSignupInfo>
           <p>다나아 시작하기</p>
-          <SSignupBtn onClick={handleClickModal}>회원 가입</SSignupBtn>
+          <SSignupBtn>
+            <Link to="/register">회원 가입</Link>
+          </SSignupBtn>
           {isOpenModal ? (
             <SModalLayout>
               <SModal>
