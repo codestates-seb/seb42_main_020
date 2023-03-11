@@ -13,6 +13,7 @@ import {
   SLoginInfo,
   SLoginBtn,
 } from '../../Style/SignupStyle';
+import axios from 'axios';
 
 const Signup = () => {
   const [name, setName] = useState('');
@@ -21,24 +22,50 @@ const Signup = () => {
   const [password, setPassword] = useState('');
 
   const [messageApi, contextHolder] = message.useMessage();
-  const [nicknameMsg, setNickmaeMsg] = useState(''); // 유효성 검사 안내 Msg for nickname
+  const [nameMsg, setNameMsg] = useState(''); // 유효성 검사 안내 Msg for name && nickname
   const [emailMsg, setEmailMsg] = useState(''); // Msg for eamil
   const [passwordMsg, setPasswordMsg] = useState(''); // Msg for PW
 
-  const notTobeNull = ({ nickname, email, password }) => {
-    return nickname !== null && email !== null && password !== null;
+  // * '/members/signup' 이나 json-server '/' 인식 불가능으로 '/signup' 으로 임시 적용
+
+  const handleSubmit = () => {
+    axios({
+      method: 'post',
+      url: 'http://localhost:3001/signup',
+      data: {
+        email,
+        name,
+        displayName: nickname,
+        password,
+      },
+      Headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(() => {
+        console.log('Error!');
+      });
   };
 
-  // 닉네임 정규 표현식
+  const notTobeNull = ({ name, nickname, email, password }) => {
+    return (
+      name !== null && nickname !== null && email !== null && password !== null
+    );
+  };
+
+  // 이름 정규 표현식
   // 한글, 영어만 입력 받기
   const vaildateName = () => {
-    return name.match(/([a-z|A-Z|ㄱ-ㅎ|가-힣]).{1,15}$/);
+    return name.match(/^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/);
   };
 
   // 닉네임 정규 표현식
   // 한글, 영어만 입력 받기
   const vaildateNickname = () => {
-    return nickname.match(/([a-z|A-Z|ㄱ-ㅎ|가-힣]).{1,15}$/);
+    return nickname.match(/^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/);
   };
 
   // 이메일 정규 표현식
@@ -64,11 +91,10 @@ const Signup = () => {
     setName(currName);
 
     if (!vaildateName(name)) {
-      setNickmaeMsg(
-        '한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.'
-      );
+      // 오류 안내창 닉네임과 공유
+      setNameMsg('한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.');
     } else {
-      setNickmaeMsg('');
+      setNameMsg('');
     }
   };
 
@@ -78,11 +104,9 @@ const Signup = () => {
     setNickname(currNickname);
 
     if (!vaildateNickname(nickname)) {
-      setNickmaeMsg(
-        '한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.'
-      );
+      setNameMsg('한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.');
     } else {
-      setNickmaeMsg('');
+      setNameMsg('');
     }
   };
 
@@ -115,16 +139,16 @@ const Signup = () => {
   const handleClickAlert = () => {
     messageApi.open({
       type: 'warning',
-      content: emailMsg || passwordMsg || nicknameMsg || '내용을 입력해 주세요',
+      content: emailMsg || passwordMsg || nameMsg || '내용을 입력해 주세요',
     });
   };
 
   // 유효성 검사를 통과하지 못하면 Submit 비활성화
   const isvaildateName = vaildateName(name);
-  const isNicknameVaild = vaildateName(nickname);
+  const isNicknameVaild = vaildateNickname(nickname);
   const isEmailValid = validateEmail(email);
   const isPwdValid = validatePwd(password);
-  const isNotNull = notTobeNull({ email, password });
+  const isNotNull = notTobeNull({ name, nickname, email, password });
   const isAllValid =
     isvaildateName &&
     isNicknameVaild &&
@@ -143,8 +167,16 @@ const Signup = () => {
         </SInfoSection>
         <SFormSection>
           <div>
-            <SInput onChange={handleChangeName} placeholder="이름" />
-            <SInput onChange={handleChangeNickname} placeholder="닉네임" />
+            <SInput
+              onClick={handleClickAlert}
+              onChange={handleChangeName}
+              placeholder="이름"
+            />
+            <SInput
+              onClick={handleClickAlert}
+              onChange={handleChangeNickname}
+              placeholder="닉네임"
+            />
             <SInput onChange={handleChangeEmail} placeholder="이메일" />
             <SInput onChange={handleChangePassword} placeholder="비밀번호" />
           </div>
@@ -164,7 +196,13 @@ const Signup = () => {
               </div>
             </STerm>
           </STermSection>
-          <SSubmitBtn onClick={handleClickAlert}>회원가입</SSubmitBtn>
+          <SSubmitBtn
+            type="submit"
+            disabled={!isAllValid}
+            onClick={handleSubmit}
+          >
+            회원가입
+          </SSubmitBtn>
         </SFormSection>
         <SLoginInfo>
           <div>
