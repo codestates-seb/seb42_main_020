@@ -28,7 +28,7 @@ const DoctorSignup = () => {
   const [password, setPassword] = useState('');
 
   const [messageApi, contextHolder] = message.useMessage();
-  const [hospitalMsg, setHospitalMsg] = useState(''); // 유효성 검사 안내 Msg for 병원명
+  const [nameMsg, setNameMsg] = useState(''); // 유효성 검사 안내 Msg for name && hospital
   const [emailMsg, setEmailMsg] = useState(''); // Msg for eamil
   const [passwordMsg, setPasswordMsg] = useState(''); // Msg for PW
 
@@ -41,13 +41,13 @@ const DoctorSignup = () => {
   // 닉네임 정규 표현식
   // 한글, 영어만 입력 받기
   const vaildateName = () => {
-    return name.match(/([a-z|A-Z|ㄱ-ㅎ|가-힣]).{1,15}$/);
+    return name.match(/^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/);
   };
 
   // 병원명 정규 표현식
   // 한글, 영어만 입력 받기
   const vaildateHospital = () => {
-    return hospital.match(/([a-z|A-Z|ㄱ-ㅎ|가-힣]).{1,15}$/);
+    return name.match(/^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/);
   };
 
   // 이메일 정규 표현식
@@ -72,13 +72,11 @@ const DoctorSignup = () => {
     const currName = e.target.value;
     setName(currName);
 
-    // 이름과 조건식이 같은 병원명으로 안내 Msg 설정
     if (!vaildateName(name)) {
-      setHospitalMsg(
-        '한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.'
-      );
+      // 오류 안내창 병원명과 공유
+      setNameMsg('한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.');
     } else {
-      setHospitalMsg('');
+      setNameMsg('');
     }
   };
 
@@ -87,12 +85,10 @@ const DoctorSignup = () => {
     const currHospital = e.target.value;
     setHospital(currHospital);
 
-    if (!setHospitalMsg(hospital)) {
-      setHospitalMsg(
-        '한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.'
-      );
+    if (!vaildateHospital(hospital)) {
+      setNameMsg('한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.');
     } else {
-      setHospitalMsg('');
+      setNameMsg('');
     }
   };
 
@@ -125,7 +121,7 @@ const DoctorSignup = () => {
   const handleClickAlert = () => {
     messageApi.open({
       type: 'warning',
-      content: emailMsg || passwordMsg || hospitalMsg || '내용을 입력해 주세요',
+      content: nameMsg || emailMsg || passwordMsg || '내용을 입력해 주세요',
     });
   };
 
@@ -157,10 +153,26 @@ const DoctorSignup = () => {
         </SInfoSection>
         <SFormSection>
           <div>
-            <SInput onChange={handleChangeName} placeholder="이름" />
-            <SInput onChange={handleChangeHospital} placeholder="병원명" />
-            <SInput onChange={handleChangeEmail} placeholder="이메일" />
-            <SInput onChange={handleChangePassword} placeholder="비밀번호" />
+            <SInput
+              onChange={handleChangeName}
+              onClick={handleClickAlert}
+              placeholder="이름"
+            />
+            <SInput
+              onChange={handleChangeHospital}
+              onClick={handleClickAlert}
+              placeholder="병원명"
+            />
+            <SInput
+              onChange={handleChangeEmail}
+              onClick={handleClickAlert}
+              placeholder="이메일"
+            />
+            <SInput
+              onChange={handleChangePassword}
+              onClick={handleClickAlert}
+              placeholder="비밀번호"
+            />
           </div>
           <SFileInput>
             <input type="file" id="profile-upload" accept="image/*" />
@@ -185,7 +197,9 @@ const DoctorSignup = () => {
               </div>
             </STerm>
           </STermSection>
-          <SSubmitBtn onClick={handleClickAlert}>회원가입</SSubmitBtn>
+          <SSubmitBtn type="submit" disabled={!isAllValid}>
+            회원가입
+          </SSubmitBtn>
         </SFormSection>
         <SLoginInfo>
           <div>
