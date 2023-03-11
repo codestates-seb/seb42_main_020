@@ -20,12 +20,14 @@ import {
   SModal,
   DoctorRegiInfo,
 } from '../../Style/DoctorSignupStyle';
+import axios from 'axios';
 
 const DoctorSignup = () => {
   const [name, setName] = useState('');
   const [hospital, setHospital] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [imgFile, setImgFile] = useState('');
 
   const [messageApi, contextHolder] = message.useMessage();
   const [nameMsg, setNameMsg] = useState(''); // 유효성 검사 안내 Msg for name && hospital
@@ -33,6 +35,40 @@ const DoctorSignup = () => {
   const [passwordMsg, setPasswordMsg] = useState(''); // Msg for PW
 
   const [isOpenModal, setIsOpenModal] = useState(false);
+
+  // * '/doctors/signup' 이나 json-server '/' 인식 불가능으로 '/doctors' 으로 임시 적용
+
+  const handleSubmit = () => {
+    const formData = new FormData(); // 새로운 formData를 찍어내 그안에 키와 밸류의 형태로 넣어주는 형식
+    formData.append('email', email);
+    formData.append('hospital', hospital);
+    formData.append('name', name);
+    formData.append('password', password);
+    formData.append('img', imgFile);
+
+    // formDate 값 확인하기
+    /*
+    let entries = formData.entries();
+    for (const pair of entries) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+    */
+
+    axios({
+      method: 'post',
+      url: 'http://localhost:3001/doctors',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(() => {
+        console.log('Error!');
+      });
+  };
 
   const notTobeNull = ({ hospital, email, password }) => {
     return hospital !== null && email !== null && password !== null;
@@ -138,6 +174,16 @@ const DoctorSignup = () => {
     isPwdValid &&
     isNotNull;
 
+  // Img File
+  const onChangeImg = (e) => {
+    e.preventDefault();
+
+    if (e.target.files) {
+      const uploadFile = e.target.files[0];
+      setImgFile(uploadFile);
+    }
+  };
+
   const handleClickModal = () => {
     setIsOpenModal(!isOpenModal);
   };
@@ -169,13 +215,19 @@ const DoctorSignup = () => {
               placeholder="이메일"
             />
             <SInput
+              type="password"
               onChange={handleChangePassword}
               onClick={handleClickAlert}
               placeholder="비밀번호"
             />
           </div>
           <SFileInput>
-            <input type="file" id="profile-upload" accept="image/*" />
+            <input
+              type="file"
+              accept="image/png, image/jpeg"
+              multiple="multiple"
+              onChange={onChangeImg}
+            />
             <SPolicy>
               <FcInfo />
               <button onClick={handleClickModal}>인증 상세안내</button>
@@ -197,7 +249,11 @@ const DoctorSignup = () => {
               </div>
             </STerm>
           </STermSection>
-          <SSubmitBtn type="submit" disabled={!isAllValid}>
+          <SSubmitBtn
+            type="submit"
+            disabled={!isAllValid}
+            onClick={handleSubmit}
+          >
             회원가입
           </SSubmitBtn>
         </SFormSection>
