@@ -35,6 +35,7 @@ function PostTopic() {
               },
             ]}
           />
+          <button className="create-post">글쓰기</button>
         </Space>
       </div>
     </PostTopicStlye>

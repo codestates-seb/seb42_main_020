@@ -10,7 +10,23 @@ const PostTopicStlye = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+  }
+  .create-post {
+    margin-left: 20px;
+    padding: 5px 30px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #ffffff;
+    border: 4px solid #858585;
+  }
+  .create-post:hover {
+    border: 4px solid #333333;
+    background-color: #333333;
+    color: #ffffff;
+    box-shadow: none;
   }
 `;
 
