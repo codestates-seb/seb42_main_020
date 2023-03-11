@@ -23,6 +23,7 @@ const PostCategoryStyle = styled.ul`
   }
   .doctor {
     flex: 0.7;
+    font-size: 16px;
   }
   .title {
     flex: 4;

@@ -18,14 +18,20 @@ const PostListStyle = styled.ul`
     flex: 0.7;
   }
   .title {
-    text-align: initial;
     flex: 4;
+    text-align: initial;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   .title > span {
     padding: 0px 20px;
   }
   .nickname {
     flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   .area {
     flex: 0.5;
