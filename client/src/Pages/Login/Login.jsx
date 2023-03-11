@@ -155,9 +155,7 @@ const Login = () => {
         </SFormSection>
         <SSignupInfo>
           <p>다나아 시작하기</p>
-          <SSignupBtn>
-            <Link to="/register">회원 가입</Link>
-          </SSignupBtn>
+          <SSignupBtn onClick={handleClickModal}>회원 가입</SSignupBtn>
           {isOpenModal ? (
             <SModalLayout>
               <SModal>
