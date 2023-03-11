@@ -26,6 +26,9 @@ const Signup = () => {
   const [emailMsg, setEmailMsg] = useState(''); // Msg for eamil
   const [passwordMsg, setPasswordMsg] = useState(''); // Msg for PW
 
+  const [checkedService, setCheckedService] = useState(false); // 이용약관 동의
+  const [checkedLocation, setCheckedLocation] = useState(false); // 위치 기반 서비스 동의
+
   // * '/members/signup' 이나 json-server '/' 인식 불가능으로 '/signup' 으로 임시 적용
 
   const handleSubmit = () => {
@@ -143,6 +146,15 @@ const Signup = () => {
     });
   };
 
+  // 이용약관 유효성 검사
+  const handleClickTermService = (e) => {
+    setCheckedService(e.target.checked);
+  };
+
+  const handleClickTermLocation = (e) => {
+    setCheckedLocation(e.target.checked);
+  };
+
   // 유효성 검사를 통과하지 못하면 Submit 비활성화
   const isvaildateName = vaildateName(name);
   const isNicknameVaild = vaildateNickname(nickname);
@@ -154,7 +166,9 @@ const Signup = () => {
     isNicknameVaild &&
     isEmailValid &&
     isPwdValid &&
-    isNotNull;
+    isNotNull &&
+    checkedService &&
+    checkedLocation;
 
   return (
     <SMain>
@@ -178,20 +192,30 @@ const Signup = () => {
               placeholder="닉네임"
             />
             <SInput onChange={handleChangeEmail} placeholder="이메일" />
-            <SInput onChange={handleChangePassword} placeholder="비밀번호" />
+            <SInput
+              type="password"
+              onChange={handleChangePassword}
+              placeholder="비밀번호"
+            />
           </div>
           <STermSection>
             <STerm>
-              <input type="checkbox" name="" value="" />
-              전체 동의
-            </STerm>
-            <STerm>
               <div>
-                <input type="checkbox" name="" value="" />
+                <input
+                  type="checkbox"
+                  name="term"
+                  value="service"
+                  onClick={handleClickTermService}
+                />
                 서비스 이용약관
               </div>
               <div>
-                <input type="checkbox" name="" value="" />
+                <input
+                  type="checkbox"
+                  name="term"
+                  value="location"
+                  onClick={handleClickTermLocation}
+                />
                 위치 기반 서비스
               </div>
             </STerm>
