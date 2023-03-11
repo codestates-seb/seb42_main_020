@@ -1,16 +1,25 @@
-import './variables.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Header from './Components/Header/Header';
+import Login from './Pages/Login/Login';
+import Signup from './Pages/Signup/Signup';
+import Footer from './Components/Footer/Footer';
 import { createGlobalStyle } from 'styled-components';
 import { reset } from 'styled-reset';
-import Footer from './Components/Footer/Footer';
+import './variables.css';
 
 const GlobalStyle = createGlobalStyle`${reset}`;
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <GlobalStyle />
+      <Header />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Signup />} />
+      </Routes>
       <Footer />
-    </>
+    </BrowserRouter>
   );
 }
 
