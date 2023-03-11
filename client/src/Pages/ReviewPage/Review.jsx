@@ -18,7 +18,7 @@ import LocationInput from '../../Components/AskForm/LocationInput';
 import TypeInput from '../../Components/AskForm/TypeInput';
 import RateStar from '../../Components/ReviewForm/RateStar';
 import ModalTest from '../../Components/MakeContents/MakeContents';
-
+import WaitModal from '../../Components/ReviewForm/WaitModal';
 const Review = () => {
   // const navigate = useNavigate();
   // 제목 입력값
@@ -51,6 +51,8 @@ const Review = () => {
   const [rateMessage, setRateMesasge] = useState();
   // 종합적인 리뷰 데이터
   const [reviewData, setReviewData] = useState({});
+  // 리뷰 대기 안내창
+  const [reviewWait, setReviewWait] = useState(false);
 
   // 작성 내용
   const handleText = (value) => {
@@ -94,6 +96,12 @@ const Review = () => {
     setReviewTypeValid(true);
   };
 
+  //별점 데이터 받아오기
+  const rateNumberHandler = (e) => {
+    setRateValid(true);
+    setRateNumber(e);
+  };
+
   //받아온 데이터 받아온걸 종합하기
   const submitDataHandler = () => {
     if (location === '') {
@@ -119,26 +127,34 @@ const Review = () => {
     if (!rateValid) {
       setRateMesasge('별점을 선택해 주세요');
     }
-
-    setReviewData({
-      reviewTitle,
-      reviewLocation,
-      reviewType,
-      reviewText,
-      rateNumber,
-    });
-    // navigate('/');
-    //나중에 서버로 데이터 보내줄 예정
-    console.log(setReviewData);
+    // 모든 입력이 정상적으로 되었을 경우
+    if (
+      reviewValid &&
+      reviewTitleValid &&
+      reviewLocationValid &&
+      reviewTypeValid &&
+      rateValid
+    ) {
+      // 사용자의 입력 데이터를 종합
+      setReviewData({
+        reviewTitle,
+        reviewLocation,
+        reviewType,
+        reviewText,
+        rateNumber,
+      });
+      // 승인 대기중 모달창 노출
+      setReviewWait(true);
+      // navigate('/');
+      //나중에 서버로 데이터 보내줄 예정
+      console.log(reviewData);
+    }
   };
 
-  //별점 데이터 받아오기
-  const rateNumberHandler = (e) => {
-    setRateValid(true);
-    setRateNumber(e);
+  // 모달 닫기
+  const closeModal = () => {
+    setReviewWait(false);
   };
-
-  console.log(reviewData);
 
   return (
     <SAskQuestionContainer>
@@ -150,6 +166,7 @@ const Review = () => {
           titleOnChangeHandler={titleOnChangeHandler}
         />
         <SValidFail> {reviewTitleValid ? null : reviewTitleMessage}</SValidFail>
+
         <SAskQuestionInfoBlock>
           <div>
             <span>지역</span>
@@ -186,12 +203,21 @@ const Review = () => {
         <SValidFail>{rateValid ? null : rateMessage}</SValidFail>
         <TextEditor handleText={handleText} />
         <SValidFail> {reviewValid ? null : reviewMessage}</SValidFail>
+        <div>
+          <label htmlFor="pics">영수증 사진</label>
+          <input
+            id="pics"
+            type="file"
+            placeholder="영수증 사진을 업로드 해주세요"
+          />
+        </div>
         <SButtonBlock>
           <SCancalButton>취 소</SCancalButton>
           <SSubmitButton onClick={submitDataHandler}>작 성</SSubmitButton>
         </SButtonBlock>
       </SAskQuestionBlock>
       <ModalTest />
+      {reviewWait && <WaitModal closeModal={closeModal} />}
     </SAskQuestionContainer>
   );
 };
