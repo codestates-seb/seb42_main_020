@@ -20,10 +20,10 @@ const PostTopicStlye = styled.div`
     font-weight: bold;
     cursor: pointer;
     background-color: #ffffff;
-    border: 4px solid #858585;
+    border: 2px solid #858585;
   }
   .create-post:hover {
-    border: 4px solid #333333;
+    border: px solid #333333;
     background-color: #333333;
     color: #ffffff;
     box-shadow: none;

@@ -12,7 +12,6 @@ const FooterStyle = styled.footer`
   h3 {
     font-size: 25px;
     font-weight: bold;
-    margin-right: 5em;
     margin-left: 1em;
   }
   h4 {
@@ -26,13 +25,20 @@ const FooterStyle = styled.footer`
     font-size: 16px;
     margin-bottom: 20px;
   }
-  .content {
+  .content-template {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px 200px;
     color: var(--mint-400);
     background-color: var(--blackalpha-800);
+  }
+  .content {
+    width: 90%;
+    padding: 50px 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
   }
   .copyright {
     display: flex;
@@ -48,7 +54,6 @@ const FooterStyle = styled.footer`
     flex-direction: column;
   }
   .frontTeam {
-    margin-right: 40px;
   }
   .profile-icon {
     width: 80px;
@@ -72,7 +77,6 @@ const FooterStyle = styled.footer`
     height: 100px;
   }
   .teamContent {
-    margin-left: 200px;
     display: flex;
   }
   .teamLogo {

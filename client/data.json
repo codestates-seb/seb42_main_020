@@ -1,9 +1,224 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "example"
+      "number": 1,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": false,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 2,
+      "subject": "subject",
+      "doctor": true,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": false,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 3,
+      "subject": "subject",
+      "doctor": true,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 4,
+      "subject": "subject",
+      "doctor": true,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 5,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 6,
+      "subject": "subject",
+      "doctor": true,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 7,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": false,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 8,
+      "subject": "subject",
+      "doctor": true,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 9,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 10,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": false,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 11,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 12,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": false,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 13,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 14,
+      "subject": "subject",
+      "doctor": true,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 15,
+      "subject": "subject",
+      "doctor": true,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": false,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 16,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": false,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 17,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": false,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 18,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": false,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 19,
+      "subject": "subject",
+      "doctor": true,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
+    },
+    {
+      "number": 20,
+      "subject": "subject",
+      "doctor": true,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": true,
+      "nickname": "nickname",
+      "like": "like"
     }
   ],
   "comments": [
