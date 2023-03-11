@@ -1,44 +1,36 @@
 import PostListStyle from '../../Style/PostListStyle';
 import { RxDotsHorizontal } from 'react-icons/rx';
 import { FiUserCheck } from 'react-icons/fi';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 
-function PostList() {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:3001/posts').then((res) => setPosts(res.data));
-  }, []);
-
+function PostList({ data }) {
   return (
     <>
-      {posts.map((post) => {
+      {data.map((ele) => {
         return (
-          <PostListStyle key={post.number}>
-            <li className="number">{post.number}</li>
-            <li className="subject">{post.subject}</li>
+          <PostListStyle key={ele.number}>
+            <li className="number">{ele.number}</li>
+            <li className="subject">{ele.subject}</li>
             <li className="doctor">
-              {post.doctor ? (
+              {ele.doctor ? (
                 <FiUserCheck size={25} color={'#173ea1'} />
               ) : (
                 <RxDotsHorizontal size={25} color={'#ff6947'} />
               )}
             </li>
-            <li className="area">{post.area}</li>
+            <li className="area">{ele.area}</li>
             <li className="title">
-              <span>{post.title}</span>
+              <span>{ele.title}</span>
             </li>
-            <li className="time">{post.time}</li>
+            <li className="time">{ele.time}</li>
             <li className="type">
-              {post.postType ? (
-                <span className="question">{post.type}</span>
+              {ele.postType ? (
+                <span className="question">{ele.type}</span>
               ) : (
-                <span className="review">{post.type}</span>
+                <span className="review">{ele.type}</span>
               )}
             </li>
-            <li className="nickname">{post.nickname}</li>
-            <li className="like">{post.like}</li>
+            <li className="nickname">{ele.nickname}</li>
+            <li className="like">{ele.like}</li>
           </PostListStyle>
         );
       })}

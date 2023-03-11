@@ -1,10 +1,10 @@
 import PostListTemplateStyle from '../../Style/PostListTemplateStyle';
 import PostList from './PostList';
 
-function PostListTemplate() {
+function PostListTemplate({ data }) {
   return (
     <PostListTemplateStyle>
-      <PostList />
+      <PostList data={data} />
     </PostListTemplateStyle>
   );
 }
