@@ -134,6 +134,7 @@ const Login = () => {
             placeholder="이메일"
           />
           <SInput
+            type="password"
             onChange={handleChangePassword}
             onClick={handleClickAlert}
             placeholder="비밀번호"

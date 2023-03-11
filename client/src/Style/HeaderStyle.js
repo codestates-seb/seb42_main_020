@@ -61,11 +61,14 @@ export const SLogin = styled.div`
     border: 2px solid var(--gray-200);
     border-radius: 10px;
     background-color: var(--white);
-    color: var(--gray-700);
-    font-size: 15px;
-    font-weight: 600;
     box-shadow: 0 2px 3px 0 var(--gray-200);
     cursor: pointer;
+    a {
+      text-decoration: none;
+      color: var(--gray-700);
+      font-size: 15px;
+      font-weight: 600;
+    }
     :hover {
       background-color: var(--mint-100);
     }

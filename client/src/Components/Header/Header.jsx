@@ -18,7 +18,7 @@ function Header() {
   const [isLogged, setIsLogged] = useState(false); // 로그인 여부
   const [isNoticed, setIsNoticed] = useState(true); // 답변 알림 유무
 
-  console.log(setIsNoticed);
+  console.log(setIsNoticed); // 답변 알림 미사용으로 인한 ESLint 오류 발생 방지 콘솔
 
   const modeHandler = () => {
     setIsLogged(!isLogged);
@@ -41,7 +41,9 @@ function Header() {
             {!isLogged ? (
               <div>
                 <SLogin>
-                  <button>Log in</button>
+                  <button>
+                    <Link to="/login">Log in</Link>
+                  </button>
                 </SLogin>
               </div>
             ) : (
@@ -53,7 +55,7 @@ function Header() {
                   </SNotification>
                   <Popover
                     title="김원필 님, 안녕하세요"
-                    content={<a href="/myinfo">마이 페이지</a>}
+                    content={<Link to="/myinfo">마이 페이지</Link>}
                   >
                     <Avatar size="large" icon={<UserOutlined />} />
                   </Popover>
