@@ -44,3 +44,28 @@ export const SPicture = styled.div`
     border-radius: 10px;
   }
 `;
+
+export const SUserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  strong {
+    font-weight: bold;
+  }
+  .usertype {
+    font-size: 18px;
+    font-weight: 18px;
+    padding: 8px 20px;
+    border-radius: 3px;
+    color: #ffffff;
+    background: #00663b;
+  }
+  .class {
+    font-size: 20px;
+    margin-top: 15px;
+  }
+  .sign-up {
+    margin-top: 15px;
+  }
+`;
