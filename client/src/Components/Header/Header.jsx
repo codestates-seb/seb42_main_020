@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Nav from '../Nav/Nav';
 import { Popover, Avatar, Badge } from 'antd';
 import { UserOutlined, BellOutlined } from '@ant-design/icons';
 import {
@@ -18,10 +19,13 @@ function Header() {
   const [isLogged, setIsLogged] = useState(false); // 로그인 여부
   const [isNoticed, setIsNoticed] = useState(true); // 답변 알림 유무
 
+  const [isOpenNav, setIsOpenNav] = useState(false);
+
+  console.log(setIsLogged); // 로그인 여부 ESLint 오류 발생 방지 콘솔
   console.log(setIsNoticed); // 답변 알림 미사용으로 인한 ESLint 오류 발생 방지 콘솔
 
-  const modeHandler = () => {
-    setIsLogged(!isLogged);
+  const handleClickNav = () => {
+    setIsOpenNav(!isOpenNav);
   };
 
   return (
@@ -33,9 +37,7 @@ function Header() {
               <img src="images/logo.png" alt="logo" />
               <span>다나아</span>
             </SLogo>
-            <SNav>
-              <Link to="/">커뮤니티</Link>
-            </SNav>
+            <SNav onClick={handleClickNav}>커뮤니티</SNav>
           </div>
           <div>
             {!isLogged ? (
@@ -68,7 +70,7 @@ function Header() {
           </div>
         </SLayout>
       </SHeader>
-      <button onClick={modeHandler}>❤️</button>
+      {isOpenNav ? <Nav /> : null}
     </>
   );
 }

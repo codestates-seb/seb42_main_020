@@ -39,17 +39,16 @@ export const SLogo = styled.div`
 `;
 
 export const SNav = styled.nav`
-  padding: 16px 32px;
-  a {
-    text-decoration: none;
-    padding: 16px;
-    font-family: 'TheJamsil';
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--blue-600);
-    :hover {
-      color: var(--blue-400);
-    }
+  padding: 16px 32px !important;
+  text-decoration: none;
+  padding: 16px;
+  font-family: 'TheJamsil';
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--blue-600);
+  cursor: pointer;
+  :hover {
+    color: var(--blue-400);
   }
 `;
 
