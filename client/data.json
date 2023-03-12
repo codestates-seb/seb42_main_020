@@ -14,5 +14,18 @@
       "email": "qwer12@naver.com",
       "password": "qwer@1234"
     }
+  ],  
+  "posts": [
+    {
+      "number": 1,
+      "subject": "subject",
+      "doctor": false,
+      "area": "area",
+      "title": "title",
+      "time": "time",
+      "postType": false,
+      "nickname": "nickname",
+      "like": 323
+    }
   ]
 }
