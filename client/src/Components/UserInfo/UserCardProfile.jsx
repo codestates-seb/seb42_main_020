@@ -3,7 +3,10 @@ import {
   SName,
   SPicture,
   SUserInfo,
+  SActivity,
 } from '../../Style/UserCardProfileStyle';
+import { BsPencilSquare } from 'react-icons/bs';
+import { BiCommentDetail, BiCommentCheck } from 'react-icons/bi';
 
 function UserCardProfile() {
   return (
@@ -25,6 +28,33 @@ function UserCardProfile() {
         <div className="sign-up">
           <strong>가입:</strong> 2023년 3월 13일
         </div>
+        <SActivity>
+          <div className="linetop"></div>
+          <div className="user-activity">
+            <div className="post">
+              <span className="post-title">
+                <BsPencilSquare size={25} />
+                <span>게시글:</span>
+              </span>
+              <span>11 개</span>
+            </div>
+            <div className="comment">
+              <span className="post-title">
+                <BiCommentDetail size={25} />
+                <span>댓글:</span>
+              </span>
+              <span>483 개</span>
+            </div>
+            <div className="adoptComment">
+              <span className="post-title">
+                <BiCommentCheck size={25} />
+                <span>채택된 댓글:</span>
+              </span>
+              <span>18 개</span>
+            </div>
+          </div>
+          <div className="linebottom"></div>
+        </SActivity>
       </SUserInfo>
     </UserCardProfileStyle>
   );

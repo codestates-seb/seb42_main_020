@@ -69,3 +69,49 @@ export const SUserInfo = styled.div`
     margin-top: 15px;
   }
 `;
+
+export const SActivity = styled.div`
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  .linetop,
+  .linebottom {
+    border-bottom: 2px solid #f0f0f0;
+    width: 100%;
+  }
+  .linetop {
+    margin-bottom: 15px;
+  }
+  .linebottom {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .user-activity {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    justify-content: space-around;
+  }
+  .post,
+  .comment,
+  .adoptComment {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .post-title {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+  }
+  .post-title > span {
+    margin-left: 10px;
+  }
+  .adoptComment {
+    margin-bottom: 0;
+  }
+`;
