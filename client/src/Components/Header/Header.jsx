@@ -34,8 +34,10 @@ function Header() {
         <SLayout>
           <div className="layout-div">
             <SLogo>
-              <img src="images/logo.png" alt="logo" />
-              <span>다나아</span>
+              <Link to="/">
+                <img src="images/logo.png" alt="logo" />
+                <span>다나아</span>
+              </Link>
             </SLogo>
             <SNav onClick={handleClickNav}>커뮤니티</SNav>
           </div>
