@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useBodyScrollLock } from '../../api/useBodyScrollLock';
+import { useBodyScrollLock } from '../../util/useBodyScrollLock';
 import { message } from 'antd';
 import { BsArrowReturnLeft } from 'react-icons/bs';
 import { FcInfo } from 'react-icons/fc';
