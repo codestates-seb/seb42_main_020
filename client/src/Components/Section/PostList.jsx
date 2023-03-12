@@ -5,32 +5,32 @@ import { FiUserCheck } from 'react-icons/fi';
 function PostList({ data }) {
   return (
     <>
-      {data.map((ele) => {
+      {data.map((data) => {
         return (
-          <PostListStyle key={ele.number}>
-            <li className="number">{ele.number}</li>
-            <li className="subject">{ele.subject}</li>
+          <PostListStyle key={data.number}>
+            <li className="number">{data.number}</li>
+            <li className="subject">{data.subject}</li>
             <li className="doctor">
-              {ele.doctor ? (
+              {data.doctor ? (
                 <FiUserCheck size={25} color={'#173ea1'} />
               ) : (
                 <RxDotsHorizontal size={25} color={'#ff6947'} />
               )}
             </li>
-            <li className="area">{ele.area}</li>
+            <li className="area">{data.area}</li>
             <li className="title">
-              <span>{ele.title}</span>
+              <span>{data.title}</span>
             </li>
-            <li className="time">{ele.time}</li>
+            <li className="time">{data.time}</li>
             <li className="type">
-              {ele.postType ? (
-                <span className="question">{ele.type}</span>
+              {data.postType ? (
+                <span className="question">{data.type}</span>
               ) : (
-                <span className="review">{ele.type}</span>
+                <span className="review">{data.type}</span>
               )}
             </li>
-            <li className="nickname">{ele.nickname}</li>
-            <li className="like">{ele.like}</li>
+            <li className="nickname">{data.nickname}</li>
+            <li className="like">{data.like}</li>
           </PostListStyle>
         );
       })}

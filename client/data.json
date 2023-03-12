@@ -219,17 +219,6 @@
       "postType": true,
       "nickname": "nickname",
       "like": 19
-    },
-    {
-      "number": 21,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": false,
-      "nickname": "nickname",
-      "like": 232
     }
   ],
   "comments": [

@@ -19,15 +19,7 @@ function App() {
     <BrowserRouter>
       <GlobalStyle />
       <Header />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Section />
-      </div>
+      <Section />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
