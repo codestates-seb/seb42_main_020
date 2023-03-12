@@ -1,4 +1,20 @@
 {
+  "signup": [
+    {
+      "id": 0,
+      "email": "qwer12@naver.com",
+      "name": "장홍재",
+      "displayName": "다나아따",
+      "password": "qwer@1234"
+    }
+  ],
+  "login": [
+    {
+      "id": 1,
+      "email": "qwer12@naver.com",
+      "password": "qwer@1234"
+    }
+  ],  
   "posts": [
     {
       "number": 1,
@@ -10,237 +26,6 @@
       "postType": false,
       "nickname": "nickname",
       "like": 323
-    },
-    {
-      "number": 2,
-      "subject": "subject",
-      "doctor": true,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": false,
-      "nickname": "nickname",
-      "like": 221
-    },
-    {
-      "number": 3,
-      "subject": "subject",
-      "doctor": true,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 645
-    },
-    {
-      "number": 4,
-      "subject": "subject",
-      "doctor": true,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 334
-    },
-    {
-      "number": 5,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 58
-    },
-    {
-      "number": 6,
-      "subject": "subject",
-      "doctor": true,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 21
-    },
-    {
-      "number": 7,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": false,
-      "nickname": "nickname",
-      "like": 24
-    },
-    {
-      "number": 8,
-      "subject": "subject",
-      "doctor": true,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 75
-    },
-    {
-      "number": 9,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 65
-    },
-    {
-      "number": 10,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": false,
-      "nickname": "nickname ",
-      "like": 32
-    },
-    {
-      "number": 11,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 37
-    },
-    {
-      "number": 12,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": false,
-      "nickname": "nickname",
-      "like": 85
-    },
-    {
-      "number": 13,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 37
-    },
-    {
-      "number": 14,
-      "subject": "subject",
-      "doctor": true,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 86
-    },
-    {
-      "number": 15,
-      "subject": "subject",
-      "doctor": true,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": false,
-      "nickname": "nickname",
-      "like": 21
-    },
-    {
-      "number": 16,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": false,
-      "nickname": "nickname",
-      "like": 54
-    },
-    {
-      "number": 17,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": false,
-      "nickname": "nickname",
-      "like": 78
-    },
-    {
-      "number": 18,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": false,
-      "nickname": "nickname",
-      "like": 23
-    },
-    {
-      "number": 19,
-      "subject": "subject",
-      "doctor": true,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 4
-    },
-    {
-      "number": 20,
-      "subject": "subject",
-      "doctor": true,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 19
-    },
-    {
-      "number": 21,
-      "subject": "subject",
-      "doctor": false,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": false,
-      "nickname": "nickname",
-      "like": 232
     }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "wonpil"
-  }
-  
+  ]
 }
