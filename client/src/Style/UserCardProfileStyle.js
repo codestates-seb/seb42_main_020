@@ -4,10 +4,13 @@ export const UserCardProfileStyle = styled.aside`
   display: flex;
   flex-direction: column;
   width: 300px;
-  border: 2px solid #000;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
+    rgb(209, 213, 219) 0px 0px 0px 1px inset;
 `;
 
 export const SName = styled.div`
+  margin-top: 20px;
   height: 40px;
   display: flex;
   align-items: center;
@@ -18,9 +21,26 @@ export const SName = styled.div`
     height: 100%;
     margin-right: 20px;
   }
-  .userid {
+  .user-nick-name {
     display: inline-block;
     font-size: 20px;
     font-weight: bold;
+  }
+`;
+
+export const SPicture = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  padding: 0px 20px;
+
+  .frame {
+    width: 200px;
+    height: 200px;
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
   }
 `;
