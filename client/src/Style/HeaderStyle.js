@@ -26,8 +26,12 @@ export const SLayout = styled.div`
 `;
 
 export const SLogo = styled.div`
-  display: flex;
-  align-items: center;
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--gray-900);
+  }
   img {
     width: 45px;
     padding: 0 16px 0 0;
