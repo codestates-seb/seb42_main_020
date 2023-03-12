@@ -1,18 +1,19 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './Components/Header/Header';
+import Landing from './Pages/Landing/Landing';
+import Section from './Components/Section/Section';
 import Login from './Pages/Login/Login';
 import Signup from './Pages/Signup/Signup';
 import DoctorSignup from './Pages/DoctorSignup/DoctorSignup';
+import AskQuestion from './Pages/AskQuestion/AskQuestion';
+import Review from './Pages/ReviewPage/Review';
 import Footer from './Components/Footer/Footer';
-import Section from './Components/Section/Section';
+
 import { createGlobalStyle } from 'styled-components';
 import { reset } from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-  body{
-    background: #f2f2f2;
-  }
 `;
 
 function App() {
@@ -20,19 +21,14 @@ function App() {
     <BrowserRouter>
       <GlobalStyle />
       <Header />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Section />
-      </div>
       <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/home" element={<Section />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/medicalprovider" element={<DoctorSignup />} />
+        <Route path="/askquestion" element={<AskQuestion />} />
+        <Route path="/review" element={<Review />} />
       </Routes>
       <Footer />
     </BrowserRouter>
