@@ -1,19 +1,18 @@
 {
-  "posts": [
+  "signup": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "example"
+      "id": 0,
+      "email": "qwer12@naver.com",
+      "name": "장홍재",
+      "displayName": "다나아따",
+      "password": "qwer@1234"
     }
   ],
-  "comments": [
+  "login": [
     {
       "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "email": "qwer12@naver.com",
+      "password": "qwer@1234"
     }
-  ],
-  "profile": {
-    "name": "wonpil"
-  }
+  ]
 }
