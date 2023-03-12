@@ -20,19 +20,58 @@ import {
   SModal,
   DoctorRegiInfo,
 } from '../../Style/DoctorSignupStyle';
+import axios from 'axios';
 
 const DoctorSignup = () => {
   const [name, setName] = useState('');
   const [hospital, setHospital] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [imgFile, setImgFile] = useState('');
 
   const [messageApi, contextHolder] = message.useMessage();
-  const [hospitalMsg, setHospitalMsg] = useState(''); // 유효성 검사 안내 Msg for 병원명
+  const [nameMsg, setNameMsg] = useState(''); // 유효성 검사 안내 Msg for name && hospital
   const [emailMsg, setEmailMsg] = useState(''); // Msg for eamil
   const [passwordMsg, setPasswordMsg] = useState(''); // Msg for PW
 
+  const [checkedService, setCheckedService] = useState(false); // 이용약관 동의
+  const [checkedLocation, setCheckedLocation] = useState(false); // 위치 기반 서비스 동의
+
   const [isOpenModal, setIsOpenModal] = useState(false);
+
+  // * '/doctors/signup' 이나 json-server '/' 인식 불가능으로 '/doctors' 으로 임시 적용
+
+  const handleSubmit = () => {
+    const formData = new FormData(); // 새로운 formData를 찍어내 그안에 키와 밸류의 형태로 넣어주는 형식
+    formData.append('email', email);
+    formData.append('hospital', hospital);
+    formData.append('name', name);
+    formData.append('password', password);
+    formData.append('img', imgFile);
+
+    // formDate 값 확인하기
+    /*
+    let entries = formData.entries();
+    for (const pair of entries) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+    */
+
+    axios({
+      method: 'post',
+      url: 'http://localhost:3001/doctors',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(() => {
+        console.log('Error!');
+      });
+  };
 
   const notTobeNull = ({ hospital, email, password }) => {
     return hospital !== null && email !== null && password !== null;
@@ -41,13 +80,13 @@ const DoctorSignup = () => {
   // 닉네임 정규 표현식
   // 한글, 영어만 입력 받기
   const vaildateName = () => {
-    return name.match(/([a-z|A-Z|ㄱ-ㅎ|가-힣]).{1,15}$/);
+    return name.match(/^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/);
   };
 
   // 병원명 정규 표현식
   // 한글, 영어만 입력 받기
   const vaildateHospital = () => {
-    return hospital.match(/([a-z|A-Z|ㄱ-ㅎ|가-힣]).{1,15}$/);
+    return name.match(/^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/);
   };
 
   // 이메일 정규 표현식
@@ -72,13 +111,11 @@ const DoctorSignup = () => {
     const currName = e.target.value;
     setName(currName);
 
-    // 이름과 조건식이 같은 병원명으로 안내 Msg 설정
     if (!vaildateName(name)) {
-      setHospitalMsg(
-        '한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.'
-      );
+      // 오류 안내창 병원명과 공유
+      setNameMsg('한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.');
     } else {
-      setHospitalMsg('');
+      setNameMsg('');
     }
   };
 
@@ -87,12 +124,10 @@ const DoctorSignup = () => {
     const currHospital = e.target.value;
     setHospital(currHospital);
 
-    if (!setHospitalMsg(hospital)) {
-      setHospitalMsg(
-        '한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.'
-      );
+    if (!vaildateHospital(hospital)) {
+      setNameMsg('한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.');
     } else {
-      setHospitalMsg('');
+      setNameMsg('');
     }
   };
 
@@ -125,8 +160,17 @@ const DoctorSignup = () => {
   const handleClickAlert = () => {
     messageApi.open({
       type: 'warning',
-      content: emailMsg || passwordMsg || hospitalMsg || '내용을 입력해 주세요',
+      content: nameMsg || emailMsg || passwordMsg || '내용을 입력해 주세요',
     });
+  };
+
+  // 이용약관 유효성 검사
+  const handleClickTermService = (e) => {
+    setCheckedService(e.target.checked);
+  };
+
+  const handleClickTermLocation = (e) => {
+    setCheckedLocation(e.target.checked);
   };
 
   // 유효성 검사를 통과하지 못하면 Submit 비활성화
@@ -140,7 +184,19 @@ const DoctorSignup = () => {
     isHospitalVaild &&
     isEmailValid &&
     isPwdValid &&
-    isNotNull;
+    isNotNull &&
+    checkedService &&
+    checkedLocation;
+
+  // Img File
+  const onChangeImg = (e) => {
+    e.preventDefault();
+
+    if (e.target.files) {
+      const uploadFile = e.target.files[0];
+      setImgFile(uploadFile);
+    }
+  };
 
   const handleClickModal = () => {
     setIsOpenModal(!isOpenModal);
@@ -157,13 +213,35 @@ const DoctorSignup = () => {
         </SInfoSection>
         <SFormSection>
           <div>
-            <SInput onChange={handleChangeName} placeholder="이름" />
-            <SInput onChange={handleChangeHospital} placeholder="병원명" />
-            <SInput onChange={handleChangeEmail} placeholder="이메일" />
-            <SInput onChange={handleChangePassword} placeholder="비밀번호" />
+            <SInput
+              onChange={handleChangeName}
+              onClick={handleClickAlert}
+              placeholder="이름"
+            />
+            <SInput
+              onChange={handleChangeHospital}
+              onClick={handleClickAlert}
+              placeholder="병원명"
+            />
+            <SInput
+              onChange={handleChangeEmail}
+              onClick={handleClickAlert}
+              placeholder="이메일"
+            />
+            <SInput
+              type="password"
+              onChange={handleChangePassword}
+              onClick={handleClickAlert}
+              placeholder="비밀번호"
+            />
           </div>
           <SFileInput>
-            <input type="file" id="profile-upload" accept="image/*" />
+            <input
+              type="file"
+              accept="image/png, image/jpeg"
+              multiple="multiple"
+              onChange={onChangeImg}
+            />
             <SPolicy>
               <FcInfo />
               <button onClick={handleClickModal}>인증 상세안내</button>
@@ -171,21 +249,33 @@ const DoctorSignup = () => {
           </SFileInput>
           <STermSection>
             <STerm>
-              <input type="checkbox" name="" value="" />
-              전체 동의
-            </STerm>
-            <STerm>
               <div>
-                <input type="checkbox" name="" value="" />
+                <input
+                  type="checkbox"
+                  name="term"
+                  value="service"
+                  onClick={handleClickTermService}
+                />
                 서비스 이용약관
               </div>
               <div>
-                <input type="checkbox" name="" value="" />
+                <input
+                  type="checkbox"
+                  name="term"
+                  value="location"
+                  onClick={handleClickTermLocation}
+                />
                 위치 기반 서비스
               </div>
             </STerm>
           </STermSection>
-          <SSubmitBtn onClick={handleClickAlert}>회원가입</SSubmitBtn>
+          <SSubmitBtn
+            type="submit"
+            disabled={!isAllValid}
+            onClick={handleSubmit}
+          >
+            회원가입
+          </SSubmitBtn>
         </SFormSection>
         <SLoginInfo>
           <div>

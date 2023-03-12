@@ -1,4 +1,20 @@
 {
+  "signup": [
+    {
+      "id": 0,
+      "email": "qwer12@naver.com",
+      "name": "장홍재",
+      "displayName": "다나아따",
+      "password": "qwer@1234"
+    }
+  ],
+  "login": [
+    {
+      "id": 1,
+      "email": "qwer12@naver.com",
+      "password": "qwer@1234"
+    }
+  ],  
   "posts": [
     {
       "number": 1,
@@ -220,16 +236,5 @@
       "nickname": "nickname",
       "like": 19
     }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "wonpil"
-  }
-  
+  ]
 }
