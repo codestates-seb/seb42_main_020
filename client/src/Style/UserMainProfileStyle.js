@@ -21,6 +21,7 @@ export const STitle = styled.div`
   justify-content: space-between;
   align-items: center;
   .title {
+    padding: 0px 10px;
     font-size: 35px;
     font-weight: bold;
     border-bottom: 2px solid #c2c2c2;
@@ -48,4 +49,83 @@ export const STitle = styled.div`
 
 export const SInfo = styled.div`
   margin-top: 40px;
+
+  //info 내용
+  .info {
+    width: 40%;
+  }
+  .info > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .type {
+    width: 30%;
+    text-align: right;
+    font-weight: bold;
+  }
+  .value {
+    width: 70%;
+    text-align: left;
+    margin-left: 40px;
+  }
+  .user-id,
+  .nickname,
+  .name {
+    margin-bottom: 20px;
+  }
+
+  // sns 내용
+  .sns {
+    width: 60%;
+  }
+  .sns > li {
+    display: flex;
+    align-items: center;
+    margin-left: 230px;
+  }
+  .google,
+  .kakao,
+  .facebook {
+    margin-bottom: 20px;
+  }
+  .sns-value {
+    margin-left: 30px;
+  }
+`;
+
+export const SMyPost = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+  h3 {
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .line {
+    margin-top: 15px;
+    border-bottom: 5px solid #f0f0f0;
+    width: 100%;
+  }
+  .my-post {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .create-post {
+    margin-left: 20px;
+    padding: 5px 30px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #ffffff;
+    border: 2px solid #858585;
+  }
+  .create-post:hover {
+    border: px solid #333333;
+    background-color: #333333;
+    color: #ffffff;
+    box-shadow: none;
+  }
 `;
