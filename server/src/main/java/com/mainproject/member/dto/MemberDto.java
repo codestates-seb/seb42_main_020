@@ -1,7 +1,7 @@
 package com.mainproject.member.dto;
 
+import com.mainproject.comment.entity.Comment;
 import com.mainproject.member.entity.Member;
-import com.mainproject.member_comment.entity.MemberComment;
 import com.mainproject.review.entity.Review;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -70,6 +70,6 @@ public class MemberDto {
         // 아래 List들은 ResponseDto로 변경 가능
         private List<Post> posts;
         private List<Review> reviews;
-        private List<MemberComment> memberComments;
+        private List<Comment> comments;
     }
 }
