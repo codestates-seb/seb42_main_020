@@ -40,6 +40,7 @@ const DoctorSignup = () => {
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { lockScroll, openScroll } = useBodyScrollLock();
+  openScroll(); // 페이지 이동 후 scroll lock 해제
 
   // * '/doctors/signup' 이나 json-server '/' 인식 불가능으로 '/doctors' 으로 임시 적용
 
