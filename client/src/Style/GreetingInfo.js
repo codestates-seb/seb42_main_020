@@ -51,6 +51,7 @@ export const SBtnSection = styled.div`
     background-color: rgba(0, 12, 30, 0.8);
     border-radius: 5px;
     :hover {
+      cursor: pointer;
       background-color: rgba(0, 12, 30, 0.5);
     }
   }
@@ -69,6 +70,7 @@ export const motion = keyframes`
 export const SNavigateBtnSection = styled.div`
   height: 100px;
   font-size: 55px;
+  cursor: pointer;
   svg {
     color: var(--gray-900);
     animation: ${motion} 0.5s linear 0s infinite alternate;

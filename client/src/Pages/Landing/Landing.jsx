@@ -1,15 +1,18 @@
 import GreetingInfo from '../../Components/Landing/GreetingInfo';
-import styled from 'styled-components';
+import ServiceInfo from '../../Components/Landing/ServiceInfo';
 
-const SServiceInfoLayout = styled.div`
-  width: 100vw;
-  height: 2000px;
-`;
 const Landing = () => {
+  // 클릭 시 스크롤 이동
+  const scrollToDown = () => {
+    let location = document.querySelector('.scrollpoint').offsetTop;
+    window.scrollTo({ top: location, behavior: 'smooth' });
+  };
   return (
     <>
-      <GreetingInfo />
-      <SServiceInfoLayout></SServiceInfoLayout>
+      <GreetingInfo scrollToDown={scrollToDown} />
+      <div className="scrollpoint">
+        <ServiceInfo />
+      </div>
     </>
   );
 };
