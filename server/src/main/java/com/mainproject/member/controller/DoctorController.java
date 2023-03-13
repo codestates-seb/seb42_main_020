@@ -39,6 +39,14 @@ public class DoctorController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/{member-id}")
+    public ResponseEntity getDoctor(@PathVariable("member-id") long memberId) {
+
+        Member member = memberService.findDoctor(memberId);
+
+        return new ResponseEntity<>(response(member), HttpStatus.OK);
+    }
+
     public DoctorDto.response response(Member member) {
         return memberMapper.memberToDoctorResponse(member);
     }
