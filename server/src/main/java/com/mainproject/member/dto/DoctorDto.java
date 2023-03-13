@@ -1,8 +1,6 @@
 package com.mainproject.member.dto;
 
 import com.mainproject.comment.entity.Comment;
-import com.mainproject.doctor.entity.Doctor;
-import com.mainproject.doctor_comment.entity.DoctorComment;
 import com.mainproject.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
