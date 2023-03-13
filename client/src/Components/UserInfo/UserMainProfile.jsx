@@ -63,6 +63,9 @@ function UserMainProfile() {
             <span className="sns-value">None</span>
           </li>
         </ul>
+        <div className="picture">
+          <img src="/images/care.png" alt="pill-img"></img>
+        </div>
       </SInfo>
       <SMyPost>
         <div className="my-post">

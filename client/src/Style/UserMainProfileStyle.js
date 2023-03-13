@@ -81,12 +81,12 @@ export const SInfo = styled.div`
 
   // sns 내용
   .sns {
-    width: 60%;
+    width: 50%;
   }
   .sns > li {
     display: flex;
     align-items: center;
-    margin-left: 230px;
+    margin-left: 100px;
   }
   .google,
   .facebook,
@@ -95,6 +95,19 @@ export const SInfo = styled.div`
   }
   .sns-value {
     margin-left: 30px;
+  }
+
+  //user-button 내용
+  .picture {
+    width: 30%;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .picture > img {
+    width: 95%;
+    position: absolute;
   }
 `;
 
