@@ -34,8 +34,8 @@ public class MemberController {
     }
 
     // 회원 수정
-    @PatchMapping("{member-id}")
-    public ResponseEntity patchMember(@PathVariable("{member-id}") @Positive long memberId,
+    @PatchMapping("/{member-id}")
+    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
                                       @Valid @RequestBody MemberDto.Patch requestBody) {
 
         requestBody.addMemberId(memberId);
@@ -47,8 +47,8 @@ public class MemberController {
     }
 
     // 특정 회원 조회
-    @GetMapping("{member-id}")
-    public ResponseEntity getMember(@PathVariable("{member-id}") @Positive long memberId) {
+    @GetMapping("/{member-id}")
+    public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {
 
         Member member = memberService.findMember(memberId);
 
@@ -56,8 +56,8 @@ public class MemberController {
     }
 
     // 회원 탈퇴
-    @DeleteMapping("{member-id}")
-    public ResponseEntity deleteMember(@PathVariable("{member-id}") @Positive long memberId) {
+    @DeleteMapping("/{member-id}")
+    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId) {
 
         memberService.deleteMember(memberId);
 
