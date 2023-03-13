@@ -1,7 +1,7 @@
 package com.mainproject.member.dto;
 
+import com.mainproject.comment.entity.Comment;
 import com.mainproject.member.entity.Member;
-import com.mainproject.member_comment.entity.MemberComment;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -63,7 +63,7 @@ public class DoctorDto {
         private String email;
         private String name;
         // DoctorCommentResponseDto로 변경 가능
-        private List<MemberComment> memberComments;
+        private List<Comment> comments;
         private Member.MemberStatus memberStatus;
     }
 }

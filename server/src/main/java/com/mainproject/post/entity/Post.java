@@ -3,13 +3,12 @@ package com.mainproject.post.entity;
 
 import com.mainproject.doctor_comment.entity.DoctorComment;
 import com.mainproject.member.entity.Member;
-import com.mainproject.member_comment.entity.MemberComment;
+import com.mainproject.comment.entity.Comment;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class Post {
 
     // 회원 댓글 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<MemberComment> memberComments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     // 의사 댓글 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
