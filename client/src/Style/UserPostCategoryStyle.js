@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const UserPostCategoryStyle = styled.ul`
-  width: 100%;
   display: flex;
   justify-content: space-around;
   text-align: center;
@@ -25,7 +24,7 @@ const UserPostCategoryStyle = styled.ul`
     font-size: 12px;
   }
   .title {
-    flex: 3.5;
+    flex: 4;
   }
   .nickname {
     flex: 1;
@@ -34,13 +33,13 @@ const UserPostCategoryStyle = styled.ul`
     flex: 0.5;
   }
   .type {
-    flex: 0.6;
+    flex: 0.4;
   }
   .time {
     flex: 0.6;
   }
   .like {
-    flex: 0.4;
+    flex: 0.3;
   }
 `;
 

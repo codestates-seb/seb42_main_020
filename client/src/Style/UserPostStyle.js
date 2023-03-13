@@ -1,3 +1,9 @@
 import styled from 'styled-components';
 
-export const UserPostStyle = styled.div``;
+const UserPostStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+`;
+
+export default UserPostStyle;

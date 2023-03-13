@@ -2,7 +2,7 @@ import UserInfoStyle from '../../Style/UserInfoStyle';
 import UserCardProfile from './UserCardProfile';
 import UserMainProfile from './UserMainProfile';
 
-function Userinfo() {
+function UserInfo() {
   return (
     <div
       style={{
@@ -19,4 +19,4 @@ function Userinfo() {
   );
 }
 
-export default Userinfo;
+export default UserInfo;

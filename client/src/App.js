@@ -4,7 +4,7 @@ import Login from './Pages/Login/Login';
 import Signup from './Pages/Signup/Signup';
 import DoctorSignup from './Pages/DoctorSignup/DoctorSignup';
 import Footer from './Components/Footer/Footer';
-import Userinfo from './Components/UserInfo/Userinfo';
+import UserInfo from './Components/UserInfo/UserInfo';
 // import Section from './Components/Section/Section';
 import { createGlobalStyle } from 'styled-components';
 import { reset } from 'styled-reset';
@@ -17,7 +17,7 @@ function App() {
       <GlobalStyle />
       <Header />
       {/* <Section /> */}
-      <Userinfo />
+      <UserInfo />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />

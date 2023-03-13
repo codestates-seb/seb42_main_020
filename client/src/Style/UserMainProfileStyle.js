@@ -89,8 +89,8 @@ export const SInfo = styled.div`
     margin-left: 230px;
   }
   .google,
-  .kakao,
-  .facebook {
+  .facebook,
+  .naver {
     margin-bottom: 20px;
   }
   .sns-value {
