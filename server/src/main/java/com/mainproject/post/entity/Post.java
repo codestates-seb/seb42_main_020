@@ -1,6 +1,7 @@
 package com.mainproject.post.entity;
 
 
+import com.mainproject.audit.Auditable;
 import com.mainproject.doctor_comment.entity.DoctorComment;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member_comment.entity.MemberComment;
@@ -9,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Post {
+public class Post extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +30,6 @@ public class Post {
     // 본문
     @Column(length = 1000, nullable = false)
     private String content;
-
-//    // 생성 시간
-//    private LocalDateTime createdAt = LocalDateTime.now();
-//
-//    // 수정 시간
-//    private LocalDateTime modifiedAt = LocalDateTime.now();
 
     // 상태
     @Enumerated(value = EnumType.STRING)
