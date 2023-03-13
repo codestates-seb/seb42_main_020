@@ -58,6 +58,7 @@ function UserCardProfile() {
         </SActivity>
         <SLogOut>
           <button className="logout">Log Out</button>
+          <button className="delete-user">Delete User</button>
         </SLogOut>
       </SUserInfo>
     </UserCardProfileStyle>

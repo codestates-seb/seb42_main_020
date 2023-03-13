@@ -121,15 +121,24 @@ export const SActivity = styled.div`
 
 export const SLogOut = styled.div`
   margin-bottom: 15px;
-  .logout {
-    font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+
+  button {
     color: #fff;
-    padding: 5px 50px;
-    background: #f2921d;
+    padding: 7px 0px;
     outline: none;
     cursor: pointer;
     border: none;
     border-radius: 10px;
+    width: 100%;
+  }
+  .logout {
+    font-size: 25px;
+    padding: 15px 0px;
+    background: #f2921d;
     transition: 0.3s;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
       rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
@@ -137,5 +146,19 @@ export const SLogOut = styled.div`
   .logout:hover {
     background: #fff;
     color: #f2921d;
+  }
+
+  .delete-user {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #fff;
+    background: #ff6947;
+    transition: 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+      rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  }
+  .delete-user:hover {
+    background: #fff;
+    color: #ff6947;
   }
 `;
