@@ -11,7 +11,7 @@ const LocationInput = ({ treeData, location, locationChangeHandler }) => {
         maxHeight: 400,
         overflow: 'auto',
       }}
-      deafaultValue={location}
+      defaultValue={location}
       allowClear
       treeDefaultExpandAll
       value={location}
