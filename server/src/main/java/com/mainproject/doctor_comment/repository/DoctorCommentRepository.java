@@ -1,4 +1,8 @@
 package com.mainproject.doctor_comment.repository;
 
-public class DoctorCommentRepository {
+import com.mainproject.doctor_comment.entity.DoctorComment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface DoctorCommentRepository extends JpaRepository<DoctorComment, Long> {
+
 }

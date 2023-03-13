@@ -1,5 +1,6 @@
 package com.mainproject.doctor_comment.entity;
 
+import com.mainproject.audit.Auditable;
 import com.mainproject.doctor.entity.Doctor;
 import com.mainproject.post.entity.Post;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 @Entity
 @Getter
 @Setter
-public class DoctorComment {
+public class DoctorComment extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +25,10 @@ public class DoctorComment {
     private String content;
 
     // 생성 시간
+    // 상속받음
 
     // 수정 시간
+    // 상속받음
 
     // 상태
 
