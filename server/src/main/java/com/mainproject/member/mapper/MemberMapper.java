@@ -1,6 +1,5 @@
 package com.mainproject.member.mapper;
 
-import com.mainproject.doctor.entity.Doctor;
 import com.mainproject.member.dto.DoctorDto;
 import com.mainproject.member.dto.MemberDto;
 import com.mainproject.member.entity.Member;
