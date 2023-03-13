@@ -26,7 +26,7 @@ public class DoctorController {
 
         Member member = memberMapper.doctorPostToMember(requestBody);
 
-        memberService.createMember(member);
+        memberService.createDoctor(member);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
