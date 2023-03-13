@@ -37,11 +37,13 @@ export const SPicture = styled.div`
   .frame {
     width: 200px;
     height: 200px;
+    border: 1px solid #e6e6e6;
+    padding: 5px;
   }
   img {
     width: 100%;
     height: 100%;
-    border-radius: 10px;
+    border-radius: 5px;
   }
 `;
 
@@ -113,5 +115,26 @@ export const SActivity = styled.div`
   }
   .adoptComment {
     margin-bottom: 0;
+  }
+`;
+
+export const SLogOut = styled.div`
+  margin-bottom: 15px;
+  .logout {
+    font-size: 20px;
+    color: #fff;
+    padding: 5px 50px;
+    background: #f2921d;
+    outline: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+      rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  }
+  .logout:hover {
+    background: #fff;
+    color: #f2921d;
   }
 `;

@@ -4,6 +4,7 @@ import {
   SPicture,
   SUserInfo,
   SActivity,
+  SLogOut,
 } from '../../Style/UserCardProfileStyle';
 import { BsPencilSquare } from 'react-icons/bs';
 import { BiCommentDetail, BiCommentCheck } from 'react-icons/bi';
@@ -55,6 +56,9 @@ function UserCardProfile() {
           </div>
           <div className="linebottom"></div>
         </SActivity>
+        <SLogOut>
+          <button className="logout">Log Out</button>
+        </SLogOut>
       </SUserInfo>
     </UserCardProfileStyle>
   );
