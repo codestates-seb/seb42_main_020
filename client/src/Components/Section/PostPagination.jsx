@@ -11,12 +11,18 @@ function PostPagination() {
   const [pageSize, setPageSize] = useState(20);
   const [total, setTotal] = useState(0);
 
+  const fetchData = async () => {
+    const response = await axios.get(`http://localhost:3001/posts`, {
+      params: {
+        page: currentPage,
+        size: pageSize,
+      },
+    });
+    setData(response.data);
+    setTotal(response.data.length);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(`http://localhost:3001/posts`);
-      setData(response.data);
-      setTotal(response.data);
-    };
     fetchData();
   }, [currentPage, pageSize]);
 
@@ -24,7 +30,6 @@ function PostPagination() {
     setCurrentPage(page);
     setPageSize(pageSize);
   };
-  console.log(data);
 
   return (
     <>
@@ -39,15 +44,6 @@ function PostPagination() {
         />
       </PostPaginationStyle>
     </>
-
-    // defaultCurrent={page} // 페이지 넘버 기본값
-    // defaultPageSize={20} // 페이지 넘버당 아이템 개수
-    // total={size} // 총 아이템 개수
-    // showSizeChanger={true} // 페이지 크기를 변경할 수 있는 드롭다운 메뉴가 표시
-
-    // // onChange={}
-    // // itemRender={}
-    // // onShowSizeChange={}
   );
 }
 export default PostPagination;
