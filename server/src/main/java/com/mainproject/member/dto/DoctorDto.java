@@ -1,7 +1,5 @@
 package com.mainproject.member.dto;
 
-import com.mainproject.doctor.entity.Doctor;
-import com.mainproject.doctor_comment.entity.DoctorComment;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member_comment.entity.MemberComment;
 import lombok.AccessLevel;

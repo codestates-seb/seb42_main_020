@@ -1,9 +1,6 @@
 package com.mainproject.member.controller;
 
 import com.mainproject.member.dto.DoctorDto;
-import com.mainproject.doctor.entity.Doctor;
-import com.mainproject.doctor.mapper.DoctorMapper;
-import com.mainproject.doctor.service.DoctorService;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.mapper.MemberMapper;
 import com.mainproject.member.service.MemberService;
@@ -29,7 +26,7 @@ public class DoctorController {
 
         Member member = memberMapper.doctorPostToMember(requestBody);
 
-        memberService.createMember(member);
+        memberService.createDoctor(member);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
