@@ -4,6 +4,8 @@ import {
   SInfo,
   SMyPost,
 } from '../../Style/UserMainProfileStyle';
+import UserPost from './UserPost';
+
 import { FiEdit } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook, BsTwitter } from 'react-icons/bs';
@@ -64,6 +66,7 @@ function UserMainProfile() {
         </div>
         <div className="line"></div>
       </SMyPost>
+      <UserPost />
     </UserMainProfileStyle>
   );
 }
