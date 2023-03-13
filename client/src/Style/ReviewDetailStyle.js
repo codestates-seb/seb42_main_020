@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const SReviewDetailContainer = styled.div`
+  font-family: 'TheJamsil5Bold';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,8 +18,9 @@ export const SReviewDetailBlock = styled.div`
   padding: 30px 15px;
   width: 40%;
   background-color: white;
-  border-radius: 3px;
+  border-radius: 4px;
   box-shadow: 3px 2px 3px 2px var(--gray-200);
+  border-top: 3px solid var(--mint-600);
 `;
 
 export const SReviewHeader = styled.div`
