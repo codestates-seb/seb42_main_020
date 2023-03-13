@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const SAskQuestionContainer = styled.div`
+  font-family: 'TheJamsil5Bold';
   display: flex;
   align-items: center;
   flex-direction: column;

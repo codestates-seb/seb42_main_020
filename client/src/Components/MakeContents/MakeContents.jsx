@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { SModal, SWrapper, SModalWrapper } from '../../Style/MakeContentStyle';
+import {
+  SModal,
+  SPostModalBlock,
+  SModalWrapper,
+} from '../../Style/MakeContentStyle';
 import { useNavigate } from 'react-router-dom';
 
 const ModalTest = () => {
@@ -18,12 +22,12 @@ const ModalTest = () => {
 
   const questionClickHandler = () => {
     setIsTrue((prev) => !prev);
-    navigate('/');
+    navigate('/askquestion');
   };
 
   return (
     <div className="modal_wrapper">
-      <SWrapper>
+      <SPostModalBlock>
         <button onClick={modalHandler}>리뷰 / 질문 작성하기</button>
         {isTrue && (
           <SModalWrapper>
@@ -36,7 +40,7 @@ const ModalTest = () => {
             </SModal>
           </SModalWrapper>
         )}
-      </SWrapper>
+      </SPostModalBlock>
     </div>
   );
 };

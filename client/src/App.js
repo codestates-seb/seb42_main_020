@@ -12,6 +12,8 @@ import Footer from './Components/Footer/Footer';
 
 import { createGlobalStyle } from 'styled-components';
 import { reset } from 'styled-reset';
+import ReviewDetail from './Pages/ReviewDetail/ReviewDetail';
+import QuestionDetail from './Pages/QuestionDetail/QuestionDetail';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -31,6 +33,8 @@ function App() {
         <Route path="/myinfo" element={<Userinfo />} />
         <Route path="/askquestion" element={<AskQuestion />} />
         <Route path="/review" element={<Review />} />
+        <Route path="/question/1234" element={<QuestionDetail />} />
+        <Route path="/review/1234" element={<ReviewDetail />} />
       </Routes>
       <Footer />
     </BrowserRouter>

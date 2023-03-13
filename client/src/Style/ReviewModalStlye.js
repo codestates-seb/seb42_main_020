@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const SModalBlock = styled.div`
+  font-family: 'TheJamsil5Bold';
   display: flex;
   align-items: center;
   justify-content: center;
