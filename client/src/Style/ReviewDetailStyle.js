@@ -8,6 +8,10 @@ export const SReviewDetailContainer = styled.div`
   width: 100%;
   height: 1000px;
   background-color: var(--blue-50);
+
+  button {
+    cursor: pointer;
+  }
 `;
 
 export const SReviewDetailBlock = styled.div`
@@ -27,13 +31,14 @@ export const SReviewHeader = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-
   margin-bottom: 15px;
 
   // 추후에 img로 수정 예정
-  > span {
-    width: 10%;
-    margin-right: 10px;
+  > img {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+    border-radius: 15px;
   }
 `;
 
@@ -90,14 +95,17 @@ export const SReviewButtonBlock = styled.div`
     justify-content: flex-end;
 
     > button {
+      font-family: 'TheJamsil5Bold';
       border: none;
       background-color: var(--peach-400);
       width: 25%;
       height: 30px;
     }
-
-    > button:last-child {
-      margin-left: 20px;
-    }
+  }
+  > button {
+    font-size: 20px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
   }
 `;
