@@ -18,7 +18,7 @@ function UserCardProfile() {
       </SName>
       <SPicture>
         <div className="frame">
-          <img src="/images/Swear.png" alt="user_picture" />
+          <img src="/images/user-icon.png" alt="user_picture" />
         </div>
       </SPicture>
       <SUserInfo>

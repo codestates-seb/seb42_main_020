@@ -16,7 +16,7 @@ function UserMainProfile() {
       </STitle>
       <SInfo>
         <div className="info">ㅇㅇ</div>
-        <div className="sns">sns 공유</div>
+        <div className="sns">sns 공유 </div>
       </SInfo>
     </UserMainProfileStyle>
   );
