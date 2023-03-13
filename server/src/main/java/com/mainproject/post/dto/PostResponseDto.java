@@ -1,7 +1,7 @@
 package com.mainproject.post.dto;
 
-import com.mainproject.doctor_comment.dto.DoctorCommentDto;
-import com.mainproject.member_comment.dto.MemberCommentDto;
+//import com.mainproject.doctor_comment.dto.DoctorCommentDto;
+//import com.mainproject.member_comment.dto.MemberCommentDto;
 import com.mainproject.post.entity.Post;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,9 +31,8 @@ public class PostResponseDto {
 
     private Post.PostStatus status;
 
-    private List<MemberCommentDto> memberComments;
+//    private List<MemberCommentDto> memberComments;
 
-    private List<DoctorCommentDto> doctorComments;
 
 //    // 신고
 //    private List<신고dto> 신고s;
