@@ -11,7 +11,7 @@ const TypeInput = ({ treeData, type, typeChangeHandler }) => {
         maxHeight: 400,
         overflow: 'auto',
       }}
-      deafaultValue="select"
+      deafaultValue={type}
       allowClear
       treeDefaultExpandAll
       value={type}
