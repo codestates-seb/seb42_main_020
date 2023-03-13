@@ -1,7 +1,5 @@
 package com.mainproject.member.service;
 
-import com.mainproject.doctor.entity.Doctor;
-import com.mainproject.doctor.repository.DoctorRepository;
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;
@@ -19,13 +17,31 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final DoctorRepository doctorRepository;
 
-    // 회원가입
+    // 일반 회원가입
     public Member createMember(Member member) {
 
         emailDuplicateCheck(member.getEmail());
 
+        member.setIsDoctor(false);
+        member.setMemberStatus(Member.MemberStatus.MEMBER_ACTIVE);
+        member.setCreatedAt(LocalDateTime.now());
+        member.setModifiedAt(LocalDateTime.now());
+
+        // 패스워드 암호화
+
+        // USER Role 저장
+
+        return memberRepository.save(member);
+    }
+
+    // 의사 회원가입
+    public Member createDoctor(Member member) {
+
+        emailDuplicateCheck(member.getEmail());
+
+        member.setIsDoctor(true);
+        member.setMemberStatus(Member.MemberStatus.MEMBER_PENDING);
         member.setCreatedAt(LocalDateTime.now());
         member.setModifiedAt(LocalDateTime.now());
 
@@ -69,6 +85,18 @@ public class MemberService {
         return memberRepository.save(findMember);
     }
 
+    // 회원가입 승인
+    public Member approveMemberSignup(long memberId) {
+
+        // 관리자 검증 필요
+
+        Member findMember = findPendingMember(memberId);
+
+        findMember.setMemberStatus(Member.MemberStatus.MEMBER_ACTIVE);
+
+        return memberRepository.save(findMember);
+    }
+
     // 이메일 중복 체크 로직
     public void emailDuplicateCheck(String email) {
 
@@ -76,11 +104,18 @@ public class MemberService {
         Optional<Member> member = memberRepository.findByEmail(email);
         if (member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
 
-        // 의사 이메일 체크
-        Optional<Doctor> doctor = doctorRepository.findByEmail(email);
-        if (doctor.isPresent())
-            throw new BusinessLogicException(ExceptionCode.DOCTOR_EXISTS);
+    public Member findPendingMember(long memberId) {
+
+        Optional<Member> optionalMember =
+                memberRepository.findById(memberId);
+        Member findMember =
+                optionalMember.orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.DOCTOR_NOT_FOUND));
+        if(findMember.getMemberStatus() != Member.MemberStatus.MEMBER_PENDING) throw new BusinessLogicException(ExceptionCode.DOCTOR_NOT_FOUND);
+
+        return findMember;
     }
 
     // 회원 존재와 휴면,탈퇴 유무 체크

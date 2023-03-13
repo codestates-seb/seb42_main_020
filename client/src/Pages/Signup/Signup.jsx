@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useBodyScrollLock } from '../../util/useBodyScrollLock';
 import { message } from 'antd';
 import {
   SMain,
@@ -28,6 +29,9 @@ const Signup = () => {
 
   const [checkedService, setCheckedService] = useState(false); // 이용약관 동의
   const [checkedLocation, setCheckedLocation] = useState(false); // 위치 기반 서비스 동의
+
+  const { openScroll } = useBodyScrollLock(); // 페이지 이동 후 scroll lock 해제
+  openScroll();
 
   // * '/members/signup' 이나 json-server '/' 인식 불가능으로 '/signup' 으로 임시 적용
 

@@ -2,7 +2,6 @@ package com.mainproject.member.dto;
 
 import com.mainproject.comment.entity.Comment;
 import com.mainproject.member.entity.Member;
-import com.mainproject.review.entity.Review;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,10 +10,11 @@ import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
-public class MemberDto {
+public class DoctorDto {
 
     @Getter
     @AllArgsConstructor
@@ -28,8 +28,8 @@ public class MemberDto {
         @NotBlank(message = "이름은 공백이 허용되지 않습니다.")
         private String name;
 
-        @NotBlank(message = "닉네임은 공백이 허용되지 않습니다.")
-        private String displayName;
+        @NotNull(message = "의사면허증 또는 면허 번호가 명시된 서류 사진을 첨부해야 합니다.")
+        private String img;
 
         @NotBlank
         @Pattern(regexp = "^[a-zA-Z\\\\d`~!@#$%^&*()-_=+]{8,15}$",
@@ -43,9 +43,6 @@ public class MemberDto {
     public static class Patch {
 
         private long memberId;
-
-        @NotBlank(message = "닉네임은 공백이 허용되지 않습니다.")
-        private String displayName;
 
         @Pattern(regexp = "^[a-zA-Z\\\\d`~!@#$%^&*()-_=+]{8,15}$",
                 message = "영어와 숫자 특수문자를 사용해야 하며 8~15자리를 허용한다.")
@@ -65,11 +62,8 @@ public class MemberDto {
         private long memberId;
         private String email;
         private String name;
-        private String displayName;
-        private Member.MemberStatus memberStatus;
-        // 아래 List들은 ResponseDto로 변경 가능
-        private List<Post> posts;
-        private List<Review> reviews;
+        // DoctorCommentResponseDto로 변경 가능
         private List<Comment> comments;
+        private Member.MemberStatus memberStatus;
     }
 }

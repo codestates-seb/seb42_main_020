@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostPostDto {
+public class PostPatchDto {
 
     @NotBlank(message = "제목은 공백이 아니어야 합니다.")
     private String title;
@@ -22,5 +22,4 @@ public class PostPostDto {
     private Long tagId;
 
     private Long regionId;
-
 }

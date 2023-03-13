@@ -39,8 +39,25 @@ const QuestionDetail = () => {
         </div>
         <button>답변하기!</button>
       </SPostAnswerBlock>
-      <SAnswerBlock className="answer-blcok">
-        <h1>전문가 답변 입니다.</h1>
+      <SAnswerBlock className="expert-answer">
+        <h1>전문가 답변</h1>
+        <SAnswerInfoBlock className="answer-header-block">
+          <SAnswerUserInfoBlock className="answer-user-info">
+            <span>작성자</span>
+            <span>2023-03-02</span>
+          </SAnswerUserInfoBlock>
+          <span>이미지</span>
+        </SAnswerInfoBlock>
+        <div className="answer-contents-block">
+          <p>답변 내용입니다. 제 생각은 이렇습니다. 어쩌구 저쩌구~</p>
+        </div>
+        <SAnswerButtonBlock className="answer-button-block">
+          <button>수정</button>
+          <button>삭제</button>
+        </SAnswerButtonBlock>
+      </SAnswerBlock>
+      <SAnswerBlock className="normal-answer">
+        <h1>일반인 답변</h1>
         <SAnswerInfoBlock className="answer-header-block">
           <SAnswerUserInfoBlock className="answer-user-info">
             <span>작성자</span>

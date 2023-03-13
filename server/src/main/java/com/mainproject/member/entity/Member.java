@@ -1,8 +1,7 @@
 package com.mainproject.member.entity;
 
 import com.mainproject.audit.Auditable;
-import com.mainproject.doctor_comment.entity.DoctorComment;
-import com.mainproject.member_comment.entity.MemberComment;
+import com.mainproject.comment.entity.Comment;
 import com.mainproject.post.entity.Post;
 import com.mainproject.review.entity.Review;
 import lombok.Getter;
@@ -39,17 +38,27 @@ public class Member extends Auditable {
     private String password;
 
     @Column
+    private boolean isDoctor;
+
+    @Column
+    private String img;
+
+    @Column
     private int point = 0;
 
     // 회원 활동, 휴면, 탈퇴 여부
     @Enumerated(value = EnumType.STRING)
     @Column(name = "MEMBER_STATUS", length = 30, nullable = false)
-    private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
+    private MemberStatus memberStatus;
 
     // 회원 등급
     @Enumerated(value = EnumType.STRING)
     @Column(name = "MEMBER_RATING", length = 30, nullable = false)
     private MemberRating memberRating = MemberRating.UNRANKED;
+
+    public void setIsDoctor(boolean isDoctor) {
+        this.isDoctor = isDoctor;
+    }
 
     // Post 클래스 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -61,14 +70,15 @@ public class Member extends Auditable {
 
     // Comment 클래스 1;n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
-    private List<MemberComment> memberComments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<DoctorComment> doctorComments = new ArrayList<>();
+    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<DoctorComment> doctorComments = new ArrayList<>();*/
 
     // 게시글, 댓글 신고, 좋아요 매핑 필요
 
     public enum MemberStatus {
+        MEMBER_PENDING("승인 대기"),
         MEMBER_ACTIVE("활동 상태"),
         MEMBER_SLEEP("휴면 상태"),
         MEMBER_QUIT("탈퇴 상태");

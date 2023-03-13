@@ -1,19 +1,19 @@
 package com.mainproject.review.entity;
 
+import com.mainproject.audit.Auditable;
 import com.mainproject.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Review {
+public class Review extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
@@ -25,12 +25,6 @@ public class Review {
     // 본문
     @Column(length = 1000, nullable = false)
     private String content;
-
-//    // 생성 시간
-//    private LocalDateTime createdAt = LocalDateTime.now();
-//
-//    // 수정 시간
-//    private LocalDateTime modifiedAt = LocalDateTime.now();
 
     // 상태
     @Enumerated(value = EnumType.STRING)

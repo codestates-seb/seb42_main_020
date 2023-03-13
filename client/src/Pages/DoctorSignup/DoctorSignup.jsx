@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useBodyScrollLock } from '../../util/useBodyScrollLock';
 import { message } from 'antd';
 import { BsArrowReturnLeft } from 'react-icons/bs';
 import { FcInfo } from 'react-icons/fc';
@@ -38,6 +39,8 @@ const DoctorSignup = () => {
   const [checkedLocation, setCheckedLocation] = useState(false); // 위치 기반 서비스 동의
 
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const { lockScroll, openScroll } = useBodyScrollLock();
+  openScroll(); // 페이지 이동 후 scroll lock 해제
 
   // * '/doctors/signup' 이나 json-server '/' 인식 불가능으로 '/doctors' 으로 임시 적용
 
@@ -198,7 +201,13 @@ const DoctorSignup = () => {
     }
   };
 
-  const handleClickModal = () => {
+  const handleOpen = () => {
+    lockScroll();
+    setIsOpenModal(!isOpenModal);
+  };
+
+  const handleClose = () => {
+    openScroll();
     setIsOpenModal(!isOpenModal);
   };
 
@@ -244,7 +253,7 @@ const DoctorSignup = () => {
             />
             <SPolicy>
               <FcInfo />
-              <button onClick={handleClickModal}>인증 상세안내</button>
+              <button onClick={handleOpen}>인증 상세안내</button>
             </SPolicy>
           </SFileInput>
           <STermSection>
@@ -293,7 +302,7 @@ const DoctorSignup = () => {
           {isOpenModal ? (
             <SModalLayout>
               <SModal>
-                <BsArrowReturnLeft onClick={handleClickModal} />
+                <BsArrowReturnLeft onClick={handleClose} />
                 <DoctorRegiInfo>안내 이미지 예정</DoctorRegiInfo>
               </SModal>
             </SModalLayout>
