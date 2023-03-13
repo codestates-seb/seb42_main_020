@@ -6,8 +6,20 @@ export const SQuestionDetailContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 1000px;
-  background-color: gray;
+  background-color: var(--blue-50);
   padding-top: 20px;
+
+  > div {
+    box-shadow: 3px 2px 3px 2px var(--gray-200);
+  }
+
+  .normal-answer {
+    border-top: 5px solid var(--blue-600);
+  }
+
+  .expert-answer {
+    border-top: 5px solid var(--mint-500);
+  }
 `;
 
 export const SQuestionDetailBlock = styled.div`
@@ -48,13 +60,27 @@ export const SQuestionTextBlock = styled.div`
 `;
 
 export const SQuestionButtonBlock = styled.div`
-  display: felx;
+  display: flex;
   justify-content: flex-end;
   width: 100%;
   margin-bottom: 15px;
 
+  button {
+    width: 15%;
+    height: 30px;
+    border: none;
+    background-color: var(--blue-200);
+    border-radius: 3px;
+    color: #636e72;
+  }
+
+  button:first-child {
+    background-color: var(--mint-400);
+  }
+
   button:last-child {
     margin-left: 20px;
+    background-color: var(--peach-400);
   }
 `;
 
@@ -104,7 +130,7 @@ export const SAnswerBlock = styled.div`
   width: 40%;
   background-color: white;
   padding: 15px;
-  border-top: 5px solid var(--mint-500);
+  margin-bottom: 20px;
   border-radius: 3px;
 
   > h1 {
@@ -147,12 +173,26 @@ export const SAnswerUserInfoBlock = styled.div`
 `;
 
 export const SAnswerButtonBlock = styled.div`
-  display: felx;
+  display: flex;
   justify-content: flex-end;
   width: 100%;
-  margin-bottom: 15px;
+  margin: 15px 0;
+
+  button {
+    width: 15%;
+    height: 30px;
+    border: none;
+    background-color: var(--blue-200);
+    border-radius: 3px;
+    color: #636e72;
+  }
+
+  button:first-child {
+    background-color: var(--mint-400);
+  }
 
   button:last-child {
     margin-left: 20px;
+    background-color: var(--peach-400);
   }
 `;

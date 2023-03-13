@@ -6,7 +6,7 @@ import Login from './Pages/Login/Login';
 import Signup from './Pages/Signup/Signup';
 import DoctorSignup from './Pages/DoctorSignup/DoctorSignup';
 import AskQuestion from './Pages/AskQuestion/AskQuestion';
-import Review from './Pages/ReviewPage/Review';
+import Review from './Pages/Review/Review';
 import Footer from './Components/Footer/Footer';
 
 import { createGlobalStyle } from 'styled-components';
