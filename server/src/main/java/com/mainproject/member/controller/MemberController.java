@@ -23,7 +23,7 @@ public class MemberController {
     private final MemberMapper memberMapper;
 
     // 회원가입
-    @PostMapping
+    @PostMapping("/signup")
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
 
         Member member = memberMapper.memberPostToMember(requestBody);

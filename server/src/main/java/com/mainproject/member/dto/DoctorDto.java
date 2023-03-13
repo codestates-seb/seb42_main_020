@@ -1,7 +1,9 @@
-package com.mainproject.doctor.dto;
+package com.mainproject.member.dto;
 
 import com.mainproject.doctor.entity.Doctor;
 import com.mainproject.doctor_comment.entity.DoctorComment;
+import com.mainproject.member.entity.Member;
+import com.mainproject.member_comment.entity.MemberComment;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,15 +44,15 @@ public class DoctorDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Patch {
 
-        private long doctorId;
+        private long memberId;
 
         @Pattern(regexp = "^[a-zA-Z\\\\d`~!@#$%^&*()-_=+]{8,15}$",
                 message = "영어와 숫자 특수문자를 사용해야 하며 8~15자리를 허용한다.")
         private String password;
 
-        public Patch addDoctorId(Long doctorId) {
-            Assert.notNull(doctorId, "doctor id must not be null.");
-            this.doctorId = doctorId;
+        public Patch addMemberId(Long memberId) {
+            Assert.notNull(memberId, "member id must not be null.");
+            this.memberId = memberId;
             return this;
         }
     }
@@ -59,11 +61,11 @@ public class DoctorDto {
     @Getter
     public static class response {
 
-        private long doctorId;
+        private long memberId;
         private String email;
         private String name;
         // DoctorCommentResponseDto로 변경 가능
-        private List<DoctorComment> doctorComments;
-        private Doctor.DoctorStatus doctorStatus;
+        private List<MemberComment> memberComments;
+        private Member.MemberStatus memberStatus;
     }
 }
