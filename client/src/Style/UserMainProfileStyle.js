@@ -9,7 +9,7 @@ export const UserMainProfileStyle = styled.main`
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
     rgb(209, 213, 219) 0px 0px 0px 1px inset;
   & > * {
-    width: 90%;
+    width: 95%;
     display: flex;
     margin-left: auto;
     margin-right: auto;
@@ -64,12 +64,13 @@ export const SInfo = styled.div`
     justify-content: space-between;
   }
   .type {
-    width: 30%;
+    width: 40%;
+    font-size: 20px;
     text-align: right;
     font-weight: bold;
   }
   .value {
-    width: 70%;
+    width: 60%;
     text-align: left;
     margin-left: 40px;
   }
@@ -97,7 +98,7 @@ export const SInfo = styled.div`
     margin-left: 30px;
   }
 
-  //user-button 내용
+  //picture 내용
   .picture {
     width: 30%;
     position: relative;
