@@ -10,12 +10,16 @@ import { FiEdit } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
 import { BsFacebook, BsTwitter } from 'react-icons/bs';
 import { RiKakaoTalkFill } from 'react-icons/ri';
+import { CiMemoPad } from 'react-icons/ci';
 
 function UserMainProfile() {
   return (
     <UserMainProfileStyle>
       <STitle>
-        <h2 className="title">User Information</h2>
+        <div className="title">
+          <CiMemoPad />
+          <h2>User Information</h2>
+        </div>
         <button className="edit-profile">
           <FiEdit size={25} color="#00663b" />
           <span>Edit Profile</span>

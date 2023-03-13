@@ -20,7 +20,11 @@ export const STitle = styled.div`
   margin-top: 30px;
   justify-content: space-between;
   align-items: center;
+  h2 {
+    margin-left: 10px;
+  }
   .title {
+    display: flex;
     padding: 0px 10px;
     font-size: 35px;
     font-weight: bold;
