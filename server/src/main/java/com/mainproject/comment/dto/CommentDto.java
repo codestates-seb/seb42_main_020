@@ -1,7 +1,7 @@
-package com.mainproject.member_comment.dto;
+package com.mainproject.comment.dto;
 import java.time.LocalDateTime;
 
-public class MemberCommentDto {
+public class CommentDto {
 
     private String content;
     public LocalDateTime createdAt;

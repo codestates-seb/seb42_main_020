@@ -1,4 +1,4 @@
-package com.mainproject.member_comment.entity;
+package com.mainproject.comment.entity;
 
 import com.mainproject.member.entity.Member;
 import com.mainproject.post.entity.Post;
@@ -6,13 +6,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 @Entity
 @Getter
 @Setter
-public class MemberComment {
+public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

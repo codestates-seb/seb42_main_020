@@ -1,18 +1,18 @@
-package com.mainproject.member_comment.controller;
+package com.mainproject.comment.controller;
 
-import com.mainproject.member_comment.dto.MemberCommentDto;
+import com.mainproject.comment.dto.CommentDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/memberComments")
-public class MemberCommentController {
+public class CommentController {
 
     // 댓글 등록
     @PostMapping
-    public ResponseEntity postMemberComment(MemberCommentDto memberCommentDto) {
-        return new ResponseEntity<MemberCommentDto>(memberCommentDto, HttpStatus.CREATED);
+    public ResponseEntity postMemberComment(CommentDto commentDto) {
+        return new ResponseEntity<CommentDto>(commentDto, HttpStatus.CREATED);
     }
 
     // 모든 댓글 조회
