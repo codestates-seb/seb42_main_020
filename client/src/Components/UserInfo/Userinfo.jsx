@@ -1,5 +1,6 @@
 import UserInfoStyle from '../../Style/UserInfoStyle';
 import UserCardProfile from './UserCardProfile';
+import UserMainProfile from './UserMainProfile';
 
 function Userinfo() {
   return (
@@ -11,7 +12,8 @@ function Userinfo() {
       }}
     >
       <UserInfoStyle>
-        <UserCardProfile></UserCardProfile>
+        <UserCardProfile />
+        <UserMainProfile />
       </UserInfoStyle>
     </div>
   );
