@@ -24,7 +24,7 @@
       "title": "title",
       "time": "time",
       "postType": false,
-      "nickname": "nickname",
+      "nickname": "niㄴckname",
       "like": 323
     },
     {
@@ -227,17 +227,6 @@
     },
     {
       "number": 20,
-      "subject": "subject",
-      "doctor": true,
-      "area": "area",
-      "title": "title",
-      "time": "time",
-      "postType": true,
-      "nickname": "nickname",
-      "like": 19
-    },
-    {
-      "number": 21,
       "subject": "subject",
       "doctor": true,
       "area": "area",

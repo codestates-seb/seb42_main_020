@@ -5,8 +5,9 @@ import Section from './Components/Section/Section';
 import Login from './Pages/Login/Login';
 import Signup from './Pages/Signup/Signup';
 import DoctorSignup from './Pages/DoctorSignup/DoctorSignup';
+import Userinfo from './Components/UserInfo/Userinfo';
 import AskQuestion from './Pages/AskQuestion/AskQuestion';
-import Review from './Pages/ReviewPage/Review';
+import Review from './Pages/Review/Review';
 import Footer from './Components/Footer/Footer';
 
 import { createGlobalStyle } from 'styled-components';
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/medicalprovider" element={<DoctorSignup />} />
+        <Route path="/myinfo" element={<Userinfo />} />
         <Route path="/askquestion" element={<AskQuestion />} />
         <Route path="/review" element={<Review />} />
       </Routes>

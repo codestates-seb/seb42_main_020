@@ -6,12 +6,20 @@ import PostSearch from './PostSearch';
 
 function Section() {
   return (
-    <SectionStyle>
-      <PostTopic />
-      <Category />
-      <PostPagination />
-      <PostSearch />
-    </SectionStyle>
+    <section
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <SectionStyle>
+        <PostTopic />
+        <Category />
+        <PostPagination />
+        <PostSearch />
+      </SectionStyle>
+    </section>
   );
 }
 
