@@ -28,12 +28,23 @@ public class Comment extends Auditable {
     @Column(length = 50, nullable = false)
     private String content;
 
-    // 생성 시간
-
-    // 수정 시간
-
     // 상태
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "COMMENT_STATUS", length = 30, nullable = false)
+    private Comment.CommentStatus commentStatus = Comment.CommentStatus.COMMENT_REGISTERED;
 
+    public enum CommentStatus{
+        COMMENT_REGISTERED("댓글 등록"),
+        COMMENT_ACCEPTED("채택됨"),
+        COMMENT_DELETED("댓글 삭제");
+
+        @Getter
+        private String string;
+
+        CommentStatus(String string) {
+            this.string = string;
+        }
+    }
     // ----------------------------------- 연관관계 매핑 ----------------------------------- //
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -45,10 +56,13 @@ public class Comment extends Auditable {
         return like;
     }
 
-/*    // 회원 n:1 양방향
+    // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("member_id")
     private Member member;
+
+/*
+
 
     // 게시글 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
