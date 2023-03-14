@@ -165,6 +165,8 @@ public class MemberService {
         return findMember;
     }
 
+    // 포인트 추가 로직 필요
+
     // 좋아요, 채택, 게시글, 리뷰 작성 로직에 추가하는 등급 업데이트 로직
     public Member updateRating(Member member) {
 
