@@ -8,7 +8,7 @@ import {
   SNavigateBtnSection,
 } from '../../Style/GreetingInfo';
 
-const GreetingInfo = () => {
+const GreetingInfo = ({ scrollToDown }) => {
   return (
     <>
       <SBackgroundLayout>
@@ -23,7 +23,7 @@ const GreetingInfo = () => {
           <Link to="/login">로그인</Link>
           <Link to="/home">커뮤니티</Link>
         </SBtnSection>
-        <SNavigateBtnSection>
+        <SNavigateBtnSection onClick={scrollToDown}>
           <BsChevronCompactDown />
         </SNavigateBtnSection>
       </SBackgroundLayout>

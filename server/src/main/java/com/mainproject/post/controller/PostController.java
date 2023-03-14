@@ -1,8 +1,10 @@
 package com.mainproject.post.controller;
 
-import com.mainproject.global.dto.ResponseDto;
 import com.mainproject.post.dto.PostPatchDto;
 import com.mainproject.post.dto.PostPostDto;
+import com.mainproject.post.dto.PostResponseDto;
+import com.mainproject.post.entity.Post;
+import com.mainproject.post.mapper.PostMapper;
 import com.mainproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,44 +21,52 @@ public class PostController {
 
     private final PostService postService;
 
+    private final PostMapper postMapper;
+
     // 페이징 조회
 
     // 단일 조회
     @GetMapping("/{post-id}")
-    public ResponseEntity getPost(@PathVariable("post-id") @Positive Long id){
-        return ResponseEntity
-                .status((HttpStatus.OK))
-                .body(new ResponseDto(postService.getPost(id),200));
+    public ResponseEntity<PostResponseDto> getPost(@PathVariable("post-id") @Positive Long postId){
+
+        Post post = postService.getPost(postId);
+        PostResponseDto postResponseDto = postMapper.postToPostResponseDto(post);
+
+        return new ResponseEntity<>(postResponseDto, HttpStatus.OK);
+
     }
+
 
     // 글 작성
     @PostMapping("/post")
-    public ResponseEntity postPost(@RequestBody @Valid PostPostDto dto){
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(new ResponseDto(postService.createPost(dto), 200));
+    public ResponseEntity createPost(@RequestBody @Valid PostPostDto postDto, @RequestParam Long memberId) {
 
+        Post post = postMapper.postPostDtoToPost(postDto);
+        Long postId = postService.createPost(post, memberId);
+
+        return new ResponseEntity<>(postId, HttpStatus.OK);
     }
+
 
     // 글 수정
     @PatchMapping("/{post-id}")
-    public ResponseEntity updatePost(@PathVariable("post-id") @Positive Long id,
-                                     @RequestBody @Valid PostPatchDto dto){
-        postService.updatePost(dto, id);
+    public ResponseEntity updatePost(@PathVariable("post-id") @Positive Long postId,
+                                     @RequestBody @Valid PostPatchDto patchDto){
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new ResponseDto(id, 200));
+        Post updatedPost = postMapper.postPatchDtoToPost(patchDto);
+        postService.updatePost(updatedPost, postId);
 
+        return new ResponseEntity<>(postId, HttpStatus.OK);
     }
 
-    // 삭제 -> 상태 바꾸기로 수정해야됨
+
+    // 글 삭제
     @DeleteMapping("/{post-id}")
-    public ResponseEntity deletePost(@PathVariable("post-id") @Positive Long id){
-        postService.deletePost(id);
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+    public ResponseEntity deletePost(@PathVariable("post-id") @Positive Long postId){
+
+        postService.deletePost(postId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

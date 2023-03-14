@@ -11,8 +11,13 @@ public enum ExceptionCode {
     DOCTOR_EXISTS(409, "Doctor exists"),
     INVALID_DOCTOR_STATUS(400, "Invalid Doctor status"),
     MEMBER_ALREADY_VOTED(400, "Member already voted"),
-    NOT_RESOURCE_OWNER(400, "Not resource owner"),
-    POST_NOT_FOUND(404, "Post not found");
+
+
+    POST_NOT_FOUND(404, "Post not found"),
+    REVIEW_NOT_FOUND(404, "Post not found"),
+
+    NOT_RESOURCE_OWNER(400, "Not resource owner");
+
 
     @Getter
     private int status;
