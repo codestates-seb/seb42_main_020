@@ -1,2 +1,4 @@
-package com.mainproject.commentReport.dto;public class CommentReportPostDto {
+package com.mainproject.commentReport.dto;
+
+public class CommentReportPostDto {
 }

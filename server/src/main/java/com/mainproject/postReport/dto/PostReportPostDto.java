@@ -1,2 +1,4 @@
-package com.mainproject.postReport.dto;public class PostReportPostDto {
+package com.mainproject.postReport.dto;
+
+public class PostReportPostDto {
 }
