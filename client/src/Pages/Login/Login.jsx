@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useBodyScrollLock } from '../../util/useBodyScrollLock';
 import { FcGoogle } from 'react-icons/fc';
 import { BsArrowReturnLeft } from 'react-icons/bs';
 import { message } from 'antd';
@@ -31,6 +32,7 @@ const Login = () => {
   const [passwordMsg, setPasswordMsg] = useState(''); // 유효성 검사 안내 Msg for PW
 
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const { lockScroll, openScroll } = useBodyScrollLock();
 
   // * '/members/login' 이나 json-server '/' 인식 불가능으로 '/login' 으로 임시 적용
 
@@ -114,7 +116,13 @@ const Login = () => {
   const isNotNull = notTobeNull({ email, password });
   const isAllValid = isEmailValid && isPwdValid && isNotNull;
 
-  const handleClickModal = () => {
+  const handleOpen = () => {
+    lockScroll();
+    setIsOpenModal(!isOpenModal);
+  };
+
+  const handleClose = () => {
+    openScroll();
     setIsOpenModal(!isOpenModal);
   };
 
@@ -155,7 +163,7 @@ const Login = () => {
         </SFormSection>
         <SSignupInfo>
           <p>다나아 시작하기</p>
-          <SSignupBtn onClick={handleClickModal}>회원 가입</SSignupBtn>
+          <SSignupBtn onClick={handleOpen}>회원 가입</SSignupBtn>
           {isOpenModal ? (
             <SModalLayout>
               <SModal>
@@ -164,7 +172,7 @@ const Login = () => {
                     <p>회원 가입을 통해</p>
                     <p>다나아의 다양한 서비스를 이용해 보세요</p>
                   </SModalInfo>
-                  <BsArrowReturnLeft onClick={handleClickModal} />
+                  <BsArrowReturnLeft onClick={handleClose} />
                 </SModalInfoSection>
                 <SModalBtnSection>
                   <SModalSignupBtn>

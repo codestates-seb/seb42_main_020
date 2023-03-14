@@ -1,11 +1,17 @@
 package com.mainproject.comment.dto;
+
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
-public class CommentDto {
+public class CommentPostDto {
 
+    @NotBlank(message = "내용을 입력하세요.")
     private String content;
     public LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+
+
+    // Getter Setter
 
     public String getContent() {
         return content;
