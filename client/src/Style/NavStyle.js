@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const SNavContainer = styled.div`
+  font-family: 'TheJamsil5Bold';
   width: 100%;
   height: 100px;
   display: flex;
