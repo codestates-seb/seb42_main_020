@@ -88,25 +88,39 @@ export const SAskQuestionInfo = styled.input`
   font-size: 15px;
 `;
 
-export const SRateStartBlock = styled.div`
+export const SHospitalInfoBlock = styled.div`
+  display: flex;
+  width: 100%;
+  > div:first-child {
+    margin-right: 15px;
+  }
+`;
+
+export const SHospitalInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 50%;
+  > span {
+    margin-bottom: 15px;
+  }
+
+  > div:first-child {
+    margin-bottom: 15px;
+  }
+
+  .input_info {
+    font-size: 13px;
+    opacity: 0.6;
+    margin-left: 15px;
+    font-style: italic;
+  }
+`;
+
+export const SStarRateBlock = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  margin-bottom: 20px;
-
-  > span:first-child {
-    margin-right: 15px;
-  }
-
-  > ul {
-    margin-right: 35px;
-  }
-
-  > span:last-child {
-    font-size: 13px;
-    opacity: 0.6;
-    font-style: italic;
-  }
 `;
 
 export const SButtonBlock = styled.div`
