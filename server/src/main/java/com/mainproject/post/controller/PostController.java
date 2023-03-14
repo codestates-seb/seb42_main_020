@@ -6,6 +6,10 @@ import com.mainproject.post.dto.PostResponseDto;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.mapper.PostMapper;
 import com.mainproject.post.service.PostService;
+import com.mainproject.postReport.dto.PostReportPostDto;
+import com.mainproject.postReport.entity.PostReport;
+import com.mainproject.postReport.mapper.PostReportMapper;
+import com.mainproject.postReport.service.PostReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +26,8 @@ public class PostController {
     private final PostService postService;
 
     private final PostMapper postMapper;
+    private final PostReportMapper postReportMapper;
+    private final PostReportService postReportService;
 
     // 페이징 조회
 
@@ -69,5 +75,27 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    // 게시글 좋아요
+    @PostMapping("/{post-id}/likes")
+    public ResponseEntity postLike(@PathVariable("post-id") long postId,
+                                   /*@AuthenticationPrincipal*/ String email) {
+
+        postService.addLike(postId, email, 1);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // 게시글 신고
+    @PostMapping("/{post-id}/report")
+    public ResponseEntity postReport(@PathVariable("post-id") long postId,
+                                     /*@AuthenticationPrincipal*/ String email,
+                                     @RequestBody @Valid PostReportPostDto postDto) {
+
+        PostReport postReport = postReportMapper.postReportPostDtoToPostReport(postDto);
+
+        postReportService.createReport(postReport, email, postId);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 }
