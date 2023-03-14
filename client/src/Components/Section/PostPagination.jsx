@@ -3,7 +3,7 @@ import { Pagination } from 'antd';
 import PostPaginationStyle from '../../Style/PostPaginationStyle';
 import axios from 'axios';
 
-import PostListTemplate from './PostListTemplate';
+import PostList from './PostList';
 
 function PostPagination() {
   const [data, setData] = useState([]);
@@ -33,7 +33,7 @@ function PostPagination() {
 
   return (
     <>
-      <PostListTemplate data={data} />
+      <PostList data={data} />
       <PostPaginationStyle>
         <Pagination
           current={currentPage}
