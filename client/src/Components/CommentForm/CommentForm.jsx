@@ -25,7 +25,7 @@ const SwritingSection = styled.div`
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  box-shadow: 0 2px 3px 0 var(--gray-200);
+  box-shadow: 3px 2px 3px 2px var(--gray-200);
 `;
 
 const SWritingForm = styled.div`
