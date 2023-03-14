@@ -17,6 +17,10 @@ function UserCardProfile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
+  const LogOut = () => {
+    navigate('/');
+    window.scrollTo(0, 0);
+  };
   const ModalSubmit = () => {
     setIsModalOpen(!isModalOpen);
     navigate('/');
@@ -85,7 +89,9 @@ function UserCardProfile() {
           <div className="linebottom"></div>
         </SActivity>
         <SLogOut>
-          <button className="logout">Log Out</button>
+          <button className="logout" onClick={LogOut}>
+            Log Out
+          </button>
           <button
             className="delete-user"
             onClick={() => setIsModalOpen(!isModalOpen)}
