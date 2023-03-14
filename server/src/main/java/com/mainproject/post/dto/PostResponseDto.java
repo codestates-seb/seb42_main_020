@@ -14,12 +14,6 @@ public class PostResponseDto {
 
     private Long postId;
 
-    private Long tagId;
-
-    private Long memberId;
-
-    private Long regionId;
-
     private String title;
 
     private String content;
@@ -28,17 +22,15 @@ public class PostResponseDto {
 
     private LocalDateTime modifiedAt;
 
-    private Post.PostStatus status;
+    private Post.PostStatus postStatus;
+
+/*    private Integer likes;*/
+
+    private String medicalTagTitle;
+
+    private String regionName;
 
     // comment 부분 코드 작성되면 수정 필요
 /*    private List<CommentDto> memberComments;
-
-    private List<CommentDto> doctorComments;*/
-
-
-//    // 신고
-//    private List<신고dto> 신고s;
-//
-//    // 좋아요
-//    private List<조아요dto> 조아요s;
+*/
 }

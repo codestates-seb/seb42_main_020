@@ -4,8 +4,9 @@ import com.mainproject.audit.Auditable;
 import com.mainproject.member.entity.Member;
 import com.mainproject.comment.entity.Comment;
 import com.mainproject.postReport.entity.PostReport;
-import com.mainproject.subEntity.MedicalTag;
-import com.mainproject.subEntity.Region;
+import com.mainproject.subEntity.hospital.Hospital;
+import com.mainproject.subEntity.medicalTag.MedicalTag;
+import com.mainproject.subEntity.region.Region;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,19 +26,59 @@ public class Post extends Auditable {
     private Long postId;
 
     // 제목
-    @Column(length = 50, nullable = false)
+    @Column(name = "POST_TITLE", length = 50, nullable = false)
     private String title;
 
     // 본문
-    @Column(length = 1000, nullable = false)
+    @Column(name = "CONTENT", length = 1000, nullable = false)
     private String content;
+
+    // 질문인지 리뷰인지
+    @Column(nullable = false)
+    private String postType;
+
+    @Column
+    private String receipt;
 
     // 상태
     @Enumerated(value = EnumType.STRING)
     @Column(name = "POST_STATUS", length = 30, nullable = false)
-    private PostStatus postStatus = PostStatus.POST_REGISTERED;
+    private PostStatus postStatus;
+
+    // 회원 n:1 양방향
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    // 회원 댓글 1:n 양방향
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Comment> comments = new ArrayList<>();
+
+    // 좋아요 1:n 양방향
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    private List<PostLike> likes = new ArrayList<>();
+
+    // 진료과목 n:1 양방향
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEDICAL_TAG_ID")
+    private MedicalTag medicalTag;
+
+    // 지역 n:1 양방향
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "REGION_ID")
+    private Region region;
+
+    // 병원 n:1 양방향
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "HOSPITAL_ID")
+    private Hospital hospital;
+
+    // 신고 1:n 양방향
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<PostReport> postReports = new ArrayList<>();
 
     public enum PostStatus{
+        POST_PENDING("등록 대기"),
         POST_REGISTERED("게시글 등록"),
         POST_COMMENTED("댓글 등록"),
         POST_ACCEPTED("채택 완료"),
@@ -51,38 +92,9 @@ public class Post extends Auditable {
         }
     }
 
-
-    // 회원 n:1 양방향
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    // *** 회원댓글 & 의사댓글은 Comment 코드가 작성되면 수정예정 ***
-
-    // 회원 댓글 1:n 양방향
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Comment> comments = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<PostLike> likes = new ArrayList<>();
-
     public PostLike addLike(PostLike like) {
         this.likes.add(like);
         like.setPost(this);
         return like;
     }
-
-    // 진료과목 n:1 양방향
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEDICAL_TAG_ID")
-    private MedicalTag medicalTag;
-
-    // 지역 n:1 양방향
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "REGION_ID")
-    private Region region;
-
-    // 신고 1:n 양방향
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<PostReport> postReports = new ArrayList<>();
 }

@@ -13,9 +13,10 @@ public enum ExceptionCode {
     MEMBER_ALREADY_VOTED(400, "Member already voted"),
     MEMBER_ALREADY_REPORTED(400, "Member already reported"),
 
-
     POST_NOT_FOUND(404, "Post not found"),
     REVIEW_NOT_FOUND(404, "Review not found"),
+    POST_DELETED(404, "Post deleted"),
+    POST_NOT_APPROVED(400, "Post not approved"),
 
     NOT_RESOURCE_OWNER(400, "Not resource owner");
 

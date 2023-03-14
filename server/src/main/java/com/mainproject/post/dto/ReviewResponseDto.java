@@ -1,6 +1,6 @@
-package com.mainproject.review.dto;
+package com.mainproject.post.dto;
 
-import com.mainproject.review.entity.Review;
+import com.mainproject.post.entity.Post;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,13 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ReviewResponseDto {
 
-    private Long reviewId;
-
-    private Long tagId;
-
-    private Long memberId;
-
-    private Long regionId;
+    private Long postId;
 
     private String title;
 
@@ -26,12 +20,16 @@ public class ReviewResponseDto {
 
     private LocalDateTime modifiedAt;
 
-    private Review.ReviewStatus status;
+    private Post.PostStatus postStatus;
 
+    /*    private Integer likes;*/
 
-//    // 신고
-//    private List<신고dto> 신고s;
-//
+    private String hospitalName;
+
+    private String medicalTagTitle;
+
+    private String regionName;
+
 //    // 좋아요
 //    private List<조아요dto> 조아요s;
 }
