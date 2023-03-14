@@ -5,7 +5,7 @@ import Section from './Components/Section/Section';
 import Login from './Pages/Login/Login';
 import Signup from './Pages/Signup/Signup';
 import DoctorSignup from './Pages/DoctorSignup/DoctorSignup';
-import UserInfo from './Components/UserInfo/UserInfo';
+import UserInfo from './Components/UserInfo/Userinfo';
 import AskQuestion from './Pages/AskQuestion/AskQuestion';
 import Review from './Pages/Review/Review';
 import Footer from './Components/Footer/Footer';
