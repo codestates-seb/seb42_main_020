@@ -162,3 +162,55 @@ export const SLogOut = styled.div`
     color: #ff6947;
   }
 `;
+
+export const SUserDeleteModal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  /* 모달창 스타일링 */
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+  }
+  /* 모달창 내용 스타일링 */
+  .modal-content {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  h2 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  p {
+    margin-bottom: 30px;
+  }
+  /* 모달창 닫기 버튼 스타일링 */
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    margin: 0px 20px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+  }
+  .modal-submit-btn {
+    background-color: #f52424;
+  }
+  .modal-close-btn {
+    background-color: #3498db;
+  }
+`;
