@@ -2,17 +2,18 @@ package com.mainproject.post.service;
 
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
+import com.mainproject.member.entity.Member;
 import com.mainproject.post.dto.PostPatchDto;
 import com.mainproject.post.dto.PostPostDto;
 import com.mainproject.post.dto.PostResponseDto;
 import com.mainproject.post.entity.Post;
+import com.mainproject.post.entity.PostLike;
 import com.mainproject.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -80,5 +81,7 @@ public class PostService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
         postRepository.deleteById((id));
     }
+
+
 
 }

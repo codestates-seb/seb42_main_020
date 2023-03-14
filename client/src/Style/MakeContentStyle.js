@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const SWrapper = styled.div`
+export const SPostModalBlock = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -12,6 +12,11 @@ export const SWrapper = styled.div`
     color: #636e72;
     font-weight: bold;
     border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--peach-400);
+    }
   }
 
   > button {
@@ -30,13 +35,13 @@ export const SModal = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  padding: 20px;
   background-color: white;
-  top: 150px;
+  top: 250px;
   right: -75px;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 150px;
   border-radius: 20px;
   > button:last-child {
     width: 60px;
@@ -44,7 +49,9 @@ export const SModal = styled.div`
   }
 
   > div {
-    margin-bottom: 60px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
     > button {
       width: 100px;
       height: 80px;

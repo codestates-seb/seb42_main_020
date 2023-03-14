@@ -31,13 +31,13 @@ const AskQuestion = () => {
   // 내용 유효성 검사
   const [textValid, setTextValid] = useState(false);
   // 지역 입력값
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState('지역');
   // 지역 유효성
   const [locationValid, setLocationValid] = useState(false);
   // 지역,타입 유효성 실패 메시지
   const [validFailMessage, setValidFailMessage] = useState('');
   // 진료 과목 입력값
-  const [type, setType] = useState('');
+  const [type, setType] = useState('진료과목');
   // // 진료 과목 유효값
   const [typeValid, setTypeValid] = useState(false);
   // 입력값 총 합
