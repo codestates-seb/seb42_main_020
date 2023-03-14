@@ -60,6 +60,15 @@ public class Post extends Auditable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<PostLike> likes = new ArrayList<>();
+
+    public PostLike addLike(PostLike like) {
+        this.likes.add(like);
+        like.setPost(this);
+        return like;
+    }
+
 //    // 의사 댓글 1:n 양방향
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<DoctorComment>  doctorComments= new ArrayList<>();

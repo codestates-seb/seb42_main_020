@@ -19,8 +19,8 @@ public class CommentLike {
 
     // Post 클래스 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "POST_ID")
-    private Post post;
+    @JoinColumn(name = "COMMENT_ID")
+    private Comment comment;
 
     // member 클래스 n:1 단방향
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,8 +29,8 @@ public class CommentLike {
 
     private Integer commentVote;
 
-    public CommentLike(Post post, Member member, Integer commentVote) {
-        this.post = post;
+    public CommentLike(Comment comment, Member member, Integer commentVote) {
+        this.comment = comment;
         this.member = member;
         this.commentVote = commentVote;
     }

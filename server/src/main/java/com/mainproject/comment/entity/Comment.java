@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,6 +35,15 @@ public class Comment extends Auditable {
     // 상태
 
     // ----------------------------------- 연관관계 매핑 ----------------------------------- //
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<CommentLike> likes = new ArrayList<>();
+
+    public CommentLike addLike(CommentLike like) {
+        this.likes.add(like);
+        like.setComment(this);
+        return like;
+    }
 
 /*    // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
