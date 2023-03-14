@@ -1,18 +1,16 @@
-package com.mainproject.post.dto;
+package com.mainproject.review.dto;
 
-import com.mainproject.comment.dto.CommentDto;
-import com.mainproject.post.entity.Post;
+import com.mainproject.review.entity.Review;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
-public class PostResponseDto {
+public class ReviewResponseDto {
 
-    private Long postId;
+    private Long reviewId;
 
     private Long tagId;
 
@@ -28,12 +26,7 @@ public class PostResponseDto {
 
     private LocalDateTime modifiedAt;
 
-    private Post.PostStatus status;
-
-    // comment 부분 코드 작성되면 수정 필요
-    private List<CommentDto> memberComments;
-
-    private List<CommentDto> doctorComments;
+    private Review.ReviewStatus status;
 
 
 //    // 신고

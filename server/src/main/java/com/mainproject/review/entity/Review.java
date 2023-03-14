@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 
 @Entity
 @Getter
@@ -29,11 +28,11 @@ public class Review extends Auditable {
     // 상태
     @Enumerated(value = EnumType.STRING)
     @Column(name = "REVIEW_STATUS", length = 30, nullable = false)
-    private Review.ReviewStatus reviewStatus = Review.ReviewStatus.REVIEW_REGISTRATION;
+    private Review.ReviewStatus reviewStatus = ReviewStatus.REVIEW_REGISTERED;
 
     public enum ReviewStatus{
-        REVIEW_REGISTRATION("리뷰 등록"),
-        REVIEW_DELETE("리뷰 삭제");
+        REVIEW_REGISTERED("리뷰 등록"),
+        REVIEW_DELETED("리뷰 삭제");
 
         @Getter
         private String string;
@@ -60,13 +59,11 @@ public class Review extends Auditable {
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<Hospital> hospital = new ArrayList<>();
 
-//    // 영수증
-//
-//    // 신고
+//    // 신고 1:n 양방향
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<Report> reports = new ArrayList<>();
 //
-//    // 좋아요
+//    // 좋아요 1:n 양방향
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "review", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<Like> likes = new ArrayList<>();
 
