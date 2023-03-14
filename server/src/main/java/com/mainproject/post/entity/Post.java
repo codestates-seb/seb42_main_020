@@ -1,6 +1,5 @@
 package com.mainproject.post.entity;
 
-
 import com.mainproject.audit.Auditable;
 import com.mainproject.member.entity.Member;
 import com.mainproject.comment.entity.Comment;
@@ -33,11 +32,13 @@ public class Post extends Auditable {
     // 상태
     @Enumerated(value = EnumType.STRING)
     @Column(name = "POST_STATUS", length = 30, nullable = false)
-    private Post.PostStatus postStatus = PostStatus.POST_REGISTRATION;
+    private PostStatus postStatus = PostStatus.POST_REGISTERED;
 
     public enum PostStatus{
-        POST_REGISTRATION("게시글 등록"),
-        POST_DELETE("게시글 삭제");
+        POST_REGISTERED("게시글 등록"),
+        POST_COMMENTED("댓글 등록"),
+        POST_ACCEPTED("채택 완료"),
+        POST_DELETED("게시글 삭제");
 
         @Getter
         private String string;
@@ -52,6 +53,8 @@ public class Post extends Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    // *** 회원댓글 & 의사댓글은 Comment 코드가 작성되면 수정예정 ***
 
     // 회원 댓글 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
@@ -69,12 +72,11 @@ public class Post extends Auditable {
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<Region> region = new ArrayList<>();
 
-
-//    // 신고
+//    // 신고 1:n 양방향
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<Report> reports = new ArrayList<>();
 //
-//    // 좋아요
+//    // 좋아요 1:n 양방향
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 //    private List<Like> likes = new ArrayList<>();
 
