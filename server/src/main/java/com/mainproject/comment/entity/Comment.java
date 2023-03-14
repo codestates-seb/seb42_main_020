@@ -1,6 +1,7 @@
 package com.mainproject.comment.entity;
 
 import com.mainproject.audit.Auditable;
+import com.mainproject.commentReport.entity.CommentReport;
 import com.mainproject.member.entity.Member;
 import com.mainproject.post.entity.Post;
 import lombok.AllArgsConstructor;
@@ -61,19 +62,12 @@ public class Comment extends Auditable {
     @MapsId("member_id")
     private Member member;
 
-/*
-
-
     // 게시글 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("post_id")
-    private Post post;*/
-
-/*    // 좋아요 1:n
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Like> likes = new ArrayList<>();
+    private Post post;
 
     // 신고 1:n
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Report> reports = new ArrayList<>();*/
+    private List<CommentReport> reports = new ArrayList<>();
 }

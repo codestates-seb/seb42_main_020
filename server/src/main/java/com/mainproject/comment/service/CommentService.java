@@ -24,16 +24,14 @@ public class CommentService {
     private final MemberService memberService;
 
     // 댓글 작성
-    public Long createComment(Comment comment, Long memberId) {
+    public Comment createComment(Comment comment, Long memberId) {
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         comment.setMember(member);
         comment.setContent(comment.getContent());
 
-        commentRepository.save(comment);
-
-        return comment.getCommentId();
+        return commentRepository.save(comment);
     }
 
     public Comment updateComment(Comment comment) {

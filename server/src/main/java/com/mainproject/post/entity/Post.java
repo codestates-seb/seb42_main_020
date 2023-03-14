@@ -3,6 +3,9 @@ package com.mainproject.post.entity;
 import com.mainproject.audit.Auditable;
 import com.mainproject.member.entity.Member;
 import com.mainproject.comment.entity.Comment;
+import com.mainproject.postReport.entity.PostReport;
+import com.mainproject.subEntity.MedicalTag;
+import com.mainproject.subEntity.Region;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -69,24 +72,17 @@ public class Post extends Auditable {
         return like;
     }
 
-//    // 의사 댓글 1:n 양방향
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-//    private List<DoctorComment>  doctorComments= new ArrayList<>();
+    // 진료과목 n:1 양방향
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEDICAL_TAG_ID")
+    private MedicalTag medicalTag;
 
-//    // 진료과목 1:n 양방향
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-//    private List<Tag> tag = new ArrayList<>();
-//
-//    // 지역 1:n 양방향
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-//    private List<Region> region = new ArrayList<>();
+    // 지역 n:1 양방향
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "REGION_ID")
+    private Region region;
 
-//    // 신고 1:n 양방향
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-//    private List<Report> reports = new ArrayList<>();
-//
-//    // 좋아요 1:n 양방향
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-//    private List<Like> likes = new ArrayList<>();
-
+    // 신고 1:n 양방향
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<PostReport> postReports = new ArrayList<>();
 }
