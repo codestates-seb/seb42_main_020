@@ -11,10 +11,17 @@ import {
 import { BsPencilSquare } from 'react-icons/bs';
 import { BiCommentDetail, BiCommentCheck } from 'react-icons/bi';
 import { useState, useLayoutEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function UserCardProfile() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const ModalSubmit = () => setIsModalOpen(!isModalOpen);
+  const navigate = useNavigate();
+
+  const ModalSubmit = () => {
+    setIsModalOpen(!isModalOpen);
+    navigate('/');
+    window.scrollTo(0, 0);
+  };
   const ModalClose = () => setIsModalOpen(!isModalOpen);
 
   useLayoutEffect(() => {
