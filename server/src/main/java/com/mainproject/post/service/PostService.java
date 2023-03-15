@@ -17,10 +17,13 @@ import com.mainproject.subEntity.region.Region;
 import com.mainproject.subEntity.region.RegionRepository;
 import com.mainproject.subEntity.service.SubService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +41,17 @@ public class PostService {
     private final RegionRepository regionRepository;
 
     // 페이징 조회
+    public Page<Post> findByTitleContainingAndPostStatusNot(String keyword, String status, Pageable pageable) {
+        return postRepository.findByTitleContainingAndPostStatusNot(keyword, status, pageable);
+    }
+
+    public Page<Post> findByTitleContainingAndPostStatusIn(String keyword, List<String> status, Pageable pageable) {
+        return postRepository.findByTitleContainingAndPostStatusIn(keyword, status, pageable);
+    }
+
+    public Page<Post> findByMemberIdAndPostStatusNot(Long memberId, String status, Pageable pageable) {
+        return postRepository.findByMemberIdAndPostStatusNot(memberId, status, pageable);
+    }
 
     // 단일 조회
     public Post findPost(Long postId){
