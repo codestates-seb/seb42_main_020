@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -38,14 +40,17 @@ public class MemberService {
     }
 
     // 의사 회원가입
-    public Member createDoctor(Member member) {
+    public Member createDoctor(Member member, MultipartFile img) throws IOException {
 
         emailDuplicateCheck(member.getEmail());
+
+        byte[] imgByte = convertMultipartFileToByte(img);
 
         member.setIsDoctor(true);
         member.setMemberStatus(Member.MemberStatus.MEMBER_PENDING);
         member.setCreatedAt(LocalDateTime.now());
         member.setModifiedAt(LocalDateTime.now());
+        member.setImg(imgByte);
 
         // 패스워드 암호화
 
@@ -189,7 +194,7 @@ public class MemberService {
     }
 
     // 로그인 정보에서 추출한 memberId
-    public Long getLoginUserId() {
+    private Long getLoginUserId() {
 
         Long memberId = null;
         /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -200,5 +205,9 @@ public class MemberService {
         }*/
 
         return memberId;
+    }
+
+    private byte[] convertMultipartFileToByte(MultipartFile multipartFile) throws IOException {
+        return multipartFile.getBytes();
     }
 }
