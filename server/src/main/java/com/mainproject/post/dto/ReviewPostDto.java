@@ -1,4 +1,4 @@
-package com.mainproject.review.dto;
+package com.mainproject.post.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewPatchDto {
+public class ReviewPostDto {
 
     @NotBlank(message = "제목은 공백이 아니어야 합니다.")
     private String title;
@@ -19,7 +19,12 @@ public class ReviewPatchDto {
     @NotBlank(message = "내용은 공백이 아니어야 합니다.")
     private String content;
 
-    private Long tagId;
+    @NotBlank(message = "영수증 사진을 첨부해야합니다.")
+    private String receipt;
 
-    private Long regionId;
+    private String medicalTagTitle;
+
+    private String regionName;
+
+    private String hospitalName;
 }

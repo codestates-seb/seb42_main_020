@@ -14,11 +14,13 @@ import com.mainproject.postReport.entity.PostReport;
 import com.mainproject.postReport.repository.PostReportRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CommentReportService {
 

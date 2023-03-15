@@ -1,8 +1,6 @@
 package com.mainproject.post.controller;
 
-import com.mainproject.post.dto.PostPatchDto;
-import com.mainproject.post.dto.PostPostDto;
-import com.mainproject.post.dto.PostResponseDto;
+import com.mainproject.post.dto.*;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.mapper.PostMapper;
 import com.mainproject.post.service.PostService;
@@ -13,6 +11,7 @@ import com.mainproject.postReport.service.PostReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,6 +19,7 @@ import javax.validation.constraints.Positive;
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 @RequestMapping("/posts")
 public class PostController {
 
@@ -35,20 +35,18 @@ public class PostController {
     @GetMapping("/{post-id}")
     public ResponseEntity<PostResponseDto> getPost(@PathVariable("post-id") @Positive Long postId){
 
-        Post post = postService.getPost(postId);
+        Post post = postService.findPost(postId);
         PostResponseDto postResponseDto = postMapper.postToPostResponseDto(post);
 
         return new ResponseEntity<>(postResponseDto, HttpStatus.OK);
-
     }
 
-
     // 글 작성
-    @PostMapping("/post")
+    @PostMapping
     public ResponseEntity createPost(@RequestBody @Valid PostPostDto postDto, @RequestParam Long memberId) {
 
         Post post = postMapper.postPostDtoToPost(postDto);
-        Long postId = postService.createPost(post, memberId);
+        Long postId = postService.createPost(post, memberId, postDto.getMedicalTagTitle(), postDto.getRegionName());
 
         return new ResponseEntity<>(postId, HttpStatus.OK);
     }
@@ -60,7 +58,7 @@ public class PostController {
                                      @RequestBody @Valid PostPatchDto patchDto){
 
         Post updatedPost = postMapper.postPatchDtoToPost(patchDto);
-        postService.updatePost(updatedPost, postId);
+        postService.updatePost(updatedPost, postId, patchDto.getMemberId(), patchDto.getMedicalTagTitle(), patchDto.getRegionName());
 
         return new ResponseEntity<>(postId, HttpStatus.OK);
     }
@@ -97,5 +95,4 @@ public class PostController {
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-
 }

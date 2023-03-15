@@ -9,6 +9,13 @@ import com.mainproject.post.entity.Post;
 import com.mainproject.post.entity.PostLike;
 import com.mainproject.post.repository.PostLikeRepository;
 import com.mainproject.post.repository.PostRepository;
+import com.mainproject.subEntity.hospital.Hospital;
+import com.mainproject.subEntity.hospital.HospitalRepository;
+import com.mainproject.subEntity.medicalTag.MedicalTag;
+import com.mainproject.subEntity.medicalTag.MedicalTagRepository;
+import com.mainproject.subEntity.region.Region;
+import com.mainproject.subEntity.region.RegionRepository;
+import com.mainproject.subEntity.service.SubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,74 +29,107 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
-
     private final MemberRepository memberRepository;
     private final MemberService memberService;
     private final PostLikeRepository postLikeRepository;
-
+    private final SubService subService;
+    private final HospitalRepository hospitalRepository;
+    private final MedicalTagRepository medicalTagRepository;
+    private final RegionRepository regionRepository;
 
     // 페이징 조회
 
-
     // 단일 조회
-    public Post getPost(Long postId){
+    public Post findPost(Long postId){
 
-        Post existingPost = postRepository.findById(postId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        Post post = findVerifiedPost(postId);
 
-       return existingPost;
+       return post;
     }
 
+    // 게시글 작성
+    public Long createPost(Post post, Long memberId, String medicalTitle, String regionName) {
 
-    // 글 작성
-    public Long createPost(Post post, Long memberId) {
+        // 로그인 검증 필요
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        MedicalTag medicalTag = subService.findMedicalTag(medicalTitle);
+        Region region = subService.findRegion(regionName);
+
+        post.setMedicalTag(medicalTag);
+        post.setRegion(region);
         post.setMember(member);
-        post.setTitle(post.getTitle());
-        post.setContent(post.getContent());
-//        post.setTagId(post.getTagId());
-//        post.setRegionId(post.getRegionId());
+        post.setPostType("question");
+        post.setPostStatus(Post.PostStatus.POST_REGISTERED);
+        post.setCreatedAt(LocalDateTime.now());
+        post.setModifiedAt(LocalDateTime.now());
 
         postRepository.save(post);
 
         return post.getPostId();
     }
 
+    // 리뷰글 작성
+    public Long createReview(Post post, Long memberId, String hospitalName, String medicalTitle, String regionName) {
 
-    // 글 수정
-    public void updatePost(Post post, Long postId){
+        // 로그인 검증 필요
 
-        Post existingPost = postRepository.findById(postId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Hospital hospital = subService.findHospital(hospitalName);
+        MedicalTag medicalTag = subService.findMedicalTag(medicalTitle);
+        Region region = subService.findRegion(regionName);
 
-        existingPost.setTitle(post.getTitle());
-        existingPost.setContent(post.getContent());
-//        existingPost.setTagId(post.getTagId());
-//        existingPost.setRegionId(post.getRegionId());
+        post.setHospital(hospital);
+        post.setMedicalTag(medicalTag);
+        post.setRegion(region);
+        post.setMember(member);
+        post.setPostType("review");
+        post.setPostStatus(Post.PostStatus.POST_PENDING);
+        post.setCreatedAt(LocalDateTime.now());
+        post.setModifiedAt(LocalDateTime.now());
 
-        postRepository.save(existingPost);
+        postRepository.save(post);
+
+        return post.getPostId();
     }
 
+    // 게시글 수정
+    public void updatePost(Post post, Long postId, Long memberId, String medicalTitle, String regionName){
+
+        // 본인 검증 필요
+
+        MedicalTag medicalTag = subService.findMedicalTag(medicalTitle);
+        Region region = subService.findRegion(regionName);
+
+        Post findPost = findVerifiedPost(postId);
+
+        findPost.setTitle(post.getTitle());
+        findPost.setContent(post.getContent());
+        findPost.setMedicalTag(medicalTag);
+        findPost.setRegion(region);
+        findPost.setModifiedAt(LocalDateTime.now());
+
+        postRepository.save(findPost);
+    }
 
     // 글 삭제
     public void deletePost(Long postId){
 
-        Post existingPost = postRepository.findById(postId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        Post post = findVerifiedPost(postId);
 
-        existingPost.setModifiedAt(LocalDateTime.now());
-        existingPost.setPostStatus(Post.PostStatus.POST_DELETED);
+        post.setModifiedAt(LocalDateTime.now());
+        post.setPostStatus(Post.PostStatus.POST_DELETED);
 
-        postRepository.save(existingPost);
+        postRepository.save(post);
     }
 
     // 좋아요 기능
     public void addLike(long postId, String email, Integer like) {
 
         Member member = memberService.findMemberByEmail(email);
-        Post post = postRepository.findById(postId).get();
+        Post post = findVerifiedPost(postId);
 
         verifyExistsLike(member, post);
 
@@ -103,5 +143,18 @@ public class PostService {
         if (like.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_VOTED);
         }
+    }
+
+    private Post findVerifiedPost(long postId) {
+
+        Post findPost = postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        if(findPost.getPostStatus() == Post.PostStatus.POST_DELETED ) {
+            throw new BusinessLogicException(ExceptionCode.POST_DELETED);
+        } else if (findPost.getPostStatus() == Post.PostStatus.POST_PENDING) {
+            throw new BusinessLogicException(ExceptionCode.POST_NOT_APPROVED);
+        }
+
+        return findPost;
     }
 }

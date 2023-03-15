@@ -3,7 +3,6 @@ package com.mainproject.member.entity;
 import com.mainproject.audit.Auditable;
 import com.mainproject.comment.entity.Comment;
 import com.mainproject.post.entity.Post;
-import com.mainproject.review.entity.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -63,10 +62,6 @@ public class Member extends Auditable {
     // Post 클래스 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Post> posts = new ArrayList<>();
-
-    // Review 클래스 1:n 양방향
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<Review> reviews = new ArrayList<>();
 
     // Comment 클래스 1;n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)

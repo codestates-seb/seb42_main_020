@@ -1,7 +1,7 @@
-package com.mainproject.subEntity;
+package com.mainproject.subEntity.medicalTag;
 
 import com.mainproject.post.entity.Post;
-import com.mainproject.review.entity.Review;
+import com.mainproject.subEntity.hospital.Hospital;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,7 +29,4 @@ public class MedicalTag {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalTag", cascade = CascadeType.PERSIST)
     private List<Post> posts = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalTag", cascade = CascadeType.PERSIST)
-    private List<Review> reviews = new ArrayList<>();
 }
