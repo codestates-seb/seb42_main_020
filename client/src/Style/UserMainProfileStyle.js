@@ -109,6 +109,7 @@ export const SInfo = styled.div`
   .picture > img {
     width: 95%;
     position: absolute;
+    z-index: -1;
   }
 `;
 

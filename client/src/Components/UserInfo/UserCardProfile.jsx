@@ -5,11 +5,43 @@ import {
   SUserInfo,
   SActivity,
   SLogOut,
+  SUserDeleteModal,
 } from '../../Style/UserCardProfileStyle';
+
 import { BsPencilSquare } from 'react-icons/bs';
 import { BiCommentDetail, BiCommentCheck } from 'react-icons/bi';
+import { useState, useLayoutEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function UserCardProfile() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const LogOut = () => {
+    navigate('/');
+    window.scrollTo(0, 0);
+  };
+  const ModalSubmit = () => {
+    setIsModalOpen(!isModalOpen);
+    navigate('/');
+    window.scrollTo(0, 0);
+  };
+  const ModalClose = () => setIsModalOpen(!isModalOpen);
+
+  useLayoutEffect(() => {
+    const originalStyle = window.getComputedStyle(document.body).overflow;
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = '17px';
+    } else {
+      document.body.style.overflow = originalStyle;
+      document.body.style.paddingRight = '0';
+    }
+    return () => {
+      document.body.style.overflow = originalStyle;
+    };
+  }, [isModalOpen]);
+
   return (
     <UserCardProfileStyle>
       <SName>
@@ -57,9 +89,32 @@ function UserCardProfile() {
           <div className="linebottom"></div>
         </SActivity>
         <SLogOut>
-          <button className="logout">Log Out</button>
-          <button className="delete-user">Delete User</button>
+          <button className="logout" onClick={LogOut}>
+            Log Out
+          </button>
+          <button
+            className="delete-user"
+            onClick={() => setIsModalOpen(!isModalOpen)}
+          >
+            Delete User
+          </button>
         </SLogOut>
+        {isModalOpen ? (
+          <SUserDeleteModal>
+            <div className="modal">
+              <div className="modal-content">
+                <h2>회원 탈퇴</h2>
+                <p>진행 하시겠습니까?</p>
+                <button className="modal-submit-btn" onClick={ModalSubmit}>
+                  확인
+                </button>
+                <button className="modal-close-btn" onClick={ModalClose}>
+                  취소
+                </button>
+              </div>
+            </div>
+          </SUserDeleteModal>
+        ) : null}
       </SUserInfo>
     </UserCardProfileStyle>
   );
