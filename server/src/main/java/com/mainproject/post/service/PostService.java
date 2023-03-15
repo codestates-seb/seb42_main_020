@@ -49,8 +49,8 @@ public class PostService {
         return postRepository.findByTitleContainingAndPostStatusIn(keyword, status, pageable);
     }
 
-    public Page<Post> findByMemberIdAndPostStatusNot(Long memberId, String status, Pageable pageable) {
-        return postRepository.findByMemberIdAndPostStatusNot(memberId, status, pageable);
+    public Page<Post> findByMember_memberIdAndPostStatusNot(Long memberId, String status, Pageable pageable) {
+        return postRepository.findByMember_memberIdAndPostStatusNot(memberId, status, pageable);
     }
 
     // 단일 조회

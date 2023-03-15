@@ -63,7 +63,7 @@ public class PostController {
                                                          @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
-        Page<Post> posts = postService.findByMemberIdAndPostStatusNot(memberId, "POST_DELETED", pageable);
+        Page<Post> posts = postService.findByMember_memberIdAndPostStatusNot(memberId, "POST_DELETED", pageable);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
