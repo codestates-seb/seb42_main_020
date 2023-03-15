@@ -28,6 +28,8 @@ public class PostResponseDto {
 
     private Post.PostStatus postStatus;
 
+    private String postType;
+
     /*    private Integer likes;*/
 
     private String medicalTagTitle;
