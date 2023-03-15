@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const SServiceInfoLayout = styled.div`
   width: 100vw;
+  margin-bottom: 100px;
 `;
 
 export const SServiceInfoSection = styled.div`
