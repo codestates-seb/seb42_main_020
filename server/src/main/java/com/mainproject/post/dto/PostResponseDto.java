@@ -2,6 +2,7 @@ package com.mainproject.post.dto;
 
 
 import com.mainproject.comment.dto.CommentResponseDto;
+import com.mainproject.member.dto.WriterResponse;
 import com.mainproject.post.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,8 @@ public class PostResponseDto {
     private String medicalTagTitle;
 
     private String regionName;
+
+    private WriterResponse writerResponse;
 
     private List<CommentResponseDto> comments;
 }

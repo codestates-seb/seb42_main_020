@@ -2,6 +2,7 @@ package com.mainproject.member.mapper;
 
 import com.mainproject.member.dto.DoctorDto;
 import com.mainproject.member.dto.MemberDto;
+import com.mainproject.member.dto.WriterResponse;
 import com.mainproject.member.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -28,4 +29,7 @@ public interface MemberMapper {
     DoctorDto.response memberToDoctorResponse(Member member);
 
     List<DoctorDto.response> membersToDoctorResponses(List<Member> members);
+
+    // 작성자
+    WriterResponse memberToWriterResponse(Member member);
 }

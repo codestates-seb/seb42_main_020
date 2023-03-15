@@ -17,6 +17,7 @@ public interface PostMapper {
 
     @Mapping(target = "medicalTagTitle", source = "post.medicalTag.title")
     @Mapping(target = "regionName", source = "post.region.name")
+    @Mapping(target = "writerResponse", source = "post.member")
     PostResponseDto postToPostResponseDto(Post post);
 
     // 리뷰글 매핑
