@@ -33,9 +33,9 @@ public class PostController {
     private final PostReportMapper postReportMapper;
     private final PostReportService postReportService;
 
-    // 페이징 조회
-    @GetMapping
-    public ResponseEntity<Page<Post>> getPosts(@RequestParam(value = "page", defaultValue = "0") int page,
+    // 페이징 조회 - 제목 검색
+    @GetMapping("/title")
+    public ResponseEntity<Page<Post>> getPostsByTitle(@RequestParam(value = "page", defaultValue = "0") int page,
                                                @RequestParam(value = "size", defaultValue = "10") int size,
                                                @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
                                                @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
@@ -55,6 +55,29 @@ public class PostController {
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
+    // 페이징 조회 = 내용 검색
+    @GetMapping("/content")
+    public ResponseEntity<Page<Post>> getPostsByContent(@RequestParam(value = "page", defaultValue = "0") int page,
+                                               @RequestParam(value = "size", defaultValue = "10") int size,
+                                               @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                               @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
+                                               @RequestParam(value = "keyword", required = false) String keyword,
+                                               @RequestParam(value = "status", required = false) List<String> status) {
+
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+
+        Page<Post> posts;
+
+        if (status == null) {
+            posts = postService.findByContentContainingAndPostStatusNot(keyword, "POST_DELETED", pageable);
+        } else {
+            posts = postService.findByContentContainingAndPostStatusIn(keyword, status, pageable);
+        }
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    // 페이징 조회 - 작성자 검색
     @GetMapping("/member/{memberId}")
     public ResponseEntity<Page<Post>> getPostsByMemberId(@PathVariable Long memberId,
                                                          @RequestParam(value = "page", defaultValue = "0") int page,

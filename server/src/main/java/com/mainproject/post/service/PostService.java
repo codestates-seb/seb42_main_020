@@ -49,6 +49,14 @@ public class PostService {
         return postRepository.findByTitleContainingAndPostStatusIn(keyword, status, pageable);
     }
 
+    public Page<Post> findByContentContainingAndPostStatusNot(String keyword, String status, Pageable pageable) {
+        return postRepository.findByContentContainingAndPostStatusNot(keyword, status, pageable);
+    }
+
+    public Page<Post> findByContentContainingAndPostStatusIn(String keyword, List<String> status, Pageable pageable) {
+        return postRepository.findByContentContainingAndPostStatusIn(keyword, status, pageable);
+    }
+
     public Page<Post> findByMember_memberIdAndPostStatusNot(Long memberId, String status, Pageable pageable) {
         return postRepository.findByMember_memberIdAndPostStatusNot(memberId, status, pageable);
     }
