@@ -1,7 +1,9 @@
 package com.mainproject.post.dto;
 
 
+import com.mainproject.comment.dto.CommentResponseDto;
 import com.mainproject.post.entity.Post;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class PostResponseDto {
 
     private Long postId;
@@ -24,13 +27,11 @@ public class PostResponseDto {
 
     private Post.PostStatus postStatus;
 
-/*    private Integer likes;*/
+    /*    private Integer likes;*/
 
     private String medicalTagTitle;
 
     private String regionName;
 
-    // comment 부분 코드 작성되면 수정 필요
-/*    private List<CommentDto> memberComments;
-*/
+    private List<CommentResponseDto> comments;
 }

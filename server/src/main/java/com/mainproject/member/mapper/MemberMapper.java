@@ -12,14 +12,13 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface MemberMapper {
 
-    // 일반회원
+    /// 일반회원
     Member memberPostToMember(MemberDto.Post requestBody);
     Member memberPatchToMember(MemberDto.Patch requestBody);
 
     @Mapping(target = "memberId", source = "member.memberId")
+    @Mapping(target = "postResponseMyPageInfos", source = "member.posts")
     MemberDto.response memberToMemberResponse(Member member);
-
-    List<MemberDto.response> membersToMemberResponses(List<Member> members);
 
     // 의사회원
     Member doctorPostToMember(DoctorDto.Post requestBody);

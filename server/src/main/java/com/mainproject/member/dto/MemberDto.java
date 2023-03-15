@@ -2,6 +2,7 @@ package com.mainproject.member.dto;
 
 import com.mainproject.comment.entity.Comment;
 import com.mainproject.member.entity.Member;
+import com.mainproject.post.dto.PostResponseMyPageInfo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -66,8 +67,6 @@ public class MemberDto {
         private String name;
         private String displayName;
         private Member.MemberStatus memberStatus;
-        // 아래 List들은 ResponseDto로 변경 가능
-        private List<Post> posts;
-        private List<Comment> comments;
+        private List<PostResponseMyPageInfo> postResponseMyPageInfos;
     }
 }

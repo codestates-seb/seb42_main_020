@@ -1,6 +1,7 @@
 package com.mainproject.post.dto;
 
 import com.mainproject.post.entity.Post;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class ReviewResponseDto {
 
     private Long postId;
@@ -29,7 +31,4 @@ public class ReviewResponseDto {
     private String medicalTagTitle;
 
     private String regionName;
-
-//    // 좋아요
-//    private List<조아요dto> 조아요s;
 }
