@@ -22,15 +22,14 @@ import java.util.Optional;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final MemberRepository memberRepository;
-    private final CommentLikeRepository commentLikeRepository;
     private final MemberService memberService;
+    private final CommentLikeRepository commentLikeRepository;
 
     // 댓글 작성
     public Comment createComment(Comment comment, Long memberId) {
 
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Member member = memberService.findMember(memberId);
+
         comment.setMember(member);
         comment.setCreatedAt(LocalDateTime.now());
         comment.setModifiedAt(LocalDateTime.now());
@@ -40,8 +39,8 @@ public class CommentService {
 
     // 댓글 수정
     public Comment updateComment(Comment comment, Long commentId) {
-        Comment findComment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+
+        Comment findComment = findVerifiedComment(commentId);
 
         findComment.setModifiedAt(LocalDateTime.now());
 
@@ -50,8 +49,8 @@ public class CommentService {
 
 
     public Comment deleteComment(long commentId) {
-        Comment findComment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+
+        Comment findComment = findVerifiedComment(commentId);
 
         findComment.setModifiedAt(LocalDateTime.now());
         findComment.setCommentStatus(Comment.CommentStatus.COMMENT_DELETED);
@@ -77,5 +76,16 @@ public class CommentService {
         if (like.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_ALREADY_VOTED);
         }
+    }
+
+    // 댓글 채택 또는 수정 여부 확인
+    private Comment findVerifiedComment(long commentId) {
+
+        Comment findComment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+
+        if(findComment.getCommentStatus() != Comment.CommentStatus.COMMENT_REGISTERED) throw new BusinessLogicException(ExceptionCode.COMMENT_NOT_CHANGED);
+
+        return findComment;
     }
 }

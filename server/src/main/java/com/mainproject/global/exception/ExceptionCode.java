@@ -18,6 +18,7 @@ public enum ExceptionCode {
     POST_DELETED(404, "Post deleted"),
     POST_NOT_APPROVED(400, "Post not approved"),
 
+    COMMENT_NOT_CHANGED(400, "Comment not changed"),
     NOT_RESOURCE_OWNER(400, "Not resource owner");
 
 
