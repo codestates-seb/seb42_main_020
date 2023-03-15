@@ -17,10 +17,13 @@ import com.mainproject.subEntity.region.Region;
 import com.mainproject.subEntity.region.RegionRepository;
 import com.mainproject.subEntity.service.SubService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +41,33 @@ public class PostService {
     private final RegionRepository regionRepository;
 
     // 페이징 조회
+    public Page<Post> findByTitleContainingAndPostStatusNot(String keyword, String status, Pageable pageable) {
+        return postRepository.findByTitleContainingAndPostStatusNot(keyword, status, pageable);
+    }
+
+    public Page<Post> findByTitleContainingAndPostStatusIn(String keyword, List<String> status, Pageable pageable) {
+        return postRepository.findByTitleContainingAndPostStatusIn(keyword, status, pageable);
+    }
+
+    public Page<Post> findByContentContainingAndPostStatusNot(String keyword, String status, Pageable pageable) {
+        return postRepository.findByContentContainingAndPostStatusNot(keyword, status, pageable);
+    }
+
+    public Page<Post> findByContentContainingAndPostStatusIn(String keyword, List<String> status, Pageable pageable) {
+        return postRepository.findByContentContainingAndPostStatusIn(keyword, status, pageable);
+    }
+
+    public Page<Post> findByMember_memberIdAndPostStatusNot(Long memberId, String status, Pageable pageable) {
+        return postRepository.findByMember_memberIdAndPostStatusNot(memberId, status, pageable);
+    }
+
+    public Page<Post> findByMedicalTag_medicalTagIdAndPostStatusNot(Long medicalTagId, String status, Pageable pageable) {
+        return postRepository.findByMedicalTag_medicalTagIdAndPostStatusNot(medicalTagId, status, pageable);
+    }
+
+    public Page<Post> findByRegion_regionIdAndPostStatusNot(Long regionId, String status, Pageable pageable) {
+        return postRepository.findByRegion_regionIdAndPostStatusNot(regionId, status, pageable);
+    }
 
     // 단일 조회
     public Post findPost(Long postId){

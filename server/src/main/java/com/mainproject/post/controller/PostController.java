@@ -10,6 +10,9 @@ import com.mainproject.postReport.entity.PostReport;
 import com.mainproject.postReport.mapper.PostReportMapper;
 import com.mainproject.postReport.service.PostReportService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,7 +35,91 @@ public class PostController {
     private final PostReportService postReportService;
     private final CommentService commentService;
 
-    // 페이징 조회
+    // 페이징 조회 - 제목 검색
+    @GetMapping("/title")
+    public ResponseEntity<Page<Post>> getPostsByTitle(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                      @RequestParam(value = "size", defaultValue = "10") int size,
+                                                      @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                      @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
+                                                      @RequestParam(value = "keyword", required = false) String keyword,
+                                                      @RequestParam(value = "status", required = false) List<String> status) {
+
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+
+        Page<Post> posts;
+
+        if (status == null) {
+            posts = postService.findByTitleContainingAndPostStatusNot(keyword, "POST_DELETED", pageable);
+        } else {
+            posts = postService.findByTitleContainingAndPostStatusIn(keyword, status, pageable);
+        }
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    // 페이징 조회 = 내용 검색
+    @GetMapping("/content")
+    public ResponseEntity<Page<Post>> getPostsByContent(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                        @RequestParam(value = "size", defaultValue = "10") int size,
+                                                        @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                        @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
+                                                        @RequestParam(value = "keyword", required = false) String keyword,
+                                                        @RequestParam(value = "status", required = false) List<String> status) {
+
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+
+        Page<Post> posts;
+
+        if (status == null) {
+            posts = postService.findByContentContainingAndPostStatusNot(keyword, "POST_DELETED", pageable);
+        } else {
+            posts = postService.findByContentContainingAndPostStatusIn(keyword, status, pageable);
+        }
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    // 페이징 조회 - 작성자
+    @GetMapping("/member/{memberId}")
+    public ResponseEntity<Page<Post>> getPostsByMemberId(@PathVariable Long memberId,
+                                                         @RequestParam(value = "page", defaultValue = "0") int page,
+                                                         @RequestParam(value = "size", defaultValue = "10") int size,
+                                                         @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                         @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
+
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        Page<Post> posts = postService.findByMember_memberIdAndPostStatusNot(memberId, "POST_DELETED", pageable);
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    // 페이징 조회 - 진료과목
+    @GetMapping("/medicalTag/{medicalTagId}")
+    public ResponseEntity<Page<Post>> getPostsByMedicalTag(@PathVariable Long medicalTagId,
+                                                         @RequestParam(value = "page", defaultValue = "0") int page,
+                                                         @RequestParam(value = "size", defaultValue = "10") int size,
+                                                         @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                         @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
+
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        Page<Post> posts = postService.findByMedicalTag_medicalTagIdAndPostStatusNot(medicalTagId, "POST_DELETED", pageable);
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    // 페이징 조회 - 지역
+    @GetMapping("/region/{regionId}")
+    public ResponseEntity<Page<Post>> getPostsByRegionId(@PathVariable Long regionTagId,
+                                                         @RequestParam(value = "page", defaultValue = "0") int page,
+                                                         @RequestParam(value = "size", defaultValue = "10") int size,
+                                                         @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                         @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
+
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        Page<Post> posts = postService.findByRegion_regionIdAndPostStatusNot(regionTagId, "POST_DELETED", pageable);
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 
     // 단일 조회
     @GetMapping("/{post-id}")
