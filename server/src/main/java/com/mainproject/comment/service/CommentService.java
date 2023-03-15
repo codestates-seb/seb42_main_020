@@ -32,7 +32,8 @@ public class CommentService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         comment.setMember(member);
-        comment.setContent(comment.getContent());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setModifiedAt(LocalDateTime.now());
 
         return commentRepository.save(comment);
     }
@@ -41,7 +42,7 @@ public class CommentService {
     public Comment updateComment(Comment comment, Long commentId) {
         Comment findComment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
-        findComment.setContent(comment.getContent());
+
         findComment.setModifiedAt(LocalDateTime.now());
 
         return commentRepository.save(findComment);
@@ -51,6 +52,7 @@ public class CommentService {
     public Comment deleteComment(long commentId) {
         Comment findComment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+
         findComment.setModifiedAt(LocalDateTime.now());
         findComment.setCommentStatus(Comment.CommentStatus.COMMENT_DELETED);
 
