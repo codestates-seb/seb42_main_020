@@ -28,7 +28,7 @@ const DoctorSignup = () => {
   const [hospital, setHospital] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [imgFile, setImgFile] = useState('');
+  const [imgFile, setImgFile] = useState(null);
 
   const [messageApi, contextHolder] = message.useMessage();
   const [nameMsg, setNameMsg] = useState(''); // 유효성 검사 안내 Msg for name && hospital
@@ -42,15 +42,20 @@ const DoctorSignup = () => {
   const { lockScroll, openScroll } = useBodyScrollLock();
   openScroll(); // 페이지 이동 후 scroll lock 해제
 
-  // * '/doctors/signup' 이나 json-server '/' 인식 불가능으로 '/doctors' 으로 임시 적용
-
   const handleSubmit = () => {
     const formData = new FormData(); // 새로운 formData를 찍어내 그안에 키와 밸류의 형태로 넣어주는 형식
-    formData.append('email', email);
-    formData.append('hospital', hospital);
-    formData.append('name', name);
-    formData.append('password', password);
     formData.append('img', imgFile);
+
+    const dataString = {
+      email,
+      hospital,
+      name,
+      password,
+    };
+    formData.append(
+      'post',
+      new Blob([JSON.stringify(dataString)], { type: 'application/json' })
+    );
 
     // formDate 값 확인하기
     /*
@@ -60,19 +65,17 @@ const DoctorSignup = () => {
     }
     */
 
-    axios({
-      method: 'post',
-      url: 'http://localhost:3001/doctors',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+    axios
+      .post('/doctors/signup', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then((res) => {
         console.log(res);
       })
-      .catch(() => {
-        console.log('Error!');
+      .catch((data) => {
+        console.log(data);
       });
   };
 
