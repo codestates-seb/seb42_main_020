@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -36,17 +37,24 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public Comment updateComment(Comment comment) {
-        // TODO should business logic
+    // 댓글 수정
+    public Comment updateComment(Comment comment, Long commentId) {
+        Comment findComment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        findComment.setContent(comment.getContent());
+        findComment.setModifiedAt(LocalDateTime.now());
 
-        // TODO member 객체는 나중에 DB에 업데이트 후, 되돌려 받는 것으로 변경 필요.
-        Comment updatedComment = comment;
-        return updatedComment;
+        return commentRepository.save(findComment);
     }
 
 
-    public void deleteComment(long commentId) {
+    public Comment deleteComment(long commentId) {
+        Comment findComment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        findComment.setModifiedAt(LocalDateTime.now());
+        findComment.setCommentStatus(Comment.CommentStatus.COMMENT_DELETED);
 
+        return commentRepository.save(findComment);
     }
 
     // 좋아요 기능

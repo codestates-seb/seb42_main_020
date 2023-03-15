@@ -6,8 +6,10 @@ import {
   SAskQuestionBlock,
   STitle,
   SAskQuestionInfoBlock,
-  SRateStartBlock,
   SValidFail,
+  SHospitalInfoBlock,
+  SHospitalInfo,
+  SStarRateBlock,
   SSubmitButton,
   SButtonBlock,
   SCancalButton,
@@ -16,6 +18,7 @@ import AskQuestionTitle from '../../Components/AskForm/AskQuestionTitle';
 import { locationData, typeData } from '../../Components/AskForm/QuestionData';
 import LocationInput from '../../Components/AskForm/LocationInput';
 import TypeInput from '../../Components/AskForm/TypeInput';
+import HospitalInput from '../../Components/ReviewForm/HospitalInput';
 import RateStar from '../../Components/ReviewForm/RateStar';
 import ModalTest from '../../Components/MakeContents/MakeContents';
 import WaitModal from '../../Components/ReviewForm/WaitModal';
@@ -43,6 +46,12 @@ const Review = () => {
   const [reviewTypeValid, setReviewTypeValid] = useState(false);
   // 지역 or 진료 과목이 실패할 경우 메시지
   const [reviewFailMessage, setReviewFailMessage] = useState('');
+  // 병원명 입력값
+  const [hospitalName, setHospitalName] = useState('');
+  // 병원명 유효성
+  const [hospitalValid, setHospitalValid] = useState(false);
+  // 병원명 입력 실패시 나타날 메시지
+  const [hospitalMesasge, setHospitalMessage] = useState('');
   // 별점 입력값
   const [rateNumber, setRateNumber] = useState('');
   // 별점 입력 유효성
@@ -96,6 +105,13 @@ const Review = () => {
     setReviewTypeValid(true);
   };
 
+  // 병원명 받아오기
+  const hospitalChangeHandler = (e) => {
+    console.log(e);
+    setHospitalName(e.target.value);
+    setHospitalValid(true);
+  };
+
   //별점 데이터 받아오기
   const rateNumberHandler = (e) => {
     setRateValid(true);
@@ -122,6 +138,11 @@ const Review = () => {
     if (reviewText < 5) {
       setReviewValid(false);
       setReviewMessage('내용은 5글자 이상 입력해주세요');
+    }
+
+    if (hospitalName === '') {
+      setHospitalValid(false);
+      setHospitalMessage('병원명을 입력해 주세요');
     }
 
     if (!rateValid) {
@@ -192,15 +213,32 @@ const Review = () => {
             </SValidFail>
           </div>
         </SAskQuestionInfoBlock>
-        <SRateStartBlock>
-          <span>평점</span>
-          <RateStar
-            rateNumber={rateNumber}
-            rateNumberHandler={rateNumberHandler}
-          />
-          <span>별을 클릭해서 병원의 만족도를 알려주세요!!</span>
-        </SRateStartBlock>
-        <SValidFail>{rateValid ? null : rateMessage}</SValidFail>
+        <SHospitalInfoBlock>
+          <SHospitalInfo>
+            <span>병원명</span>
+            <HospitalInput
+              hospitalName={hospitalName}
+              hospitalChangeHandler={hospitalChangeHandler}
+            />
+            <SValidFail>{hospitalValid ? null : hospitalMesasge}</SValidFail>
+          </SHospitalInfo>
+          <SHospitalInfo>
+            <div>
+              <span>평점</span>
+              <span className="input_info">
+                별을 클릭해서 병원의 만족도를 알려주세요!!
+              </span>
+            </div>
+            <SStarRateBlock>
+              <RateStar
+                rateNumber={rateNumber}
+                rateNumberHandler={rateNumberHandler}
+              />
+              <span>({rateNumber})</span>
+            </SStarRateBlock>
+            <SValidFail>{rateValid ? null : rateMessage}</SValidFail>
+          </SHospitalInfo>
+        </SHospitalInfoBlock>
         <TextEditor handleText={handleText} />
         <SValidFail> {reviewValid ? null : reviewMessage}</SValidFail>
         <div>
