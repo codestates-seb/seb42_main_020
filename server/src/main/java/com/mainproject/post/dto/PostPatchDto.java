@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class PostPatchDto {
 
-    @NotBlank
+    @NotNull
     private long memberId;
 
     @NotBlank(message = "제목은 공백이 아니어야 합니다.")

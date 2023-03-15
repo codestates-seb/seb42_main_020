@@ -1,5 +1,6 @@
 package com.mainproject.post.controller;
 
+import com.mainproject.comment.service.CommentService;
 import com.mainproject.post.dto.*;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.mapper.PostMapper;
@@ -28,6 +29,7 @@ public class PostController {
     private final PostMapper postMapper;
     private final PostReportMapper postReportMapper;
     private final PostReportService postReportService;
+    private final CommentService commentService;
 
     // 페이징 조회
 
@@ -94,5 +96,16 @@ public class PostController {
         postReportService.createReport(postReport, email, postId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    // 답변 채택
+    @PatchMapping("/{post-id}/comments/{comment-id}/members/{member-Id}")
+    public ResponseEntity acceptComment(@PathVariable("post-id") long postId,
+                                        @PathVariable("comment-id") long commentId,
+                                        @PathVariable("member-id") long memberId) {
+
+        commentService.acceptComment(memberId, postId, commentId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

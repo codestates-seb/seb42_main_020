@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class MemberDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Patch {
 
+        @NotNull
         private long memberId;
 
         @NotBlank(message = "닉네임은 공백이 허용되지 않습니다.")
@@ -66,6 +68,8 @@ public class MemberDto {
         private String email;
         private String name;
         private String displayName;
+        private boolean isDoctor;
+        private Member.MemberRating memberRating;
         private Member.MemberStatus memberStatus;
         private List<PostResponseMyPageInfo> postResponseMyPageInfos;
     }

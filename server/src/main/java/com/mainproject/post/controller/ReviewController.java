@@ -31,4 +31,12 @@ public class ReviewController {
         return new ResponseEntity<>(reviewId, HttpStatus.OK);
     }
 
+    @PatchMapping("/{post-id}")
+    public ResponseEntity approveReview(@PathVariable("post-id") long postId) {
+
+        postService.approveReview(postId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

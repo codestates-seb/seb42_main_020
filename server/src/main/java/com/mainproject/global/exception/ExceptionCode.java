@@ -17,6 +17,8 @@ public enum ExceptionCode {
     REVIEW_NOT_FOUND(404, "Review not found"),
     POST_DELETED(404, "Post deleted"),
     POST_NOT_APPROVED(400, "Post not approved"),
+    CANNOT_ACCEPT_COMMENT(400, "Cannot accept comment"),
+    DOCTOR_CANNOT_POST(400, "Doctor cannot post"),
 
     COMMENT_NOT_CHANGED(400, "Comment not changed"),
     NOT_RESOURCE_OWNER(400, "Not resource owner");
