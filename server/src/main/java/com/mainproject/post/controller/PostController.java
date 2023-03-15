@@ -36,11 +36,11 @@ public class PostController {
     // 페이징 조회 - 제목 검색
     @GetMapping("/title")
     public ResponseEntity<Page<Post>> getPostsByTitle(@RequestParam(value = "page", defaultValue = "0") int page,
-                                               @RequestParam(value = "size", defaultValue = "10") int size,
-                                               @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
-                                               @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
-                                               @RequestParam(value = "keyword", required = false) String keyword,
-                                               @RequestParam(value = "status", required = false) List<String> status) {
+                                                      @RequestParam(value = "size", defaultValue = "10") int size,
+                                                      @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                      @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
+                                                      @RequestParam(value = "keyword", required = false) String keyword,
+                                                      @RequestParam(value = "status", required = false) List<String> status) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
@@ -58,11 +58,11 @@ public class PostController {
     // 페이징 조회 = 내용 검색
     @GetMapping("/content")
     public ResponseEntity<Page<Post>> getPostsByContent(@RequestParam(value = "page", defaultValue = "0") int page,
-                                               @RequestParam(value = "size", defaultValue = "10") int size,
-                                               @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
-                                               @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
-                                               @RequestParam(value = "keyword", required = false) String keyword,
-                                               @RequestParam(value = "status", required = false) List<String> status) {
+                                                        @RequestParam(value = "size", defaultValue = "10") int size,
+                                                        @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                        @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
+                                                        @RequestParam(value = "keyword", required = false) String keyword,
+                                                        @RequestParam(value = "status", required = false) List<String> status) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
@@ -77,7 +77,7 @@ public class PostController {
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
-    // 페이징 조회 - 작성자 검색
+    // 페이징 조회 - 작성자
     @GetMapping("/member/{memberId}")
     public ResponseEntity<Page<Post>> getPostsByMemberId(@PathVariable Long memberId,
                                                          @RequestParam(value = "page", defaultValue = "0") int page,
@@ -87,6 +87,34 @@ public class PostController {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
         Page<Post> posts = postService.findByMember_memberIdAndPostStatusNot(memberId, "POST_DELETED", pageable);
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    // 페이징 조회 - 진료과목
+    @GetMapping("/medicalTag/{medicalTagId}")
+    public ResponseEntity<Page<Post>> getPostsByMedicalTag(@PathVariable Long medicalTagId,
+                                                         @RequestParam(value = "page", defaultValue = "0") int page,
+                                                         @RequestParam(value = "size", defaultValue = "10") int size,
+                                                         @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                         @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
+
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        Page<Post> posts = postService.findByMedicalTag_medicalTagIdAndPostStatusNot(medicalTagId, "POST_DELETED", pageable);
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    // 페이징 조회 - 지역
+    @GetMapping("/region/{regionId}")
+    public ResponseEntity<Page<Post>> getPostsByRegionId(@PathVariable Long regionTagId,
+                                                         @RequestParam(value = "page", defaultValue = "0") int page,
+                                                         @RequestParam(value = "size", defaultValue = "10") int size,
+                                                         @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                         @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
+
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        Page<Post> posts = postService.findByRegion_regionIdAndPostStatusNot(regionTagId, "POST_DELETED", pageable);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }

@@ -61,6 +61,14 @@ public class PostService {
         return postRepository.findByMember_memberIdAndPostStatusNot(memberId, status, pageable);
     }
 
+    public Page<Post> findByMedicalTag_medicalTagIdAndPostStatusNot(Long medicalTagId, String status, Pageable pageable) {
+        return postRepository.findByMedicalTag_medicalTagIdAndPostStatusNot(medicalTagId, status, pageable);
+    }
+
+    public Page<Post> findByRegion_regionIdAndPostStatusNot(Long regionId, String status, Pageable pageable) {
+        return postRepository.findByRegion_regionIdAndPostStatusNot(regionId, status, pageable);
+    }
+
     // 단일 조회
     public Post findPost(Long postId){
 

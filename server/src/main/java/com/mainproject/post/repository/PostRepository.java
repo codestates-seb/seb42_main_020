@@ -20,4 +20,8 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     Page<Post> findByMember_memberIdAndPostStatusNot(Long memberId, String status, Pageable pageable);
 
+    Page<Post> findByMedicalTag_medicalTagIdAndPostStatusNot(Long medicalTagId, String status, Pageable pageable);
+
+    Page<Post> findByRegion_regionIdAndPostStatusNot(Long regionId, String status, Pageable pageable);
+
 }
