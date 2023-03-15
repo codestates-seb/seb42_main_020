@@ -12,7 +12,6 @@ public interface CommentMapper {
     Comment commentPostDtoToComment(CommentPostDto commentPostDto);
     Comment commentPatchDtoToComment(CommentPatchDto commentPatchDto);
 
-    @Mapping(target = "memberId", source = "comment.member.memberId")
     @Mapping(target = "writerResponse", source = "comment.member")
     CommentResponseDto commentToCommentResponseDto(Comment comment);
 }

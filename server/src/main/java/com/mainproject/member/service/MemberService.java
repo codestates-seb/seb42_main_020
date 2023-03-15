@@ -76,7 +76,7 @@ public class MemberService {
 
         Member findMember = findVerifiedMember(memberId);
 
-        if(findMember.isDoctor() != false) {
+        if(findMember.getIsDoctor() != false) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         }
 
@@ -88,7 +88,7 @@ public class MemberService {
 
         Member findMember = findVerifiedMember(memberId);
 
-        if(findMember.isDoctor() != true) {
+        if(findMember.getIsDoctor() != true) {
             throw new BusinessLogicException(ExceptionCode.DOCTOR_NOT_FOUND);
         }
 

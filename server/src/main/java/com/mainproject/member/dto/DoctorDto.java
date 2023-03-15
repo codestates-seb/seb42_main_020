@@ -62,8 +62,9 @@ public class DoctorDto {
         private long memberId;
         private String email;
         private String name;
-        // DoctorCommentResponseDto로 변경 가능
-        private List<Comment> comments;
+        private boolean isDoctor;
+        private Member.MemberRating memberRating;
         private Member.MemberStatus memberStatus;
+        private List<Comment> comments;
     }
 }

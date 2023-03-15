@@ -30,7 +30,7 @@ public class Member extends Auditable {
     private String name;
 
     // 닉네임
-    @Column(length = 30, nullable = false)
+    @Column(length = 30)
     private String displayName;
 
     @Column(length = 100, nullable = false)
@@ -55,6 +55,10 @@ public class Member extends Auditable {
     @Column(name = "MEMBER_RATING", length = 30, nullable = false)
     private MemberRating memberRating = MemberRating.UNRANKED;
 
+    public boolean getIsDoctor() {
+        return isDoctor;
+    }
+
     public void setIsDoctor(boolean isDoctor) {
         this.isDoctor = isDoctor;
     }
@@ -66,9 +70,6 @@ public class Member extends Auditable {
     // Comment 클래스 1;n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
-
-    /*@OneToMany(fetch = FetchType.LAZY, mappedBy = "doctor", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private List<DoctorComment> doctorComments = new ArrayList<>();*/
 
     // 게시글, 댓글 신고, 좋아요 매핑 필요
 

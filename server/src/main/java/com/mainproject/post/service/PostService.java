@@ -57,6 +57,10 @@ public class PostService {
         MedicalTag medicalTag = subService.findMedicalTag(medicalTitle);
         Region region = subService.findRegion(regionName);
 
+        if (member.getIsDoctor() == true) {
+            throw new BusinessLogicException(ExceptionCode.DOCTOR_CANNOT_POST);
+        }
+
         post.setMedicalTag(medicalTag);
         post.setRegion(region);
         post.setMember(member);
@@ -80,6 +84,10 @@ public class PostService {
         Hospital hospital = subService.findHospital(hospitalName);
         MedicalTag medicalTag = subService.findMedicalTag(medicalTitle);
         Region region = subService.findRegion(regionName);
+
+        if (member.getIsDoctor() == true) {
+            throw new BusinessLogicException(ExceptionCode.DOCTOR_CANNOT_POST);
+        }
 
         post.setHospital(hospital);
         post.setMedicalTag(medicalTag);
@@ -125,6 +133,16 @@ public class PostService {
         postRepository.save(post);
     }
 
+    // 리뷰글 등록 승인
+    public void approveReview(long postId) {
+
+        // 관리자 검증 필요
+
+        Post post = findPendingPost(postId);
+
+        post.setPostStatus(Post.PostStatus.POST_REGISTERED);
+    }
+
     // 좋아요 기능
     public void addLike(long postId, String email, Integer like) {
 
@@ -145,6 +163,7 @@ public class PostService {
         }
     }
 
+    // 삭제, 승인대기인 게시글 검증
     private Post findVerifiedPost(long postId) {
 
         Post findPost = postRepository.findById(postId)
@@ -154,6 +173,17 @@ public class PostService {
         } else if (findPost.getPostStatus() == Post.PostStatus.POST_PENDING) {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_APPROVED);
         }
+
+        return findPost;
+    }
+
+    // 승인대기중인 게시글 찾기
+    private Post findPendingPost(long postId) {
+
+        Post findPost = postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+
+        if(findPost.getPostStatus() != Post.PostStatus.POST_PENDING) throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
 
         return findPost;
     }
