@@ -20,6 +20,8 @@ public interface PostMapper {
     @Mapping(target = "writerResponse", source = "post.member")
     PostResponseDto postToPostResponseDto(Post post);
 
+    List<PostResponseDto> postsToPostsResponseDto(List<Post> posts);
+
     // 리뷰글 매핑
     Post reviewPostDtoToReview(ReviewPostDto reviewPostDto);
 
