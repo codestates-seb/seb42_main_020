@@ -9,8 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,20 +25,21 @@ public class ReviewController {
 
     // 글 작성
     @PostMapping
-    public ResponseEntity createReview(@RequestBody @Valid ReviewPostDto reviewDto, @RequestParam Long memberId) {
+    public ResponseEntity createReview(@RequestPart(value = "post") ReviewPostDto reviewDto,
+                                       @RequestPart(value = "memberId") Long memberId,
+                                       @RequestPart(value = "img", required = false) MultipartFile img) throws IOException {
 
         Post review = postMapper.reviewPostDtoToReview(reviewDto);
-        Long reviewId = postService.createReview(review, memberId, reviewDto.getHospitalName(), reviewDto.getMedicalTagTitle(), reviewDto.getRegionName());
+        Long reviewId = postService.createReview(review, memberId, reviewDto.getHospitalName(), reviewDto.getMedicalTagTitle(), reviewDto.getRegionName(), img);
 
         return new ResponseEntity<>(reviewId, HttpStatus.OK);
     }
 
-    @PatchMapping("/{post-id}")
+    @PatchMapping("/{post-id}/approval")
     public ResponseEntity approveReview(@PathVariable("post-id") long postId) {
 
         postService.approveReview(postId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

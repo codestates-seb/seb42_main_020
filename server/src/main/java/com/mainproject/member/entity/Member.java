@@ -6,6 +6,7 @@ import com.mainproject.post.entity.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -39,8 +40,8 @@ public class Member extends Auditable {
     @Column
     private boolean isDoctor;
 
-    @Column
-    private String img;
+    @Column(length = 10000000)
+    private byte[] img;
 
     @Column
     private int point = 0;

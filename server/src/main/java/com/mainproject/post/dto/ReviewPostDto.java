@@ -19,9 +19,6 @@ public class ReviewPostDto {
     @NotBlank(message = "내용은 공백이 아니어야 합니다.")
     private String content;
 
-    @NotBlank(message = "영수증 사진을 첨부해야합니다.")
-    private String receipt;
-
     private String medicalTagTitle;
 
     private String regionName;

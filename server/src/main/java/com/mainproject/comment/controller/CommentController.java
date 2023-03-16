@@ -34,9 +34,11 @@ public class CommentController {
 
     // 하나의 댓글 등록
     @PostMapping
-    public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentPostDto, @RequestParam Long memberId) {
+    public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentPostDto,
+                                      @RequestParam long memberId,
+                                      @RequestParam long postId) {
         Comment comment = mapper.commentPostDtoToComment(commentPostDto);
-        Comment response = commentService.createComment(comment, memberId);
+        Comment response = commentService.createComment(comment, memberId, postId);
         return new ResponseEntity<>(mapper.commentToCommentResponseDto(response), HttpStatus.CREATED);
     }
 

@@ -1,6 +1,7 @@
 package com.mainproject.member.controller;
 
 import com.mainproject.member.dto.DoctorDto;
+import com.mainproject.member.dto.MemberDto;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.mapper.MemberMapper;
 import com.mainproject.member.service.MemberService;
@@ -9,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/doctors")
@@ -22,11 +25,12 @@ public class DoctorController {
     private final MemberMapper memberMapper;
 
     @PostMapping("/signup")
-    public ResponseEntity postDoctor(@Valid @RequestBody DoctorDto.Post requestBody) {
+    public ResponseEntity postDoctor(@RequestPart(value = "post") DoctorDto.Post post,
+                                     @RequestPart(value = "img", required = false) MultipartFile img) throws IOException {
 
-        Member member = memberMapper.doctorPostToMember(requestBody);
+        Member member = memberMapper.doctorPostToMember(post);
 
-        memberService.createDoctor(member);
+        memberService.createDoctor(member, img);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

@@ -1,6 +1,7 @@
 package com.mainproject.post.controller;
 
 import com.mainproject.comment.service.CommentService;
+import com.mainproject.global.dto.MultiResponseDto;
 import com.mainproject.post.dto.*;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.mapper.PostMapper;
@@ -34,6 +35,22 @@ public class PostController {
     private final PostReportMapper postReportMapper;
     private final PostReportService postReportService;
     private final CommentService commentService;
+
+    // 전체 질문 조회
+    @GetMapping
+    public ResponseEntity getQuestions(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                   @RequestParam(value = "titleKeyword", required = false) String titleKeyword,
+                                                   @RequestParam(value = "contentKeyword", required = false) String contentKeyword,
+                                                   @RequestParam(value = "sort", defaultValue = "createdAt") String sortType,
+                                                   @RequestParam(value = "filterType", defaultValue = "1") int filterType,
+                                                   @RequestParam(value = "medicalTagTitle", required = false) String medicalTagTitle,
+                                                   @RequestParam(value = "regionName", required = false) String regionName) {
+        Page<Post> postPage = postService.findQuestions(page, titleKeyword, contentKeyword, sortType, filterType, medicalTagTitle, regionName);
+        List<Post> posts = postPage.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(postMapper.postsToPostsResponseDto(posts), postPage), HttpStatus.OK);
+    }
 
     // 페이징 조회 - 제목 검색
     @GetMapping("/title")

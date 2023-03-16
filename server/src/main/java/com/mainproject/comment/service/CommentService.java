@@ -32,10 +32,16 @@ public class CommentService {
     private final CommentLikeRepository commentLikeRepository;
 
     // 댓글 작성
-    public Comment createComment(Comment comment, Long memberId) {
+    public Comment createComment(Comment comment, Long memberId, long postId) {
 
         Member member = memberService.findMember(memberId);
+        Post post = postService.findPost(postId);
 
+        if (post.getPostType() == "review") {
+            throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
+        }
+
+        comment.setPost(post);
         comment.setMember(member);
         comment.setCreatedAt(LocalDateTime.now());
         comment.setModifiedAt(LocalDateTime.now());
