@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
 import { FcGoogle } from 'react-icons/fc';
 import { BsArrowReturnLeft } from 'react-icons/bs';
@@ -23,11 +23,13 @@ import {
   SModalSignupBtn,
 } from '../../Style/LoginStyle';
 import axios from 'axios';
-import { useRecoilState } from 'recoil';
-import { loginState } from '../../atoms/atoms';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { loginState, loggedUserInfo } from '../../atoms/atoms';
 
 const Login = () => {
-  const [loggedIn, setLoggedIn] = useRecoilState(loginState);
+  const [isLogged, setIsLogged] = useRecoilState(loginState);
+  const setUserInfo = useSetRecoilState(loggedUserInfo);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -39,6 +41,7 @@ const Login = () => {
   const { lockScroll, openScroll } = useBodyScrollLock();
 
   const cookies = new Cookies();
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
     axios
@@ -47,14 +50,25 @@ const Login = () => {
         password: password,
       })
       .then((res) => {
-        console.log(res.headers);
         const accessToken = res.headers.authorization;
         const refreshToken = res.headers.refresh;
         localStorage.setItem('accessToken', accessToken);
+        // token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
+        axios.defaults.headers.common['Authorization'] = `${accessToken}`;
 
-        cookies.set('refresh_token', refreshToken, { sameSite: 'strict' });
-        setLoggedIn(true);
-        console.log(loggedIn);
+        axios
+          .get(`/members`, {
+            headers: {
+              'ngrok-skip-browser-warning': 'skip', // ngrok error skip용 헤더 추후 삭제 예정
+            },
+          })
+          .then((res) => {
+            setUserInfo(res.data);
+          });
+
+        cookies.set('refreshToken', refreshToken, { sameSite: 'strict' });
+        setIsLogged(!isLogged);
+        navigate('/home');
       })
       .catch((data) => {
         console.log('Error!');
