@@ -1,18 +1,22 @@
 package com.mainproject.member.service;
 
+import com.mainproject.auth.CustomAuthorityUtils;
 import com.mainproject.global.dto.PrincipalDto;
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -21,6 +25,8 @@ import java.util.Optional;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
 
     // 일반 회원가입
     public Member createMember(Member member) {
@@ -33,8 +39,12 @@ public class MemberService {
         member.setModifiedAt(LocalDateTime.now());
 
         // 패스워드 암호화
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
 
         // USER Role 저장
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
 
         return memberRepository.save(member);
     }
@@ -53,16 +63,20 @@ public class MemberService {
         member.setImg(imgByte);
 
         // 패스워드 암호화
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
 
         // USER Role 저장
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
 
         return memberRepository.save(member);
     }
 
     // 회원 수정 (로그인 정보 검증 필요)
-    public Member updateMember(Member member) {
+    public Member updateMember(Member member, String email) {
 
-        Member findMember = findVerifiedMember(member.getMemberId());
+        Member findMember = findMemberByEmail(email);
 
         Optional.ofNullable(member.getDisplayName())
                 .ifPresent(displayName -> findMember.setDisplayName(displayName));
@@ -70,6 +84,8 @@ public class MemberService {
                 .ifPresent(password -> findMember.setPassword(password));
 
         // 패스워드 암호화
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
 
         findMember.setModifiedAt(LocalDateTime.now());
 
@@ -77,9 +93,9 @@ public class MemberService {
     }
 
     // 특정 회원 찾기
-    public Member findMember(long memberId) {
+    public Member findMember(String email) {
 
-        Member findMember = findVerifiedMember(memberId);
+        Member findMember = findMemberByEmail(email);
 
         if(findMember.getIsDoctor() != false) {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
@@ -89,9 +105,9 @@ public class MemberService {
     }
 
     // 특정 의사 찾기
-    public Member findDoctor(long memberId) {
+    public Member findDoctor(String email) {
 
-        Member findMember = findVerifiedMember(memberId);
+        Member findMember = findMemberByEmail(email);
 
         if(findMember.getIsDoctor() != true) {
             throw new BusinessLogicException(ExceptionCode.DOCTOR_NOT_FOUND);
@@ -101,7 +117,10 @@ public class MemberService {
     }
 
     // 회원 삭제 (로그인 정보 검증 필요)
-    public Member deleteMember(long memberId) {
+    public Member deleteMember(String email) {
+
+        Member member = findMemberByEmail(email);
+        long memberId = member.getMemberId();
 
         Member findMember = findVerifiedMember(memberId);
 
@@ -184,27 +203,6 @@ public class MemberService {
         } member.setMemberRating(Member.MemberRating.UNRANKED);
 
         return memberRepository.save(member);
-    }
-
-    // 로그인 정보 검증
-    public void compareMemberIdAndLoginId(Long memberId) {
-
-        if (!memberId.equals(getLoginUserId()))
-            throw new BusinessLogicException(ExceptionCode.NOT_RESOURCE_OWNER);
-    }
-
-    // 로그인 정보에서 추출한 memberId
-    private Long getLoginUserId() {
-
-        Long memberId = null;
-        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication != null && authentication.getPrincipal() instanceof PrincipalDto) {
-            PrincipalDto principal = (PrincipalDto) authentication.getPrincipal();
-            memberId = principal.getId();
-        }*/
-
-        return memberId;
     }
 
     private byte[] convertMultipartFileToByte(MultipartFile multipartFile) throws IOException {

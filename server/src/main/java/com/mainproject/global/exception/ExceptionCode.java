@@ -20,6 +20,9 @@ public enum ExceptionCode {
     CANNOT_ACCEPT_COMMENT(400, "Cannot accept comment"),
     DOCTOR_CANNOT_POST(400, "Doctor cannot post"),
 
+    NOT_COMMENTS_MEMBER(400, "Not comment's member"),
+    NOT_POSTS_MEMBER(400, "Not post's member"),
+    POST_NOT_CHANGED(400, "Post not changed"),
     COMMENT_NOT_CHANGED(400, "Comment not changed"),
     NOT_RESOURCE_OWNER(400, "Not resource owner");
 
