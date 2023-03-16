@@ -1,3 +1,4 @@
+import Cookies from 'universal-cookie';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
@@ -22,8 +23,11 @@ import {
   SModalSignupBtn,
 } from '../../Style/LoginStyle';
 import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { loginState } from '../../atoms/atoms';
 
 const Login = () => {
+  const [loggedIn, setLoggedIn] = useRecoilState(loginState);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,25 +38,27 @@ const Login = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { lockScroll, openScroll } = useBodyScrollLock();
 
-  // * '/members/login' 이나 json-server '/' 인식 불가능으로 '/login' 으로 임시 적용
+  const cookies = new Cookies();
 
   const handleSubmit = () => {
-    axios({
-      method: 'post',
-      url: 'http://localhost:3001/login',
-      data: {
-        email,
-        password,
-      },
-      Headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        console.log(res);
+    axios
+      .post('/login', {
+        email: email,
+        password: password,
       })
-      .catch(() => {
+      .then((res) => {
+        console.log(res.headers);
+        const accessToken = res.headers.authorization;
+        const refreshToken = res.headers.refresh;
+        localStorage.setItem('accessToken', accessToken);
+
+        cookies.set('refresh_token', refreshToken, { sameSite: 'strict' });
+        setLoggedIn(true);
+        console.log(loggedIn);
+      })
+      .catch((data) => {
         console.log('Error!');
+        console.log(data);
       });
   };
 
