@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
 import { message } from 'antd';
 import {
@@ -33,6 +33,8 @@ const Signup = () => {
   const { openScroll } = useBodyScrollLock(); // 페이지 이동 후 scroll lock 해제
   openScroll();
 
+  const navigate = useNavigate();
+
   const handleSubmit = () => {
     axios
       .post('/members/signup', {
@@ -43,10 +45,12 @@ const Signup = () => {
       })
       .then((res) => {
         console.log(res);
+        navigate('/login');
       })
       .catch((data) => {
         console.log('Error!');
         console.log(data);
+        // 회원가입 실패 안내창 띄우기
       });
   };
 
