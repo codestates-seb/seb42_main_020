@@ -90,9 +90,9 @@ public class PostService {
         } else if(filterType == 3) {
             return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndPostType(titleKeyword, contentKeyword, status, "review", pageRequest);
         } else if (filterType == 4) {
-            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndMedicalTag_title(titleKeyword, contentKeyword, status, medicalTagTitle, pageRequest);
-        } else if (filterType == 5) {
             return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndRegion_name(titleKeyword, contentKeyword, status, regionName, pageRequest);
+        } else if (filterType == 5) {
+            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndMedicalTag_title(titleKeyword, contentKeyword, status, medicalTagTitle, pageRequest);
         }
         throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
     }
