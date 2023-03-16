@@ -37,8 +37,8 @@ public class Post extends Auditable {
     @Column(nullable = false)
     private String postType;
 
-    @Column
-    private String receipt;
+    @Column(length = 10000000)
+    private byte[] receipt;
 
     // 상태
     @Enumerated(value = EnumType.STRING)

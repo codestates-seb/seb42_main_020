@@ -35,6 +35,20 @@ public class PostController {
     private final PostReportService postReportService;
     private final CommentService commentService;
 
+    // 전체 질문 조회
+    @GetMapping
+    public ResponseEntity<Page<Post>> getQuestions(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                   @RequestParam(value = "titleKeyword", required = false) String titleKeyword,
+                                                   @RequestParam(value = "contentKeyword", required = false) String contentKeyword,
+                                                   @RequestParam(value = "sort", defaultValue = "createdAt") String sortType,
+                                                   @RequestParam(value = "filterType", defaultValue = "1") int filterType,
+                                                   @RequestParam(value = "medicalTagTitle", required = false) String medicalTagTitle,
+                                                   @RequestParam(value = "regionName", required = false) String regionName) {
+        Page<Post> posts = postService.findQuestions(page, titleKeyword, contentKeyword, sortType, filterType, medicalTagTitle, regionName);
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
     // 페이징 조회 - 제목 검색
     @GetMapping("/title")
     public ResponseEntity<Page<Post>> getPostsByTitle(@RequestParam(value = "page", defaultValue = "0") int page,

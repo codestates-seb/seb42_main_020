@@ -18,19 +18,28 @@ import com.mainproject.subEntity.region.RegionRepository;
 import com.mainproject.subEntity.service.SubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static com.mainproject.post.entity.Post.PostStatus.POST_DELETED;
+import static com.mainproject.post.entity.Post.PostStatus.POST_PENDING;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class PostService {
 
+    private int pageSize = 20;
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
     private final MemberService memberService;
@@ -69,6 +78,25 @@ public class PostService {
         return postRepository.findByRegion_regionIdAndPostStatusNot(regionId, status, pageable);
     }
 
+    public Page<Post> findQuestions(int page, String titleKeyword, String contentKeyword, String sortType, int filterType, String medicalTagTitle, String regionName) {
+
+        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
+        List<Post.PostStatus> status = Arrays.asList(POST_PENDING, POST_DELETED);
+
+        if(filterType == 1) {
+            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotIn(titleKeyword, contentKeyword, status, pageRequest);
+        } else if(filterType == 2) {
+            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndPostType(titleKeyword, contentKeyword, status, "question", pageRequest);
+        } else if(filterType == 3) {
+            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndPostType(titleKeyword, contentKeyword, status, "review", pageRequest);
+        } else if (filterType == 4) {
+            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndMedicalTag_title(titleKeyword, contentKeyword, status, medicalTagTitle, pageRequest);
+        } else if (filterType == 5) {
+            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndRegion_name(titleKeyword, contentKeyword, status, regionName, pageRequest);
+        }
+        throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
+    }
+
     // 단일 조회
     public Post findPost(Long postId){
 
@@ -105,7 +133,7 @@ public class PostService {
     }
 
     // 리뷰글 작성
-    public Long createReview(Post post, Long memberId, String hospitalName, String medicalTitle, String regionName) {
+    public Long createReview(Post post, Long memberId, String hospitalName, String medicalTitle, String regionName, MultipartFile img) throws IOException{
 
         // 로그인 검증 필요
 
@@ -114,6 +142,7 @@ public class PostService {
         Hospital hospital = subService.findHospital(hospitalName);
         MedicalTag medicalTag = subService.findMedicalTag(medicalTitle);
         Region region = subService.findRegion(regionName);
+        byte[] imgByte = convertMultipartFileToByte(img);
 
         if (member.getIsDoctor() == true) {
             throw new BusinessLogicException(ExceptionCode.DOCTOR_CANNOT_POST);
@@ -124,9 +153,10 @@ public class PostService {
         post.setRegion(region);
         post.setMember(member);
         post.setPostType("review");
-        post.setPostStatus(Post.PostStatus.POST_PENDING);
+        post.setPostStatus(POST_PENDING);
         post.setCreatedAt(LocalDateTime.now());
         post.setModifiedAt(LocalDateTime.now());
+        post.setReceipt(imgByte);
 
         postRepository.save(post);
 
@@ -158,7 +188,7 @@ public class PostService {
         Post post = findVerifiedPost(postId);
 
         post.setModifiedAt(LocalDateTime.now());
-        post.setPostStatus(Post.PostStatus.POST_DELETED);
+        post.setPostStatus(POST_DELETED);
 
         postRepository.save(post);
     }
@@ -198,9 +228,9 @@ public class PostService {
 
         Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
-        if(findPost.getPostStatus() == Post.PostStatus.POST_DELETED ) {
+        if(findPost.getPostStatus() == POST_DELETED ) {
             throw new BusinessLogicException(ExceptionCode.POST_DELETED);
-        } else if (findPost.getPostStatus() == Post.PostStatus.POST_PENDING) {
+        } else if (findPost.getPostStatus() == POST_PENDING) {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_APPROVED);
         }
 
@@ -213,8 +243,12 @@ public class PostService {
         Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
-        if(findPost.getPostStatus() != Post.PostStatus.POST_PENDING) throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
+        if(findPost.getPostStatus() != POST_PENDING) throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
 
         return findPost;
+    }
+
+    private byte[] convertMultipartFileToByte(MultipartFile multipartFile) throws IOException {
+        return multipartFile.getBytes();
     }
 }

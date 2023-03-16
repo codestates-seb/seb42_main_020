@@ -40,7 +40,7 @@ public class Member extends Auditable {
     @Column
     private boolean isDoctor;
 
-    @Column(length = 1000000)
+    @Column(length = 10000000)
     private byte[] img;
 
     @Column
