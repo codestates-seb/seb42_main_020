@@ -2,15 +2,12 @@ package com.mainproject.member.service;
 
 import com.mainproject.auth.CustomAuthorityUtils;
 import com.mainproject.comment.entity.Comment;
-import com.mainproject.global.dto.PrincipalDto;
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.repository.MemberRepository;
 import com.mainproject.post.entity.Post;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,11 +1,12 @@
 package com.mainproject.post.controller;
 
-import com.mainproject.auth.MemberDetailsService;
 import com.mainproject.comment.service.CommentService;
 import com.mainproject.global.dto.MultiResponseDto;
-import com.mainproject.member.entity.Member;
 import com.mainproject.member.service.MemberService;
-import com.mainproject.post.dto.*;
+import com.mainproject.post.dto.PostPatchDto;
+import com.mainproject.post.dto.PostPostDto;
+import com.mainproject.post.dto.PostResponseDto;
+import com.mainproject.post.dto.ReviewResponseDto;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.mapper.PostMapper;
 import com.mainproject.post.service.PostService;
@@ -19,14 +20,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -69,13 +69,8 @@ public class PostController {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
-        Page<Post> posts;
-
-        if (status == null) {
-            posts = postService.findByTitleContainingAndPostStatusNot(keyword, "POST_DELETED", pageable);
-        } else {
-            posts = postService.findByTitleContainingAndPostStatusIn(keyword, status, pageable);
-        }
+        Page<Post> posts = postService.findByTitleContainingAndPostStatusNotIn(keyword,
+                Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }

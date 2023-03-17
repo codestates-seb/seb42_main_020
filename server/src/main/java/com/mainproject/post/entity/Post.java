@@ -1,8 +1,12 @@
 package com.mainproject.post.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mainproject.audit.Auditable;
-import com.mainproject.member.entity.Member;
 import com.mainproject.comment.entity.Comment;
+import com.mainproject.member.entity.Member;
+import com.mainproject.page.LocalDateTimeSerializer;
 import com.mainproject.postReport.entity.PostReport;
 import com.mainproject.subEntity.hospital.Hospital;
 import com.mainproject.subEntity.medicalTag.MedicalTag;
@@ -10,8 +14,11 @@ import com.mainproject.subEntity.region.Region;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +39,16 @@ public class Post extends Auditable {
     // 본문
     @Column(name = "CONTENT", length = 1000, nullable = false)
     private String content;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime modifiedAt;
 
     // 리뷰 별점
     @Column(name = "STAR_RATING")
@@ -55,10 +72,12 @@ public class Post extends Auditable {
     // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
+    @JsonBackReference
     private Member member;
 
     // 회원 댓글 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
     // 좋아요 1:n 양방향
@@ -68,16 +87,19 @@ public class Post extends Auditable {
     // 진료과목 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEDICAL_TAG_ID")
+    @JsonManagedReference
     private MedicalTag medicalTag;
 
     // 지역 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REGION_ID")
+    @JsonManagedReference
     private Region region;
 
     // 병원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOSPITAL_ID")
+    @JsonManagedReference
     private Hospital hospital;
 
     // 신고 1:n 양방향

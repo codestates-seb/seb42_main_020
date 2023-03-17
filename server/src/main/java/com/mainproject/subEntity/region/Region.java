@@ -1,5 +1,7 @@
 package com.mainproject.subEntity.region;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.mainproject.post.entity.Post;
 import com.mainproject.subEntity.hospital.Hospital;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Region {
 
     @Id
@@ -24,8 +27,10 @@ public class Region {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "region", cascade = CascadeType.PERSIST)
+    @JsonBackReference
     private List<Hospital> hospitals = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "region", cascade = CascadeType.PERSIST)
+    @JsonBackReference
     private List<Post> posts = new ArrayList<>();
 }

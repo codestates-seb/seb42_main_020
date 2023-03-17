@@ -2,7 +2,6 @@ package com.mainproject.post.repository;
 
 import com.mainproject.post.entity.Post;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +13,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post,Long> {
 
     // 키워드 검색 and 삭제상태 제외
-    Page<Post> findByTitleContainingAndPostStatusNot(String keyword, String status, Pageable pageable);
+    Page<Post> findByTitleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
 
     Page<Post> findByTitleContainingAndPostStatusIn(String keyword, List<String> status, Pageable pageable);
 

@@ -1,7 +1,6 @@
 package com.mainproject.member.controller;
 
 import com.mainproject.member.dto.DoctorDto;
-import com.mainproject.member.dto.MemberDto;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.mapper.MemberMapper;
 import com.mainproject.member.service.MemberService;
@@ -13,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController

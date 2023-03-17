@@ -1,7 +1,7 @@
 package com.mainproject.commentReport.repository;
 
-import com.mainproject.commentReport.entity.CommentReport;
 import com.mainproject.comment.entity.Comment;
+import com.mainproject.commentReport.entity.CommentReport;
 import com.mainproject.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

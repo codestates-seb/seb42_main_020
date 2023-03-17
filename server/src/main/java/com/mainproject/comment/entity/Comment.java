@@ -1,5 +1,6 @@
 package com.mainproject.comment.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mainproject.audit.Auditable;
 import com.mainproject.commentReport.entity.CommentReport;
 import com.mainproject.member.entity.Member;
@@ -35,7 +36,7 @@ public class Comment extends Auditable {
     // 상태
     @Enumerated(value = EnumType.STRING)
     @Column(name = "COMMENT_STATUS", length = 30, nullable = false)
-    private Comment.CommentStatus commentStatus = Comment.CommentStatus.COMMENT_REGISTERED;
+    private CommentStatus commentStatus = CommentStatus.COMMENT_REGISTERED;
 
     public enum CommentStatus{
         COMMENT_REGISTERED("댓글 등록"),
@@ -63,11 +64,13 @@ public class Comment extends Auditable {
     // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("member_id")
+    @JsonBackReference
     private Member member;
 
     // 게시글 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("post_id")
+    @JsonBackReference
     private Post post;
 
     // 신고 1:n

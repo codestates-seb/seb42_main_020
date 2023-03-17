@@ -1,8 +1,6 @@
 package com.mainproject.member.dto;
 
-import com.mainproject.comment.dto.CommentResponseDto;
 import com.mainproject.comment.dto.CommentResponseDtoDoctorInfo;
-import com.mainproject.comment.entity.Comment;
 import com.mainproject.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,7 +10,6 @@ import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;

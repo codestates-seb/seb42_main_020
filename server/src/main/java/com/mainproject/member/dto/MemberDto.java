@@ -1,17 +1,14 @@
 package com.mainproject.member.dto;
 
-import com.mainproject.comment.entity.Comment;
 import com.mainproject.member.entity.Member;
 import com.mainproject.post.dto.PostResponseMyPageInfo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;

@@ -50,8 +50,8 @@ public class PostService {
     private final RegionRepository regionRepository;
 
     // 페이징 조회
-    public Page<Post> findByTitleContainingAndPostStatusNot(String keyword, String status, Pageable pageable) {
-        return postRepository.findByTitleContainingAndPostStatusNot(keyword, status, pageable);
+    public Page<Post> findByTitleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
+        return postRepository.findByTitleContainingAndPostStatusNotIn(keyword, status, pageable);
     }
 
     public Page<Post> findByTitleContainingAndPostStatusIn(String keyword, List<String> status, Pageable pageable) {
