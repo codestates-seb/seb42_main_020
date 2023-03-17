@@ -54,28 +54,20 @@ public class PostService {
         return postRepository.findByTitleContainingAndPostStatusNotIn(keyword, status, pageable);
     }
 
-    public Page<Post> findByTitleContainingAndPostStatusIn(String keyword, List<String> status, Pageable pageable) {
-        return postRepository.findByTitleContainingAndPostStatusIn(keyword, status, pageable);
+    public Page<Post> findByContentContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
+        return postRepository.findByContentContainingAndPostStatusNotIn(keyword, status, pageable);
     }
 
-    public Page<Post> findByContentContainingAndPostStatusNot(String keyword, String status, Pageable pageable) {
-        return postRepository.findByContentContainingAndPostStatusNot(keyword, status, pageable);
+    public Page<Post> findByMember_memberIdAndPostStatusNotIn(Long memberId, List<Post.PostStatus> status, Pageable pageable) {
+        return postRepository.findByMember_memberIdAndPostStatusNotIn(memberId, status, pageable);
     }
 
-    public Page<Post> findByContentContainingAndPostStatusIn(String keyword, List<String> status, Pageable pageable) {
-        return postRepository.findByContentContainingAndPostStatusIn(keyword, status, pageable);
+    public Page<Post> findByMedicalTag_medicalTagIdAndPostStatusNotIn(Long medicalTagId, List<Post.PostStatus> status, Pageable pageable) {
+        return postRepository.findByMedicalTag_medicalTagIdAndPostStatusNotIn(medicalTagId, status, pageable);
     }
 
-    public Page<Post> findByMember_memberIdAndPostStatusNot(Long memberId, String status, Pageable pageable) {
-        return postRepository.findByMember_memberIdAndPostStatusNot(memberId, status, pageable);
-    }
-
-    public Page<Post> findByMedicalTag_medicalTagIdAndPostStatusNot(Long medicalTagId, String status, Pageable pageable) {
-        return postRepository.findByMedicalTag_medicalTagIdAndPostStatusNot(medicalTagId, status, pageable);
-    }
-
-    public Page<Post> findByRegion_regionIdAndPostStatusNot(Long regionId, String status, Pageable pageable) {
-        return postRepository.findByRegion_regionIdAndPostStatusNot(regionId, status, pageable);
+    public Page<Post> findByRegion_regionIdAndPostStatusNotIn(Long regionId, List<Post.PostStatus> status, Pageable pageable) {
+        return postRepository.findByRegion_regionIdAndPostStatusNotIn(regionId, status, pageable);
     }
 
     public Page<Post> findQuestions(int page, String titleKeyword, String sortType, int filterType, String medicalTagTitle, String regionName) {

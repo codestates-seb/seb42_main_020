@@ -36,7 +36,6 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-
     private final PostMapper postMapper;
     private final PostReportMapper postReportMapper;
     private final PostReportService postReportService;
@@ -86,13 +85,8 @@ public class PostController {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
-        Page<Post> posts;
-
-        if (status == null) {
-            posts = postService.findByContentContainingAndPostStatusNot(keyword, "POST_DELETED", pageable);
-        } else {
-            posts = postService.findByContentContainingAndPostStatusIn(keyword, status, pageable);
-        }
+        Page<Post> posts = postService.findByContentContainingAndPostStatusNotIn(keyword,
+                Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
@@ -106,7 +100,9 @@ public class PostController {
                                                          @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
-        Page<Post> posts = postService.findByMember_memberIdAndPostStatusNot(memberId, "POST_DELETED", pageable);
+
+        Page<Post> posts = postService.findByMember_memberIdAndPostStatusNotIn(memberId,
+                Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
@@ -114,27 +110,31 @@ public class PostController {
     // 페이징 조회 - 진료과목
     @GetMapping("/medicalTag/{medicalTagId}")
     public ResponseEntity<Page<Post>> getPostsByMedicalTag(@PathVariable Long medicalTagId,
-                                                         @RequestParam(value = "page", defaultValue = "0") int page,
-                                                         @RequestParam(value = "size", defaultValue = "10") int size,
-                                                         @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
-                                                         @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
+                                                           @RequestParam(value = "page", defaultValue = "0") int page,
+                                                           @RequestParam(value = "size", defaultValue = "10") int size,
+                                                           @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                           @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
-        Page<Post> posts = postService.findByMedicalTag_medicalTagIdAndPostStatusNot(medicalTagId, "POST_DELETED", pageable);
+
+        Page<Post> posts = postService.findByMedicalTag_medicalTagIdAndPostStatusNotIn(medicalTagId,
+                Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     // 페이징 조회 - 지역
     @GetMapping("/region/{regionId}")
-    public ResponseEntity<Page<Post>> getPostsByRegionId(@PathVariable Long regionTagId,
+    public ResponseEntity<Page<Post>> getPostsByRegionId(@PathVariable Long regionId,
                                                          @RequestParam(value = "page", defaultValue = "0") int page,
                                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                                          @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
                                                          @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
-        Page<Post> posts = postService.findByRegion_regionIdAndPostStatusNot(regionTagId, "POST_DELETED", pageable);
+
+        Page<Post> posts = postService.findByRegion_regionIdAndPostStatusNotIn(regionId,
+                Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
