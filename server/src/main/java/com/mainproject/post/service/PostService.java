@@ -83,6 +83,7 @@ public class PostService {
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
         List<Post.PostStatus> status = Arrays.asList(POST_PENDING, POST_DELETED);
 
+
         if(filterType == 1) {
             return postRepository.findByTitleContainsAndPostStatusNotIn(titleKeyword, status, pageRequest);
         } else if(filterType == 2) {
@@ -98,11 +99,11 @@ public class PostService {
     }
 
     // 단일 조회
-    public Post findPost(Long postId){
+    public Post findPost(Long postId) {
 
         Post post = findVerifiedPost(postId);
 
-       return post;
+        return post;
     }
 
     // 게시글 작성
@@ -138,9 +139,11 @@ public class PostService {
         Region region = subService.findRegion(regionName);
         byte[] imgByte = convertMultipartFileToByte(img);
 
-        if (member.getIsDoctor() == true) {
+        if (member.getIsDoctor()) {
             throw new BusinessLogicException(ExceptionCode.DOCTOR_CANNOT_POST);
         }
+
+        subService.updateHospitalGrade(hospital.getHospitalId(), post.getStarRating());
 
         post.setHospital(hospital);
         post.setMedicalTag(medicalTag);
@@ -158,6 +161,7 @@ public class PostService {
     }
 
     // 게시글 수정
+
     public void updatePost(Post post, Long postId, String email, String medicalTitle, String regionName){
 
         // 본인 검증
@@ -215,7 +219,7 @@ public class PostService {
     }
 
     // 좋아요 여부 검증
-    private void verifyExistsLike(Member member, Post post)  {
+    private void verifyExistsLike(Member member, Post post) {
 
         Optional<PostLike> like = postLikeRepository.findByMemberAndPost(member, post);
         if (like.isPresent()) {
@@ -228,7 +232,7 @@ public class PostService {
 
         Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
-        if(findPost.getPostStatus() == POST_DELETED ) {
+        if (findPost.getPostStatus() == POST_DELETED) {
             throw new BusinessLogicException(ExceptionCode.POST_DELETED);
         } else if (findPost.getPostStatus() == POST_PENDING) {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_APPROVED);
@@ -243,7 +247,7 @@ public class PostService {
         Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
-        if(findPost.getPostStatus() != POST_PENDING) throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
+        if (findPost.getPostStatus() != POST_PENDING) throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
 
         return findPost;
     }

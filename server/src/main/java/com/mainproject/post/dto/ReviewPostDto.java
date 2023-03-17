@@ -24,4 +24,6 @@ public class ReviewPostDto {
     private String regionName;
 
     private String hospitalName;
+
+    private int starRating;
 }

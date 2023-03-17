@@ -6,6 +6,7 @@ import com.mainproject.subEntity.region.Region;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,6 +25,13 @@ public class Hospital {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private double grade;
+
+    @Column(nullable = false)
+    @ColumnDefault("0")
+    private int reviewCount;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REGION_ID")
     private Region region;

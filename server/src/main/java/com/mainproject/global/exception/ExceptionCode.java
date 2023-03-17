@@ -24,7 +24,8 @@ public enum ExceptionCode {
     NOT_POSTS_MEMBER(400, "Not post's member"),
     POST_NOT_CHANGED(400, "Post not changed"),
     COMMENT_NOT_CHANGED(400, "Comment not changed"),
-    NOT_RESOURCE_OWNER(400, "Not resource owner");
+    NOT_RESOURCE_OWNER(400, "Not resource owner"),
+    HOSPITAL_NOT_FOUND(404, "Hospital not found");
 
 
     @Getter
