@@ -125,6 +125,10 @@ public class PostService {
         post.setCreatedAt(LocalDateTime.now());
         post.setModifiedAt(LocalDateTime.now());
 
+        // 포인트 수정
+        member.setPoint(member.getPoint() + 5);
+        memberService.updateRating(member);
+
         postRepository.save(post);
 
         return post.getPostId();
@@ -204,6 +208,11 @@ public class PostService {
 
         Post post = findPendingPost(postId);
 
+        // 포인트 수정
+        Member memberForPoint = post.getMember();
+        memberForPoint.setPoint(memberForPoint.getPoint() + 10);
+        memberService.updateRating(memberForPoint);
+
         post.setPostStatus(Post.PostStatus.POST_REGISTERED);
     }
 
@@ -213,9 +222,15 @@ public class PostService {
         Member member = memberService.findMemberByEmail(email);
         Post post = findVerifiedPost(postId);
 
+        // 포인트 수정
+        Member memberForPoint = post.getMember();
+        memberForPoint.setPoint(memberForPoint.getPoint() + 1);
+        memberService.updateRating(memberForPoint);
+
         verifyExistsLike(member, post);
 
         postLikeRepository.save(post.addLike(new PostLike(post, member, like)));
+        post.setTotalLike(post.getTotalLike());
     }
 
     // 좋아요 여부 검증

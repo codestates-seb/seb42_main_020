@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -33,6 +34,9 @@ public class Member extends Auditable {
     // 닉네임
     @Column(length = 30)
     private String displayName;
+
+    @Column(length = 30)
+    private String area;
 
     @Column(length = 100, nullable = false)
     private String password;
@@ -105,5 +109,23 @@ public class Member extends Auditable {
         MemberRating(String rating) {
             this.rating = rating;
         }
+    }
+
+    // 댓글 수
+    public int getTotalComments() {
+        int totalComments = comments.size();
+        return totalComments;
+    }
+
+    // 채택된 댓글 수
+    public int getAcceptComments() {
+
+        List<Comment> filterComments = comments.stream()
+                .filter(comment -> comment.getCommentStatus() == Comment.CommentStatus.COMMENT_ACCEPTED)
+                .collect(Collectors.toList());
+
+        int totalAcceptComments = filterComments.size();
+
+        return totalAcceptComments;
     }
 }

@@ -1,5 +1,6 @@
-package com.mainproject.post.dto;
+package com.mainproject.comment.dto;
 
+import com.mainproject.comment.entity.Comment;
 import com.mainproject.post.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,17 +11,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PostResponseMyPageInfo {
+public class CommentResponseDtoDoctorInfo {
 
-    private long postId;
-    private String title;
+    private long commentId;
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-    private Post.PostStatus postStatus;
-    private String postType;
+    private Comment.CommentStatus commentStatus;
     private Integer totalLike;
-    private String hospitalName;
-    private String medicalTagTitle;
-    private String regionName;
 }

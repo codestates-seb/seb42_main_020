@@ -1,11 +1,13 @@
 package com.mainproject.member.service;
 
 import com.mainproject.auth.CustomAuthorityUtils;
+import com.mainproject.comment.entity.Comment;
 import com.mainproject.global.dto.PrincipalDto;
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.repository.MemberRepository;
+import com.mainproject.post.entity.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -82,6 +85,8 @@ public class MemberService {
                 .ifPresent(displayName -> findMember.setDisplayName(displayName));
         Optional.ofNullable(member.getPassword())
                 .ifPresent(password -> findMember.setPassword(password));
+        Optional.ofNullable(member.getArea())
+                .ifPresent(area -> findMember.setArea(area));
 
         // 패스워드 암호화
         String encryptedPassword = passwordEncoder.encode(member.getPassword());
@@ -101,6 +106,13 @@ public class MemberService {
             throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         }
 
+        // 삭제 및 대기 상태 질문 필터링
+        List<Post> filteredPosts = findMember.getPosts().stream()
+                .filter(post -> post.getPostStatus() != Post.PostStatus.POST_DELETED && post.getPostStatus() != Post.PostStatus.POST_PENDING)
+                .collect(Collectors.toList());
+
+        findMember.setPosts(filteredPosts);
+
         return findMember;
     }
 
@@ -112,6 +124,13 @@ public class MemberService {
         if(findMember.getIsDoctor() != true) {
             throw new BusinessLogicException(ExceptionCode.DOCTOR_NOT_FOUND);
         }
+
+        // 삭제 상태 댓글 필터링
+        List<Comment> filteredComments = findMember.getComments().stream()
+                .filter(comment -> comment.getCommentStatus() != Comment.CommentStatus.COMMENT_DELETED)
+                .collect(Collectors.toList());
+
+        findMember.setComments(filteredComments);
 
         return findMember;
     }
@@ -188,8 +207,6 @@ public class MemberService {
 
         return findMember;
     }
-
-    // 포인트 추가 로직 필요
 
     // 좋아요, 채택, 게시글, 리뷰 작성 로직에 추가하는 등급 업데이트 로직
     public Member updateRating(Member member) {
