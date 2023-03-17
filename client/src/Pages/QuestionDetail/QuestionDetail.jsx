@@ -25,22 +25,24 @@ const QuestionDetail = () => {
   // const { params } = useParams();
   // 로그인 상태 정보 확인
   const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const [loginInfo, setLoginInfo] = useRecoilState(loggedUserInfo);
+  const userInfo = useRecoilState(loggedUserInfo);
 
   // 글을 삭제할 경우 삭제 후 다른 페이지로 이동하기 위해
   const navigate = useNavigate();
   // 현재 로그인 상태가 글 작성자일 경우
-  const [isWriter, setIsWriter] = useState(true);
   // 글의 채택여부(전문가)
   const [expertChoice, setExpertChoice] = useState(false);
   // 글의 채택여부 (일반인)
   const [normalChoice, setNormalChoice] = useState(false);
-  // 리뷰 데이터
-  const [questionData, setQuestionData] = useState([]);
+  // 질문 데이터
+  const [questionData, setQuestionData] = useState({});
+  // 질문 작성자 정보
+  const [writerInfo, setWriterInfo] = useState({});
+  // 답글 목록
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    console.log(loginInfo);
-    console.log(setLoginInfo);
+    // 로그인 상태가 아닐경우
     if (!isLogin) {
       alert('로그인을 해 주세요');
       navigate('/home');
@@ -51,7 +53,7 @@ const QuestionDetail = () => {
   // paht는 수정 예정
   useEffect(() => {
     axios
-      .get('/posts/1', {
+      .get('/posts/5', {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
@@ -59,13 +61,10 @@ const QuestionDetail = () => {
       })
       .then((res) => {
         setQuestionData(res.data);
+        setWriterInfo(res.data.writerResponse);
+        setComments(res.data.comments);
       });
-  }, []);
-
-  // 사용자 변경
-  const userHandler = () => {
-    setIsWriter((prev) => !prev);
-  };
+  }, [setQuestionData]);
 
   const expertChoiceHandler = () => {
     if (!expertChoice) {
@@ -124,15 +123,16 @@ const QuestionDetail = () => {
     }
   };
 
+  console.log(comments);
+
   return (
     <SQuestionDetailContainer className="detail-block">
-      <button onClick={userHandler}> 글쓴이=사용자!</button>
       <SQuestionDetailBlock className="question-block">
         <SQuestionHeaderBlock className="header-block">
           <h1>🤔 {questionData.title}</h1>
           <SQuestionInfoBlock className="info-block">
             <span>
-              {questionData.from} [{questionData.regionName}]
+              {userInfo[0].displayName} [{questionData.regionName}]
             </span>
             <span>{questionData.createdAt}</span>
           </SQuestionInfoBlock>
@@ -140,14 +140,15 @@ const QuestionDetail = () => {
         <SQuestionTextBlock className="contents-block">
           <p>{questionData.content}</p>
         </SQuestionTextBlock>
-        {isWriter ? (
+
+        {userInfo[0].memberId === writerInfo.memberId ? (
           <SQuestionButtonBlock className="button-block">
             <button onClick={modifyHandler}>수정</button>
             <button onClick={deleteHandler}>삭제</button>
           </SQuestionButtonBlock>
         ) : null}
       </SQuestionDetailBlock>
-      {isWriter ? null : (
+      {isLogin ? null : (
         <SPostAnswerBlock className="want-answer-block">
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
           <div className="want-answer-text">
@@ -157,7 +158,8 @@ const QuestionDetail = () => {
           <button>답변하기!</button>
         </SPostAnswerBlock>
       )}
-
+      {/*  답글 여부에따라서 내용 변경, 서버가 완성되면 수정하겠음 */}
+      {/* {comments.length === 0 ? <></> : <></>} */}
       <SAnswerBlock
         className={
           expertChoice ? 'expoert-choiced expert-answer' : 'expert-answer'
@@ -166,7 +168,7 @@ const QuestionDetail = () => {
         {expertChoice ? <span>채택된 답변</span> : null}
         <SAnswerHeader className="header">
           <h1>전문가 답변</h1>
-          {isWriter ? null : (
+          {userInfo[0].memberId ? null : (
             <div>
               <button>수정</button>
               <button>삭제</button>
@@ -197,7 +199,7 @@ const QuestionDetail = () => {
         {normalChoice ? <span>채택된 답변</span> : null}
         <SAnswerHeader className="header">
           <h1>일반인 답변</h1>
-          {isWriter ? null : (
+          {isLogin ? null : (
             <div>
               <button>수정</button>
               <button>삭제</button>
