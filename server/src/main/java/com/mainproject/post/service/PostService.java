@@ -83,11 +83,11 @@ public class PostService {
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
         List<Post.PostStatus> status = Arrays.asList(POST_PENDING, POST_DELETED);
 
-        if(filterType == 1) {
+        if (filterType == 1) {
             return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotIn(titleKeyword, contentKeyword, status, pageRequest);
-        } else if(filterType == 2) {
+        } else if (filterType == 2) {
             return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndPostType(titleKeyword, contentKeyword, status, "question", pageRequest);
-        } else if(filterType == 3) {
+        } else if (filterType == 3) {
             return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndPostType(titleKeyword, contentKeyword, status, "review", pageRequest);
         } else if (filterType == 4) {
             return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndRegion_name(titleKeyword, contentKeyword, status, regionName, pageRequest);
@@ -98,11 +98,11 @@ public class PostService {
     }
 
     // 단일 조회
-    public Post findPost(Long postId){
+    public Post findPost(Long postId) {
 
         Post post = findVerifiedPost(postId);
 
-       return post;
+        return post;
     }
 
     // 게시글 작성
@@ -133,7 +133,7 @@ public class PostService {
     }
 
     // 리뷰글 작성
-    public Long createReview(Post post, Long memberId, String hospitalName, String medicalTitle, String regionName, MultipartFile img) throws IOException{
+    public Long createReview(Post post, Long memberId, String hospitalName, String medicalTitle, String regionName, MultipartFile img) throws IOException {
 
         // 로그인 검증 필요
 
@@ -144,9 +144,11 @@ public class PostService {
         Region region = subService.findRegion(regionName);
         byte[] imgByte = convertMultipartFileToByte(img);
 
-        if (member.getIsDoctor() == true) {
+        if (member.getIsDoctor()) {
             throw new BusinessLogicException(ExceptionCode.DOCTOR_CANNOT_POST);
         }
+
+        subService.updateHospitalGrade(hospital.getHospitalId(), post.getStarRating());
 
         post.setHospital(hospital);
         post.setMedicalTag(medicalTag);
@@ -164,7 +166,7 @@ public class PostService {
     }
 
     // 게시글 수정
-    public void updatePost(Post post, Long postId, Long memberId, String medicalTitle, String regionName){
+    public void updatePost(Post post, Long postId, Long memberId, String medicalTitle, String regionName) {
 
         // 본인 검증 필요
 
@@ -183,7 +185,7 @@ public class PostService {
     }
 
     // 글 삭제
-    public void deletePost(Long postId){
+    public void deletePost(Long postId) {
 
         Post post = findVerifiedPost(postId);
 
@@ -215,7 +217,7 @@ public class PostService {
     }
 
     // 좋아요 여부 검증
-    private void verifyExistsLike(Member member, Post post)  {
+    private void verifyExistsLike(Member member, Post post) {
 
         Optional<PostLike> like = postLikeRepository.findByMemberAndPost(member, post);
         if (like.isPresent()) {
@@ -228,7 +230,7 @@ public class PostService {
 
         Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
-        if(findPost.getPostStatus() == POST_DELETED ) {
+        if (findPost.getPostStatus() == POST_DELETED) {
             throw new BusinessLogicException(ExceptionCode.POST_DELETED);
         } else if (findPost.getPostStatus() == POST_PENDING) {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_APPROVED);
@@ -243,7 +245,7 @@ public class PostService {
         Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
-        if(findPost.getPostStatus() != POST_PENDING) throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
+        if (findPost.getPostStatus() != POST_PENDING) throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
 
         return findPost;
     }

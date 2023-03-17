@@ -21,7 +21,8 @@ public enum ExceptionCode {
     DOCTOR_CANNOT_POST(400, "Doctor cannot post"),
 
     COMMENT_NOT_CHANGED(400, "Comment not changed"),
-    NOT_RESOURCE_OWNER(400, "Not resource owner");
+    NOT_RESOURCE_OWNER(400, "Not resource owner"),
+    HOSPITAL_NOT_FOUND(404, "Hospital not found");
 
 
     @Getter
