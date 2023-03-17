@@ -26,6 +26,7 @@ const QuestionDetail = () => {
   // 로그인 상태 정보 확인
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const userInfo = useRecoilState(loggedUserInfo);
+  const token = localStorage.getItem('accessToken');
 
   // 글을 삭제할 경우 삭제 후 다른 페이지로 이동하기 위해
   const navigate = useNavigate();
@@ -51,12 +52,14 @@ const QuestionDetail = () => {
 
   // 서버로부터 데이터 가져오기
   // paht는 수정 예정
+
   useEffect(() => {
     axios
       .get('/posts/5', {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
+          Authorization: `${token}`,
         },
       })
       .then((res) => {
@@ -115,9 +118,15 @@ const QuestionDetail = () => {
     const deleteResult = confirm('질문을 삭제하시겠습니까???');
     if (deleteResult) {
       alert('질문을 삭제하였습니다.');
-      axios.delete(`/posts/${questionData.postId}`).then((res) => {
-        console.log(res);
-      });
+      axios
+        .delete(`/posts/${questionData.postId}`, {
+          header: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
       navigate('/');
     }
   };
@@ -127,6 +136,7 @@ const QuestionDetail = () => {
       .post(`/posts/${questionData.postId}/likes`, {
         headers: {
           'ngrok-skip-browser-warning': '69420',
+          Authorization: `${token}`,
         },
       })
       .then((res) => {

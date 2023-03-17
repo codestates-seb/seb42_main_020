@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loginState } from '../../atoms/atoms';
 
@@ -22,6 +22,10 @@ import TypeInput from '../../Components/AskForm/TypeInput';
 
 const AskQuestion = () => {
   const navigate = useNavigate();
+  const locations = useLocation();
+  console.log(locations.state);
+  //로컬에 있는 토큰
+  const token = localStorage.getItem('accessToken');
   // 제목 입력값
   const [questionTitle, setQuestionTitle] = useState('');
   // 제목 유효성 검사
@@ -130,9 +134,13 @@ const AskQuestion = () => {
       setTitleValid(false);
     }
 
-    axios.post('/posts', questionData).then((res) => {
-      console.log(res);
-    });
+    axios
+      .post('/posts', questionData, {
+        header: { Authorization: token },
+      })
+      .then((res) => {
+        console.log(res);
+      });
 
     alert('질문이 작성되었습니다.');
     navigate('/');

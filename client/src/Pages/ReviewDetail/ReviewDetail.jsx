@@ -18,6 +18,8 @@ import {
 
 const ReviewDetail = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem('accessToken');
+
   // 로그인 상태 정보 확인
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [loginInfo, setLoginInfo] = useRecoilState(loggedUserInfo);
@@ -45,6 +47,7 @@ const ReviewDetail = () => {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
+          Authorization: `${token}`,
         },
       })
       .then((res) => {
@@ -60,6 +63,7 @@ const ReviewDetail = () => {
       .post(`/posts/${reviewData.postId}/likes`, {
         headers: {
           'ngrok-skip-browser-warning': '69420',
+          Authorization: `${token}`,
         },
       })
       .then((res) => {
@@ -79,6 +83,7 @@ const ReviewDetail = () => {
         <ReportModal
           reportModalHandler={reportModalHandler}
           setReportModal={setReportModal}
+          reviewData={reviewData}
         />
       )}
       <SReviewDetailBlock>
