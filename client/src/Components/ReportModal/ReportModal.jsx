@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ReviewReason from './ReviewReason';
 import {
   SReportModalContainer,
   SReportModalBlock,
@@ -31,6 +32,7 @@ const ReportModal = ({ reportModalHandler, setReportModal }) => {
           <SReportModalClose onClick={reportModalHandler}>X</SReportModalClose>
         </SReportModalHeader>
         <div>
+          <ReviewReason className="review_reson" />
           <SReportText
             rows="50"
             cols="50"

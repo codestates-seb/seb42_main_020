@@ -7,13 +7,13 @@ const Nav = () => {
       <SNavBlock>
         <SNavContents>
           {/* // 자세한 링크는 수정 예정 */}
-          <Link to="/">전체</Link>
+          <Link to="/home">전체</Link>
         </SNavContents>
         <SNavContents>
-          <Link to="/askquestion">질문</Link>
+          <Link to="/question/1234">질문</Link>
         </SNavContents>
         <SNavContents>
-          <Link to="/review">리뷰</Link>
+          <Link to="/review/1234">리뷰</Link>
         </SNavContents>
         <SNavContents>
           <Link to="/locations">지역별</Link>
