@@ -1,5 +1,8 @@
-import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { loginState } from '../../atoms/atoms';
+import { useNavigate } from 'react-router-dom';
 import TextEditor from '../../Components/AskForm/TextEditor';
 import {
   SAskQuestionContainer,
@@ -15,7 +18,7 @@ import {
   SCancalButton,
 } from '../../Style/AskQuestionStyle';
 import AskQuestionTitle from '../../Components/AskForm/AskQuestionTitle';
-import { locationData, typeData } from '../../Components/AskForm/QuestionData';
+import { locationData, typeData } from '../../Components/AskForm/PostData';
 import LocationInput from '../../Components/AskForm/LocationInput';
 import TypeInput from '../../Components/AskForm/TypeInput';
 import HospitalInput from '../../Components/ReviewForm/HospitalInput';
@@ -23,27 +26,29 @@ import RateStar from '../../Components/ReviewForm/RateStar';
 import ModalTest from '../../Components/MakeContents/MakeContents';
 import WaitModal from '../../Components/ReviewForm/WaitModal';
 const Review = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  // 로그인 상태
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   // 제목 입력값
   const [reviewTitle, setReviewTitle] = useState('');
   // 제목 유효성 검사
   const [reviewTitleValid, setReviewTitleValid] = useState(false);
   // 제목이 적합하지 않을 경우 표출
-  const [reviewTitleMessage, setReviewTitleMessage] = useState('');
+  const [titleFailMessage, setTitleFailMessage] = useState('');
   // 내용 입력값
-  const [reviewText, setReviewText] = useState('');
+  const [reviewContent, setReviewContent] = useState('');
   // 내용 유효성 검사
-  const [reviewValid, setReviewValid] = useState(false);
+  const [reviewContentValid, setReviewContentValid] = useState(false);
   //  내용이 적합하지 않을 경우 메시지
-  const [reviewMessage, setReviewMessage] = useState('');
+  const [contentFailMessage, setContentFailMessage] = useState('');
   // 지역 입력값
-  const [reviewLocation, setReviewLocation] = useState('');
+  const [reviewRegionName, setReviewRegionName] = useState('');
   // 지역 유효성
-  const [reviewLocationValid, setReviewLocationValid] = useState(false);
+  const [reviewRegionNameValid, setReviewRegionNameValid] = useState(false);
   // 진료 과목 입력값
-  const [reviewType, setReviewType] = useState('');
+  const [medicalTagTitle, setMedicalTagTitle] = useState('');
   // 진료 과목 유효성
-  const [reviewTypeValid, setReviewTypeValid] = useState(false);
+  const [medicalTagTitleValid, setMedicalTagTitleValid] = useState(false);
   // 지역 or 진료 과목이 실패할 경우 메시지
   const [reviewFailMessage, setReviewFailMessage] = useState('');
   // 병원명 입력값
@@ -62,30 +67,58 @@ const Review = () => {
   const [reviewData, setReviewData] = useState({});
   // 리뷰 대기 안내창
   const [reviewWait, setReviewWait] = useState(false);
+  // 사진
+  const [recipte, setRecipte] = useState(null);
+
+  useEffect(() => {
+    // 로그인 상태가 아닐경우
+    if (!isLogin) {
+      alert('로그인을 해 주세요');
+      navigate('/home');
+    }
+  }, [setIsLogin]);
+
+  //리뷰 데이터 종합하기
+  useEffect(() => {
+    setReviewData({
+      title: reviewTitle,
+      regionName: reviewRegionName,
+      content: reviewContent,
+      medicalTagTitle,
+      hospitalName,
+    });
+  }, [
+    reviewTitle,
+    reviewRegionName,
+    reviewContent,
+    medicalTagTitle,
+    hospitalName,
+  ]);
 
   // 작성 내용
   const handleText = (value) => {
     if (value.length < 5) {
-      setReviewValid(false);
-      setReviewMessage('내용은 5글자 이상 입력해주세요');
-    } else if (value.length > 100) {
-      setReviewValid(false);
-      setReviewMessage('내용은 100글자 이하로 입력해주세요');
+      setReviewContentValid(false);
+      setContentFailMessage('내용은 5글자 이상 입력해주세요');
+    } else if (value.length > 500) {
+      setReviewContentValid(false);
+      setContentFailMessage('내용은 500글자 이하로 입력해주세요');
     } else {
-      setReviewValid(true);
+      setReviewContentValid(true);
     }
 
-    setReviewText(value);
+    setReviewContent(value);
   };
+
   //제목 받아오기
   const titleOnChangeHandler = (e) => {
     const inputTitle = e.target.value;
     if (inputTitle.length < 5) {
       setReviewTitleValid(false);
-      setReviewTitleMessage('제목은 5글자 이상 입력해주세요');
+      setTitleFailMessage('제목은 5글자 이상 입력해주세요');
     } else if (inputTitle.length > 25) {
       setReviewTitleValid(false);
-      setReviewTitleMessage('제목은 25글자 이하로 입력해주세요');
+      setTitleFailMessage('제목은 25글자 이하로 입력해주세요');
     } else {
       setReviewTitleValid(true);
     }
@@ -95,14 +128,14 @@ const Review = () => {
 
   // 지역 받아오기
   const locationChangeHandler = (e) => {
-    setReviewLocation(e);
-    setReviewLocationValid(true);
+    setReviewRegionName(e);
+    setReviewRegionNameValid(true);
   };
 
   //진료 과목 받아오기
   const typeChangeHandler = (e) => {
-    setReviewType(e);
-    setReviewTypeValid(true);
+    setMedicalTagTitle(e);
+    setMedicalTagTitleValid(true);
   };
 
   // 병원명 받아오기
@@ -118,26 +151,32 @@ const Review = () => {
     setRateNumber(e);
   };
 
+  // 사진 받아오기
+  const recipteHandler = (e) => {
+    const uploadFile = e.target.files[0];
+    setRecipte(uploadFile);
+  };
+
   //받아온 데이터 받아온걸 종합하기
   const submitDataHandler = () => {
-    if (location === '') {
-      setReviewLocationValid(false);
+    if (reviewRegionName === '') {
+      setReviewRegionNameValid(false);
       setReviewFailMessage('내용을 입력해 주세요');
     }
 
-    if (reviewType === '') {
-      setReviewTypeValid(false);
+    if (medicalTagTitle === '') {
+      setMedicalTagTitleValid(false);
       setReviewFailMessage('내용을 입력해 주세요');
     }
 
     if (reviewTitle.length < 5) {
       setReviewTitleValid(false);
-      setReviewTitleMessage('제목은 5글자 이상 입력해주세요');
+      setTitleFailMessage('제목은 5글자 이상 입력해주세요');
     }
 
-    if (reviewText < 5) {
-      setReviewValid(false);
-      setReviewMessage('내용은 5글자 이상 입력해주세요');
+    if (reviewContent < 5) {
+      setReviewContentValid(false);
+      setContentFailMessage('내용은 5글자 이상 입력해주세요');
     }
 
     if (hospitalName === '') {
@@ -150,32 +189,48 @@ const Review = () => {
     }
     // 모든 입력이 정상적으로 되었을 경우
     if (
-      reviewValid &&
+      reviewContentValid &&
       reviewTitleValid &&
-      reviewLocationValid &&
-      reviewTypeValid &&
+      reviewRegionNameValid &&
+      medicalTagTitleValid &&
       rateValid
     ) {
-      // 사용자의 입력 데이터를 종합
-      setReviewData({
-        reviewTitle,
-        reviewLocation,
-        reviewType,
-        reviewText,
-        rateNumber,
-      });
+      // 사진과 텍스트를 같이 보내기 위해서 formdata 사용
+      const formData = new FormData();
+
+      // formData에 이미지 파일 넣기
+      formData.append('img', recipte);
+
+      // formDarta에 텍스트 파일들 넣기
+      // 서버와는 json으로 통신하기때문에 blob을 이용하여 파일을 보낸다
+      formData.append(
+        'post',
+        new Blob([JSON.stringify(reviewData)], { type: 'application/json' })
+      );
+
+      axios
+        .post('/reviews', formData, {
+          //이미지와 json파일이 가기때문에
+          headers: {
+            'Content-Type': 'multipart/form-data', // token 추가로 넣어주기
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
+
       // 승인 대기중 모달창 노출
       setReviewWait(true);
-      // navigate('/');
-      //나중에 서버로 데이터 보내줄 예정
-      console.log(reviewData);
     }
   };
 
   // 모달 닫기
   const closeModal = () => {
     setReviewWait(false);
+    navigate('/');
   };
+
+  console.log(reviewData);
 
   return (
     <SAskQuestionContainer>
@@ -186,30 +241,30 @@ const Review = () => {
           title={reviewTitle}
           titleOnChangeHandler={titleOnChangeHandler}
         />
-        <SValidFail> {reviewTitleValid ? null : reviewTitleMessage}</SValidFail>
+        <SValidFail> {reviewTitleValid ? null : titleFailMessage}</SValidFail>
 
         <SAskQuestionInfoBlock>
           <div>
             <span>지역</span>
             <LocationInput
               treeData={locationData}
-              location={reviewLocation}
+              location={reviewRegionName}
               locationChangeHandler={locationChangeHandler}
             />
             <SValidFail>
-              {reviewLocationValid ? null : reviewFailMessage}
+              {reviewRegionNameValid ? null : reviewFailMessage}
             </SValidFail>
           </div>
           <div>
             <span>진료 과목</span>
             <TypeInput
               treeData={typeData}
-              type={reviewType}
+              type={medicalTagTitle}
               typeChangeHandler={typeChangeHandler}
-              reviewTypeValid
+              medicalTagTitleValid
             />
             <SValidFail>
-              {reviewTypeValid ? null : reviewFailMessage}
+              {medicalTagTitleValid ? null : reviewFailMessage}
             </SValidFail>
           </div>
         </SAskQuestionInfoBlock>
@@ -240,13 +295,17 @@ const Review = () => {
           </SHospitalInfo>
         </SHospitalInfoBlock>
         <TextEditor handleText={handleText} />
-        <SValidFail> {reviewValid ? null : reviewMessage}</SValidFail>
+        <SValidFail>
+          {reviewContentValid ? null : contentFailMessage}
+        </SValidFail>
         <div>
           <label htmlFor="pics">영수증 사진</label>
           <input
             id="pics"
             type="file"
+            accept="image/png, image/jpeg"
             placeholder="영수증 사진을 업로드 해주세요"
+            onChange={recipteHandler}
           />
         </div>
         <SButtonBlock>

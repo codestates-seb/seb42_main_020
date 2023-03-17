@@ -183,3 +183,10 @@ export const typeData = [
     title: '기타',
   },
 ];
+
+export const reasonData = [
+  { value: '광고성 댓글', title: '광고성 댓글' },
+  { value: '허위 리뷰', title: '허위 리뷰' },
+  { value: '괴롭힘', title: '괴롭힘' },
+  { value: '기타', title: '기타' },
+];
