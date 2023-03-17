@@ -86,6 +86,7 @@ const Review = () => {
       content: reviewContent,
       medicalTagTitle,
       hospitalName,
+      starRating: rateNumber,
     });
   }, [
     reviewTitle,
@@ -93,6 +94,7 @@ const Review = () => {
     reviewContent,
     medicalTagTitle,
     hospitalName,
+    rateNumber,
   ]);
 
   // 작성 내용
