@@ -22,8 +22,6 @@ const ReviewDetail = () => {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [loginInfo, setLoginInfo] = useRecoilState(loggedUserInfo);
 
-  // 좋아요 상태관리
-  const [like, setLike] = useState(false);
   // 신고 모달 관리
   const [reportModal, setReportModal] = useState(true);
   // 받아오는 정보 관리
@@ -40,10 +38,10 @@ const ReviewDetail = () => {
       navigate('/home');
     }
   }, [setIsLogin]);
-
+  //상세 경로 수정 예쩡
   useEffect(() => {
     axios
-      .get('/posts/1', {
+      .get('/posts/3', {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
@@ -54,11 +52,20 @@ const ReviewDetail = () => {
         setReviewData(res.data);
         setReviewFrom(res.data.writerResponse);
       });
-  }, []);
+  }, [setReviewData]);
 
   // 버튼 클릭시 좋아요 넣기
   const likeHandler = () => {
-    setLike((prev) => !prev);
+    axios
+      .post(`/posts/${reviewData.postId}/likes`, {
+        headers: {
+          'ngrok-skip-browser-warning': '69420',
+        },
+      })
+      .then((res) => {
+        location.reload();
+        console.log(res.data);
+      });
   };
 
   // 모달창 관리하기
@@ -83,14 +90,14 @@ const ReviewDetail = () => {
           </SReviewUserInfo>
         </SReviewHeader>
         <SReviewHospitalInfo className="hopital-info">
-          <span>{reviewData.medicalTagTitle}</span>
+          <span>{reviewData.hospitalName}</span>
           {/* 추 후에 서버작업 완료되면 수정 예정 */}
-          <span>⭐⭐⭐⭐⭐ (5.0) 점</span>
+          <span>⭐⭐⭐⭐⭐ ({reviewData.starRating}) 점</span>
         </SReviewHospitalInfo>
         <SReviewContent className="contents">
           <p>{reviewData.content}~</p>
           <SReviewButtonBlock className="review-footer">
-            <button onClick={likeHandler}>{like ? '❤️ 99' : '🖤'}</button>
+            <button onClick={likeHandler}>❤️ {reviewData.totalLike}</button>
             {loginInfo.memberId === reviewFrom.memberId ? (
               <></>
             ) : (
