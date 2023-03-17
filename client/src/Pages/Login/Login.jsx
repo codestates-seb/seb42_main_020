@@ -23,11 +23,11 @@ import {
   SModalSignupBtn,
 } from '../../Style/LoginStyle';
 import axios from 'axios';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 
 const Login = () => {
-  const [isLogged, setIsLogged] = useRecoilState(loginState);
+  const setIsLogged = useSetRecoilState(loginState);
   const setUserInfo = useSetRecoilState(loggedUserInfo);
 
   const [email, setEmail] = useState('');
@@ -63,11 +63,12 @@ const Login = () => {
             },
           })
           .then((res) => {
+            localStorage.setItem('loggedUserInfo', res.data);
             setUserInfo(res.data);
           });
 
         cookies.set('refreshToken', refreshToken, { sameSite: 'strict' });
-        setIsLogged(!isLogged);
+        setIsLogged(true);
         navigate('/home');
       })
       .catch((data) => {
