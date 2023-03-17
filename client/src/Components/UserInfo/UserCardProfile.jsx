@@ -12,19 +12,26 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { BiCommentDetail, BiCommentCheck } from 'react-icons/bi';
 import { useState, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { loggedUserInfo, loginState } from '../../atoms/atoms';
+import { useRecoilState } from 'recoil';
 
 function UserCardProfile() {
+  const [userInfo, setUserInfo] = useRecoilState(loggedUserInfo);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const LogOut = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('loggedUserInfo');
+    setUserInfo('');
+    setIsLogin(!isLogin);
     navigate('/');
     window.scrollTo(0, 0);
   };
   const ModalSubmit = () => {
     setIsModalOpen(!isModalOpen);
-    navigate('/');
-    window.scrollTo(0, 0);
+    LogOut();
   };
   const ModalClose = () => setIsModalOpen(!isModalOpen);
 
@@ -46,7 +53,7 @@ function UserCardProfile() {
     <UserCardProfileStyle>
       <SName>
         <div className="block"></div>
-        <h3 className="user-nick-name">개발새발자</h3>
+        <h3 className="user-nick-name">{userInfo?.displayName}</h3>
       </SName>
       <SPicture>
         <div className="frame">
@@ -54,12 +61,13 @@ function UserCardProfile() {
         </div>
       </SPicture>
       <SUserInfo>
-        <div className="usertype">Member</div>
+        <div className="usertype">{userInfo?.doctor ? 'doctor' : 'Member'}</div>
         <div className="class">
-          <strong>회원등급:</strong> 일반
+          <strong>회원등급:</strong>&nbsp;
+          {userInfo?.memberRating === 'UNRANKED' ? '일반' : '브론즈'}
         </div>
         <div className="sign-up">
-          <strong>가입:</strong> 2023년 3월 13일
+          <strong>가입:</strong> None
         </div>
         <SActivity>
           <div className="linetop"></div>
@@ -69,21 +77,21 @@ function UserCardProfile() {
                 <BsPencilSquare size={25} />
                 <span>게시글:</span>
               </span>
-              <span>11 개</span>
+              <span>{userInfo?.postResponseMyPageInfos.length} 개</span>
             </div>
             <div className="comment">
               <span className="post-title">
                 <BiCommentDetail size={25} />
                 <span>댓글:</span>
               </span>
-              <span>483 개</span>
+              <span>None 개</span>
             </div>
             <div className="adoptComment">
               <span className="post-title">
                 <BiCommentCheck size={25} />
                 <span>채택된 댓글:</span>
               </span>
-              <span>18 개</span>
+              <span>None 개</span>
             </div>
           </div>
           <div className="linebottom"></div>
