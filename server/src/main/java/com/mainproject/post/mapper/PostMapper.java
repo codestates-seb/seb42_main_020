@@ -30,9 +30,12 @@ public interface PostMapper {
     @Mapping(target = "hospitalName", source = "review.hospital.name")
     ReviewResponseDto reviewToReviewResponseDto(Post review);
 
+    List<ReviewResponseDto> reviewsToReviewsResponseDto(List<Post> reviews);
+
     // 마이페이지 매핑
     @Mapping(target = "medicalTagTitle", source = "post.medicalTag.title")
     @Mapping(target = "regionName", source = "post.region.name")
+    @Mapping(target = "hospitalName", source = "post.hospital.name")
     PostResponseMyPageInfo postToMyPageInfo(Post post);
 
     List<PostResponseMyPageInfo> postsToMyPageInfos(List<Post> posts);

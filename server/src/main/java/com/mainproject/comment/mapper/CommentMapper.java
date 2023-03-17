@@ -3,6 +3,7 @@ package com.mainproject.comment.mapper;
 import com.mainproject.comment.dto.CommentPatchDto;
 import com.mainproject.comment.dto.CommentPostDto;
 import com.mainproject.comment.dto.CommentResponseDto;
+import com.mainproject.comment.dto.CommentResponseDtoDoctorInfo;
 import com.mainproject.comment.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,4 +15,6 @@ public interface CommentMapper {
 
     @Mapping(target = "writerResponse", source = "comment.member")
     CommentResponseDto commentToCommentResponseDto(Comment comment);
+
+    CommentResponseDtoDoctorInfo commentToDoctorInfo(Comment comment);
 }

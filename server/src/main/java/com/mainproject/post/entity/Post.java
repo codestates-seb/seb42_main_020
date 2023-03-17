@@ -44,6 +44,9 @@ public class Post extends Auditable {
     @Column(length = 10000000)
     private byte[] receipt;
 
+    @Column(name = "TOTAL_LIKE")
+    private int totalLike;
+
     // 상태
     @Enumerated(value = EnumType.STRING)
     @Column(name = "POST_STATUS", length = 30, nullable = false)
@@ -100,5 +103,10 @@ public class Post extends Auditable {
         this.likes.add(like);
         like.setPost(this);
         return like;
+    }
+
+    public int getTotalLike() {
+        int totalLike = likes.size();
+        return totalLike;
     }
 }
