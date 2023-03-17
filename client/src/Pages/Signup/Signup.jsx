@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
 import { message } from 'antd';
 import {
@@ -18,7 +18,7 @@ import axios from 'axios';
 
 const Signup = () => {
   const [name, setName] = useState('');
-  const [nickname, setNickname] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -33,33 +33,33 @@ const Signup = () => {
   const { openScroll } = useBodyScrollLock(); // 페이지 이동 후 scroll lock 해제
   openScroll();
 
-  // * '/members/signup' 이나 json-server '/' 인식 불가능으로 '/signup' 으로 임시 적용
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
-    axios({
-      method: 'post',
-      url: 'http://localhost:3001/signup',
-      data: {
-        email,
-        name,
-        displayName: nickname,
-        password,
-      },
-      Headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    axios
+      .post('/members/signup', {
+        email: email,
+        name: name,
+        displayName: displayName,
+        password: password,
+      })
       .then((res) => {
         console.log(res);
+        navigate('/login');
       })
-      .catch(() => {
+      .catch((data) => {
         console.log('Error!');
+        console.log(data);
+        // 회원가입 실패 안내창 띄우기
       });
   };
 
-  const notTobeNull = ({ name, nickname, email, password }) => {
+  const notTobeNull = ({ name, displayName, email, password }) => {
     return (
-      name !== null && nickname !== null && email !== null && password !== null
+      name !== null &&
+      displayName !== null &&
+      email !== null &&
+      password !== null
     );
   };
 
@@ -72,7 +72,7 @@ const Signup = () => {
   // 닉네임 정규 표현식
   // 한글, 영어만 입력 받기
   const vaildateNickname = () => {
-    return nickname.match(/^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/);
+    return displayName.match(/^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/);
   };
 
   // 이메일 정규 표현식
@@ -108,9 +108,9 @@ const Signup = () => {
   // 닉네임
   const handleChangeNickname = (e) => {
     const currNickname = e.target.value;
-    setNickname(currNickname);
+    setDisplayName(currNickname);
 
-    if (!vaildateNickname(nickname)) {
+    if (!vaildateNickname(displayName)) {
       setNameMsg('한글과 영문을 제외한 숫자 및 특수문자는 입력이 어렵습니다.');
     } else {
       setNameMsg('');
@@ -161,10 +161,10 @@ const Signup = () => {
 
   // 유효성 검사를 통과하지 못하면 Submit 비활성화
   const isvaildateName = vaildateName(name);
-  const isNicknameVaild = vaildateNickname(nickname);
+  const isNicknameVaild = vaildateNickname(displayName);
   const isEmailValid = validateEmail(email);
   const isPwdValid = validatePwd(password);
-  const isNotNull = notTobeNull({ name, nickname, email, password });
+  const isNotNull = notTobeNull({ name, displayName, email, password });
   const isAllValid =
     isvaildateName &&
     isNicknameVaild &&

@@ -1,7 +1,10 @@
 package com.mainproject.post.controller;
 
+import com.mainproject.auth.MemberDetailsService;
 import com.mainproject.comment.service.CommentService;
 import com.mainproject.global.dto.MultiResponseDto;
+import com.mainproject.member.entity.Member;
+import com.mainproject.member.service.MemberService;
 import com.mainproject.post.dto.*;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.mapper.PostMapper;
@@ -16,6 +19,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,17 +41,17 @@ public class PostController {
     private final PostReportMapper postReportMapper;
     private final PostReportService postReportService;
     private final CommentService commentService;
+    private final MemberService memberService;
 
     // 전체 질문 조회
     @GetMapping
     public ResponseEntity getQuestions(@RequestParam(value = "page", defaultValue = "0") int page,
                                                    @RequestParam(value = "titleKeyword", required = false) String titleKeyword,
-                                                   @RequestParam(value = "contentKeyword", required = false) String contentKeyword,
                                                    @RequestParam(value = "sort", defaultValue = "createdAt") String sortType,
                                                    @RequestParam(value = "filterType", defaultValue = "1") int filterType,
                                                    @RequestParam(value = "medicalTagTitle", required = false) String medicalTagTitle,
                                                    @RequestParam(value = "regionName", required = false) String regionName) {
-        Page<Post> postPage = postService.findQuestions(page, titleKeyword, contentKeyword, sortType, filterType, medicalTagTitle, regionName);
+        Page<Post> postPage = postService.findQuestions(page, titleKeyword, sortType, filterType, medicalTagTitle, regionName);
         List<Post> posts = postPage.getContent();
 
         return new ResponseEntity<>(
@@ -150,10 +156,11 @@ public class PostController {
 
     // 글 작성
     @PostMapping
-    public ResponseEntity createPost(@RequestBody @Valid PostPostDto postDto, @RequestParam Long memberId) {
+    public ResponseEntity createPost(@RequestBody @Valid PostPostDto postDto,
+                                     @AuthenticationPrincipal String email) {
 
         Post post = postMapper.postPostDtoToPost(postDto);
-        Long postId = postService.createPost(post, memberId, postDto.getMedicalTagTitle(), postDto.getRegionName());
+        Long postId = postService.createPost(post, email, postDto.getMedicalTagTitle(), postDto.getRegionName());
 
         return new ResponseEntity<>(postId, HttpStatus.OK);
     }
@@ -162,10 +169,11 @@ public class PostController {
     // 글 수정
     @PatchMapping("/{post-id}")
     public ResponseEntity updatePost(@PathVariable("post-id") @Positive Long postId,
-                                     @RequestBody @Valid PostPatchDto patchDto){
+                                     @RequestBody @Valid PostPatchDto patchDto,
+                                     @AuthenticationPrincipal String email){
 
         Post updatedPost = postMapper.postPatchDtoToPost(patchDto);
-        postService.updatePost(updatedPost, postId, patchDto.getMemberId(), patchDto.getMedicalTagTitle(), patchDto.getRegionName());
+        postService.updatePost(updatedPost, postId, email, patchDto.getMedicalTagTitle(), patchDto.getRegionName());
 
         return new ResponseEntity<>(postId, HttpStatus.OK);
     }
@@ -173,9 +181,10 @@ public class PostController {
 
     // 글 삭제
     @DeleteMapping("/{post-id}")
-    public ResponseEntity deletePost(@PathVariable("post-id") @Positive Long postId){
+    public ResponseEntity deletePost(@PathVariable("post-id") @Positive Long postId,
+                                     @AuthenticationPrincipal String email){
 
-        postService.deletePost(postId);
+        postService.deletePost(postId, email);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -183,7 +192,7 @@ public class PostController {
     // 게시글 좋아요
     @PostMapping("/{post-id}/likes")
     public ResponseEntity postLike(@PathVariable("post-id") long postId,
-                                   /*@AuthenticationPrincipal*/ String email) {
+                                   @AuthenticationPrincipal String email) {
 
         postService.addLike(postId, email, 1);
 
@@ -193,7 +202,7 @@ public class PostController {
     // 게시글 신고
     @PostMapping("/{post-id}/report")
     public ResponseEntity postReport(@PathVariable("post-id") long postId,
-                                     /*@AuthenticationPrincipal*/ String email,
+                                     @AuthenticationPrincipal String email,
                                      @RequestBody @Valid PostReportPostDto postDto) {
 
         PostReport postReport = postReportMapper.postReportPostDtoToPostReport(postDto);
@@ -204,12 +213,12 @@ public class PostController {
     }
 
     // 답변 채택
-    @PatchMapping("/{post-id}/comments/{comment-id}/members/{member-Id}")
+    @PatchMapping("/{post-id}/comments/{comment-id}")
     public ResponseEntity acceptComment(@PathVariable("post-id") long postId,
                                         @PathVariable("comment-id") long commentId,
-                                        @PathVariable("member-id") long memberId) {
+                                        @AuthenticationPrincipal String email) {
 
-        commentService.acceptComment(memberId, postId, commentId);
+        commentService.acceptComment(email, postId, commentId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -14,9 +14,6 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 public class PostPatchDto {
 
-    @NotNull
-    private long memberId;
-
     @NotBlank(message = "제목은 공백이 아니어야 합니다.")
     private String title;
 

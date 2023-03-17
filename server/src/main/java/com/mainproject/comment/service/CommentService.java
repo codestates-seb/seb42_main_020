@@ -32,9 +32,9 @@ public class CommentService {
     private final CommentLikeRepository commentLikeRepository;
 
     // 댓글 작성
-    public Comment createComment(Comment comment, Long memberId, long postId) {
+    public Comment createComment(Comment comment, String email, long postId) {
 
-        Member member = memberService.findMember(memberId);
+        Member member = memberService.findMemberByEmail(email);
         Post post = postService.findPost(postId);
 
         if (post.getPostType() == "review") {
@@ -50,12 +50,14 @@ public class CommentService {
     }
 
     // 댓글 수정
-    public Comment updateComment(Comment comment, Long commentId, long memberId) {
+    public Comment updateComment(Comment comment, Long commentId, String email) {
 
-        // 로그인 검증 필요
-
+        // 본인 검증
+        Member member = memberService.findMemberByEmail(email);
         Comment findComment = findVerifiedComment(commentId);
+        if(member.getMemberId() != findComment.getMember().getMemberId()) throw new BusinessLogicException(ExceptionCode.NOT_POSTS_MEMBER);
 
+        findComment.setMember(member);
         findComment.setContent(comment.getContent());
         findComment.setModifiedAt(LocalDateTime.now());
 
@@ -64,11 +66,12 @@ public class CommentService {
 
 
     // 댓글 삭제
-    public Comment deleteComment(long commentId) {
+    public Comment deleteComment(long commentId, String email) {
 
-        // 로그인 검증 필요
-
+        // 본인 검증
+        Member member = memberService.findMemberByEmail(email);
         Comment findComment = findVerifiedComment(commentId);
+        if(member.getMemberId() != findComment.getMember().getMemberId()) throw new BusinessLogicException(ExceptionCode.NOT_POSTS_MEMBER);
 
         findComment.setModifiedAt(LocalDateTime.now());
         findComment.setCommentStatus(Comment.CommentStatus.COMMENT_DELETED);
@@ -76,10 +79,10 @@ public class CommentService {
         return commentRepository.save(findComment);
     }
 
-    public void acceptComment(long memberId, long postId, long commentId) {
+    public void acceptComment(String email, long postId, long commentId) {
 
-        // 로그인 검증 필요
-
+        Member member = memberService.findMemberByEmail(email);
+        long memberId = member.getMemberId();
         Comment comment = findVerifiedComment(commentId);
         Post post = postService.findPost(postId);
         long findMemberId = post.getMember().getMemberId();

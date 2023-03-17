@@ -1,5 +1,6 @@
+import Cookies from 'universal-cookie';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
 import { FcGoogle } from 'react-icons/fc';
 import { BsArrowReturnLeft } from 'react-icons/bs';
@@ -22,8 +23,13 @@ import {
   SModalSignupBtn,
 } from '../../Style/LoginStyle';
 import axios from 'axios';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { loginState, loggedUserInfo } from '../../atoms/atoms';
 
 const Login = () => {
+  const [isLogged, setIsLogged] = useRecoilState(loginState);
+  const setUserInfo = useSetRecoilState(loggedUserInfo);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,25 +40,39 @@ const Login = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { lockScroll, openScroll } = useBodyScrollLock();
 
-  // * '/members/login' 이나 json-server '/' 인식 불가능으로 '/login' 으로 임시 적용
+  const cookies = new Cookies();
+  const navigate = useNavigate();
 
   const handleSubmit = () => {
-    axios({
-      method: 'post',
-      url: 'http://localhost:3001/login',
-      data: {
-        email,
-        password,
-      },
-      Headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        console.log(res);
+    axios
+      .post('/login', {
+        email: email,
+        password: password,
       })
-      .catch(() => {
+      .then((res) => {
+        const accessToken = res.headers.authorization;
+        const refreshToken = res.headers.refresh;
+        localStorage.setItem('accessToken', accessToken);
+        // token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
+        axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+
+        axios
+          .get(`/members`, {
+            headers: {
+              'ngrok-skip-browser-warning': 'skip', // ngrok error skip용 헤더 추후 삭제 예정
+            },
+          })
+          .then((res) => {
+            setUserInfo(res.data);
+          });
+
+        cookies.set('refreshToken', refreshToken, { sameSite: 'strict' });
+        setIsLogged(!isLogged);
+        navigate('/home');
+      })
+      .catch((data) => {
         console.log('Error!');
+        console.log(data);
       });
   };
 
