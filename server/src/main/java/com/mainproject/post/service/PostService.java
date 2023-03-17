@@ -78,21 +78,21 @@ public class PostService {
         return postRepository.findByRegion_regionIdAndPostStatusNot(regionId, status, pageable);
     }
 
-    public Page<Post> findQuestions(int page, String titleKeyword, String contentKeyword, String sortType, int filterType, String medicalTagTitle, String regionName) {
+    public Page<Post> findQuestions(int page, String titleKeyword, String sortType, int filterType, String medicalTagTitle, String regionName) {
 
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
         List<Post.PostStatus> status = Arrays.asList(POST_PENDING, POST_DELETED);
 
         if(filterType == 1) {
-            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotIn(titleKeyword, contentKeyword, status, pageRequest);
+            return postRepository.findByTitleContainsAndPostStatusNotIn(titleKeyword, status, pageRequest);
         } else if(filterType == 2) {
-            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndPostType(titleKeyword, contentKeyword, status, "question", pageRequest);
+            return postRepository.findByTitleContainsAndPostStatusNotInAndPostType(titleKeyword, status, "question", pageRequest);
         } else if(filterType == 3) {
-            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndPostType(titleKeyword, contentKeyword, status, "review", pageRequest);
+            return postRepository.findByTitleContainsAndPostStatusNotInAndPostType(titleKeyword, status, "review", pageRequest);
         } else if (filterType == 4) {
-            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndRegion_name(titleKeyword, contentKeyword, status, regionName, pageRequest);
+            return postRepository.findByTitleContainsAndPostStatusNotInAndRegionName(titleKeyword, status, regionName, pageRequest);
         } else if (filterType == 5) {
-            return postRepository.findByTitleContainingAndContentContainingAndPostStatusNotInAndMedicalTag_title(titleKeyword, contentKeyword, status, medicalTagTitle, pageRequest);
+            return postRepository.findByTitleContainsAndPostStatusNotInAndMedicalTagTitle(titleKeyword, status, medicalTagTitle, pageRequest);
         }
         throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
     }

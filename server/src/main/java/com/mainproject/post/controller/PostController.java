@@ -47,12 +47,11 @@ public class PostController {
     @GetMapping
     public ResponseEntity getQuestions(@RequestParam(value = "page", defaultValue = "0") int page,
                                                    @RequestParam(value = "titleKeyword", required = false) String titleKeyword,
-                                                   @RequestParam(value = "contentKeyword", required = false) String contentKeyword,
                                                    @RequestParam(value = "sort", defaultValue = "createdAt") String sortType,
                                                    @RequestParam(value = "filterType", defaultValue = "1") int filterType,
                                                    @RequestParam(value = "medicalTagTitle", required = false) String medicalTagTitle,
                                                    @RequestParam(value = "regionName", required = false) String regionName) {
-        Page<Post> postPage = postService.findQuestions(page, titleKeyword, contentKeyword, sortType, filterType, medicalTagTitle, regionName);
+        Page<Post> postPage = postService.findQuestions(page, titleKeyword, sortType, filterType, medicalTagTitle, regionName);
         List<Post> posts = postPage.getContent();
 
         return new ResponseEntity<>(
