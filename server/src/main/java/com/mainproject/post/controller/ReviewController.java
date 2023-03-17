@@ -1,5 +1,6 @@
 package com.mainproject.post.controller;
 
+import com.mainproject.member.entity.Member;
 import com.mainproject.post.dto.ReviewPostDto;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.mapper.PostMapper;
@@ -7,6 +8,7 @@ import com.mainproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,11 +28,11 @@ public class ReviewController {
     // 글 작성
     @PostMapping
     public ResponseEntity createReview(@RequestPart(value = "post") ReviewPostDto reviewDto,
-                                       @RequestPart(value = "memberId") Long memberId,
-                                       @RequestPart(value = "img", required = false) MultipartFile img) throws IOException {
+                                       @RequestPart(value = "img", required = false) MultipartFile img,
+                                       @AuthenticationPrincipal String email) throws IOException {
 
         Post review = postMapper.reviewPostDtoToReview(reviewDto);
-        Long reviewId = postService.createReview(review, memberId, reviewDto.getHospitalName(), reviewDto.getMedicalTagTitle(), reviewDto.getRegionName(), img);
+        Long reviewId = postService.createReview(review, email, reviewDto.getHospitalName(), reviewDto.getMedicalTagTitle(), reviewDto.getRegionName(), img);
 
         return new ResponseEntity<>(reviewId, HttpStatus.OK);
     }

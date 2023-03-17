@@ -33,6 +33,10 @@ public class Post extends Auditable {
     @Column(name = "CONTENT", length = 1000, nullable = false)
     private String content;
 
+    // 리뷰 별점
+    @Column(name = "STAR_RATING")
+    private int starRating;
+
     // 질문인지 리뷰인지
     @Column(nullable = false)
     private String postType;

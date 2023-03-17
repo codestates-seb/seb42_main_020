@@ -7,6 +7,7 @@ import com.mainproject.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,32 +35,30 @@ public class MemberController {
     }
 
     // 회원 수정
-    @PatchMapping("/{member-id}")
-    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
+    @PatchMapping
+    public ResponseEntity patchMember(@AuthenticationPrincipal String email,
                                       @Valid @RequestBody MemberDto.Patch requestBody) {
 
-        requestBody.addMemberId(memberId);
+        Member patchMember =
+                memberService.updateMember(memberMapper.memberPatchToMember(requestBody), email);
 
-        Member member =
-                memberService.updateMember(memberMapper.memberPatchToMember(requestBody));
-
-        return new ResponseEntity<>(response(member), HttpStatus.OK);
+        return new ResponseEntity<>(response(patchMember), HttpStatus.OK);
     }
 
     // 특정 회원 조회
-    @GetMapping("/{member-id}")
-    public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {
+    @GetMapping
+    public ResponseEntity getMember(@AuthenticationPrincipal String email) {
 
-        Member member = memberService.findMember(memberId);
+        Member member = memberService.findMember(email);
 
         return new ResponseEntity<>(response(member), HttpStatus.OK);
     }
 
     // 회원 탈퇴
-    @DeleteMapping("/{member-id}")
-    public ResponseEntity deleteMember(@PathVariable("member-id") @Positive long memberId) {
+    @DeleteMapping
+    public ResponseEntity deleteMember(@AuthenticationPrincipal String email) {
 
-        memberService.deleteMember(memberId);
+        memberService.deleteMember(email);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

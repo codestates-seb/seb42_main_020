@@ -46,6 +46,11 @@ public class Member extends Auditable {
     @Column
     private int point = 0;
 
+    // 권한 컬럼 추가
+    // 사용자 등록 시 사용자 권한을 등록하기 위한 테이블 생성
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
     // 회원 활동, 휴면, 탈퇴 여부
     @Enumerated(value = EnumType.STRING)
     @Column(name = "MEMBER_STATUS", length = 30, nullable = false)

@@ -8,6 +8,7 @@ import com.mainproject.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,10 +44,10 @@ public class DoctorController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{member-id}")
-    public ResponseEntity getDoctor(@PathVariable("member-id") long memberId) {
+    @GetMapping
+    public ResponseEntity getDoctor(@AuthenticationPrincipal String email) {
 
-        Member member = memberService.findDoctor(memberId);
+        Member member = memberService.findDoctor(email);
 
         return new ResponseEntity<>(response(member), HttpStatus.OK);
     }
