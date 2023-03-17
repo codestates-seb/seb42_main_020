@@ -104,6 +104,22 @@ export const SQuestionButtonBlock = styled.div`
   }
 `;
 
+export const SQuestionLikeButtonBlock = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 15px;
+
+  button {
+    width: 15%;
+    height: 30px;
+    border: none;
+    background-color: white;
+    border-radius: 3px;
+    color: #636e72;
+  }
+`;
+
 export const SAnswerHeader = styled.div`
   display: flex;
   justify-content: space-between;

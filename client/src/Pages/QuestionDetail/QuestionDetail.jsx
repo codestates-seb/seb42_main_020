@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useRecoilState } from 'recoil';
-
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 
 import {
@@ -19,6 +18,7 @@ import {
   SAnswerInfoBlock,
   SAnswerUserInfoBlock,
   SAnswerButtonBlock,
+  SQuestionLikeButtonBlock,
 } from '../../Style/QuestionDetailStyle';
 
 const QuestionDetail = () => {
@@ -64,8 +64,7 @@ const QuestionDetail = () => {
         setWriterInfo(res.data.writerResponse);
         setComments(res.data.comments);
       });
-  }, [setQuestionData]);
-
+  }, [questionData.totalLike]);
   const expertChoiceHandler = () => {
     if (!expertChoice) {
       const expertChoiceConfirm = confirm('답변을 채택하시겠습니까?');
@@ -116,14 +115,29 @@ const QuestionDetail = () => {
     const deleteResult = confirm('질문을 삭제하시겠습니까???');
     if (deleteResult) {
       alert('질문을 삭제하였습니다.');
-      axios.delete('/posts/1').then((res) => {
-        setQuestionData(res.data);
+      axios.delete(`/posts/${questionData.postId}`).then((res) => {
+        console.log(res);
       });
       navigate('/');
     }
   };
 
+  const likeHandler = () => {
+    axios
+      .post(`/posts/${questionData.postId}/likes`, {
+        headers: {
+          'ngrok-skip-browser-warning': '69420',
+        },
+      })
+      .then((res) => {
+        location.reload();
+
+        console.log(res);
+      });
+  };
+
   console.log(comments);
+  console.log(questionData);
 
   return (
     <SQuestionDetailContainer className="detail-block">
@@ -146,7 +160,11 @@ const QuestionDetail = () => {
             <button onClick={modifyHandler}>수정</button>
             <button onClick={deleteHandler}>삭제</button>
           </SQuestionButtonBlock>
-        ) : null}
+        ) : (
+          <SQuestionLikeButtonBlock className="button-block">
+            <button onClick={likeHandler}>❤️ {questionData.totalLike}</button>
+          </SQuestionLikeButtonBlock>
+        )}
       </SQuestionDetailBlock>
       {isLogin ? null : (
         <SPostAnswerBlock className="want-answer-block">
