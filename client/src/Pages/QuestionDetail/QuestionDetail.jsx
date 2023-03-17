@@ -146,7 +146,7 @@ const QuestionDetail = () => {
           <h1>🤔 {questionData.title}</h1>
           <SQuestionInfoBlock className="info-block">
             <span>
-              {userInfo[0].displayName} [{questionData.regionName}]
+              {writerInfo.displayName} [{questionData.regionName}]
             </span>
             <span>{questionData.createdAt}</span>
           </SQuestionInfoBlock>

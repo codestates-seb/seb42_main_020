@@ -26,6 +26,11 @@ export const SReportModalBlock = styled.div`
   h1 {
     font-size: 30px;
   }
+
+  .ant-select {
+    width: 100%;
+    margin-bottom: 15px;
+  }
 `;
 
 export const SReportModalHeader = styled.div`
@@ -36,7 +41,7 @@ export const SReportModalHeader = styled.div`
 `;
 
 export const SReportText = styled.textarea`
-  width: 100%;
+  width: 98%;
   border: none;
   font-size: 15px;
   height: 100px;

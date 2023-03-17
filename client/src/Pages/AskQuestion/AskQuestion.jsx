@@ -130,18 +130,9 @@ const AskQuestion = () => {
       setTitleValid(false);
     }
 
-    //나중에 서버로 데이터 보내줄 예정
-    // 멤버 id는 현재 로그인 상태의 id
-
-    axios
-      .post('/posts', questionData, {
-        headers: {
-          // token 추가로 넣어주기
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      });
+    axios.post('/posts', questionData).then((res) => {
+      console.log(res);
+    });
 
     alert('질문이 작성되었습니다.');
     navigate('/');
