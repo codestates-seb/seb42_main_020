@@ -14,19 +14,23 @@ import { useState, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loggedUserInfo, loginState } from '../../atoms/atoms';
 import { useRecoilState } from 'recoil';
+import Cookies from 'universal-cookie';
 
 function UserCardProfile() {
   const [userInfo, setUserInfo] = useRecoilState(loggedUserInfo);
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
-  const LogOut = () => {
+  const LogOut = async () => {
+    //서버에 post 요청 꼭 들어가야 함. 아직 미구현인거 같음.
     localStorage.removeItem('accessToken');
     localStorage.removeItem('loggedUserInfo');
+    cookies.remove('refreshToken');
     setUserInfo('');
     setIsLogin(!isLogin);
-    navigate('/');
+    navigate('/home');
     window.scrollTo(0, 0);
   };
   const ModalSubmit = () => {
