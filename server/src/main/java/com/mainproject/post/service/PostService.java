@@ -49,43 +49,61 @@ public class PostService {
     private final MedicalTagRepository medicalTagRepository;
     private final RegionRepository regionRepository;
 
+//    // 페이징 조회 (초안인데 아래에 하나로 합쳐서 주석처리함)
+//    public Page<Post> findByTitleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
+//        return postRepository.findByTitleContainingAndPostStatusNotIn(keyword, status, pageable);
+//    }
+//
+//    public Page<Post> findByContentContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
+//        return postRepository.findByContentContainingAndPostStatusNotIn(keyword, status, pageable);
+//    }
+//
+//    public Page<Post> findByMember_displayNameAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
+//        return postRepository.findByMember_displayNameAndPostStatusNotIn(keyword, status, pageable);
+//    }
+//
+//    public Page<Post> findByMedicalTag_titleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
+//        return postRepository.findByMedicalTag_titleContainingAndPostStatusNotIn(keyword, status, pageable);
+//    }
+//
+//    public Page<Post> findByRegion_nameContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
+//        return postRepository.findByRegion_nameContainingAndPostStatusNotIn(keyword, status, pageable);
+//    }
+
+//    // 페이징 조회 - 홍재님 코드
+//    public Page<Post> findQuestions(int page, String titleKeyword, String sortType, int filterType, String medicalTagTitle, String regionName) {
+//
+//        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
+//        List<Post.PostStatus> status = Arrays.asList(POST_PENDING, POST_DELETED);
+//
+//
+//        if(filterType == 1) {
+//            return postRepository.findByTitleContainsAndPostStatusNotIn(titleKeyword, status, pageRequest);
+//        } else if(filterType == 2) {
+//            return postRepository.findByTitleContainsAndPostStatusNotInAndPostType(titleKeyword, status, "question", pageRequest);
+//        } else if(filterType == 3) {
+//            return postRepository.findByTitleContainsAndPostStatusNotInAndPostType(titleKeyword, status, "review", pageRequest);
+//        } else if (filterType == 4) {
+//            return postRepository.findByTitleContainsAndPostStatusNotInAndRegionName(titleKeyword, status, regionName, pageRequest);
+//        } else if (filterType == 5) {
+//            return postRepository.findByTitleContainsAndPostStatusNotInAndMedicalTagTitle(titleKeyword, status, medicalTagTitle, pageRequest);
+//        }
+//        throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
+//    }
+
     // 페이징 조회
-    public Page<Post> findByTitleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
-        return postRepository.findByTitleContainingAndPostStatusNotIn(keyword, status, pageable);
-    }
-
-    public Page<Post> findByContentContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
-        return postRepository.findByContentContainingAndPostStatusNotIn(keyword, status, pageable);
-    }
-
-    public Page<Post> findByMember_displayNameAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
-        return postRepository.findByMember_displayNameAndPostStatusNotIn(keyword, status, pageable);
-    }
-
-    public Page<Post> findByMedicalTag_titleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
-        return postRepository.findByMedicalTag_titleContainingAndPostStatusNotIn(keyword, status, pageable);
-    }
-
-    public Page<Post> findByRegion_nameContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
-        return postRepository.findByRegion_nameContainingAndPostStatusNotIn(keyword, status, pageable);
-    }
-
-    public Page<Post> findQuestions(int page, String titleKeyword, String sortType, int filterType, String medicalTagTitle, String regionName) {
-
-        PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
-        List<Post.PostStatus> status = Arrays.asList(POST_PENDING, POST_DELETED);
-
+    public Page<Post> findQuestions(int filterType, String keyword, List<Post.PostStatus> status, Pageable pageable) {
 
         if(filterType == 1) {
-            return postRepository.findByTitleContainsAndPostStatusNotIn(titleKeyword, status, pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotIn(keyword, status, pageable);
         } else if(filterType == 2) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndPostType(titleKeyword, status, "question", pageRequest);
+            return postRepository.findByContentContainingAndPostStatusNotIn(keyword, status, pageable);
         } else if(filterType == 3) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndPostType(titleKeyword, status, "review", pageRequest);
+            return postRepository.findByMember_displayNameAndPostStatusNotIn(keyword, status, pageable);
         } else if (filterType == 4) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndRegionName(titleKeyword, status, regionName, pageRequest);
+            return postRepository.findByMedicalTag_titleContainingAndPostStatusNotIn(keyword, status, pageable);
         } else if (filterType == 5) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndMedicalTagTitle(titleKeyword, status, medicalTagTitle, pageRequest);
+            return postRepository.findByRegion_nameContainingAndPostStatusNotIn(keyword, status, pageable);
         }
         throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
     }
