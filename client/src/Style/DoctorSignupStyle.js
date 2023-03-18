@@ -191,6 +191,10 @@ export const SModal = styled.div`
   background-color: var(--white);
   box-shadow: 0 1px 3px 0 var(--gray-200);
   border-radius: 30px;
+  a {
+    text-decoration: none;
+    color: var(--black);
+  }
   svg {
     margin: 32px;
     font-size: 1.5rem;
@@ -206,8 +210,22 @@ export const DoctorRegiInfo = styled.div`
   width: 900px;
   height: 250px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column !important;
   align-items: center;
   justify-content: center !important;
   margin: 30px;
+  padding-bottom: 35px !important;
+  h1 {
+    font-size: 30px;
+    margin-bottom: 30px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 20px;
+    line-height: normal;
+    text-align: center;
+  }
 `;
