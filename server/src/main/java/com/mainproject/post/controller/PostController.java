@@ -92,48 +92,51 @@ public class PostController {
     }
 
     // 페이징 조회 - 작성자
-    @GetMapping("/member/{memberId}")
-    public ResponseEntity<Page<Post>> getPostsByMemberId(@PathVariable Long memberId,
-                                                         @RequestParam(value = "page", defaultValue = "0") int page,
+    @GetMapping("/member")
+    public ResponseEntity<Page<Post>> getPostsByMemberId(@RequestParam(value = "page", defaultValue = "0") int page,
                                                          @RequestParam(value = "size", defaultValue = "10") int size,
                                                          @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
-                                                         @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
+                                                         @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
+                                                         @RequestParam(value = "keyword", required = false) String keyword,
+                                                         @RequestParam(value = "status", required = false) List<String> status) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
-        Page<Post> posts = postService.findByMember_memberIdAndPostStatusNotIn(memberId,
+        Page<Post> posts = postService.findByMember_displayNameAndPostStatusNotIn(keyword,
                 Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     // 페이징 조회 - 진료과목
-    @GetMapping("/medicalTag/{medicalTagId}")
-    public ResponseEntity<Page<Post>> getPostsByMedicalTag(@PathVariable Long medicalTagId,
-                                                           @RequestParam(value = "page", defaultValue = "0") int page,
+    @GetMapping("/medicalTag")
+    public ResponseEntity<Page<Post>> getPostsByMedicalTag(@RequestParam(value = "page", defaultValue = "0") int page,
                                                            @RequestParam(value = "size", defaultValue = "10") int size,
                                                            @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
-                                                           @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
+                                                           @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
+                                                           @RequestParam(value = "keyword", required = false) String keyword,
+                                                           @RequestParam(value = "status", required = false) List<String> status) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
-        Page<Post> posts = postService.findByMedicalTag_medicalTagIdAndPostStatusNotIn(medicalTagId,
+        Page<Post> posts = postService.findByMedicalTag_titleContainingAndPostStatusNotIn(keyword,
                 Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     // 페이징 조회 - 지역
-    @GetMapping("/region/{regionId}")
-    public ResponseEntity<Page<Post>> getPostsByRegionId(@PathVariable Long regionId,
-                                                         @RequestParam(value = "page", defaultValue = "0") int page,
-                                                         @RequestParam(value = "size", defaultValue = "10") int size,
-                                                         @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
-                                                         @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction) {
+    @GetMapping("/region")
+    public ResponseEntity<Page<Post>> getPostsByRegion(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                       @RequestParam(value = "size", defaultValue = "10") int size,
+                                                       @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
+                                                       @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
+                                                       @RequestParam(value = "keyword", required = false) String keyword,
+                                                       @RequestParam(value = "status", required = false) List<String> status) {
 
         PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
-        Page<Post> posts = postService.findByRegion_regionIdAndPostStatusNotIn(regionId,
+        Page<Post> posts = postService.findByRegion_nameContainingAndPostStatusNotIn(keyword,
                 Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
 
         return new ResponseEntity<>(posts, HttpStatus.OK);

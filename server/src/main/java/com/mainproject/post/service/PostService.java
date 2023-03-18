@@ -58,16 +58,16 @@ public class PostService {
         return postRepository.findByContentContainingAndPostStatusNotIn(keyword, status, pageable);
     }
 
-    public Page<Post> findByMember_memberIdAndPostStatusNotIn(Long memberId, List<Post.PostStatus> status, Pageable pageable) {
-        return postRepository.findByMember_memberIdAndPostStatusNotIn(memberId, status, pageable);
+    public Page<Post> findByMember_displayNameAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
+        return postRepository.findByMember_displayNameAndPostStatusNotIn(keyword, status, pageable);
     }
 
-    public Page<Post> findByMedicalTag_medicalTagIdAndPostStatusNotIn(Long medicalTagId, List<Post.PostStatus> status, Pageable pageable) {
-        return postRepository.findByMedicalTag_medicalTagIdAndPostStatusNotIn(medicalTagId, status, pageable);
+    public Page<Post> findByMedicalTag_titleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
+        return postRepository.findByMedicalTag_titleContainingAndPostStatusNotIn(keyword, status, pageable);
     }
 
-    public Page<Post> findByRegion_regionIdAndPostStatusNotIn(Long regionId, List<Post.PostStatus> status, Pageable pageable) {
-        return postRepository.findByRegion_regionIdAndPostStatusNotIn(regionId, status, pageable);
+    public Page<Post> findByRegion_nameContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
+        return postRepository.findByRegion_nameContainingAndPostStatusNotIn(keyword, status, pageable);
     }
 
     public Page<Post> findQuestions(int page, String titleKeyword, String sortType, int filterType, String medicalTagTitle, String regionName) {

@@ -17,11 +17,11 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     Page<Post> findByContentContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
 
-    Page<Post> findByMember_memberIdAndPostStatusNotIn(Long memberId, List<Post.PostStatus> status, Pageable pageable);
+    Page<Post> findByMember_displayNameAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
 
-    Page<Post> findByMedicalTag_medicalTagIdAndPostStatusNotIn(Long medicalTagId, List<Post.PostStatus> status, Pageable pageable);
+    Page<Post> findByMedicalTag_titleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
 
-    Page<Post> findByRegion_regionIdAndPostStatusNotIn(Long regionId1, List<Post.PostStatus> status, Pageable pageable);
+    Page<Post> findByRegion_nameContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
 
     /*Page<Post> findByTitleContainingAndContentContainingAndPostStatusNotIn(String titleKeyword, String contentKeyword, List<Post.PostStatus> status, Pageable pageable);*/
 
