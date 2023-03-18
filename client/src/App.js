@@ -31,8 +31,8 @@ function App() {
     <RecoilRoot>
       <BrowserRouter>
         <GlobalStyle />
-        <Header />
         <Suspense fallback={<Loading />}>
+          <Header />
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/home" element={<Section />} />
