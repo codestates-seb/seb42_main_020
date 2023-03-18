@@ -35,7 +35,7 @@ const Landing = () => {
                 <br /> 나누세요
               </SOfferSub>
               <SOfferBtn>
-                <Link to="/">질문하기</Link>
+                <Link to="/askquestion">질문하기</Link>
               </SOfferBtn>
             </SOfferInfo>
           </SOfferSection>
@@ -47,7 +47,7 @@ const Landing = () => {
                 <br /> 찾아보세요
               </SOfferSub>
               <SOfferBtn>
-                <Link to="/">리뷰 쓰기</Link>
+                <Link to="/review">리뷰 쓰기</Link>
               </SOfferBtn>
             </SOfferInfo>
           </SOfferSection>
@@ -60,7 +60,7 @@ const Landing = () => {
                 <br /> 시작해 보세요.
               </SOfferSub>
               <SOfferBtn>
-                <Link to="/">회원가입</Link>
+                <Link to="/medicalprovider">회원가입</Link>
               </SOfferBtn>
             </SOfferInfo>
           </SOfferSection>
