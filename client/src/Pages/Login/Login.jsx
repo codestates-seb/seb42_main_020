@@ -2,6 +2,7 @@ import Cookies from 'universal-cookie';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
+import useDidMountEffect from '../../util/useDidMountEffect';
 import { FcGoogle } from 'react-icons/fc';
 import { BsArrowReturnLeft } from 'react-icons/bs';
 import { message } from 'antd';
@@ -33,6 +34,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [isFocus, setIsFocus] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [emailMsg, setEmailMsg] = useState(''); // 유효성 검사 안내 Msg for eamil
   const [passwordMsg, setPasswordMsg] = useState(''); // 유효성 검사 안내 Msg for PW
@@ -124,12 +126,16 @@ const Login = () => {
   };
 
   // 유효성 검사 미통과 안내 Msg
-  const handleClickAlert = () => {
+  const handleFocusAlert = () => {
+    setIsFocus(!isFocus);
+  };
+
+  useDidMountEffect(() => {
     messageApi.open({
       type: 'warning',
       content: emailMsg || passwordMsg || '이메일과 비밀번호를 입력해 주세요',
     });
-  };
+  }, [isFocus]);
 
   // 유효성 검사를 통과하지 못하면 Submit 비활성화
   const isEmailValid = validateEmail(email);
@@ -159,13 +165,13 @@ const Login = () => {
         <SFormSection>
           <SInput
             onChange={handleChangeEmail}
-            onClick={handleClickAlert}
+            onFocus={handleFocusAlert}
             placeholder="이메일"
           />
           <SInput
             type="password"
             onChange={handleChangePassword}
-            onClick={handleClickAlert}
+            onFocus={handleFocusAlert}
             placeholder="비밀번호"
           />
           <div>

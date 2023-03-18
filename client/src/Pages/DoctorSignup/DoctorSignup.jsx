@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
+import useDidMountEffect from '../../util/useDidMountEffect';
 import { message } from 'antd';
-import { BsArrowReturnLeft } from 'react-icons/bs';
 import { FcInfo } from 'react-icons/fc';
+import {
+  DoctorRegiInfoModal,
+  DoctorRegiPolicyModal,
+} from '../../Components/DoctorSignup/DoctorRegiInfoModal';
 import {
   SMain,
   SLayout,
@@ -17,9 +21,6 @@ import {
   SSubmitBtn,
   SLoginInfo,
   SLoginBtn,
-  SModalLayout,
-  SModal,
-  DoctorRegiInfo,
 } from '../../Style/DoctorSignupStyle';
 import axios from 'axios';
 
@@ -30,6 +31,7 @@ const DoctorSignup = () => {
   const [password, setPassword] = useState('');
   const [imgFile, setImgFile] = useState(null);
 
+  const [isFocus, setIsFocus] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [nameMsg, setNameMsg] = useState(''); // 유효성 검사 안내 Msg for name && hospital
   const [emailMsg, setEmailMsg] = useState(''); // Msg for eamil
@@ -38,7 +40,8 @@ const DoctorSignup = () => {
   const [checkedService, setCheckedService] = useState(false); // 이용약관 동의
   const [checkedLocation, setCheckedLocation] = useState(false); // 위치 기반 서비스 동의
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false); // 가입 동의 안내
+  const [isOpenAutoModal, setIsOpenAutoModal] = useState(false); // 성공 안내 모달
   const { lockScroll, openScroll } = useBodyScrollLock();
   openScroll(); // 페이지 이동 후 scroll lock 해제
 
@@ -73,6 +76,9 @@ const DoctorSignup = () => {
       })
       .then((res) => {
         console.log(res);
+        // 운영진 승인 안내 모달
+        lockScroll();
+        setIsOpenAutoModal(!isOpenAutoModal);
       })
       .catch((data) => {
         console.log(data);
@@ -163,12 +169,16 @@ const DoctorSignup = () => {
   };
 
   // 유효성 검사 미통과 안내 Msg
-  const handleClickAlert = () => {
+  const handleFocusAlert = () => {
+    setIsFocus(!isFocus);
+  };
+
+  useDidMountEffect(() => {
     messageApi.open({
       type: 'warning',
       content: nameMsg || emailMsg || passwordMsg || '내용을 입력해 주세요',
     });
-  };
+  }, [isFocus]);
 
   // 이용약관 유효성 검사
   const handleClickTermService = (e) => {
@@ -227,23 +237,23 @@ const DoctorSignup = () => {
           <div>
             <SInput
               onChange={handleChangeName}
-              onClick={handleClickAlert}
+              onFocus={handleFocusAlert}
               placeholder="이름"
             />
             <SInput
               onChange={handleChangeHospital}
-              onClick={handleClickAlert}
+              onFocus={handleFocusAlert}
               placeholder="병원명"
             />
             <SInput
               onChange={handleChangeEmail}
-              onClick={handleClickAlert}
+              onFocus={handleFocusAlert}
               placeholder="이메일"
             />
             <SInput
               type="password"
               onChange={handleChangePassword}
-              onClick={handleClickAlert}
+              onFocus={handleFocusAlert}
               placeholder="비밀번호"
             />
           </div>
@@ -303,13 +313,11 @@ const DoctorSignup = () => {
             </SLoginBtn>
           </div>
           {isOpenModal ? (
-            <SModalLayout>
-              <SModal>
-                <BsArrowReturnLeft onClick={handleClose} />
-                <DoctorRegiInfo>안내 이미지 예정</DoctorRegiInfo>
-              </SModal>
-            </SModalLayout>
-          ) : null}
+            <DoctorRegiPolicyModal handleClose={handleClose} />
+          ) : (
+            <></>
+          )}
+          {isOpenAutoModal ? <DoctorRegiInfoModal /> : <></>}
         </SLoginInfo>
       </SLayout>
     </SMain>
