@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import ReviewReason from './ReviewReason';
+import AlertModal from '../AlertModal/AlertModal';
 import {
   SReportModalContainer,
   SReportModalBlock,
@@ -10,9 +10,7 @@ import {
   SReportModalClose,
 } from '../../Style/ReportModalStyle';
 
-const ReportModal = ({ reportModalHandler, setReportModal, reviewData }) => {
-  const token = localStorage.getItem('accessToken');
-
+const ReportModal = ({ reportModalHandler }) => {
   //모달 제출 내용
   const [reportText, setReportText] = useState('');
   const [reportReason, setReportReason] = useState('');
@@ -27,27 +25,12 @@ const ReportModal = ({ reportModalHandler, setReportModal, reviewData }) => {
 
   // 신고 사유
   const reportReasonHandler = (e) => {
-    setReportReason(e.target.value);
+    console.log(e);
+    setReportReason(e);
   };
   // 신고 내용
   const reportTextHandler = (e) => {
     setReportText(e.target.value);
-  };
-
-  const reportSubmitHandler = () => {
-    axios.defaults.baseURL = 'http://localhost:3000';
-    axios
-      .post(`posts/${reviewData.postId}/report`, reportInfo, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      });
-    alert('신고가 접수되었습니다.');
-    setReportModal((prev) => !prev);
-    console.log(reportText);
   };
 
   return (
@@ -59,7 +42,8 @@ const ReportModal = ({ reportModalHandler, setReportModal, reviewData }) => {
         </SReportModalHeader>
         <div>
           <ReviewReason
-            onChange={reportReasonHandler}
+            reportReason={reportReason}
+            reportReasonHandler={reportReasonHandler}
             className="review_reson"
           />
           <SReportText
@@ -71,7 +55,7 @@ const ReportModal = ({ reportModalHandler, setReportModal, reviewData }) => {
           />
           <SReportModalButtonBlock>
             <button onClick={reportModalHandler}>취 소</button>
-            <button onClick={reportSubmitHandler}>제 출</button>
+            <AlertModal reportInfo={reportInfo}>제 출</AlertModal>
           </SReportModalButtonBlock>
         </div>
       </SReportModalBlock>
