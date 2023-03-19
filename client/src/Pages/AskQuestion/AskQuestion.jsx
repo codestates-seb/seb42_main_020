@@ -34,7 +34,7 @@ const AskQuestion = () => {
   const [titleMessage, setTitleMessage] = useState('');
 
   // 내용 입력값
-  const [questionContent, setQuestionContent] = useState('');
+  const [questionContent, setQuestionContent] = useState('내용입니다');
   // 내용 유효성 검사
   const [textValid, setTextValid] = useState(false);
   // 내용이 적합하지 않을 경우 표출
@@ -76,6 +76,7 @@ const AskQuestion = () => {
 
   // 작성 내용
   const handleText = (value) => {
+    setQuestionContent(value);
     if (value.length < 5) {
       setTextValid(false);
       setTextMessage('내용은 5글자 이상 입력해주세요');
@@ -85,7 +86,6 @@ const AskQuestion = () => {
     } else {
       setTextValid(true);
     }
-
     setQuestionContent(value);
   };
 
@@ -180,7 +180,7 @@ const AskQuestion = () => {
             </SValidFail>
           </div>
         </SAskQuestionInfoBlock>
-        <TextEditor handleText={handleText} />
+        <TextEditor handleText={handleText} questionContent={questionContent} />
         <SValidFail> {textValid ? null : textMessage}</SValidFail>
         <SButtonBlock>
           <SCancalButton>취소</SCancalButton>

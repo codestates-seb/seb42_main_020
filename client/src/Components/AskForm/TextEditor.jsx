@@ -25,7 +25,7 @@ const CustomToolbar = () => (
   </div>
 );
 
-const TextEditor = ({ handleText, questionContent }) => {
+const TextEditor = ({ handleText }) => {
   const modules = {
     toolbar: {
       container: '#toolbar',
@@ -54,8 +54,8 @@ const TextEditor = ({ handleText, questionContent }) => {
     <div className="text-editor" style={{ height: '350px', width: '100%' }}>
       <CustomToolbar />
       <ReactQuill
+        // value={questionContent}
         style={{ height: '300px', fontsize: '15px' }}
-        value={questionContent}
         modules={modules}
         formats={formats}
         theme="snow"
