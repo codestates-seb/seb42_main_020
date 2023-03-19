@@ -54,6 +54,7 @@ const TextEditor = ({ handleText }) => {
     <div className="text-editor" style={{ height: '350px', width: '100%' }}>
       <CustomToolbar />
       <ReactQuill
+        // value={questionContent}
         style={{ height: '300px', fontsize: '15px' }}
         modules={modules}
         formats={formats}

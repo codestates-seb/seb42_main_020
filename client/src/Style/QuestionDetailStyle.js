@@ -259,16 +259,31 @@ export const SAnswerUserInfoBlock = styled.div`
 
 export const SAnswerButtonBlock = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
   margin: 15px 0;
-
-  button {
-    width: 15%;
-    height: 30px;
+  > button {
+    background-color: white;
+    width: 10%;
     border: none;
-    background-color: var(--blue-200);
-    border-radius: 3px;
-    color: #636e72;
+  }
+
+  > div {
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+
+    > button {
+      width: 17%;
+      height: 30px;
+      border: none;
+      background-color: var(--blue-200);
+      border-radius: 3px;
+      color: #636e72;
+    }
+
+    > button:nth-child(2) {
+      margin: 0px 10px;
+    }
   }
 `;

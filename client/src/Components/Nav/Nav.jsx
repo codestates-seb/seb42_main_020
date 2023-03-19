@@ -13,7 +13,7 @@ const Nav = () => {
           <Link to="/question/1234">질문</Link>
         </SNavContents>
         <SNavContents>
-          <Link to="/review/1234">리뷰</Link>
+          <Link to="/review/123">리뷰</Link>
         </SNavContents>
         <SNavContents>
           <Link to="/locations">지역별</Link>

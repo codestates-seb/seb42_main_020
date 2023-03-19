@@ -39,7 +39,7 @@ function App() {
         <Route path="/askquestion" element={<AskQuestion />} />
         <Route path="/review" element={<Review />} />
         <Route path="/question/1234" element={<QuestionDetail />} />
-        <Route path="/review/1234" element={<ReviewDetail />} />
+        <Route path="/review/123" element={<ReviewDetail />} />
       </Routes>
       <Footer />
     </>

@@ -25,11 +25,13 @@ export const SPostModalBlock = styled.div`
   }
 `;
 export const SModalWrapper = styled.div`
-  position: absolute;
   display: flex;
+  position: absolute;
   justify-content: center;
-  width: 100%;
-  height: 100vh;
+  width: 20%;
+  height: 20%;
+  top: 230px;
+  right: 50px;
 `;
 export const SModal = styled.div`
   position: absolute;
@@ -38,11 +40,11 @@ export const SModal = styled.div`
   align-items: center;
   padding: 20px;
   background-color: white;
-  top: 250px;
-  right: -75px;
+
   width: 250px;
   height: 150px;
   border-radius: 20px;
+
   > button:last-child {
     width: 60px;
     height: 40px;
