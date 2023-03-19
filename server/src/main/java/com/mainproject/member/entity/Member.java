@@ -66,14 +66,6 @@ public class Member extends Auditable {
     @Column(name = "MEMBER_RATING", length = 30, nullable = false)
     private MemberRating memberRating = MemberRating.UNRANKED;
 
-    public boolean getIsDoctor() {
-        return isDoctor;
-    }
-
-    public void setIsDoctor(boolean isDoctor) {
-        this.isDoctor = isDoctor;
-    }
-
     // Post 클래스 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Post> posts = new ArrayList<>();
@@ -113,6 +105,14 @@ public class Member extends Auditable {
         MemberRating(String rating) {
             this.rating = rating;
         }
+    }
+
+    public boolean getIsDoctor() {
+        return isDoctor;
+    }
+
+    public void setIsDoctor(boolean isDoctor) {
+        this.isDoctor = isDoctor;
     }
 
     // 댓글 수

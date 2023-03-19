@@ -1,5 +1,9 @@
 package com.mainproject.post.mapper;
 
+import com.mainproject.comment.dto.CommentResponseDto;
+import com.mainproject.comment.entity.Comment;
+import com.mainproject.member.dto.WriterResponse;
+import com.mainproject.member.entity.Member;
 import com.mainproject.post.dto.*;
 import com.mainproject.post.entity.Post;
 import org.mapstruct.Mapper;
@@ -40,4 +44,9 @@ public interface PostMapper {
     PostResponseMyPageInfo postToMyPageInfo(Post post);
 
     List<PostResponseMyPageInfo> postsToMyPageInfos(List<Post> posts);
+
+    WriterResponse memberToWriterResponse(Member member);
+
+    @Mapping(target = "writerResponse", source = "comment.member")
+    CommentResponseDto commentToCommentResponseDto(Comment comment);
 }

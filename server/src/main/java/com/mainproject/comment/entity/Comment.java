@@ -75,10 +75,6 @@ public class Comment extends Auditable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<CommentReport> commentReports = new ArrayList<>();
 
-    // 신고 1:n
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<CommentReport> reports = new ArrayList<>();
-
     public int getTotalLike() {
         int totalLike = likes.size();
         return totalLike;
