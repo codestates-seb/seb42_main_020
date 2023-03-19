@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const SMain = styled.main`
-  width: 100vw;
-  height: 100vh;
+  width: 1920px;
+  height: 1000px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -41,7 +41,6 @@ export const SInfoSection = styled.div`
     font-size: 32px;
   }
   p {
-    font-family: 'TheJamsil';
     font-weight: 500;
   }
 `;
@@ -52,7 +51,6 @@ export const SFormSection = styled.div`
   flex-direction: column;
   margin: 0 0 10px 0px;
   button {
-    font-family: 'TheJamsil';
     font-weight: 500;
     font-size: 16px;
   }
@@ -141,12 +139,10 @@ export const SLoginInfo = styled.div`
     padding: 5px 0;
   }
   button {
-    font-family: 'TheJamsil';
     font-weight: 500;
     font-size: 16px;
   }
   p {
-    font-family: 'TheJamsil';
     font-weight: 400;
     font-size: 16px;
     color: var(--gray-800);
@@ -184,7 +180,7 @@ export const SModal = styled.div`
   justify-content: center;
   align-items: flex-end !important;
   position: fixed;
-  width: 50vw;
+  width: 960px;
   height: 45vh;
   top: 25vh;
   right: 25vw;
