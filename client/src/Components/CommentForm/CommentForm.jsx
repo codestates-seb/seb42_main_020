@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import ReactQuill from 'react-quill';
+import axios from 'axios';
+import { useState } from 'react';
 import 'react-quill/dist/quill.bubble.css';
 
 const SLayout = styled.article`
@@ -62,9 +64,38 @@ const SSubmitBtn = styled(SResetBtn)`
 `;
 
 const CommentForm = () => {
+  const token = localStorage.getItem('accessToken');
+
+  const [comment, setComment] = useState();
+
+  const submitData = {
+    content: `${comment}`,
+  };
+
   const handleChangeText = (content) => {
+    setComment(content);
     console.log(content);
   };
+
+  const resetHandler = () => {
+    setComment('');
+  };
+
+  const submitHandler = () => {
+    axios.defaults.baseURL = 'http://localhost:3000';
+    axios
+      .post(`comments/?post-id=2`, submitData, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        location.reload();
+
+        console.log(res);
+      });
+  };
+
   return (
     <SLayout>
       <SCommentOfferText>댓글 작성</SCommentOfferText>
@@ -72,6 +103,7 @@ const CommentForm = () => {
         <SWritingForm>
           <ReactQuill
             theme="bubble"
+            value={comment}
             style={{
               height: '150px',
               fontSize: '15px',
@@ -83,8 +115,12 @@ const CommentForm = () => {
           />
         </SWritingForm>
         <SBtnSection>
-          <SResetBtn type="reset">취소</SResetBtn>
-          <SSubmitBtn type="submit">확인</SSubmitBtn>
+          <SResetBtn type="reset" onClick={resetHandler}>
+            취소
+          </SResetBtn>
+          <SSubmitBtn type="submit" onClick={submitHandler}>
+            확인
+          </SSubmitBtn>
         </SBtnSection>
       </SwritingSection>
     </SLayout>
