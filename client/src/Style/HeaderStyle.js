@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const SHeader = styled.header`
   font-family: 'TheJamsil5Bold';
-  width: 100%;
+  width: 1920px;
   height: 80px;
   display: flex;
   flex-direction: row;

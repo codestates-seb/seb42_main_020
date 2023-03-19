@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const SMain = styled.main`
-  width: 100vw;
-  height: 100vh;
+  width: 1920px;
+  height: 1000px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -41,7 +41,6 @@ export const SInfoSection = styled.div`
     font-size: 32px;
   }
   p {
-    font-family: 'TheJamsil';
     font-weight: 500;
   }
 `;
@@ -54,7 +53,6 @@ export const SFormSection = styled.div`
     border-bottom: 1px solid var(--gray-300);
   }
   button {
-    font-family: 'TheJamsil';
     font-weight: 500;
     font-size: 16px;
   }
@@ -107,12 +105,10 @@ export const SSignupInfo = styled.div`
   align-items: center;
   justify-content: space-between;
   button {
-    font-family: 'TheJamsil';
     font-weight: 500;
     font-size: 16px;
   }
   p {
-    font-family: 'TheJamsil';
     font-weight: 400;
     font-size: 16px;
     color: var(--gray-800);

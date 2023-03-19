@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const SMain = styled.main`
-  width: 100vw;
-  height: 100vh;
+  width: 1920px;
+  height: 1000px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -112,12 +112,10 @@ export const SLoginInfo = styled.div`
     padding: 5px 0;
   }
   button {
-    font-family: 'TheJamsil';
     font-weight: 500;
     font-size: 16px;
   }
   p {
-    font-family: 'TheJamsil';
     font-weight: 400;
     font-size: 16px;
     color: var(--gray-800);
