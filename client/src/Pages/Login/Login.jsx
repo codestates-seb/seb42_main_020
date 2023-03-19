@@ -45,38 +45,36 @@ const Login = () => {
   const cookies = new Cookies();
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    axios
-      .post('/login', {
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post('/login', {
         email: email,
         password: password,
-      })
-      .then((res) => {
-        const accessToken = res.headers.authorization;
-        const refreshToken = res.headers.refresh;
-        localStorage.setItem('accessToken', accessToken);
-        // token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
-        axios.defaults.headers.common['Authorization'] = `${accessToken}`;
-
-        axios
-          .get(`/members`, {
-            headers: {
-              'ngrok-skip-browser-warning': 'skip', // ngrok error skip용 헤더 추후 삭제 예정
-            },
-          })
-          .then((res) => {
-            localStorage.setItem('loggedUserInfo', res.data);
-            setUserInfo(res.data);
-          });
-
-        cookies.set('refreshToken', refreshToken, { sameSite: 'strict' });
-        setIsLogged(true);
-        navigate('/home');
-      })
-      .catch((data) => {
-        console.log('Error!');
-        console.log(data);
       });
+      const accessToken = res.headers.authorization;
+      const refreshToken = res.headers.refresh;
+      localStorage.setItem('accessToken', accessToken);
+      // token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
+      axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+      try {
+        const userInfoRes = await axios.get('/members', {
+          headers: {
+            'ngrok-skip-browser-warning': 'skip', // ngrok error skip용 헤더 추후 삭제 예정
+          },
+        });
+        localStorage.setItem('loggedUserInfo', userInfoRes.data);
+        setUserInfo(userInfoRes.data);
+      } catch (error) {
+        console.log('Error!');
+        console.log(error);
+      }
+      cookies.set('refreshToken', refreshToken, { sameSite: 'strict' });
+      setIsLogged(true);
+      navigate('/home');
+    } catch (error) {
+      console.log('Error!');
+      console.log(error);
+    }
   };
 
   const notTobeNull = ({ email, password }) => {

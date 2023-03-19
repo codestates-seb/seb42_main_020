@@ -37,23 +37,21 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    axios
-      .post('/members/signup', {
-        email: email,
-        name: name,
-        displayName: displayName,
-        password: password,
-      })
-      .then((res) => {
-        console.log(res);
-        navigate('/login');
-      })
-      .catch((data) => {
-        console.log('Error!');
-        console.log(data);
-        // 회원가입 실패 안내창 띄우기
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post('/members/signup', {
+        email,
+        name,
+        displayName,
+        password,
       });
+      console.log(res);
+      navigate('/login');
+    } catch (error) {
+      console.log('Error!');
+      console.log(error);
+      // 회원가입 실패 안내창 띄우기
+    }
   };
 
   const notTobeNull = ({ name, displayName, email, password }) => {

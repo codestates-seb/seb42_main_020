@@ -45,7 +45,7 @@ const DoctorSignup = () => {
   const { lockScroll, openScroll } = useBodyScrollLock();
   openScroll(); // 페이지 이동 후 scroll lock 해제
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const formData = new FormData(); // 새로운 formData를 찍어내 그안에 키와 밸류의 형태로 넣어주는 형식
     formData.append('img', imgFile);
 
@@ -60,29 +60,20 @@ const DoctorSignup = () => {
       new Blob([JSON.stringify(dataString)], { type: 'application/json' })
     );
 
-    // formDate 값 확인하기
-    /*
-    let entries = formData.entries();
-    for (const pair of entries) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
-    */
-
-    axios
-      .post('/doctors/signup', formData, {
+    try {
+      const res = await axios.post('/doctors/signup', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-      })
-      .then((res) => {
-        console.log(res);
-        // 운영진 승인 안내 모달
-        lockScroll();
-        setIsOpenAutoModal(!isOpenAutoModal);
-      })
-      .catch((data) => {
-        console.log(data);
       });
+      console.log(res);
+      // 운영진 승인 안내 모달
+      lockScroll();
+      setIsOpenAutoModal(!isOpenAutoModal);
+    } catch (error) {
+      console.log('Error!');
+      console.log(error);
+    }
   };
 
   const notTobeNull = ({ hospital, email, password }) => {
