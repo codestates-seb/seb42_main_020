@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const SMain = styled.main`
-  width: 100vw;
-  height: 100vh;
+  width: 1920px;
+  height: 1000px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -41,7 +41,6 @@ export const SInfoSection = styled.div`
     font-size: 32px;
   }
   p {
-    font-family: 'TheJamsil';
     font-weight: 500;
   }
 `;
@@ -52,7 +51,6 @@ export const SFormSection = styled.div`
   flex-direction: column;
   margin: 0 0 10px 0px;
   button {
-    font-family: 'TheJamsil';
     font-weight: 500;
     font-size: 16px;
   }
@@ -141,12 +139,10 @@ export const SLoginInfo = styled.div`
     padding: 5px 0;
   }
   button {
-    font-family: 'TheJamsil';
     font-weight: 500;
     font-size: 16px;
   }
   p {
-    font-family: 'TheJamsil';
     font-weight: 400;
     font-size: 16px;
     color: var(--gray-800);
@@ -184,13 +180,17 @@ export const SModal = styled.div`
   justify-content: center;
   align-items: flex-end !important;
   position: fixed;
-  width: 50vw;
+  width: 960px;
   height: 45vh;
   top: 25vh;
   right: 25vw;
   background-color: var(--white);
   box-shadow: 0 1px 3px 0 var(--gray-200);
   border-radius: 30px;
+  a {
+    text-decoration: none;
+    color: var(--black);
+  }
   svg {
     margin: 32px;
     font-size: 1.5rem;
@@ -206,8 +206,22 @@ export const DoctorRegiInfo = styled.div`
   width: 900px;
   height: 250px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column !important;
   align-items: center;
   justify-content: center !important;
   margin: 30px;
+  padding-bottom: 35px !important;
+  h1 {
+    font-size: 30px;
+    margin-bottom: 30px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  h3 {
+    font-size: 20px;
+    line-height: normal;
+    text-align: center;
+  }
 `;

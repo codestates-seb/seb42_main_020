@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
+import useDidMountEffect from '../../util/useDidMountEffect';
 import { message } from 'antd';
 import {
   SMain,
@@ -22,6 +23,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [isFocus, setIsFocus] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [nameMsg, setNameMsg] = useState(''); // 유효성 검사 안내 Msg for name && nickname
   const [emailMsg, setEmailMsg] = useState(''); // Msg for eamil
@@ -35,23 +37,21 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    axios
-      .post('/members/signup', {
-        email: email,
-        name: name,
-        displayName: displayName,
-        password: password,
-      })
-      .then((res) => {
-        console.log(res);
-        navigate('/login');
-      })
-      .catch((data) => {
-        console.log('Error!');
-        console.log(data);
-        // 회원가입 실패 안내창 띄우기
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post('/members/signup', {
+        email,
+        name,
+        displayName,
+        password,
       });
+      console.log(res);
+      navigate('/login');
+    } catch (error) {
+      console.log('Error!');
+      console.log(error);
+      // 회원가입 실패 안내창 띄우기
+    }
   };
 
   const notTobeNull = ({ name, displayName, email, password }) => {
@@ -143,12 +143,16 @@ const Signup = () => {
   };
 
   // 유효성 검사 미통과 안내 Msg
-  const handleClickAlert = () => {
+  const handleFocusAlert = () => {
+    setIsFocus(!isFocus);
+  };
+
+  useDidMountEffect(() => {
     messageApi.open({
       type: 'warning',
       content: emailMsg || passwordMsg || nameMsg || '내용을 입력해 주세요',
     });
-  };
+  }, [isFocus]);
 
   // 이용약관 유효성 검사
   const handleClickTermService = (e) => {
@@ -177,7 +181,7 @@ const Signup = () => {
   return (
     <SMain>
       <SLayout>
-        {isAllValid ? null : contextHolder}
+        {isAllValid ? <></> : contextHolder}
         <SInfoSection>
           <img src="images/logo.png" alt="logo" />
           <h1>회원가입</h1>
@@ -186,19 +190,24 @@ const Signup = () => {
         <SFormSection>
           <div>
             <SInput
-              onClick={handleClickAlert}
               onChange={handleChangeName}
+              onFocus={handleFocusAlert}
               placeholder="이름"
             />
             <SInput
-              onClick={handleClickAlert}
               onChange={handleChangeNickname}
+              onFocus={handleFocusAlert}
               placeholder="닉네임"
             />
-            <SInput onChange={handleChangeEmail} placeholder="이메일" />
+            <SInput
+              onChange={handleChangeEmail}
+              onFocus={handleFocusAlert}
+              placeholder="이메일"
+            />
             <SInput
               type="password"
               onChange={handleChangePassword}
+              onFocus={handleFocusAlert}
               placeholder="비밀번호"
             />
           </div>
