@@ -2,7 +2,6 @@ package com.mainproject.post.controller;
 
 import com.mainproject.comment.service.CommentService;
 //import com.mainproject.global.dto.MultiResponseDto;
-import com.mainproject.member.service.MemberService;
 import com.mainproject.post.dto.PostPatchDto;
 import com.mainproject.post.dto.PostPostDto;
 import com.mainproject.post.dto.PostResponseDto;
@@ -40,7 +39,8 @@ public class PostController {
     private final PostReportMapper postReportMapper;
     private final PostReportService postReportService;
     private final CommentService commentService;
-    private final MemberService memberService;
+    private static final int PAGE_SIZE = 20;
+
 
 //    // 전체 질문 조회 (홍재님 코드)
 //    @GetMapping
@@ -70,8 +70,7 @@ public class PostController {
                                        @RequestParam(value = "region", required = false) String region,
                                        @RequestParam(value = "status", required = false) List<String> status) {
 
-        int size = 20;
-        PageRequest pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+        PageRequest pageable = PageRequest.of(page, PAGE_SIZE, Sort.by(direction, sortBy));
 
         Page<Post> posts = postService.findQuestions(filterType, keyword, postType, medicalTag, region,
                 Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
