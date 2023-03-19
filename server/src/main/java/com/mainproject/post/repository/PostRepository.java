@@ -4,32 +4,19 @@ import com.mainproject.post.entity.Post;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+//import org.springframework.data.jpa.repository.Query;
+//import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 
 public interface PostRepository extends JpaRepository<Post,Long> {
 
-    // 키워드 검색 and 삭제상태 제외
-    Page<Post> findByTitleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
+    Page<Post> findByTitleContainingAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn(String keyword, String postType, String name, String title, List<Post.PostStatus> status, Pageable pageable);
 
-    Page<Post> findByContentContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
+    Page<Post> findByContentContainingAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn(String keyword, String postType, String name, String title, List<Post.PostStatus> status, Pageable pageable);
 
-    Page<Post> findByMember_displayNameAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
-
-    Page<Post> findByMedicalTag_titleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
-
-    Page<Post> findByRegion_nameContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
-
-    /*Page<Post> findByTitleContainingAndContentContainingAndPostStatusNotIn(String titleKeyword, String contentKeyword, List<Post.PostStatus> status, Pageable pageable);*/
-
-    //Page<Post> findByTitleContainingAndContentContainingAndPostStatusNotInAndPostType(String titleKeyword, String contentKeyword, List<Post.PostStatus> status, String postType, Pageable pageable);
-
-    //Page<Post> findByTitleContainingAndContentContainingAndPostStatusNotInAndMedicalTag_title(String titleKeyword, String contentKeyword, List<Post.PostStatus> status, String title, Pageable pageable);
-
-    //Page<Post> findByTitleContainingAndContentContainingAndPostStatusNotInAndRegion_name(String titleKeyword, String contentKeyword, List<Post.PostStatus> status, String name, Pageable pageable);
+    Page<Post> findByMember_displayNameAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn(String keyword, String postType, String name, String title, List<Post.PostStatus> status, Pageable pageable);
 
 //    // 직접 쿼리
 //    @Query(value = "SELECT * FROM Post WHERE post.post_title LIKE %:titleKeyword%  AND post_Status NOT IN :status", nativeQuery = true)

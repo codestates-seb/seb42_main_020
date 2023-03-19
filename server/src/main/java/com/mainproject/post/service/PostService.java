@@ -3,31 +3,24 @@ package com.mainproject.post.service;
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;
-import com.mainproject.member.repository.MemberRepository;
 import com.mainproject.member.service.MemberService;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.entity.PostLike;
 import com.mainproject.post.repository.PostLikeRepository;
 import com.mainproject.post.repository.PostRepository;
 import com.mainproject.subEntity.hospital.Hospital;
-import com.mainproject.subEntity.hospital.HospitalRepository;
 import com.mainproject.subEntity.medicalTag.MedicalTag;
-import com.mainproject.subEntity.medicalTag.MedicalTagRepository;
 import com.mainproject.subEntity.region.Region;
-import com.mainproject.subEntity.region.RegionRepository;
 import com.mainproject.subEntity.service.SubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,36 +32,24 @@ import static com.mainproject.post.entity.Post.PostStatus.POST_PENDING;
 @RequiredArgsConstructor
 public class PostService {
 
-    private int pageSize = 20;
+//    private int pageSize = 20;
     private final PostRepository postRepository;
-    private final MemberRepository memberRepository;
     private final MemberService memberService;
     private final PostLikeRepository postLikeRepository;
     private final SubService subService;
-    private final HospitalRepository hospitalRepository;
-    private final MedicalTagRepository medicalTagRepository;
-    private final RegionRepository regionRepository;
 
-//    // 페이징 조회 (초안인데 아래에 하나로 합쳐서 주석처리함)
-//    public Page<Post> findByTitleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
-//        return postRepository.findByTitleContainingAndPostStatusNotIn(keyword, status, pageable);
-//    }
-//
-//    public Page<Post> findByContentContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
-//        return postRepository.findByContentContainingAndPostStatusNotIn(keyword, status, pageable);
-//    }
-//
-//    public Page<Post> findByMember_displayNameAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
-//        return postRepository.findByMember_displayNameAndPostStatusNotIn(keyword, status, pageable);
-//    }
-//
-//    public Page<Post> findByMedicalTag_titleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
-//        return postRepository.findByMedicalTag_titleContainingAndPostStatusNotIn(keyword, status, pageable);
-//    }
-//
-//    public Page<Post> findByRegion_nameContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable) {
-//        return postRepository.findByRegion_nameContainingAndPostStatusNotIn(keyword, status, pageable);
-//    }
+    // 페이징 조회
+    public Page<Post> findQuestions(int filterType, String keyword, String postType, String medicalTag, String region, List<Post.PostStatus> status, Pageable pageable) {
+
+        if (filterType == 1) {
+            return postRepository.findByTitleContainingAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn(keyword, postType, medicalTag, region, status, pageable); // 제목으로 검색
+        } else if(filterType == 2) {
+            return postRepository.findByContentContainingAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn(keyword, postType, medicalTag, region, status, pageable); // 내용으로 검색
+        } else if (filterType == 3) {
+            return  postRepository.findByMember_displayNameAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn(keyword, postType, medicalTag, region, status, pageable); // 작성자로 검색
+        }
+        throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
+    }
 
 //    // 페이징 조회 - 홍재님 코드
 //    public Page<Post> findQuestions(int page, String titleKeyword, String sortType, int filterType, String medicalTagTitle, String regionName) {
@@ -90,23 +71,6 @@ public class PostService {
 //        }
 //        throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
 //    }
-
-    // 페이징 조회
-    public Page<Post> findQuestions(int filterType, String keyword, List<Post.PostStatus> status, Pageable pageable) {
-
-        if(filterType == 1) {
-            return postRepository.findByTitleContainingAndPostStatusNotIn(keyword, status, pageable);
-        } else if(filterType == 2) {
-            return postRepository.findByContentContainingAndPostStatusNotIn(keyword, status, pageable);
-        } else if(filterType == 3) {
-            return postRepository.findByMember_displayNameAndPostStatusNotIn(keyword, status, pageable);
-        } else if (filterType == 4) {
-            return postRepository.findByMedicalTag_titleContainingAndPostStatusNotIn(keyword, status, pageable);
-        } else if (filterType == 5) {
-            return postRepository.findByRegion_nameContainingAndPostStatusNotIn(keyword, status, pageable);
-        }
-        throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
-    }
 
     // 단일 조회
     public Post findPost(Long postId) {
