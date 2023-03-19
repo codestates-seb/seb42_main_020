@@ -1,6 +1,5 @@
-import { RecoilRoot } from 'recoil';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { Suspense, lazy } from 'react';
 
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
@@ -28,27 +27,25 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <RecoilRoot>
-      <BrowserRouter>
-        <GlobalStyle />
-        <Suspense fallback={<Loading />}>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/home" element={<Section />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Signup />} />
-            <Route path="/medicalprovider" element={<DoctorSignup />} />
-            <Route path="/myinfo" element={<UserInfo />} />
-            <Route path="/askquestion" element={<AskQuestion />} />
-            <Route path="/review" element={<Review />} />
-            <Route path="/question/1234" element={<QuestionDetail />} />
-            <Route path="/review/1234" element={<ReviewDetail />} />
-          </Routes>
-        </Suspense>
-        <Footer />
-      </BrowserRouter>
-    </RecoilRoot>
+    <>
+      <GlobalStyle />
+      <Header />
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/home" element={<Section />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Signup />} />
+          <Route path="/medicalprovider" element={<DoctorSignup />} />
+          <Route path="/myinfo" element={<UserInfo />} />
+          <Route path="/askquestion" element={<AskQuestion />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/question/1234" element={<QuestionDetail />} />
+          <Route path="/review/1234" element={<ReviewDetail />} />
+        </Routes>
+      </Suspense>
+      <Footer />
+    </>
   );
 }
 
