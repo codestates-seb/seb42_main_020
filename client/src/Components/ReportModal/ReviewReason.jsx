@@ -1,10 +1,11 @@
 import { TreeSelect } from 'antd';
 import { reasonData } from '../AskForm/PostData';
 
-const ReviewReason = () => {
+const ReviewReason = ({ reportReason, reportReasonHandler }) => {
   return (
     <TreeSelect
       showSearch
+      value={reportReason}
       style={{
         width: '100%',
       }}
@@ -16,7 +17,7 @@ const ReviewReason = () => {
       allowClear
       treeDefaultExpandAll
       //value={reason}
-      //onChange={reasonChangeHandler}
+      onChange={reportReasonHandler}
       treeData={reasonData}
     />
   );
