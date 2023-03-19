@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 // import { useNavigate } from 'react-router-dom';
 import CommentForm from '../../Components/CommentForm/CommentForm';
+import Comment from '../../Components/CommentForm/Comment';
 import ReportModal from '../../Components/ReportModal/ReportModal';
 import {
   SReviewDetailContainer,
@@ -40,10 +41,11 @@ const ReviewDetail = () => {
       navigate('/home');
     }
   }, [setIsLogin]);
+
   //상세 경로 수정 예쩡
   useEffect(() => {
     axios
-      .get('/posts/3', {
+      .get('/posts/2', {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
@@ -113,7 +115,8 @@ const ReviewDetail = () => {
           </SReviewButtonBlock>
         </SReviewContent>
       </SReviewDetailBlock>
-      <CommentForm></CommentForm>
+      <CommentForm />
+      <Comment />
     </SReviewDetailContainer>
   );
 };
