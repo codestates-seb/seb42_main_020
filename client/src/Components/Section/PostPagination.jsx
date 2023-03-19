@@ -12,7 +12,8 @@ function PostPagination() {
   const accessToken = localStorage.getItem('accessToken');
 
   const getPost = async () => {
-    axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+    if (JSON.parse(localStorage.getItem('recoil-persist')).loginState)
+      axios.defaults.headers.common['Authorization'] = `${accessToken}`;
     const response = await axios.get('/posts', {
       headers: {
         'ngrok-skip-browser-warning': 'skip',

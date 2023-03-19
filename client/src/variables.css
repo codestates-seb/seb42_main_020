@@ -36,17 +36,17 @@
   --purple-700: #2c1a9e;
   --purple-800: #190e58;
   --purple-900: #0a0623;
-  --blue-10: #f2f5fd;
-  --blue-50: #edf1fc;
-  --blue-100: #e4ebfb;
-  --blue-200: #d2ddf9;
+  --blue-10: #f2fbfd;
+  --blue-50: #edfafc;
+  --blue-100: #e4f6fb;
+  --blue-200: #d2f4f9;
   --blue-300: #b8c9f5;
-  --blue-400: #94bcf0;
-  --blue-500: #5e9ee8;
-  --blue-600: #297ee0;
-  --blue-700: #176aa1;
-  --blue-800: #0d3b59;
-  --blue-900: #051524;
+  --blue-400: #94def0;
+  --blue-500: #5ed8e8;
+  --blue-600: #29bbe0;
+  --blue-700: #178ca1;
+  --blue-800: #0d4159;
+  --blue-900: #051d24;
   --orange-50: #fff2e9;
   --orange-100: #ffebde;
   --orange-200: #ffe1cc;
@@ -92,6 +92,7 @@
 
 @font-face {
   font-family: 'TheJamsil5Bold';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2')
-    format('woff2');
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
 }

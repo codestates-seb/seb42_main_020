@@ -1,4 +1,5 @@
 import PostTopicStlye from '../../Style/PostTopicStlye';
+import MakeContents from '../MakeContents/MakeContents';
 import { Select, Space } from 'antd';
 
 function PostTopic() {
@@ -35,7 +36,7 @@ function PostTopic() {
               },
             ]}
           />
-          <button className="create-post">글쓰기</button>
+          <MakeContents className="create-post">글쓰기</MakeContents>
         </Space>
       </div>
     </PostTopicStlye>

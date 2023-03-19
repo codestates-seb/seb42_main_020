@@ -11,9 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentPatchDto {
 
-    @NotNull
-    private long memberId;
-
     @NotBlank(message = "내용을 입력하세요.")
     private String content;
 

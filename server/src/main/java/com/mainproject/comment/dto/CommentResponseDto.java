@@ -14,7 +14,7 @@ public class CommentResponseDto {
     private long commentId;
     private String content;
     private LocalDateTime createdAt;
-    /*private Integer likes;*/
+    private Integer totalLike;
     private Comment.CommentStatus commentStatus;
     private WriterResponse writerResponse;
 }

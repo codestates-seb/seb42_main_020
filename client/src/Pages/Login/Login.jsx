@@ -2,6 +2,7 @@ import Cookies from 'universal-cookie';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
+import useDidMountEffect from '../../util/useDidMountEffect';
 import { FcGoogle } from 'react-icons/fc';
 import { BsArrowReturnLeft } from 'react-icons/bs';
 import { message } from 'antd';
@@ -33,6 +34,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [isFocus, setIsFocus] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [emailMsg, setEmailMsg] = useState(''); // 유효성 검사 안내 Msg for eamil
   const [passwordMsg, setPasswordMsg] = useState(''); // 유효성 검사 안내 Msg for PW
@@ -43,38 +45,36 @@ const Login = () => {
   const cookies = new Cookies();
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    axios
-      .post('/login', {
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post('/login', {
         email: email,
         password: password,
-      })
-      .then((res) => {
-        const accessToken = res.headers.authorization;
-        const refreshToken = res.headers.refresh;
-        localStorage.setItem('accessToken', accessToken);
-        // token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
-        axios.defaults.headers.common['Authorization'] = `${accessToken}`;
-
-        axios
-          .get(`/members`, {
-            headers: {
-              'ngrok-skip-browser-warning': 'skip', // ngrok error skip용 헤더 추후 삭제 예정
-            },
-          })
-          .then((res) => {
-            localStorage.setItem('loggedUserInfo', res.data);
-            setUserInfo(res.data);
-          });
-
-        cookies.set('refreshToken', refreshToken, { sameSite: 'strict' });
-        setIsLogged(true);
-        navigate('/home');
-      })
-      .catch((data) => {
-        console.log('Error!');
-        console.log(data);
       });
+      const accessToken = res.headers.authorization;
+      const refreshToken = res.headers.refresh;
+      localStorage.setItem('accessToken', accessToken);
+      // token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
+      axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+      try {
+        const userInfoRes = await axios.get('/members', {
+          headers: {
+            'ngrok-skip-browser-warning': 'skip', // ngrok error skip용 헤더 추후 삭제 예정
+          },
+        });
+        localStorage.setItem('loggedUserInfo', userInfoRes.data);
+        setUserInfo(userInfoRes.data);
+      } catch (error) {
+        console.log('Error!');
+        console.log(error);
+      }
+      cookies.set('refreshToken', refreshToken, { sameSite: 'strict' });
+      setIsLogged(true);
+      navigate('/home');
+    } catch (error) {
+      console.log('Error!');
+      console.log(error);
+    }
   };
 
   const notTobeNull = ({ email, password }) => {
@@ -124,12 +124,16 @@ const Login = () => {
   };
 
   // 유효성 검사 미통과 안내 Msg
-  const handleClickAlert = () => {
+  const handleFocusAlert = () => {
+    setIsFocus(!isFocus);
+  };
+
+  useDidMountEffect(() => {
     messageApi.open({
       type: 'warning',
       content: emailMsg || passwordMsg || '이메일과 비밀번호를 입력해 주세요',
     });
-  };
+  }, [isFocus]);
 
   // 유효성 검사를 통과하지 못하면 Submit 비활성화
   const isEmailValid = validateEmail(email);
@@ -159,13 +163,13 @@ const Login = () => {
         <SFormSection>
           <SInput
             onChange={handleChangeEmail}
-            onClick={handleClickAlert}
+            onFocus={handleFocusAlert}
             placeholder="이메일"
           />
           <SInput
             type="password"
             onChange={handleChangePassword}
-            onClick={handleClickAlert}
+            onFocus={handleFocusAlert}
             placeholder="비밀번호"
           />
           <div>
