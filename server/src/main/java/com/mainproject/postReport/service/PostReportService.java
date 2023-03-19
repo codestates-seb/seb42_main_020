@@ -29,7 +29,7 @@ public class PostReportService {
         Member member = memberService.findMemberByEmail(email);
         Post post = postRepository.findById(postId).get();
 
-        verifyExistsLike(member, post);
+        verifyExistsReport(member, post);
 
         postReport.setCreatedAt(LocalDateTime.now());
 
@@ -37,7 +37,7 @@ public class PostReportService {
     }
 
     // 신고 여부 검증
-    private void verifyExistsLike(Member member, Post post)  {
+    private void verifyExistsReport(Member member, Post post)  {
 
         Optional<PostReport> report = postReportRepository.findByMemberAndPost(member, post);
         if (report.isPresent()) {

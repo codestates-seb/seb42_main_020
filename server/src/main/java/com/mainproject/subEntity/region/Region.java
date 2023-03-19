@@ -24,8 +24,5 @@ public class Region {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "region", cascade = CascadeType.PERSIST)
-    private List<Hospital> hospitals = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "region", cascade = CascadeType.PERSIST)
     private List<Post> posts = new ArrayList<>();
 }

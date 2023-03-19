@@ -28,16 +28,16 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     Page<Post> findByRegion_regionIdAndPostStatusNot(Long regionId1, String status, Pageable pageable);
 
-    /*Page<Post> findByTitleContainingAndContentContainingAndPostStatusNotIn(String titleKeyword, String contentKeyword, List<Post.PostStatus> status, Pageable pageable);*/
+    Page<Post> findByTitleContainingAndPostStatusNotIn(String keyword, List<Post.PostStatus> status, Pageable pageable);
 
-    //Page<Post> findByTitleContainingAndContentContainingAndPostStatusNotInAndPostType(String titleKeyword, String contentKeyword, List<Post.PostStatus> status, String postType, Pageable pageable);
+    Page<Post> findByTitleContainingAndPostStatusNotInAndPostType(String keyword, List<Post.PostStatus> status, String postType, Pageable pageable);
 
-    //Page<Post> findByTitleContainingAndContentContainingAndPostStatusNotInAndMedicalTag_title(String titleKeyword, String contentKeyword, List<Post.PostStatus> status, String title, Pageable pageable);
+    Page<Post> findByTitleContainingAndPostStatusNotInAndMedicalTag_title(String keyword, List<Post.PostStatus> status, String title, Pageable pageable);
 
-    //Page<Post> findByTitleContainingAndContentContainingAndPostStatusNotInAndRegion_name(String titleKeyword, String contentKeyword, List<Post.PostStatus> status, String name, Pageable pageable);
+    Page<Post> findByTitleContainingAndPostStatusNotInAndRegion_name(String keyword, List<Post.PostStatus> status, String name, Pageable pageable);
 
     // 직접 쿼리
-    @Query(value = "SELECT * FROM Post WHERE post.post_title LIKE %:titleKeyword%  AND post_Status NOT IN :status", nativeQuery = true)
+    /*@Query(value = "SELECT * FROM Post WHERE post.post_title LIKE %:titleKeyword%  AND post_Status NOT IN :status", nativeQuery = true)
     Page<Post> findByTitleContainsAndPostStatusNotIn(@Param("titleKeyword") String titleKeyword,  @Param("status") List<Post.PostStatus> status, Pageable pageable);
 
     @Query(value = "SELECT * FROM Post WHERE Post.post_title LIKE %:titleKeyword% AND Post.post_Status NOT IN :status AND Post.post_Type = :postType", nativeQuery = true)
@@ -53,5 +53,5 @@ public interface PostRepository extends JpaRepository<Post,Long> {
             "Post.post_title LIKE %:titleKeyword% " +
             "AND Post.post_Status NOT IN :status " +
             "AND Region.name = :regionName", nativeQuery = true)
-    Page<Post> findByTitleContainsAndPostStatusNotInAndRegionName(@Param("titleKeyword") String titleKeyword, @Param("status") List<Post.PostStatus> status, @Param("regionName") String regionName, Pageable pageable);
+    Page<Post> findByTitleContainsAndPostStatusNotInAndRegionName(@Param("titleKeyword") String titleKeyword, @Param("status") List<Post.PostStatus> status, @Param("regionName") String regionName, Pageable pageable);*/
 }

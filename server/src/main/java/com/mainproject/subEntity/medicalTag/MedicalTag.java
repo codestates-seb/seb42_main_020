@@ -23,10 +23,6 @@ public class MedicalTag {
     @Column(nullable = false)
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "HOSPITAL_ID")
-    private Hospital hospital;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalTag", cascade = CascadeType.PERSIST)
     private List<Post> posts = new ArrayList<>();
 }

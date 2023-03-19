@@ -85,15 +85,15 @@ public class PostService {
 
 
         if(filterType == 1) {
-            return postRepository.findByTitleContainsAndPostStatusNotIn(titleKeyword, status, pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotIn(titleKeyword, status, pageRequest);
         } else if(filterType == 2) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndPostType(titleKeyword, status, "question", pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotInAndPostType(titleKeyword, status, "question", pageRequest);
         } else if(filterType == 3) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndPostType(titleKeyword, status, "review", pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotInAndPostType(titleKeyword, status, "review", pageRequest);
         } else if (filterType == 4) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndRegionName(titleKeyword, status, regionName, pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotInAndRegion_name(titleKeyword, status, regionName, pageRequest);
         } else if (filterType == 5) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndMedicalTagTitle(titleKeyword, status, medicalTagTitle, pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotInAndMedicalTag_title(titleKeyword, status, medicalTagTitle, pageRequest);
         }
         throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
     }
@@ -217,7 +217,7 @@ public class PostService {
     }
 
     // 좋아요 기능
-    public void addLike(long postId, String email, Integer like) {
+    public void addLike(long postId, String email) {
 
         Member member = memberService.findMemberByEmail(email);
         Post post = findVerifiedPost(postId);
@@ -229,8 +229,8 @@ public class PostService {
 
         verifyExistsLike(member, post);
 
-        postLikeRepository.save(post.addLike(new PostLike(post, member, like)));
-        post.setTotalLike(post.getTotalLike());
+        postLikeRepository.save(post.addLike(new PostLike(post, member)));
+
     }
 
     // 좋아요 여부 검증

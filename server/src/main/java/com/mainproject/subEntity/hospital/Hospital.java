@@ -1,5 +1,6 @@
 package com.mainproject.subEntity.hospital;
 
+import com.mainproject.member.entity.Member;
 import com.mainproject.post.entity.Post;
 import com.mainproject.subEntity.medicalTag.MedicalTag;
 import com.mainproject.subEntity.region.Region;
@@ -22,8 +23,14 @@ public class Hospital {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long hospitalId;
 
-    @Column(nullable = false)
+    @Column
     private String name;
+
+    /*@Column
+    private String phone;
+
+    @Column
+    private String address;*/
 
     @Column(nullable = false)
     @ColumnDefault("0")
@@ -32,13 +39,10 @@ public class Hospital {
     @Column(nullable = false)
     @ColumnDefault("0")
     private int reviewCount;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "REGION_ID")
-    private Region region;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hospital", cascade = CascadeType.PERSIST)
-    private List<MedicalTag> medicalTags = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hospital", cascade = CascadeType.PERSIST)
     private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hospital", cascade = CascadeType.PERSIST)
+    private List<Member> members = new ArrayList<>();
 }

@@ -39,5 +39,4 @@ public class PostResponseDto {
     private WriterResponse writerResponse;
 
     private List<CommentResponseDto> comments;
-
 }

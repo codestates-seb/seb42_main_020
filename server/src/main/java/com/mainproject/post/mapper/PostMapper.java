@@ -28,6 +28,7 @@ public interface PostMapper {
     @Mapping(target = "medicalTagTitle", source = "review.medicalTag.title")
     @Mapping(target = "regionName", source = "review.region.name")
     @Mapping(target = "hospitalName", source = "review.hospital.name")
+    @Mapping(target = "writerResponse", source = "review.member")
     ReviewResponseDto reviewToReviewResponseDto(Post review);
 
     List<ReviewResponseDto> reviewsToReviewsResponseDto(List<Post> reviews);

@@ -3,6 +3,7 @@ package com.mainproject.member.entity;
 import com.mainproject.audit.Auditable;
 import com.mainproject.comment.entity.Comment;
 import com.mainproject.post.entity.Post;
+import com.mainproject.subEntity.hospital.Hospital;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -77,11 +78,14 @@ public class Member extends Auditable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Post> posts = new ArrayList<>();
 
-    // Comment 클래스 1;n 양방향
+    // Comment 클래스 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
 
-    // 게시글, 댓글 신고, 좋아요 매핑 필요
+    // Hospital 클래스 n:1 양방향
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "HOSPITAL_ID")
+    private Hospital hospital;
 
     public enum MemberStatus {
         MEMBER_PENDING("승인 대기"),

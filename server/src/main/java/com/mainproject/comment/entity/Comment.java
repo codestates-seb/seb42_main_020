@@ -4,6 +4,7 @@ import com.mainproject.audit.Auditable;
 import com.mainproject.commentReport.entity.CommentReport;
 import com.mainproject.member.entity.Member;
 import com.mainproject.post.entity.Post;
+import com.mainproject.postReport.entity.PostReport;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -56,19 +57,23 @@ public class Comment extends Auditable {
 
     public CommentLike addLike(CommentLike like) {
         this.likes.add(like);
-        like.setComment(this);
+        this.totalLike++;
         return like;
     }
 
     // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("member_id")
+    @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
     // 게시글 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("post_id")
+    @JoinColumn(name = "POST_ID")
     private Post post;
+
+    // 신고 1:n 양방향
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<CommentReport> commentReports = new ArrayList<>();
 
     // 신고 1:n
     @OneToMany(fetch = FetchType.LAZY)

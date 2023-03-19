@@ -105,7 +105,7 @@ public class CommentService {
     }
 
     // 좋아요 기능
-    public void addLike(long commentId, String email, Integer like) {
+    public void addLike(long commentId, String email) {
 
         Member member = memberService.findMemberByEmail(email);
         Comment comment = commentRepository.findById(commentId).get();
@@ -117,8 +117,7 @@ public class CommentService {
 
         verifyExistsLike(member, comment);
 
-        commentLikeRepository.save(comment.addLike(new CommentLike(comment, member, like)));
-        comment.setTotalLike(comment.getTotalLike());
+        commentLikeRepository.save(comment.addLike(new CommentLike(comment, member)));
     }
 
     // 좋아요 여부 검증
