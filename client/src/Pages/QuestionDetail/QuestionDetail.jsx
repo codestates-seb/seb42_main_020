@@ -88,7 +88,7 @@ const QuestionDetail = () => {
       alert('질문을 삭제하였습니다.');
       axios
         .delete(`/posts/${questionData.postId}`, {
-          header: {
+          headers: {
             Authorization: `${token}`,
           },
         })
@@ -101,7 +101,7 @@ const QuestionDetail = () => {
 
   const likeHandler = () => {
     axios
-      .post(`/posts/${questionData.postId}/likes`, {
+      .post(`/posts/${questionData?.postId}/likes`, {
         headers: {
           'ngrok-skip-browser-warning': '69420',
           Authorization: `${token}`,
@@ -117,30 +117,30 @@ const QuestionDetail = () => {
     <SQuestionDetailContainer className="detail-block">
       <SQuestionDetailBlock className="question-block">
         <SQuestionHeaderBlock className="header-block">
-          <h1>🤔 {questionData.title}</h1>
+          <h1>🤔 {questionData?.title}</h1>
           <SQuestionInfoBlock className="info-block">
             <span>
-              {writerInfo.displayName} [{questionData.regionName}]
+              {writerInfo?.displayName} [{questionData?.regionName}]
             </span>
-            <span>{questionData.createdAt}</span>
+            <span>{questionData?.createdAt}</span>
           </SQuestionInfoBlock>
         </SQuestionHeaderBlock>
         <SQuestionTextBlock className="contents-block">
-          <p>{questionData.content}</p>
+          <p>{questionData?.content}</p>
         </SQuestionTextBlock>
 
-        {userInfo[0].memberId === writerInfo.memberId ? (
+        {userInfo[0].memberId === writerInfo?.memberId ? (
           <SQuestionButtonBlock className="button-block">
             <button onClick={modifyHandler}>수정</button>
             <button onClick={deleteHandler}>삭제</button>
           </SQuestionButtonBlock>
         ) : (
           <SQuestionLikeButtonBlock className="button-block">
-            <button onClick={likeHandler}>❤️ {questionData.totalLike}</button>
+            <button onClick={likeHandler}>❤️ {questionData?.totalLike}</button>
           </SQuestionLikeButtonBlock>
         )}
       </SQuestionDetailBlock>
-      {userInfo[0].memberId === writerInfo.memberId ? null : (
+      {userInfo[0].memberId === writerInfo?.memberId ? null : (
         <SPostAnswerBlock className="want-answer-block">
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
           <div className="want-answer-text">
@@ -152,10 +152,10 @@ const QuestionDetail = () => {
       )}
       {postComment ? <CommentForm /> : <></>}
       {/*  답글 여부에따라서 내용 변경, 서버가 완성되면 수정하겠음 */}
-      {comments.length === 0 ? (
+      {comments?.length === 0 ? (
         <></>
       ) : (
-        comments.map((ele) => {
+        comments?.map((ele) => {
           return <Answers ele={ele} key={ele.commentId} userInfo={userInfo} />;
         })
       )}

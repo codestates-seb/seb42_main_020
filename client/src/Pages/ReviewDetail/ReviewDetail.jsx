@@ -62,7 +62,7 @@ const ReviewDetail = () => {
   // 버튼 클릭시 좋아요 넣기
   const likeHandler = () => {
     axios
-      .post(`/posts/${reviewData.postId}/likes`, {
+      .post(`/posts/${reviewData?.postId}/likes`, {
         headers: {
           'ngrok-skip-browser-warning': '69420',
           Authorization: `${token}`,
@@ -92,20 +92,20 @@ const ReviewDetail = () => {
         <SReviewHeader className="review-header">
           <img src="/images/Swear.png" alt="사진" />
           <SReviewUserInfo className="review-info">
-            <span>{reviewFrom.displayName}</span>
-            <span>{reviewData.modifiedAt}</span>
+            <span>{reviewFrom?.displayName}</span>
+            <span>{reviewData?.modifiedAt}</span>
           </SReviewUserInfo>
         </SReviewHeader>
         <SReviewHospitalInfo className="hopital-info">
-          <span>{reviewData.hospitalName}</span>
+          <span>{reviewData?.hospitalName}</span>
           {/* 추 후에 서버작업 완료되면 수정 예정 */}
-          <span>⭐⭐⭐⭐⭐ ({reviewData.starRating}) 점</span>
+          <span>⭐⭐⭐⭐⭐ ({reviewData?.starRating}) 점</span>
         </SReviewHospitalInfo>
         <SReviewContent className="contents">
-          <p>{reviewData.content}~</p>
+          <p>{reviewData?.content}~</p>
           <SReviewButtonBlock className="review-footer">
-            <button onClick={likeHandler}>❤️ {reviewData.totalLike}</button>
-            {loginInfo.memberId === reviewFrom.memberId ? (
+            <button onClick={likeHandler}>❤️ {reviewData?.totalLike}</button>
+            {loginInfo.memberId === reviewFrom?.memberId ? (
               <></>
             ) : (
               <div className="review-button">
