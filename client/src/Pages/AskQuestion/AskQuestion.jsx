@@ -136,7 +136,7 @@ const AskQuestion = () => {
 
     axios
       .post('/posts', questionData, {
-        header: { Authorization: token },
+        headers: { Authorization: token },
       })
       .then((res) => {
         console.log(res);
