@@ -54,6 +54,7 @@ public class Comment extends Auditable {
     // ----------------------------------- 연관관계 매핑 ----------------------------------- //
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<CommentLike> likes = new ArrayList<>();
 
     public CommentLike addLike(CommentLike like) {
@@ -76,6 +77,7 @@ public class Comment extends Auditable {
 
     // 신고 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<CommentReport> commentReports = new ArrayList<>();
 
     public int getTotalLike() {
