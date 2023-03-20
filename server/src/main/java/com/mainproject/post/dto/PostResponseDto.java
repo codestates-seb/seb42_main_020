@@ -17,27 +17,15 @@ import java.util.List;
 public class PostResponseDto {
 
     private Long postId;
-
     private String title;
-
     private String content;
-
     private LocalDateTime createdAt;
-
     private LocalDateTime modifiedAt;
-
     private Post.PostStatus postStatus;
-
     private String postType;
-
     private Integer totalLike;
-
     private String medicalTagTitle;
-
     private String regionName;
-
     private WriterResponse writerResponse;
-
     private List<CommentResponseDto> comments;
-
 }

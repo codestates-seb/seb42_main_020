@@ -1,9 +1,11 @@
 import styled, { keyframes } from 'styled-components';
 
+const landingTitle = `${process.env.PUBLIC_URL}images/landing-title.jpg`;
+
 export const SBackgroundLayout = styled.div`
   width: 100vw;
   height: 900px;
-  background-image: url('images/landing-title.jpg');
+  background-image: url(${landingTitle});
   background-size: cover;
   display: flex;
   flex-direction: column;

@@ -1,6 +1,5 @@
 package com.mainproject.post.controller;
 
-import com.mainproject.member.entity.Member;
 import com.mainproject.post.dto.ReviewPostDto;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.mapper.PostMapper;
@@ -13,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController

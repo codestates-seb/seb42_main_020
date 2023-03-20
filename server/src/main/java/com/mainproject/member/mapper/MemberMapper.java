@@ -30,6 +30,6 @@ public interface MemberMapper {
 
     List<DoctorDto.response> membersToDoctorResponses(List<Member> members);
 
-    // 작성자
+    // 게시글 작성자
     WriterResponse memberToWriterResponse(Member member);
 }

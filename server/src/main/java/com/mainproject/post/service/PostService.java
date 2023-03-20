@@ -3,31 +3,24 @@ package com.mainproject.post.service;
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;
-import com.mainproject.member.repository.MemberRepository;
 import com.mainproject.member.service.MemberService;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.entity.PostLike;
 import com.mainproject.post.repository.PostLikeRepository;
 import com.mainproject.post.repository.PostRepository;
 import com.mainproject.subEntity.hospital.Hospital;
-import com.mainproject.subEntity.hospital.HospitalRepository;
 import com.mainproject.subEntity.medicalTag.MedicalTag;
-import com.mainproject.subEntity.medicalTag.MedicalTagRepository;
 import com.mainproject.subEntity.region.Region;
-import com.mainproject.subEntity.region.RegionRepository;
 import com.mainproject.subEntity.service.SubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,64 +32,43 @@ import static com.mainproject.post.entity.Post.PostStatus.POST_PENDING;
 @RequiredArgsConstructor
 public class PostService {
 
-    private int pageSize = 20;
     private final PostRepository postRepository;
-    private final MemberRepository memberRepository;
     private final MemberService memberService;
     private final PostLikeRepository postLikeRepository;
     private final SubService subService;
-    private final HospitalRepository hospitalRepository;
-    private final MedicalTagRepository medicalTagRepository;
-    private final RegionRepository regionRepository;
 
     // 페이징 조회
-    public Page<Post> findByTitleContainingAndPostStatusNot(String keyword, String status, Pageable pageable) {
-        return postRepository.findByTitleContainingAndPostStatusNot(keyword, status, pageable);
+    public Page<Post> findQuestions(int filterType, String keyword, String postType, String medicalTag, String region, List<Post.PostStatus> status, Pageable pageable) {
+
+        if (filterType == 1) {
+            return postRepository.findByTitleContainingAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn(keyword, postType, medicalTag, region, status, pageable); // 제목으로 검색
+        } else if(filterType == 2) {
+            return postRepository.findByContentContainingAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn(keyword, postType, medicalTag, region, status, pageable); // 내용으로 검색
+        } else if (filterType == 3) {
+            return  postRepository.findByMember_displayNameAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn(keyword, postType, medicalTag, region, status, pageable); // 작성자로 검색
+        }
+        throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
     }
 
-    public Page<Post> findByTitleContainingAndPostStatusIn(String keyword, List<String> status, Pageable pageable) {
-        return postRepository.findByTitleContainingAndPostStatusIn(keyword, status, pageable);
-    }
-
-    public Page<Post> findByContentContainingAndPostStatusNot(String keyword, String status, Pageable pageable) {
-        return postRepository.findByContentContainingAndPostStatusNot(keyword, status, pageable);
-    }
-
-    public Page<Post> findByContentContainingAndPostStatusIn(String keyword, List<String> status, Pageable pageable) {
-        return postRepository.findByContentContainingAndPostStatusIn(keyword, status, pageable);
-    }
-
-    public Page<Post> findByMember_memberIdAndPostStatusNot(Long memberId, String status, Pageable pageable) {
-        return postRepository.findByMember_memberIdAndPostStatusNot(memberId, status, pageable);
-    }
-
-    public Page<Post> findByMedicalTag_medicalTagIdAndPostStatusNot(Long medicalTagId, String status, Pageable pageable) {
-        return postRepository.findByMedicalTag_medicalTagIdAndPostStatusNot(medicalTagId, status, pageable);
-    }
-
-    public Page<Post> findByRegion_regionIdAndPostStatusNot(Long regionId, String status, Pageable pageable) {
-        return postRepository.findByRegion_regionIdAndPostStatusNot(regionId, status, pageable);
-    }
-
-    public Page<Post> findQuestions(int page, String titleKeyword, String sortType, int filterType, String medicalTagTitle, String regionName) {
+    /*public Page<Post> findQuestions(int page, String titleKeyword, String sortType, int filterType, String medicalTagTitle, String regionName) {
 
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
         List<Post.PostStatus> status = Arrays.asList(POST_PENDING, POST_DELETED);
 
 
         if(filterType == 1) {
-            return postRepository.findByTitleContainsAndPostStatusNotIn(titleKeyword, status, pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotIn(titleKeyword, status, pageRequest);
         } else if(filterType == 2) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndPostType(titleKeyword, status, "question", pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotInAndPostType(titleKeyword, status, "question", pageRequest);
         } else if(filterType == 3) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndPostType(titleKeyword, status, "review", pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotInAndPostType(titleKeyword, status, "review", pageRequest);
         } else if (filterType == 4) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndRegionName(titleKeyword, status, regionName, pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotInAndRegion_name(titleKeyword, status, regionName, pageRequest);
         } else if (filterType == 5) {
-            return postRepository.findByTitleContainsAndPostStatusNotInAndMedicalTagTitle(titleKeyword, status, medicalTagTitle, pageRequest);
+            return postRepository.findByTitleContainingAndPostStatusNotInAndMedicalTag_title(titleKeyword, status, medicalTagTitle, pageRequest);
         }
         throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
-    }
+    }*/
 
     // 단일 조회
     public Post findPost(Long postId) {
@@ -170,12 +142,11 @@ public class PostService {
 
         // 본인 검증
         Member member = memberService.findMemberByEmail(email);
-        if(member.getMemberId() != post.getMember().getMemberId()) throw new BusinessLogicException(ExceptionCode.NOT_POSTS_MEMBER);
+        Post findPost = findVerifiedPost(postId);
+        if(member.getMemberId() != findPost.getMember().getMemberId()) throw new BusinessLogicException(ExceptionCode.NOT_POSTS_MEMBER);
 
         MedicalTag medicalTag = subService.findMedicalTag(medicalTitle);
         Region region = subService.findRegion(regionName);
-
-        Post findPost = findVerifiedPost(postId);
 
         findPost.setTitle(post.getTitle());
         findPost.setContent(post.getContent());
@@ -217,7 +188,7 @@ public class PostService {
     }
 
     // 좋아요 기능
-    public void addLike(long postId, String email, Integer like) {
+    public void addLike(long postId, String email) {
 
         Member member = memberService.findMemberByEmail(email);
         Post post = findVerifiedPost(postId);
@@ -229,8 +200,8 @@ public class PostService {
 
         verifyExistsLike(member, post);
 
-        postLikeRepository.save(post.addLike(new PostLike(post, member, like)));
-        post.setTotalLike(post.getTotalLike());
+        postLikeRepository.save(post.addLike(new PostLike(post, member)));
+
     }
 
     // 좋아요 여부 검증

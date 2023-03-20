@@ -27,11 +27,8 @@ public class CommentLike {
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
-    private Integer commentVote;
-
-    public CommentLike(Comment comment, Member member, Integer commentVote) {
+    public CommentLike(Comment comment, Member member) {
         this.comment = comment;
         this.member = member;
-        this.commentVote = commentVote;
     }
 }
