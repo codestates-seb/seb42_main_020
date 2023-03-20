@@ -208,7 +208,7 @@ public class MemberService {
     }
 
     // 좋아요, 채택, 게시글, 리뷰 작성 로직에 추가하는 등급 업데이트 로직
-    public Member updateRating(Member member) {
+    public void updateRating(Member member) {
 
         if (member.getPoint() >= 300) {
             member.setMemberRating(Member.MemberRating.GOLD);
@@ -217,8 +217,6 @@ public class MemberService {
         } else if (member.getPoint() >= 100) {
             member.setMemberRating(Member.MemberRating.BRONZE);
         } member.setMemberRating(Member.MemberRating.UNRANKED);
-
-        return memberRepository.save(member);
     }
 
     private byte[] convertMultipartFileToByte(MultipartFile multipartFile) throws IOException {

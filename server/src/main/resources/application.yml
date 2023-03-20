@@ -16,6 +16,7 @@ logging:
         orm:
           jpa: DEBUG
 server:
+  port: 1000
   servlet:
     multipart:
       maxFileSize: 10MB

@@ -1,8 +1,11 @@
 package com.mainproject.audit;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.mainproject.page.LocalDateTimeSerializer;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
@@ -16,11 +19,13 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Auditable {
 
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @CreatedDate
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @CreatedDate
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @LastModifiedDate
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 }
