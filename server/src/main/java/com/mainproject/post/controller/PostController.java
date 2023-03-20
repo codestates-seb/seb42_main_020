@@ -1,6 +1,7 @@
 package com.mainproject.post.controller;
 
 import com.mainproject.comment.service.CommentService;
+import com.mainproject.global.dto.MultiResponseDto;
 import com.mainproject.post.dto.*;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.mapper.PostMapper;
@@ -50,10 +51,12 @@ public class PostController {
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE, Sort.by(direction, sortBy));
 
-        Page<Post> posts = postService.findQuestions(filterType, keyword, postType, medicalTag, region,
+        Page<Post> postPage = postService.findQuestions(filterType, keyword, postType, medicalTag, region,
                 Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
+        List<Post> posts = postPage.getContent();
 
-        return new ResponseEntity<>(posts, HttpStatus.OK);
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(postMapper.postsToPostsResponsePageDto(posts), postPage), HttpStatus.OK);
     }
 
     // 단일 조회
