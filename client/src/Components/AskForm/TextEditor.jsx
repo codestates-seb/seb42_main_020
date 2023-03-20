@@ -26,7 +26,6 @@ const CustomToolbar = () => (
 );
 
 const TextEditor = ({ handleText, questionContent }) => {
-  console.log(questionContent);
   const modules = {
     toolbar: {
       container: '#toolbar',
