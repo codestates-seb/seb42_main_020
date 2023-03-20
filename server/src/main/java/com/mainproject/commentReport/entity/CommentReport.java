@@ -1,5 +1,6 @@
 package com.mainproject.commentReport.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mainproject.comment.entity.Comment;
 import com.mainproject.member.entity.Member;
 import lombok.Getter;
@@ -30,10 +31,12 @@ public class CommentReport {
     // post 클래스 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "COMMENT_ID")
+    @JsonBackReference
     private Comment comment;
 
     // member 클래스 n:1 단방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
+    @JsonBackReference
     private Member member;
 }

@@ -67,24 +67,25 @@ public class Post extends Auditable {
 
     // 좋아요 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @JsonManagedReference
     private List<PostLike> likes = new ArrayList<>();
 
     // 진료과목 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEDICAL_TAG_ID")
-    @JsonBackReference
+    @JsonManagedReference
     private MedicalTag medicalTag;
 
     // 지역 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REGION_ID")
-    @JsonBackReference
+    @JsonManagedReference
     private Region region;
 
     // 병원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOSPITAL_ID")
-    @JsonBackReference
+    @JsonManagedReference
     private Hospital hospital;
 
     // 신고 1:n 양방향
