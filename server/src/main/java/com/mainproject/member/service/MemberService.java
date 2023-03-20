@@ -2,32 +2,20 @@ package com.mainproject.member.service;
 
 import com.mainproject.auth.CustomAuthorityUtils;
 import com.mainproject.comment.entity.Comment;
-import com.mainproject.global.dto.PrincipalDto;
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.repository.MemberRepository;
 import com.mainproject.post.entity.Post;
-import com.mainproject.subEntity.hospital.Hospital;
 import com.mainproject.subEntity.hospital.HospitalRepository;
 import lombok.RequiredArgsConstructor;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -220,7 +208,7 @@ public class MemberService {
     }
 
     // 좋아요, 채택, 게시글, 리뷰 작성 로직에 추가하는 등급 업데이트 로직
-    public Member updateRating(Member member) {
+    public void updateRating(Member member) {
 
         if (member.getPoint() >= 300) {
             member.setMemberRating(Member.MemberRating.GOLD);
@@ -229,8 +217,6 @@ public class MemberService {
         } else if (member.getPoint() >= 100) {
             member.setMemberRating(Member.MemberRating.BRONZE);
         } member.setMemberRating(Member.MemberRating.UNRANKED);
-
-        return memberRepository.save(member);
     }
 
     private byte[] convertMultipartFileToByte(MultipartFile multipartFile) throws IOException {

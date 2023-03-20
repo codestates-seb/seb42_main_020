@@ -1,11 +1,10 @@
 import Cookies from 'universal-cookie';
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
-import useDidMountEffect from '../../util/useDidMountEffect';
 import { FcGoogle } from 'react-icons/fc';
 import { BsArrowReturnLeft } from 'react-icons/bs';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import {
   SMain,
   SLayout,
@@ -38,6 +37,9 @@ const Login = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [emailMsg, setEmailMsg] = useState(''); // 유효성 검사 안내 Msg for eamil
   const [passwordMsg, setPasswordMsg] = useState(''); // 유효성 검사 안내 Msg for PW
+
+  const [isError, setIsError] = useState(false);
+  const [noticeApi, notificationHolder] = notification.useNotification();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { lockScroll, openScroll } = useBodyScrollLock();
@@ -72,8 +74,11 @@ const Login = () => {
       setIsLogged(true);
       navigate('/home');
     } catch (error) {
-      console.log('Error!');
-      console.log(error);
+      const errorStatus = error.response.status;
+      if (errorStatus === 401) {
+        // 이메일과 비밀번호 일치하는지 확인하라는 안내창
+        setIsError(!isError);
+      }
     }
   };
 
@@ -128,12 +133,23 @@ const Login = () => {
     setIsFocus(!isFocus);
   };
 
-  useDidMountEffect(() => {
-    messageApi.open({
-      type: 'warning',
-      content: emailMsg || passwordMsg || '이메일과 비밀번호를 입력해 주세요',
-    });
+  useEffect(() => {
+    if (isFocus)
+      messageApi.open({
+        type: 'warning',
+        content: emailMsg || passwordMsg || '이메일과 비밀번호를 입력해 주세요',
+      });
   }, [isFocus]);
+
+  // Error status 401 안내
+  useEffect(() => {
+    if (isError)
+      noticeApi.info({
+        message: `Notification`,
+        description: '이메일과 비밀번호를 다시 확인하여 주십시오',
+        placement: 'top',
+      });
+  }, [isError, noticeApi]);
 
   // 유효성 검사를 통과하지 못하면 Submit 비활성화
   const isEmailValid = validateEmail(email);
@@ -151,12 +167,21 @@ const Login = () => {
     setIsOpenModal(!isOpenModal);
   };
 
+  const refEmail = useRef();
+  const refPassowrd = useRef();
+
+  useEffect(() => {
+    if (isError) refEmail.current.value = '';
+    refPassowrd.current.value = '';
+  }, [isError]);
+
   return (
     <SMain>
       <SLayout>
-        {isAllValid ? null : contextHolder}
+        {!isError ? <></> : notificationHolder}
+        {isAllValid ? <></> : contextHolder}
         <SInfoSection>
-          <img src={process.env.PUBLIC_URL + 'images/logo.png'} alt="logo" />
+          <img src={process.env.PUBLIC_URL + '/images/logo.png'} alt="logo" />
           <h1>로그인</h1>
           <p>로그인으로 다나아의 다양한 서비스를 경험해 보세요</p>
         </SInfoSection>
@@ -165,12 +190,14 @@ const Login = () => {
             onChange={handleChangeEmail}
             onFocus={handleFocusAlert}
             placeholder="이메일"
+            ref={refEmail}
           />
           <SInput
             type="password"
             onChange={handleChangePassword}
             onFocus={handleFocusAlert}
             placeholder="비밀번호"
+            ref={refPassowrd}
           />
           <div>
             <SSubmitBtn

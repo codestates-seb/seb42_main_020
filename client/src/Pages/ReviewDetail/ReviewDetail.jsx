@@ -7,6 +7,7 @@ import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import CommentForm from '../../Components/CommentForm/CommentForm';
 import Comment from '../../Components/CommentForm/Comment';
 import ReportModal from '../../Components/ReportModal/ReportModal';
+import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
   SReviewDetailContainer,
   SReviewDetailBlock,
@@ -116,6 +117,7 @@ const ReviewDetail = () => {
           </SReviewButtonBlock>
         </SReviewContent>
       </SReviewDetailBlock>
+      <HospitalLocation reviewData={reviewData} />
       <CommentForm />
       <Comment />
     </SReviewDetailContainer>

@@ -1,5 +1,6 @@
 package com.mainproject.postReport.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mainproject.member.entity.Member;
 import com.mainproject.post.entity.Post;
 import lombok.Getter;
@@ -30,10 +31,12 @@ public class PostReport {
     // post 클래스 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_ID")
+    @JsonBackReference
     private Post post;
 
     // member 클래스 n:1 단방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
+    @JsonBackReference
     private Member member;
 }
