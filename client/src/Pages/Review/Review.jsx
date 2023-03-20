@@ -23,7 +23,6 @@ import LocationInput from '../../Components/AskForm/LocationInput';
 import TypeInput from '../../Components/AskForm/TypeInput';
 import HospitalInput from '../../Components/ReviewForm/HospitalInput';
 import RateStar from '../../Components/ReviewForm/RateStar';
-import ModalTest from '../../Components/MakeContents/MakeContents';
 import WaitModal from '../../Components/ReviewForm/WaitModal';
 const Review = () => {
   const navigate = useNavigate();
@@ -298,7 +297,7 @@ const Review = () => {
             <SValidFail>{rateValid ? null : rateMessage}</SValidFail>
           </SHospitalInfo>
         </SHospitalInfoBlock>
-        <TextEditor handleText={handleText} />
+        <TextEditor handleText={handleText} value={reviewContent} />
         <SValidFail>
           {reviewContentValid ? null : contentFailMessage}
         </SValidFail>
@@ -317,7 +316,6 @@ const Review = () => {
           <SSubmitButton onClick={submitDataHandler}>작 성</SSubmitButton>
         </SButtonBlock>
       </SAskQuestionBlock>
-      <ModalTest />
       {reviewWait && <WaitModal closeModal={closeModal} />}
     </SAskQuestionContainer>
   );

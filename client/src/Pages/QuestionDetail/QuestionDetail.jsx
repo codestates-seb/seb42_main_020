@@ -132,7 +132,7 @@ const QuestionDetail = () => {
           </SQuestionInfoBlock>
         </SQuestionHeaderBlock>
         <SQuestionTextBlock className="contents-block">
-          <p>{questionData?.content}</p>
+          <p>{questionData.content?.slice(3, -4)}</p>
         </SQuestionTextBlock>
 
         {userInfo[0].memberId === writerInfo?.memberId ? (

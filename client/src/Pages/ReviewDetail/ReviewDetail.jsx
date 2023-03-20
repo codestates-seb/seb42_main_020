@@ -45,7 +45,7 @@ const ReviewDetail = () => {
   //상세 경로 수정 예쩡
   useEffect(() => {
     axios
-      .get('/posts/2', {
+      .get('/posts/3', {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
@@ -99,7 +99,7 @@ const ReviewDetail = () => {
           <span>⭐⭐⭐⭐⭐ ({reviewData?.starRating}) 점</span>
         </SReviewHospitalInfo>
         <SReviewContent className="contents">
-          <p>{reviewData?.content}~</p>
+          <p>{reviewData.content?.slice(3, -4)}~</p>
           <SReviewButtonBlock className="review-footer">
             <button onClick={likeHandler}>❤️ {reviewData?.totalLike}</button>
             {loginInfo.memberId === reviewFrom?.memberId ? (
