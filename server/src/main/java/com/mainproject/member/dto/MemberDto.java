@@ -65,6 +65,7 @@ public class MemberDto {
         private String name;
         private String displayName;
         private String area;
+        private int point;
         private boolean isDoctor;
         private LocalDateTime createdAt;
         private Member.MemberRating memberRating;

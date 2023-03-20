@@ -1,5 +1,6 @@
 package com.mainproject.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mainproject.audit.Auditable;
 import com.mainproject.comment.entity.Comment;
@@ -80,7 +81,7 @@ public class Member extends Auditable {
     // Hospital 클래스 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOSPITAL_ID")
-    @JsonManagedReference
+    @JsonBackReference
     private Hospital hospital;
 
     public enum MemberStatus {
