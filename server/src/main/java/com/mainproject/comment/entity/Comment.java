@@ -23,7 +23,7 @@ public class Comment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id", nullable = false)
-    private Long commentId;
+    private long commentId;
 
     // 댓글 본문
     @Column(length = 50, nullable = false)
