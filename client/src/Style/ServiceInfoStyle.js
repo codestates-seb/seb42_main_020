@@ -12,9 +12,9 @@ export const SServiceInfoSection = styled.div`
   align-items: center;
 `;
 
-const landingIntroduce1 = `${process.env.PUBLIC_URL}images/landing-introduce-1.jpg`;
-const landingIntroduce2 = `${process.env.PUBLIC_URL}images/landing-introduce-2.jpg`;
-const landingIntroduce3 = `${process.env.PUBLIC_URL}images/landing-introduce-3.jpg`;
+const landingIntroduce1 = `${process.env.PUBLIC_URL}/images/landing-introduce-1.jpg`;
+const landingIntroduce2 = `${process.env.PUBLIC_URL}/images/landing-introduce-2.jpg`;
+const landingIntroduce3 = `${process.env.PUBLIC_URL}/images/landing-introduce-3.jpg`;
 
 export const SIntroduceImg1 = styled.div`
   margin: 200px 80px 100px 0;
