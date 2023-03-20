@@ -61,17 +61,14 @@ const ReviewDetail = () => {
 
   // 버튼 클릭시 좋아요 넣기
   const likeHandler = () => {
-    axios
-      .post(`/posts/${reviewData?.postId}/likes`, {
-        headers: {
-          'ngrok-skip-browser-warning': '69420',
-          Authorization: `${token}`,
-        },
-      })
-      .then((res) => {
-        location.reload();
-        console.log(res.data);
-      });
+    axios({
+      method: 'post',
+      url: `/posts/${reviewData?.postId}/likes`,
+      headers: { Authorization: token },
+    }).then((res) => {
+      location.reload();
+      console.log(res);
+    });
   };
 
   // 모달창 관리하기

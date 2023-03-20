@@ -100,17 +100,14 @@ const QuestionDetail = () => {
   };
 
   const likeHandler = () => {
-    axios
-      .post(`/posts/${questionData?.postId}/likes`, {
-        headers: {
-          'ngrok-skip-browser-warning': '69420',
-          Authorization: `${token}`,
-        },
-      })
-      .then((res) => {
-        location.reload();
-        console.log(res);
-      });
+    axios({
+      method: 'post',
+      url: `/posts/${questionData?.postId}/likes`,
+      headers: { Authorization: token },
+    }).then((res) => {
+      location.reload();
+      console.log(res);
+    });
   };
 
   return (
