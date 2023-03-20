@@ -12,8 +12,12 @@ import { BsFacebook } from 'react-icons/bs';
 import { SiNaver } from 'react-icons/si';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { CiMemoPad } from 'react-icons/ci';
+import { loggedUserInfo } from '../../atoms/atoms';
+import { useRecoilValue } from 'recoil';
 
 function UserMainProfile() {
+  const userInfo = useRecoilValue(loggedUserInfo);
+
   return (
     <UserMainProfileStyle>
       <STitle>
@@ -30,19 +34,19 @@ function UserMainProfile() {
         <ul className="info">
           <li className="user-id">
             <span className="type">User ID</span>
-            <span className="value">abcd1234@naver.com</span>
+            <span className="value">{userInfo?.email}</span>
           </li>
           <li className="nickname">
             <span className="type">Nickname</span>
-            <span className="value">개발새발자</span>
+            <span className="value">{userInfo?.displayName}</span>
           </li>
           <li className="name">
             <span className="type">Name</span>
-            <span className="value">홍길동</span>
+            <span className="value">{userInfo?.name}</span>
           </li>
           <li className="area">
             <span className="type">Area</span>
-            <span className="value">인천</span>
+            <span className="value">None</span>
           </li>
         </ul>
         <ul className="sns">

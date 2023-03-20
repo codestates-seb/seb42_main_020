@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Pagination } from 'antd';
 import PostPaginationStyle from '../../Style/PostPaginationStyle';
 import axios from 'axios';
-
 import PostList from './PostList';
 
 function PostPagination() {
@@ -10,9 +9,15 @@ function PostPagination() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [total, setTotal] = useState(0);
+  const accessToken = localStorage.getItem('accessToken');
 
-  const fetchData = async () => {
-    const response = await axios.get(`http://localhost:3001/posts`, {
+  const getPost = async () => {
+    if (JSON.parse(localStorage.getItem('recoil-persist')).loginState)
+      axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+    const response = await axios.get('/posts', {
+      headers: {
+        'ngrok-skip-browser-warning': 'skip',
+      },
       params: {
         page: currentPage,
         size: pageSize,
@@ -23,7 +28,7 @@ function PostPagination() {
   };
 
   useEffect(() => {
-    fetchData();
+    getPost();
   }, [currentPage, pageSize]);
 
   const handlePageChange = (page, pageSize) => {
