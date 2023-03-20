@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const alertModal = ({ reportInfo }) => {
+const AlertModal = ({ reportInfo }) => {
   const token = localStorage.getItem('accessToken');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,4 +46,4 @@ const alertModal = ({ reportInfo }) => {
     </>
   );
 };
-export default alertModal;
+export default AlertModal;
