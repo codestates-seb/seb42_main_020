@@ -102,13 +102,17 @@ const ReviewDetail = () => {
         <SReviewContent className="contents">
           <p>{reviewData.content?.slice(3, -4)}~</p>
           <SReviewButtonBlock className="review-footer">
-            <button onClick={likeHandler}>❤️ {reviewData?.totalLike}</button>
             {loginInfo.memberId === reviewFrom?.memberId ? (
               <></>
             ) : (
-              <div className="review-button">
-                <button onClick={reportModalHandler}>신 고</button>
-              </div>
+              <>
+                <button onClick={likeHandler}>
+                  ❤️ {reviewData?.totalLike}
+                </button>
+                <div className="review-button">
+                  <button onClick={reportModalHandler}>신 고</button>
+                </div>
+              </>
             )}
           </SReviewButtonBlock>
         </SReviewContent>
