@@ -34,7 +34,7 @@ const AskQuestion = () => {
   const [titleMessage, setTitleMessage] = useState('');
 
   // 내용 입력값
-  const [questionContent, setQuestionContent] = useState('내용입니다');
+  const [questionContent, setQuestionContent] = useState('');
   // 내용 유효성 검사
   const [textValid, setTextValid] = useState(false);
   // 내용이 적합하지 않을 경우 표출
@@ -180,7 +180,7 @@ const AskQuestion = () => {
             </SValidFail>
           </div>
         </SAskQuestionInfoBlock>
-        <TextEditor handleText={handleText} questionContent={questionContent} />
+        <TextEditor handleText={handleText} value={questionContent} />
         <SValidFail> {textValid ? null : textMessage}</SValidFail>
         <SButtonBlock>
           <SCancalButton>취소</SCancalButton>

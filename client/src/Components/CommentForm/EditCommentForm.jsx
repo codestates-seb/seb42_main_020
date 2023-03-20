@@ -13,7 +13,7 @@ import {
   SSubmitBtn,
 } from '../../Style/CommentFormStyle';
 
-const CommentForm = () => {
+const CommentForm = ({ commentId, value }) => {
   const token = localStorage.getItem('accessToken');
 
   const [comment, setComment] = useState();
@@ -34,14 +34,13 @@ const CommentForm = () => {
   const submitHandler = () => {
     axios.defaults.baseURL = 'http://localhost:3000';
     axios
-      .post(`comments/?post-id=2`, submitData, {
+      .patch(`comments/${commentId}`, submitData, {
         headers: {
           Authorization: `${token}`,
         },
       })
       .then((res) => {
         location.reload();
-
         console.log(res);
       });
   };
@@ -53,6 +52,7 @@ const CommentForm = () => {
         <SWritingForm>
           <ReactQuill
             theme="bubble"
+            defaultValue={value}
             value={comment}
             style={{
               height: '150px',

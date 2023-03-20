@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import CommentForm from '../../Components/CommentForm/CommentForm';
 import Answers from '../../Components/Answers/Answers';
+import ReportModal from '../../Components/ReportModal/ReportModal';
 
 import {
   SQuestionDetailContainer,
@@ -38,6 +39,8 @@ const QuestionDetail = () => {
   const [commentFrom, setCommentFrom] = useState({});
   // 답변창 다루기
   const [postComment, setPostComment] = useState(false);
+  // 신고 모달 다루기
+  const [reportModal, setReportModal] = useState(false);
 
   useEffect(() => {
     // 로그인 상태가 아닐경우
@@ -51,35 +54,40 @@ const QuestionDetail = () => {
   // paht는 수정 예정
 
   useEffect(() => {
-    axios
-      .get('/posts/2', {
-        headers: {
-          'Content-Type': `application/json`,
-          'ngrok-skip-browser-warning': '69420',
-          Authorization: `${token}`,
-        },
-      })
-      .then((res) => {
-        setQuestionData(res.data);
-        setWriterInfo(res.data.writerResponse);
-        setComments(res.data.comments);
-        setCommentFrom(res.data.comments.writerResponse);
-      });
+    axios({
+      method: 'get',
+      url: '/posts/2',
+      headers: {
+        'Content-Type': `application/json`,
+        'ngrok-skip-browser-warning': '69420',
+        Authorization: `${token}`,
+      },
+    }).then((res) => {
+      setQuestionData(res.data);
+      setWriterInfo(res.data.writerResponse);
+      setComments(res.data.comments);
+      setCommentFrom(res.data.comments.writerResponse);
+    });
   }, []);
 
-  console.log('작성자');
+  console.log('댓글');
   console.log(comments);
   console.log(commentFrom);
+  console.log(questionData);
 
   const modifyHandler = () => {
     const modifyResult = confirm('질문을 수정하시겠습니까???');
     if (modifyResult) {
-      navigate('/editquestion/2');
+      navigate(`/editquestion/${questionData?.postId}`);
     }
   };
 
   const postCommentHandler = () => {
     setPostComment((prev) => !prev);
+  };
+
+  const reportHandler = () => {
+    setReportModal((prev) => !prev);
   };
 
   const deleteHandler = () => {
@@ -112,6 +120,7 @@ const QuestionDetail = () => {
 
   return (
     <SQuestionDetailContainer className="detail-block">
+      {reportModal ? <ReportModal /> : <></>}
       <SQuestionDetailBlock className="question-block">
         <SQuestionHeaderBlock className="header-block">
           <h1>🤔 {questionData?.title}</h1>
@@ -123,7 +132,7 @@ const QuestionDetail = () => {
           </SQuestionInfoBlock>
         </SQuestionHeaderBlock>
         <SQuestionTextBlock className="contents-block">
-          <p>{questionData?.content}</p>
+          <p>{questionData.content?.slice(3, -4)}</p>
         </SQuestionTextBlock>
 
         {userInfo[0].memberId === writerInfo?.memberId ? (
@@ -132,8 +141,9 @@ const QuestionDetail = () => {
             <button onClick={deleteHandler}>삭제</button>
           </SQuestionButtonBlock>
         ) : (
-          <SQuestionLikeButtonBlock className="button-block">
+          <SQuestionLikeButtonBlock className="button-block not-same-from">
             <button onClick={likeHandler}>❤️ {questionData?.totalLike}</button>
+            <button onClick={reportHandler}>신고하기</button>
           </SQuestionLikeButtonBlock>
         )}
       </SQuestionDetailBlock>
@@ -141,7 +151,7 @@ const QuestionDetail = () => {
         <SPostAnswerBlock className="want-answer-block">
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
           <div className="want-answer-text">
-            <h1>대현자님의 답변을 기다리고 있어요!</h1>
+            <h1>{userInfo[0].displayName}의 답변을 기다리고 있어요!</h1>
             <span>지금 답변하여 채택받으시면 15점을 얻습니다.</span>
           </div>
           <button onClick={postCommentHandler}>답변하기!</button>
@@ -153,7 +163,11 @@ const QuestionDetail = () => {
         <></>
       ) : (
         comments?.map((ele) => {
-          return <Answers ele={ele} key={ele.commentId} userInfo={userInfo} />;
+          if (ele.commentStatus !== 'COMMENT_DELETED') {
+            return (
+              <Answers ele={ele} key={ele.commentId} userInfo={userInfo} />
+            );
+          }
         })
       )}
     </SQuestionDetailContainer>

@@ -106,7 +106,7 @@ export const SQuestionButtonBlock = styled.div`
 
 export const SQuestionLikeButtonBlock = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   width: 100%;
   margin-bottom: 15px;
 
@@ -116,6 +116,11 @@ export const SQuestionLikeButtonBlock = styled.div`
     border: none;
     background-color: white;
     border-radius: 3px;
+    color: #636e72;
+  }
+
+  button:last-child {
+    background-color: var(--peach-400);
     color: #636e72;
   }
 `;

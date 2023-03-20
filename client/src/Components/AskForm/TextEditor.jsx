@@ -25,7 +25,7 @@ const CustomToolbar = () => (
   </div>
 );
 
-const TextEditor = ({ handleText, questionContent }) => {
+const TextEditor = ({ handleText, value }) => {
   const modules = {
     toolbar: {
       container: '#toolbar',
@@ -54,15 +54,16 @@ const TextEditor = ({ handleText, questionContent }) => {
     <div className="text-editor" style={{ height: '350px', width: '100%' }}>
       <CustomToolbar />
       <ReactQuill
-        value={questionContent}
-        defaultValue={questionContent}
+        value={value}
+        // defaultValue={questionContent}
         style={{ height: '300px', fontsize: '15px' }}
         modules={modules}
         formats={formats}
         theme="snow"
-        onChange={(content, delta, source, editor) =>
-          handleText(editor.getText())
-        }
+        // onChange={(content, delta, source, editor) =>
+        //   handleText(editor.getText())
+        // }
+        onChange={handleText}
         placeholder="내용을 작성해 주세요"
       />
     </div>
