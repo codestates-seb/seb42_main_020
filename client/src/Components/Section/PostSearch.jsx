@@ -1,18 +1,96 @@
 import PostSearchStyle from '../../Style/PostSearchStyle';
 import { Input, Space, Select } from 'antd';
+import { useReducer, useState } from 'react';
+import PostList from './PostList';
+import axios from 'axios';
 
 const { Search } = Input;
-const onSearch = (value) => console.log(value);
-
 function PostSearch() {
+  //! filterType=1&keyword=""
+  //? 제목
+  //! filterType=2&keyword=""
+  //? 내용
+  //! filterType=3&keyword=""
+  //? 작성자
+  const [keyword, setKeyword] = useState('');
+  const categoryReducer = async (state, action) => {
+    switch (action.type) {
+      case 'title':
+        return await axios
+          .get('/posts', {
+            headers: {
+              'ngrok-skip-browser-warning': 'skip',
+            },
+            params: {
+              filterType: 1,
+              keyword: keyword,
+            },
+          })
+          .then((res) => <PostList data={res.data} />)
+          .catch((err) => Promise.reject(new Error(err)));
+      case 'content':
+        return await axios
+          .get('/posts', {
+            headers: {
+              'ngrok-skip-browser-warning': 'skip',
+            },
+            params: {
+              filterType: 2,
+              keyword: keyword,
+            },
+          })
+          .then((res) => console.log(res.data));
+      case 'user':
+        return await axios
+          .get('/posts', {
+            headers: {
+              'ngrok-skip-browser-warning': 'skip',
+            },
+            params: {
+              filterType: 3,
+              keyword: keyword,
+            },
+          })
+          .then((res) => console.log(res.data));
+
+      default:
+        return state;
+    }
+  };
+
+  const handleCategory = (selectCategory) => {
+    switch (selectCategory) {
+      case 'titleContent':
+        return dispatch({ type: 'titleContent' });
+      case 'title':
+        return dispatch({ type: 'title' });
+      case 'content':
+        return dispatch({ type: 'content' });
+      case 'user':
+        return dispatch({ type: 'user' });
+      default:
+        return dispatch({ type: 'titleContent' });
+    }
+  };
+
+  const [curCategory, dispatch] = useReducer(categoryReducer, {
+    type: 'titleContent',
+  });
+
+  const [category, setCategory] = useState(curCategory);
+  const onSearch = (e) => {
+    setKeyword(e);
+    handleCategory(category);
+  };
+
   return (
     <PostSearchStyle>
       <Space wrap style={{ marginBottom: -10 }}>
         <Select
-          defaultValue="titleContent"
+          defaultValue={category.type}
           style={{ width: 120, marginBottom: 8, marginRight: 20 }}
           size="large"
-          // onChange={handleChange}
+          onChange={(e) => setCategory(e)}
           options={[
             {
               value: 'titleContent',
@@ -38,8 +116,8 @@ function PostSearch() {
           placeholder="input search text"
           allowClear
           enterButton="Search"
-          size="large"
           onSearch={onSearch}
+          size="large"
         />
       </Space>
     </PostSearchStyle>
