@@ -1,6 +1,7 @@
 package com.mainproject.subEntity.medicalTag;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mainproject.post.entity.Post;
 import com.mainproject.subEntity.hospital.Hospital;
@@ -16,6 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class MedicalTag {
 
     @Id
@@ -26,6 +28,6 @@ public class MedicalTag {
     private String title;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalTag", cascade = CascadeType.PERSIST)
-    @JsonManagedReference
+    @JsonBackReference
     private List<Post> posts = new ArrayList<>();
 }
