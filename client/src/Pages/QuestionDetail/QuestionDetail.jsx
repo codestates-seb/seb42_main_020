@@ -54,25 +54,26 @@ const QuestionDetail = () => {
   // paht는 수정 예정
 
   useEffect(() => {
-    axios
-      .get('/posts/3', {
-        headers: {
-          'Content-Type': `application/json`,
-          'ngrok-skip-browser-warning': '69420',
-          Authorization: `${token}`,
-        },
-      })
-      .then((res) => {
-        setQuestionData(res.data);
-        setWriterInfo(res.data.writerResponse);
-        setComments(res.data.comments);
-        setCommentFrom(res.data.comments.writerResponse);
-      });
+    axios({
+      method: 'get',
+      url: '/posts/2',
+      headers: {
+        'Content-Type': `application/json`,
+        'ngrok-skip-browser-warning': '69420',
+        Authorization: `${token}`,
+      },
+    }).then((res) => {
+      setQuestionData(res.data);
+      setWriterInfo(res.data.writerResponse);
+      setComments(res.data.comments);
+      setCommentFrom(res.data.comments.writerResponse);
+    });
   }, []);
 
   console.log('댓글');
   console.log(comments);
   console.log(commentFrom);
+  console.log(questionData);
 
   const modifyHandler = () => {
     const modifyResult = confirm('질문을 수정하시겠습니까???');
@@ -162,7 +163,11 @@ const QuestionDetail = () => {
         <></>
       ) : (
         comments?.map((ele) => {
-          return <Answers ele={ele} key={ele.commentId} userInfo={userInfo} />;
+          if (ele.commentStatus !== 'COMMENT_DELETED') {
+            return (
+              <Answers ele={ele} key={ele.commentId} userInfo={userInfo} />
+            );
+          }
         })
       )}
     </SQuestionDetailContainer>
