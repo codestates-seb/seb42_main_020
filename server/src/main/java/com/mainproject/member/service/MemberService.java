@@ -216,7 +216,7 @@ public class MemberService {
             member.setMemberRating(Member.MemberRating.SLIVER);
         } else if (member.getPoint() >= 100) {
             member.setMemberRating(Member.MemberRating.BRONZE);
-        } member.setMemberRating(Member.MemberRating.UNRANKED);
+        }
     }
 
     private byte[] convertMultipartFileToByte(MultipartFile multipartFile) throws IOException {
