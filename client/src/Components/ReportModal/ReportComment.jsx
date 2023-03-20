@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReviewReason from './ReviewReason';
-import AlertModal from '../AlertModal/AlertModal';
+import AlertCommentModal from '../AlertModal/AlertCommentModal';
 import {
   SReportModalContainer,
   SReportModalBlock,
@@ -10,7 +10,7 @@ import {
   SReportModalClose,
 } from '../../Style/ReportModalStyle';
 
-const ReportModal = ({ reportModalHandler, ele }) => {
+const ReportCommentModal = ({ reportModalHandler, ele }) => {
   //모달 제출 내용
   const [reportText, setReportText] = useState('');
   const [reportReason, setReportReason] = useState('');
@@ -55,13 +55,13 @@ const ReportModal = ({ reportModalHandler, ele }) => {
           />
           <SReportModalButtonBlock>
             <button onClick={reportModalHandler}>취 소</button>
-            <AlertModal reportInfo={reportInfo} ele={ele}>
+            <AlertCommentModal reportInfo={reportInfo} ele={ele}>
               제 출
-            </AlertModal>
+            </AlertCommentModal>
           </SReportModalButtonBlock>
         </div>
       </SReportModalBlock>
     </SReportModalContainer>
   );
 };
-export default ReportModal;
+export default ReportCommentModal;

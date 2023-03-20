@@ -53,7 +53,7 @@ function Header() {
             <SLogo>
               <Link to="/">
                 <img
-                  src={process.env.PUBLIC_URL + 'images/logo.png'}
+                  src={process.env.PUBLIC_URL + '/images/logo.png'}
                   alt="logo"
                 />
                 <span>다나아</span>

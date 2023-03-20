@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const AlertModal = ({ reportInfo }) => {
+const AlertCommentModal = ({ reportInfo, ele }) => {
   const token = localStorage.getItem('accessToken');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +15,7 @@ const AlertModal = ({ reportInfo }) => {
   const handleOk = () => {
     axios.defaults.baseURL = 'http://localhost:3000';
     axios
-      .post(`posts/2/report`, reportInfo, {
+      .post(`comments/${ele.commentId}/report`, reportInfo, {
         headers: {
           Authorization: `${token}`,
         },
@@ -46,4 +46,4 @@ const AlertModal = ({ reportInfo }) => {
     </>
   );
 };
-export default AlertModal;
+export default AlertCommentModal;

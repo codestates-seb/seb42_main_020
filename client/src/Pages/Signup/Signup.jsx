@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
-import useDidMountEffect from '../../util/useDidMountEffect';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import {
   SMain,
   SLayout,
@@ -32,6 +31,9 @@ const Signup = () => {
   const [checkedService, setCheckedService] = useState(false); // 이용약관 동의
   const [checkedLocation, setCheckedLocation] = useState(false); // 위치 기반 서비스 동의
 
+  const [isError, setIsError] = useState(false);
+  const [noticeApi, notificationHolder] = notification.useNotification();
+
   const { openScroll } = useBodyScrollLock(); // 페이지 이동 후 scroll lock 해제
   openScroll();
 
@@ -45,21 +47,25 @@ const Signup = () => {
         displayName,
         password,
       });
-      console.log(res);
-      navigate('/login');
+      if (res.status === 201) {
+        navigate('/login');
+      }
     } catch (error) {
-      console.log('Error!');
-      console.log(error);
+      const errorStatus = error.response.status;
       // 회원가입 실패 안내창 띄우기
+      if (errorStatus === 409) {
+        // 409 : 중복 아이디
+        setIsError(!isError);
+      }
     }
   };
 
   const notTobeNull = ({ name, displayName, email, password }) => {
     return (
-      name !== null &&
-      displayName !== null &&
-      email !== null &&
-      password !== null
+      name !== undefined &&
+      displayName !== undefined &&
+      email !== undefined &&
+      password !== undefined
     );
   };
 
@@ -147,12 +153,23 @@ const Signup = () => {
     setIsFocus(!isFocus);
   };
 
-  useDidMountEffect(() => {
-    messageApi.open({
-      type: 'warning',
-      content: emailMsg || passwordMsg || nameMsg || '내용을 입력해 주세요',
-    });
+  useEffect(() => {
+    if (isFocus)
+      messageApi.open({
+        type: 'warning',
+        content: emailMsg || passwordMsg || nameMsg || '내용을 입력해 주세요',
+      });
   }, [isFocus]);
+
+  // Error status 409 안내
+  useEffect(() => {
+    if (isError)
+      noticeApi.info({
+        message: `Notification`,
+        description: '이미 가입 완료된 이메일 입니다',
+        placement: 'top',
+      });
+  }, [isError, noticeApi]);
 
   // 이용약관 유효성 검사
   const handleClickTermService = (e) => {
@@ -178,9 +195,22 @@ const Signup = () => {
     checkedService &&
     checkedLocation;
 
+  const refName = useRef();
+  const refDisplayName = useRef();
+  const refEmail = useRef();
+  const refPassowrd = useRef();
+
+  useEffect(() => {
+    if (isError) refName.current.value = '';
+    refDisplayName.current.value = '';
+    refEmail.current.value = '';
+    refPassowrd.current.value = '';
+  }, [isError]);
+
   return (
     <SMain>
       <SLayout>
+        {!isError ? <></> : notificationHolder}
         {isAllValid ? <></> : contextHolder}
         <SInfoSection>
           <img src={process.env.PUBLIC_URL + 'images/logo.png'} alt="logo" />
@@ -193,22 +223,26 @@ const Signup = () => {
               onChange={handleChangeName}
               onFocus={handleFocusAlert}
               placeholder="이름"
+              ref={refName}
             />
             <SInput
               onChange={handleChangeNickname}
               onFocus={handleFocusAlert}
               placeholder="닉네임"
+              ref={refDisplayName}
             />
             <SInput
               onChange={handleChangeEmail}
               onFocus={handleFocusAlert}
               placeholder="이메일"
+              ref={refEmail}
             />
             <SInput
               type="password"
               onChange={handleChangePassword}
               onFocus={handleFocusAlert}
               placeholder="비밀번호"
+              ref={refPassowrd}
             />
           </div>
           <STermSection>

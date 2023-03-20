@@ -1,4 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
+
+const SLayout = styled.div`
+  margin: 10px 0;
+  box-shadow: 3px 2px 3px 2px var(--gray-200);
+`;
 
 const HospitalLocation = ({ reviewData }) => {
   const { kakao } = window;
@@ -8,7 +14,7 @@ const HospitalLocation = ({ reviewData }) => {
   const ref = useRef(); // 위치 참조
 
   useEffect(() => {
-    setPlaceName(reviewData?.hospitalName);
+    if (reviewData) setPlaceName(reviewData?.hospitalName);
 
     // 마커를 클릭하면 장소명을 표출할 인포 윈도우
     const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
@@ -29,7 +35,7 @@ const HospitalLocation = ({ reviewData }) => {
       count = count + 1;
     };
 
-    if (placeName !== null && container !== undefined) {
+    if (placeName !== undefined && container !== undefined) {
       keywordSearch(placeName);
     }
 
@@ -58,8 +64,8 @@ const HospitalLocation = ({ reviewData }) => {
       // 마커에 클릭이벤트를 등록
       kakao.maps.event.addListener(marker, 'click', function () {
         // 마커를 클릭하면 장소명이 인포 윈도우에 표출
-        infowindow.setContent(`<div style="padding:5px;font-size:12px;">${place.place_name}
-      <a href=https://map.kakao.com/link/search/${placeName}>바로가기</a>
+        infowindow.setContent(`<div style="padding:5px;font-size:12px; text-align: center;">${place.place_name}
+      <a style="padding:5px; text-align: center;" href=https://map.kakao.com/link/search/${placeName}> 길찾기 바로가기</a>
       </div>`);
         infowindow.open(map4, marker);
       });
@@ -72,7 +78,13 @@ const HospitalLocation = ({ reviewData }) => {
   });
 
   return (
-    <div id="map4" ref={ref} style={{ width: '500px', height: '500px' }}></div>
+    <SLayout>
+      <div
+        id="map4"
+        ref={ref}
+        style={{ width: '780px', height: '295px' }}
+      ></div>
+    </SLayout>
   );
 };
 
