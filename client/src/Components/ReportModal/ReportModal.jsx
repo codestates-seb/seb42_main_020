@@ -10,7 +10,7 @@ import {
   SReportModalClose,
 } from '../../Style/ReportModalStyle';
 
-const ReportModal = ({ reportModalHandler }) => {
+const ReportModal = ({ reportModalHandler, ele }) => {
   //모달 제출 내용
   const [reportText, setReportText] = useState('');
   const [reportReason, setReportReason] = useState('');
@@ -55,7 +55,9 @@ const ReportModal = ({ reportModalHandler }) => {
           />
           <SReportModalButtonBlock>
             <button onClick={reportModalHandler}>취 소</button>
-            <AlertModal reportInfo={reportInfo}>제 출</AlertModal>
+            <AlertModal reportInfo={reportInfo} ele={ele}>
+              제 출
+            </AlertModal>
           </SReportModalButtonBlock>
         </div>
       </SReportModalBlock>
