@@ -43,11 +43,10 @@ public class PostController {
                                        @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
                                        @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
                                        @RequestParam(value = "filterType", defaultValue = "1") int filterType,
-                                       @RequestParam(value = "keyword", required = false) String keyword,
-                                       @RequestParam(value = "postType", required = false) String postType,
-                                       @RequestParam(value = "medicalTag", required = false) String medicalTag,
-                                       @RequestParam(value = "region", required = false) String region,
-                                       @RequestParam(value = "status", required = false) List<String> status) {
+                                       @RequestParam(value = "keyword", defaultValue = "") String keyword,
+                                       @RequestParam(value = "postType", defaultValue = "") String postType,
+                                       @RequestParam(value = "medicalTag", defaultValue = "") String medicalTag,
+                                       @RequestParam(value = "region", defaultValue = "") String region) {
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE, Sort.by(direction, sortBy));
 
