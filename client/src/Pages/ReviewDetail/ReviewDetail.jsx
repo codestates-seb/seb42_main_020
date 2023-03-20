@@ -7,6 +7,7 @@ import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import CommentForm from '../../Components/CommentForm/CommentForm';
 import Comment from '../../Components/CommentForm/Comment';
 import ReportModal from '../../Components/ReportModal/ReportModal';
+import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
   SReviewDetailContainer,
   SReviewDetailBlock,
@@ -45,7 +46,7 @@ const ReviewDetail = () => {
   //상세 경로 수정 예쩡
   useEffect(() => {
     axios
-      .get('/posts/2', {
+      .get('/posts/5', {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
@@ -112,6 +113,7 @@ const ReviewDetail = () => {
           </SReviewButtonBlock>
         </SReviewContent>
       </SReviewDetailBlock>
+      <HospitalLocation reviewData={reviewData} />
       <CommentForm />
       <Comment />
     </SReviewDetailContainer>
