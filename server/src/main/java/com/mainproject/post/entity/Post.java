@@ -67,6 +67,7 @@ public class Post extends Auditable {
 
     // 좋아요 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @JsonManagedReference
     private List<PostLike> likes = new ArrayList<>();
 
     // 진료과목 n:1 양방향
@@ -89,6 +90,7 @@ public class Post extends Auditable {
 
     // 신고 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<PostReport> postReports = new ArrayList<>();
 
     public enum PostStatus{

@@ -57,6 +57,7 @@ public class DoctorDto {
         private String email;
         private String name;
         private String area;
+        private int point;
         private boolean isDoctor;
         private LocalDateTime createdAt;
         private Member.MemberRating memberRating;

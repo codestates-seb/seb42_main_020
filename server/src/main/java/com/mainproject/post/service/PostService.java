@@ -24,8 +24,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static com.mainproject.post.entity.Post.PostStatus.POST_DELETED;
-import static com.mainproject.post.entity.Post.PostStatus.POST_PENDING;
+import static com.mainproject.post.entity.Post.PostStatus.*;
 
 @Service
 @Transactional
@@ -89,6 +88,10 @@ public class PostService {
             throw new BusinessLogicException(ExceptionCode.DOCTOR_CANNOT_POST);
         }
 
+        // 포인트 수정
+        member.setPoint(member.getPoint() + 5);
+        memberService.updateRating(member);
+
         post.setMedicalTag(medicalTag);
         post.setRegion(region);
         post.setMember(member);
@@ -96,10 +99,6 @@ public class PostService {
         post.setPostStatus(Post.PostStatus.POST_REGISTERED);
         post.setCreatedAt(LocalDateTime.now());
         post.setModifiedAt(LocalDateTime.now());
-
-        // 포인트 수정
-        member.setPoint(member.getPoint() + 5);
-        memberService.updateRating(member);
 
         postRepository.save(post);
 
@@ -145,6 +144,8 @@ public class PostService {
         Post findPost = findVerifiedPost(postId);
         if(member.getMemberId() != findPost.getMember().getMemberId()) throw new BusinessLogicException(ExceptionCode.NOT_POSTS_MEMBER);
 
+        if(post.getPostStatus() == POST_ACCEPTED) throw new BusinessLogicException(ExceptionCode.POST_ACCEPTED);
+
         MedicalTag medicalTag = subService.findMedicalTag(medicalTitle);
         Region region = subService.findRegion(regionName);
 
@@ -166,6 +167,8 @@ public class PostService {
 
         if(member.getMemberId() != post.getMember().getMemberId()) throw new BusinessLogicException(ExceptionCode.NOT_POSTS_MEMBER);
 
+        if(post.getPostStatus() == POST_ACCEPTED) throw new BusinessLogicException(ExceptionCode.POST_ACCEPTED);
+
         post.setModifiedAt(LocalDateTime.now());
         post.setPostStatus(POST_DELETED);
 
@@ -184,7 +187,10 @@ public class PostService {
         memberForPoint.setPoint(memberForPoint.getPoint() + 10);
         memberService.updateRating(memberForPoint);
 
+        post.setMember(memberForPoint);
         post.setPostStatus(Post.PostStatus.POST_REGISTERED);
+
+        postRepository.save(post);
     }
 
     // 좋아요 기능
@@ -201,7 +207,6 @@ public class PostService {
         verifyExistsLike(member, post);
 
         postLikeRepository.save(post.addLike(new PostLike(post, member)));
-
     }
 
     // 좋아요 여부 검증

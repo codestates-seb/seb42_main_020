@@ -1,6 +1,7 @@
 package com.mainproject.post.controller;
 
 import com.mainproject.comment.service.CommentService;
+import com.mainproject.global.dto.MultiResponseDto;
 import com.mainproject.post.dto.*;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.mapper.PostMapper;
@@ -43,18 +44,19 @@ public class PostController {
                                        @RequestParam(value = "sort", defaultValue = "createdAt") String sortBy,
                                        @RequestParam(value = "direction", defaultValue = "DESC") Sort.Direction direction,
                                        @RequestParam(value = "filterType", defaultValue = "1") int filterType,
-                                       @RequestParam(value = "keyword", required = false) String keyword,
-                                       @RequestParam(value = "postType", required = false) String postType,
-                                       @RequestParam(value = "medicalTag", required = false) String medicalTag,
-                                       @RequestParam(value = "region", required = false) String region,
-                                       @RequestParam(value = "status", required = false) List<String> status) {
+                                       @RequestParam(value = "keyword", defaultValue = "") String keyword,
+                                       @RequestParam(value = "postType", defaultValue = "") String postType,
+                                       @RequestParam(value = "medicalTag", defaultValue = "") String medicalTag,
+                                       @RequestParam(value = "region", defaultValue = "") String region) {
 
         PageRequest pageable = PageRequest.of(page, PAGE_SIZE, Sort.by(direction, sortBy));
 
-        Page<Post> posts = postService.findQuestions(filterType, keyword, postType, medicalTag, region,
+        Page<Post> postPage = postService.findQuestions(filterType, keyword, postType, medicalTag, region,
                 Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
+        List<Post> posts = postPage.getContent();
 
-        return new ResponseEntity<>(posts, HttpStatus.OK);
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(postMapper.postsToPostsResponsePageDto(posts), postPage), HttpStatus.OK);
     }
 
     // 단일 조회

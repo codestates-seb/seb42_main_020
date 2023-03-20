@@ -67,7 +67,7 @@ public class CommentController {
 
     // 하나의 댓글 삭제
     @DeleteMapping("/{comment-id}")
-    public ResponseEntity deleteComment(@PathVariable("comment_id") long commentId,
+    public ResponseEntity deleteComment(@PathVariable("comment-id") long commentId,
                                         @AuthenticationPrincipal String email) {
         System.out.println("# delete comment");
         commentService.deleteComment(commentId, email);

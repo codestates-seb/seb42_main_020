@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
-const HospitalLocation = () => {
+const HospitalLocation = ({ reviewData }) => {
   const { kakao } = window;
 
-  const [placeName, setPlaceName] = useState(['차병원']); // 병원 이름 상태
-
-  console.log(setPlaceName); // ESLint 오류 방지
+  const [placeName, setPlaceName] = useState(['']); // 병원 이름 상태
 
   const ref = useRef(); // 위치 참조
 
   useEffect(() => {
+    setPlaceName(reviewData?.hospitalName);
+
     // 마커를 클릭하면 장소명을 표출할 인포 윈도우
     const infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
     const container = ref.current;
@@ -59,7 +59,7 @@ const HospitalLocation = () => {
       kakao.maps.event.addListener(marker, 'click', function () {
         // 마커를 클릭하면 장소명이 인포 윈도우에 표출
         infowindow.setContent(`<div style="padding:5px;font-size:12px;">${place.place_name}
-      <a href=https://map.kakao.com/link/search/${placeName}>길찾기 바로가기</a>
+      <a href=https://map.kakao.com/link/search/${placeName}>바로가기</a>
       </div>`);
         infowindow.open(map4, marker);
       });
@@ -69,7 +69,7 @@ const HospitalLocation = () => {
     function setBounds() {
       map4.setBounds(bounds, 90, 30, 10, 30);
     }
-  }, [placeName]);
+  });
 
   return (
     <div id="map4" ref={ref} style={{ width: '500px', height: '500px' }}></div>

@@ -24,7 +24,12 @@ public interface PostMapper {
     @Mapping(target = "writerResponse", source = "post.member")
     PostResponseDto postToPostResponseDto(Post post);
 
-    List<PostResponseDto> postsToPostsResponseDto(List<Post> posts);
+    // 전체 게시글 조회 매핑
+    @Mapping(target = "medicalTagTitle", source = "post.medicalTag.title")
+    @Mapping(target = "regionName", source = "post.region.name")
+    @Mapping(target = "hospitalName", source = "post.hospital.name")
+    PostResponseDtoOfPage postToPostResponsePageDto(Post post);
+    List<PostResponseDtoOfPage> postsToPostsResponsePageDto(List<Post> posts);
 
     // 리뷰글 매핑
     Post reviewPostDtoToReview(ReviewPostDto reviewPostDto);
@@ -35,15 +40,11 @@ public interface PostMapper {
     @Mapping(target = "writerResponse", source = "review.member")
     ReviewResponseDto reviewToReviewResponseDto(Post review);
 
-    List<ReviewResponseDto> reviewsToReviewsResponseDto(List<Post> reviews);
-
     // 마이페이지 매핑
     @Mapping(target = "medicalTagTitle", source = "post.medicalTag.title")
     @Mapping(target = "regionName", source = "post.region.name")
     @Mapping(target = "hospitalName", source = "post.hospital.name")
     PostResponseMyPageInfo postToMyPageInfo(Post post);
-
-    List<PostResponseMyPageInfo> postsToMyPageInfos(List<Post> posts);
 
     WriterResponse memberToWriterResponse(Member member);
 

@@ -19,6 +19,8 @@ public enum ExceptionCode {
     POST_NOT_APPROVED(400, "Post not approved"),
     CANNOT_ACCEPT_COMMENT(400, "Cannot accept comment"),
     DOCTOR_CANNOT_POST(400, "Doctor cannot post"),
+    POST_ACCEPTED(400, "Post accepted"),
+    COMMENT_ACCEPTED(400, "Comment accepted"),
 
     NOT_COMMENTS_MEMBER(400, "Not comment's member"),
     NOT_POSTS_MEMBER(400, "Not post's member"),

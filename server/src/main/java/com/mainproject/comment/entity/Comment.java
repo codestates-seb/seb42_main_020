@@ -1,11 +1,11 @@
 package com.mainproject.comment.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mainproject.audit.Auditable;
 import com.mainproject.commentReport.entity.CommentReport;
 import com.mainproject.member.entity.Member;
 import com.mainproject.post.entity.Post;
-import com.mainproject.postReport.entity.PostReport;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,6 +54,7 @@ public class Comment extends Auditable {
     // ----------------------------------- 연관관계 매핑 ----------------------------------- //
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<CommentLike> likes = new ArrayList<>();
 
     public CommentLike addLike(CommentLike like) {
@@ -65,17 +66,18 @@ public class Comment extends Auditable {
     // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
-    @JsonManagedReference
+    @JsonBackReference
     private Member member;
 
     // 게시글 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_ID")
-    @JsonManagedReference
+    @JsonBackReference
     private Post post;
 
     // 신고 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<CommentReport> commentReports = new ArrayList<>();
 
     public int getTotalLike() {
