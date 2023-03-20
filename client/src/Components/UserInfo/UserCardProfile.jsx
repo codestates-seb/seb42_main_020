@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { loggedUserInfo, loginState } from '../../atoms/atoms';
 import { useRecoilState } from 'recoil';
 import Cookies from 'universal-cookie';
+import axios from 'axios';
 
 function UserCardProfile() {
   const [userInfo, setUserInfo] = useRecoilState(loggedUserInfo);
@@ -33,8 +34,20 @@ function UserCardProfile() {
     navigate('/home');
     window.scrollTo(0, 0);
   };
-  const ModalSubmit = () => {
+  const token = localStorage.getItem('accessToken');
+  const ModalSubmit = async () => {
     setIsModalOpen(!isModalOpen);
+    // MEMBER_STATUS - MEMBER_QUIT 으로 변경
+    try {
+      await axios({
+        method: 'DELETE',
+        url: '/members',
+        headers: { Authorization: token },
+      });
+    } catch (error) {
+      console.log('Error!');
+      console.log(error);
+    }
     LogOut();
   };
   const ModalClose = () => setIsModalOpen(!isModalOpen);
@@ -81,7 +94,7 @@ function UserCardProfile() {
                 <BsPencilSquare size={25} />
                 <span>게시글:</span>
               </span>
-              <span>{userInfo?.postResponseMyPageInfos.length} 개</span>
+              <span>{userInfo?.postResponseMyPageInfos?.length} 개</span>
             </div>
             <div className="comment">
               <span className="post-title">
