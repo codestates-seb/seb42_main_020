@@ -7,9 +7,7 @@ import com.mainproject.comment.repository.CommentLikeRepository;
 import com.mainproject.comment.repository.CommentRepository;
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
-import com.mainproject.member.dto.MemberDto;
 import com.mainproject.member.entity.Member;
-import com.mainproject.member.repository.MemberRepository;
 import com.mainproject.member.service.MemberService;
 import com.mainproject.post.entity.Post;
 import com.mainproject.post.repository.PostRepository;
@@ -47,6 +45,8 @@ public class CommentService {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
         }
 
+        post.setPostStatus(Post.PostStatus.POST_COMMENTED);
+
         comment.setPost(post);
         comment.setMember(member);
         comment.setCreatedAt(LocalDateTime.now());
@@ -61,7 +61,10 @@ public class CommentService {
         // 본인 검증
         Member member = memberService.findMemberByEmail(email);
         Comment findComment = findVerifiedComment(commentId);
+
         if(member.getMemberId() != findComment.getMember().getMemberId()) throw new BusinessLogicException(ExceptionCode.NOT_POSTS_MEMBER);
+        if(findComment.getPost().getPostStatus() == Post.PostStatus.POST_ACCEPTED) throw new BusinessLogicException(ExceptionCode.POST_ACCEPTED);
+        if(findComment.getCommentStatus() == Comment.CommentStatus.COMMENT_ACCEPTED) throw new BusinessLogicException(ExceptionCode.COMMENT_ACCEPTED);
 
         findComment.setMember(member);
         findComment.setContent(comment.getContent());
@@ -69,7 +72,6 @@ public class CommentService {
 
         return commentRepository.save(findComment);
     }
-
 
     // 댓글 삭제
     public Comment deleteComment(long commentId, String email) {

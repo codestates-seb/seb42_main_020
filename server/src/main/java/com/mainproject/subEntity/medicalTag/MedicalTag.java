@@ -1,5 +1,7 @@
 package com.mainproject.subEntity.medicalTag;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mainproject.post.entity.Post;
 import com.mainproject.subEntity.hospital.Hospital;
 import lombok.Getter;
@@ -24,5 +26,6 @@ public class MedicalTag {
     private String title;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "medicalTag", cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private List<Post> posts = new ArrayList<>();
 }

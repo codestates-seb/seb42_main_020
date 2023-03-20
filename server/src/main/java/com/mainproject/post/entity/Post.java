@@ -72,23 +72,24 @@ public class Post extends Auditable {
     // 진료과목 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEDICAL_TAG_ID")
-    @JsonManagedReference
+    @JsonBackReference
     private MedicalTag medicalTag;
 
     // 지역 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REGION_ID")
-    @JsonManagedReference
+    @JsonBackReference
     private Region region;
 
     // 병원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOSPITAL_ID")
-    @JsonManagedReference
+    @JsonBackReference
     private Hospital hospital;
 
     // 신고 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<PostReport> postReports = new ArrayList<>();
 
     public enum PostStatus{
