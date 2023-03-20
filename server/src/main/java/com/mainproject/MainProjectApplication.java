@@ -6,14 +6,14 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class MainprojectApplication extends SpringBootServletInitializer {
+public class MainProjectApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MainprojectApplication.class, args);
+		SpringApplication.run(MainProjectApplication.class, args);
 	}
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(MainprojectApplication.class);
+		return builder.sources(MainProjectApplication.class);
 	}
 }

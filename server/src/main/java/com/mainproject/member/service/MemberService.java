@@ -28,7 +28,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
-    private final HospitalRepository hospitalRepository;
 
     // 일반 회원가입
     public Member createMember(Member member) {
@@ -219,6 +218,7 @@ public class MemberService {
         }
     }
 
+    // multipartFile -> byte 변환
     private byte[] convertMultipartFileToByte(MultipartFile multipartFile) throws IOException {
         return multipartFile.getBytes();
     }

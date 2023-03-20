@@ -53,6 +53,7 @@ public class PostController {
 
         Page<Post> postPage = postService.findQuestions(filterType, keyword, postType, medicalTag, region,
                 Arrays.asList(Post.PostStatus.POST_DELETED, Post.PostStatus.POST_PENDING), pageable);
+
         List<Post> posts = postPage.getContent();
 
         return new ResponseEntity<>(
@@ -94,6 +95,7 @@ public class PostController {
                                      @AuthenticationPrincipal String email){
 
         Post updatedPost = postMapper.postPatchDtoToPost(patchDto);
+
         postService.updatePost(updatedPost, postId, email, patchDto.getMedicalTagTitle(), patchDto.getRegionName());
 
         return new ResponseEntity<>(postId, HttpStatus.OK);

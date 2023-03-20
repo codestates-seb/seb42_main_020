@@ -46,6 +46,7 @@ public interface PostMapper {
     @Mapping(target = "hospitalName", source = "post.hospital.name")
     PostResponseMyPageInfo postToMyPageInfo(Post post);
 
+    // 댓글 작성자 매핑
     WriterResponse memberToWriterResponse(Member member);
 
     @Mapping(target = "writerResponse", source = "comment.member")

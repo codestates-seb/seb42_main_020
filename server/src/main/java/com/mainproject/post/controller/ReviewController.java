@@ -30,6 +30,7 @@ public class ReviewController {
                                        @AuthenticationPrincipal String email) throws IOException {
 
         Post review = postMapper.reviewPostDtoToReview(reviewDto);
+
         Long reviewId = postService.createReview(review, email, reviewDto.getHospitalName(), reviewDto.getMedicalTagTitle(), reviewDto.getRegionName(), img);
 
         return new ResponseEntity<>(reviewId, HttpStatus.OK);

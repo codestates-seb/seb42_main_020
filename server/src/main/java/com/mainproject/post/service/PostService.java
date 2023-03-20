@@ -54,7 +54,6 @@ public class PostService {
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
         List<Post.PostStatus> status = Arrays.asList(POST_PENDING, POST_DELETED);
 
-
         if(filterType == 1) {
             return postRepository.findByTitleContainingAndPostStatusNotIn(titleKeyword, status, pageRequest);
         } else if(filterType == 2) {
@@ -136,7 +135,6 @@ public class PostService {
     }
 
     // 게시글 수정
-
     public void updatePost(Post post, Long postId, String email, String medicalTitle, String regionName){
 
         // 본인 검증
@@ -243,6 +241,7 @@ public class PostService {
         return findPost;
     }
 
+    // multipartFile -> byte 변환
     private byte[] convertMultipartFileToByte(MultipartFile multipartFile) throws IOException {
         return multipartFile.getBytes();
     }

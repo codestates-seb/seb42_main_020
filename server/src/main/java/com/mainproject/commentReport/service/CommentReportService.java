@@ -28,6 +28,7 @@ public class CommentReportService {
     private final MemberService memberService;
     private final CommentRepository commentRepository;
 
+    // 댓글 신고
     public CommentReport createReport(CommentReport commentReport, String email, long commentId) {
 
         Member member = memberService.findMemberByEmail(email);

@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mainproject.member.entity.Member;
 import com.mainproject.post.entity.Post;
-import com.mainproject.subEntity.medicalTag.MedicalTag;
-import com.mainproject.subEntity.region.Region;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
