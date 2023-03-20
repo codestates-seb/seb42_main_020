@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
-import useDidMountEffect from '../../util/useDidMountEffect';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import { FcInfo } from 'react-icons/fc';
 import {
   DoctorRegiInfoModal,
@@ -40,6 +39,9 @@ const DoctorSignup = () => {
   const [checkedService, setCheckedService] = useState(false); // 이용약관 동의
   const [checkedLocation, setCheckedLocation] = useState(false); // 위치 기반 서비스 동의
 
+  const [isError, setIsError] = useState(false);
+  const [noticeApi, notificationHolder] = notification.useNotification();
+
   const [isOpenModal, setIsOpenModal] = useState(false); // 가입 동의 안내
   const [isOpenAutoModal, setIsOpenAutoModal] = useState(false); // 성공 안내 모달
   const { lockScroll, openScroll } = useBodyScrollLock();
@@ -71,8 +73,12 @@ const DoctorSignup = () => {
       lockScroll();
       setIsOpenAutoModal(!isOpenAutoModal);
     } catch (error) {
-      console.log('Error!');
-      console.log(error);
+      const errorStatus = error.response.status;
+      // 회원가입 실패 안내창 띄우기
+      if (errorStatus === 409) {
+        // 409 : 중복 아이디
+        setIsError(!isError);
+      }
     }
   };
 
@@ -164,12 +170,23 @@ const DoctorSignup = () => {
     setIsFocus(!isFocus);
   };
 
-  useDidMountEffect(() => {
-    messageApi.open({
-      type: 'warning',
-      content: nameMsg || emailMsg || passwordMsg || '내용을 입력해 주세요',
-    });
+  useEffect(() => {
+    if (isFocus)
+      messageApi.open({
+        type: 'warning',
+        content: nameMsg || emailMsg || passwordMsg || '내용을 입력해 주세요',
+      });
   }, [isFocus]);
+
+  // Error status 409 안내
+  useEffect(() => {
+    if (isError)
+      noticeApi.info({
+        message: `Notification`,
+        description: '이미 가입 완료된 이메일 입니다',
+        placement: 'top',
+      });
+  }, [isError, noticeApi]);
 
   // 이용약관 유효성 검사
   const handleClickTermService = (e) => {
@@ -215,10 +232,23 @@ const DoctorSignup = () => {
     setIsOpenModal(!isOpenModal);
   };
 
+  const refName = useRef();
+  const refHospital = useRef();
+  const refEmail = useRef();
+  const refPassowrd = useRef();
+
+  useEffect(() => {
+    if (isError) refName.current.value = '';
+    refHospital.current.value = '';
+    refEmail.current.value = '';
+    refPassowrd.current.value = '';
+  }, [isError]);
+
   return (
     <SMain>
       <SLayout>
-        {isAllValid ? null : contextHolder}
+        {!isError ? <></> : notificationHolder}
+        {isAllValid ? <></> : contextHolder}
         <SInfoSection>
           <img src="images/logo.png" alt="logo" />
           <h1>의료인 회원가입</h1>
@@ -230,22 +260,26 @@ const DoctorSignup = () => {
               onChange={handleChangeName}
               onFocus={handleFocusAlert}
               placeholder="이름"
+              ref={refName}
             />
             <SInput
               onChange={handleChangeHospital}
               onFocus={handleFocusAlert}
               placeholder="병원명"
+              ref={refHospital}
             />
             <SInput
               onChange={handleChangeEmail}
               onFocus={handleFocusAlert}
               placeholder="이메일"
+              ref={refEmail}
             />
             <SInput
               type="password"
               onChange={handleChangePassword}
               onFocus={handleFocusAlert}
               placeholder="비밀번호"
+              ref={refPassowrd}
             />
           </div>
           <SFileInput>
