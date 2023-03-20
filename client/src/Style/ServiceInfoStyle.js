@@ -12,24 +12,28 @@ export const SServiceInfoSection = styled.div`
   align-items: center;
 `;
 
+const landingIntroduce1 = `${process.env.PUBLIC_URL}images/landing-introduce-1.jpg`;
+const landingIntroduce2 = `${process.env.PUBLIC_URL}images/landing-introduce-2.jpg`;
+const landingIntroduce3 = `${process.env.PUBLIC_URL}images/landing-introduce-3.jpg`;
+
 export const SIntroduceImg1 = styled.div`
   margin: 200px 80px 100px 0;
   width: 425px;
   height: 300px;
   border-radius: 50px;
-  background-image: url('images/landing-introduce-1.jpg');
+  background-image: url(${landingIntroduce1});
   background-size: 500px;
   background-position: center center;
 `;
 
 export const SIntroduceImg2 = styled(SIntroduceImg1)`
   margin: 200px 0 100px 80px;
-  background-image: url('images/landing-introduce-2.jpg');
+  background-image: url(${landingIntroduce2});
 `;
 
 export const SIntroduceImg3 = styled(SIntroduceImg1)`
   margin: 200px 80px 200px 0;
-  background-image: url('images/landing-introduce-3.jpg');
+  background-image: url(${landingIntroduce3});
 `;
 
 export const STextIntroduceSection = styled.div`

@@ -183,7 +183,7 @@ const Signup = () => {
       <SLayout>
         {isAllValid ? <></> : contextHolder}
         <SInfoSection>
-          <img src="images/logo.png" alt="logo" />
+          <img src={process.env.PUBLIC_URL + 'images/logo.png'} alt="logo" />
           <h1>회원가입</h1>
           <p>회원가입으로 다나아의 다양한 서비스를 경험해 보세요</p>
         </SInfoSection>

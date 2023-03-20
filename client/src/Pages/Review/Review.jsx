@@ -27,6 +27,7 @@ import ModalTest from '../../Components/MakeContents/MakeContents';
 import WaitModal from '../../Components/ReviewForm/WaitModal';
 const Review = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem('accessToken');
   // 로그인 상태
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   // 제목 입력값
@@ -215,6 +216,7 @@ const Review = () => {
           //이미지와 json파일이 가기때문에
           headers: {
             'Content-Type': 'multipart/form-data', // token 추가로 넣어주기
+            Authorization: token, // RequestPart 에너테이션 사용으로 토큰 필요
           },
         })
         .then((res) => {
