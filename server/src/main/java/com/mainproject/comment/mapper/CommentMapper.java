@@ -8,6 +8,8 @@ import com.mainproject.comment.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface CommentMapper {
     Comment commentPostDtoToComment(CommentPostDto commentPostDto);
@@ -15,6 +17,8 @@ public interface CommentMapper {
 
     @Mapping(target = "writerResponse", source = "comment.member")
     CommentResponseDto commentToCommentResponseDto(Comment comment);
+
+    List<CommentResponseDto> commentsToCommentsResponseDto(List<Comment> comments);
 
     CommentResponseDtoDoctorInfo commentToDoctorInfo(Comment comment);
 }

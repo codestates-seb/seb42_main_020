@@ -9,8 +9,10 @@ import com.mainproject.commentReport.dto.CommentReportPostDto;
 import com.mainproject.commentReport.entity.CommentReport;
 import com.mainproject.commentReport.mapper.CommentReportMapper;
 import com.mainproject.commentReport.service.CommentReportService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +20,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path = "/comments")
+@RequestMapping("/comments")
 @Validated
 public class CommentController {
+
+    // 실시간 알림 메시지 템플릿
+    @Autowired
+    private SimpMessagingTemplate messageTemplate;
+
     private final CommentService commentService;
     private final CommentMapper mapper;
     private final CommentReportMapper commentReportMapper;
@@ -35,19 +42,23 @@ public class CommentController {
 
     // 하나의 댓글 등록
     @PostMapping
-    public ResponseEntity postComment(@Valid @RequestBody CommentPostDto commentPostDto,
+    public ResponseEntity postComment(@RequestBody @Valid CommentPostDto commentPostDto,
                                       @AuthenticationPrincipal String email,
-                                      @RequestParam long postId) {
+                                      @RequestParam(name = "post-id") long postId) {
 
         Comment comment = mapper.commentPostDtoToComment(commentPostDto);
         Comment response = commentService.createComment(comment, email, postId);
+
+        // 댓글 알림
+        commentService.noticeComment(response);
+
         return new ResponseEntity<>(mapper.commentToCommentResponseDto(response), HttpStatus.CREATED);
     }
 
     // 하나의 댓글 수정
     @PatchMapping("/{comment-id}")
     public ResponseEntity patchComment(@PathVariable("comment-id") long commentId,
-                                       @Valid @RequestBody CommentPatchDto patchDto,
+                                       @RequestBody @Valid CommentPatchDto patchDto,
                                        @AuthenticationPrincipal String email) {
 
         Comment response = commentService.updateComment(mapper.commentPatchDtoToComment(patchDto), commentId, email);
@@ -68,7 +79,7 @@ public class CommentController {
     public ResponseEntity commentLike(@PathVariable("comment-id") long commentId,
                                       @AuthenticationPrincipal String email) {
 
-        commentService.addLike(commentId, email, 1);
+        commentService.addLike(commentId, email);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

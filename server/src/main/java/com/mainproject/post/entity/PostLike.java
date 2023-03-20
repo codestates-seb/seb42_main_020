@@ -1,5 +1,6 @@
 package com.mainproject.post.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.mainproject.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,20 +18,19 @@ public class PostLike {
     private long postLikesId;
 
     // Post 클래스 n:1 양방향
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "POST_ID")
+    @JsonBackReference
     private Post post;
 
     // member 클래스 n:1 단방향
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
+    @JsonBackReference
     private Member member;
 
-    private Integer postVote;
-
-    public PostLike(Post post, Member member, Integer postVote) {
+    public PostLike(Post post, Member member) {
         this.post = post;
         this.member = member;
-        this.postVote = postVote;
     }
 }

@@ -35,6 +35,8 @@ public class CommentReportService {
 
         verifyExistsLike(member, comment);
 
+        commentReport.setMember(member);
+        commentReport.setComment(comment);
         commentReport.setCreatedAt(LocalDateTime.now());
 
         return commentReportRepository.save(commentReport);

@@ -1,5 +1,6 @@
 package com.mainproject.post.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.mainproject.post.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class PostResponseMyPageInfo {
 
     private long postId;

@@ -1,5 +1,6 @@
 package com.mainproject.post.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.mainproject.member.dto.WriterResponse;
 import com.mainproject.post.entity.Post;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ReviewResponseDto {
 
     private Long postId;

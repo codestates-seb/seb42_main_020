@@ -27,7 +27,7 @@ public class DoctorController {
 
     @PostMapping("/signup")
     public ResponseEntity postDoctor(@RequestPart(value = "post") DoctorDto.Post post,
-                                     @RequestPart(value = "img", required = false) MultipartFile img) throws IOException {
+                                     @RequestPart(value = "img") MultipartFile img) throws IOException {
 
         Member member = memberMapper.doctorPostToMember(post);
 

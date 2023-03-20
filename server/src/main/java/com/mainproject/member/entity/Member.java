@@ -1,8 +1,10 @@
 package com.mainproject.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mainproject.audit.Auditable;
 import com.mainproject.comment.entity.Comment;
 import com.mainproject.post.entity.Post;
+import com.mainproject.subEntity.hospital.Hospital;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -65,23 +67,21 @@ public class Member extends Auditable {
     @Column(name = "MEMBER_RATING", length = 30, nullable = false)
     private MemberRating memberRating = MemberRating.UNRANKED;
 
-    public boolean getIsDoctor() {
-        return isDoctor;
-    }
-
-    public void setIsDoctor(boolean isDoctor) {
-        this.isDoctor = isDoctor;
-    }
-
     // Post 클래스 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<Post> posts = new ArrayList<>();
 
-    // Comment 클래스 1;n 양방향
+    // Comment 클래스 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
-    // 게시글, 댓글 신고, 좋아요 매핑 필요
+    // Hospital 클래스 n:1 양방향
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "HOSPITAL_ID")
+    @JsonManagedReference
+    private Hospital hospital;
 
     public enum MemberStatus {
         MEMBER_PENDING("승인 대기"),
@@ -109,6 +109,14 @@ public class Member extends Auditable {
         MemberRating(String rating) {
             this.rating = rating;
         }
+    }
+
+    public boolean getIsDoctor() {
+        return isDoctor;
+    }
+
+    public void setIsDoctor(boolean isDoctor) {
+        this.isDoctor = isDoctor;
     }
 
     // 댓글 수
