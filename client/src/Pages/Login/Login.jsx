@@ -181,7 +181,7 @@ const Login = () => {
         {!isError ? <></> : notificationHolder}
         {isAllValid ? <></> : contextHolder}
         <SInfoSection>
-          <img src={process.env.PUBLIC_URL + 'images/logo.png'} alt="logo" />
+          <img src={process.env.PUBLIC_URL + '/images/logo.png'} alt="logo" />
           <h1>로그인</h1>
           <p>로그인으로 다나아의 다양한 서비스를 경험해 보세요</p>
         </SInfoSection>
