@@ -1,5 +1,6 @@
 package com.mainproject.post.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mainproject.audit.Auditable;
 import com.mainproject.member.entity.Member;
@@ -56,30 +57,34 @@ public class Post extends Auditable {
     // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
+    @JsonBackReference
     private Member member;
 
     // 회원 댓글 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
     // 좋아요 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    @JsonManagedReference
     private List<PostLike> likes = new ArrayList<>();
 
     // 진료과목 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEDICAL_TAG_ID")
+    @JsonManagedReference
     private MedicalTag medicalTag;
 
     // 지역 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REGION_ID")
+    @JsonManagedReference
     private Region region;
 
     // 병원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOSPITAL_ID")
+    @JsonManagedReference
     private Hospital hospital;
 
     // 신고 1:n 양방향

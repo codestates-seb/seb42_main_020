@@ -31,6 +31,8 @@ public class PostReportService {
 
         verifyExistsReport(member, post);
 
+        postReport.setMember(member);
+        postReport.setPost(post);
         postReport.setCreatedAt(LocalDateTime.now());
 
         return postReportRepository.save(postReport);

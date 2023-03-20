@@ -1,5 +1,6 @@
 package com.mainproject.comment.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mainproject.audit.Auditable;
 import com.mainproject.commentReport.entity.CommentReport;
 import com.mainproject.member.entity.Member;
@@ -64,11 +65,13 @@ public class Comment extends Auditable {
     // 회원 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
+    @JsonManagedReference
     private Member member;
 
     // 게시글 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "POST_ID")
+    @JsonManagedReference
     private Post post;
 
     // 신고 1:n 양방향

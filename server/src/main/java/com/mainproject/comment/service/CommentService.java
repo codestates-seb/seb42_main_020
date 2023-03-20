@@ -2,6 +2,7 @@ package com.mainproject.comment.service;
 
 import com.mainproject.comment.entity.Comment;
 import com.mainproject.comment.entity.CommentLike;
+import com.mainproject.comment.notice.NoticePayload;
 import com.mainproject.comment.repository.CommentLikeRepository;
 import com.mainproject.comment.repository.CommentRepository;
 import com.mainproject.global.exception.BusinessLogicException;
@@ -14,6 +15,8 @@ import com.mainproject.post.entity.Post;
 import com.mainproject.post.repository.PostRepository;
 import com.mainproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,6 +33,9 @@ public class CommentService {
     private final MemberService memberService;
     private final PostService postService;
     private final CommentLikeRepository commentLikeRepository;
+
+    @Autowired
+    private SimpMessagingTemplate messageTemplate;
 
     // 댓글 작성
     public Comment createComment(Comment comment, String email, long postId) {
@@ -138,5 +144,17 @@ public class CommentService {
         if(findComment.getCommentStatus() != Comment.CommentStatus.COMMENT_REGISTERED) throw new BusinessLogicException(ExceptionCode.COMMENT_NOT_CHANGED);
 
         return findComment;
+    }
+
+    // 실시간 댓글 알림
+    public void noticeComment(Comment comment) {
+        // 알림 페이로드 생성
+        NoticePayload payload = new NoticePayload();
+        payload.setType("comment");
+        payload.setMessage("새로운 댓글이 달렸습니다.");
+
+        // 게시글 작성한 회원에게 알림 전송
+        messageTemplate.convertAndSendToUser(comment.getPost().getMember().getEmail(),
+                "/member/queue/post-replies", payload);
     }
 }

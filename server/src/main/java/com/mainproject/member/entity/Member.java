@@ -1,5 +1,6 @@
 package com.mainproject.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mainproject.audit.Auditable;
 import com.mainproject.comment.entity.Comment;
 import com.mainproject.post.entity.Post;
@@ -68,15 +69,18 @@ public class Member extends Auditable {
 
     // Post 클래스 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JsonManagedReference
     private List<Post> posts = new ArrayList<>();
 
     // Comment 클래스 1:n 양방향
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "member", cascade = CascadeType.PERSIST)
+    @JsonManagedReference
     private List<Comment> comments = new ArrayList<>();
 
     // Hospital 클래스 n:1 양방향
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOSPITAL_ID")
+    @JsonManagedReference
     private Hospital hospital;
 
     public enum MemberStatus {
