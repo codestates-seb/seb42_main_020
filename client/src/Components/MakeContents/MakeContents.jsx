@@ -6,22 +6,22 @@ import {
 } from '../../Style/MakeContentStyle';
 import { useNavigate } from 'react-router-dom';
 
-const ModalTest = () => {
+const MakeContents = () => {
   const navigate = useNavigate();
 
-  const [isTrue, setIsTrue] = useState(false);
+  const [openMake, setOpenMake] = useState(false);
   // 모달 창 상태 관리
   const modalHandler = () => {
-    setIsTrue((prev) => !prev);
+    setOpenMake((prev) => !prev);
   };
   // 리뷰 클릭시 리뷰 페이지로 이동
   const reviewClickHandler = () => {
-    setIsTrue((prev) => !prev);
+    setOpenMake((prev) => !prev);
     navigate('/review');
   };
 
   const questionClickHandler = () => {
-    setIsTrue((prev) => !prev);
+    setOpenMake((prev) => !prev);
     navigate('/askquestion');
   };
 
@@ -29,7 +29,7 @@ const ModalTest = () => {
     <div className="modal_wrapper">
       <SPostModalBlock>
         <button onClick={modalHandler}>리뷰 / 질문 작성하기</button>
-        {isTrue && (
+        {openMake && (
           <SModalWrapper>
             <SModal>
               <div>
@@ -45,4 +45,4 @@ const ModalTest = () => {
   );
 };
 
-export default ModalTest;
+export default MakeContents;

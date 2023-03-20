@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import ReviewReason from './ReviewReason';
+import AlertModal from '../AlertModal/AlertModal';
 import {
   SReportModalContainer,
   SReportModalBlock,
@@ -8,19 +10,27 @@ import {
   SReportModalClose,
 } from '../../Style/ReportModalStyle';
 
-const ReportModal = ({ reportModalHandler, setReportModal }) => {
+const ReportModal = ({ reportModalHandler }) => {
   //모달 제출 내용
   const [reportText, setReportText] = useState('');
+  const [reportReason, setReportReason] = useState('');
+  const [reportInfo, setReportInfo] = useState({});
 
-  // 모달 제출
+  useEffect(() => {
+    setReportInfo({
+      reason: reportReason,
+      content: reportText,
+    });
+  }, [reportReason, reportText]);
+
+  // 신고 사유
+  const reportReasonHandler = (e) => {
+    console.log(e);
+    setReportReason(e);
+  };
+  // 신고 내용
   const reportTextHandler = (e) => {
     setReportText(e.target.value);
-  };
-
-  const reportSubmitHandler = () => {
-    alert('신고가 접수되었습니다.');
-    setReportModal((prev) => !prev);
-    console.log(reportText);
   };
 
   return (
@@ -31,6 +41,11 @@ const ReportModal = ({ reportModalHandler, setReportModal }) => {
           <SReportModalClose onClick={reportModalHandler}>X</SReportModalClose>
         </SReportModalHeader>
         <div>
+          <ReviewReason
+            reportReason={reportReason}
+            reportReasonHandler={reportReasonHandler}
+            className="review_reson"
+          />
           <SReportText
             rows="50"
             cols="50"
@@ -40,7 +55,7 @@ const ReportModal = ({ reportModalHandler, setReportModal }) => {
           />
           <SReportModalButtonBlock>
             <button onClick={reportModalHandler}>취 소</button>
-            <button onClick={reportSubmitHandler}>제 출</button>
+            <AlertModal reportInfo={reportInfo}>제 출</AlertModal>
           </SReportModalButtonBlock>
         </div>
       </SReportModalBlock>

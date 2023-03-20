@@ -29,6 +29,9 @@ public class Comment extends Auditable {
     @Column(length = 50, nullable = false)
     private String content;
 
+    @Column(name = "TOTAL_LIKE")
+    private int totalLike;
+
     // 상태
     @Enumerated(value = EnumType.STRING)
     @Column(name = "COMMENT_STATUS", length = 30, nullable = false)
@@ -70,4 +73,9 @@ public class Comment extends Auditable {
     // 신고 1:n
     @OneToMany(fetch = FetchType.LAZY)
     private List<CommentReport> reports = new ArrayList<>();
+
+    public int getTotalLike() {
+        int totalLike = likes.size();
+        return totalLike;
+    }
 }

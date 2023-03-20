@@ -146,12 +146,19 @@ public class PostController {
 
     // 단일 조회
     @GetMapping("/{post-id}")
-    public ResponseEntity<PostResponseDto> getPost(@PathVariable("post-id") @Positive Long postId){
+    public ResponseEntity getPost(@PathVariable("post-id") @Positive Long postId) {
 
         Post post = postService.findPost(postId);
-        PostResponseDto postResponseDto = postMapper.postToPostResponseDto(post);
 
-        return new ResponseEntity<>(postResponseDto, HttpStatus.OK);
+        if (post.getPostType() == "question") {
+            PostResponseDto postResponseDto = postMapper.postToPostResponseDto(post);
+
+            return new ResponseEntity<>(postResponseDto, HttpStatus.OK);
+        } else {
+            ReviewResponseDto reviewResponseDto = postMapper.reviewToReviewResponseDto(post);
+
+            return new ResponseEntity<>(reviewResponseDto, HttpStatus.OK);
+        }
     }
 
     // 글 작성

@@ -39,6 +39,8 @@ function Header() {
     e.preventDefault();
     setIsLogged(!isLogged);
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('recoil-persist');
+    localStorage.removeItem('loggedUserInfo');
     cookies.remove('refreshToken');
     navigate('/home');
   };

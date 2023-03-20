@@ -87,6 +87,11 @@ public class CommentService {
         Post post = postService.findPost(postId);
         long findMemberId = post.getMember().getMemberId();
 
+        // 포인트 수정
+        Member memberForPoint = comment.getMember();
+        memberForPoint.setPoint(memberForPoint.getPoint() + 15);
+        memberService.updateRating(memberForPoint);
+
         if(memberId != findMemberId || postId != comment.getPost().getPostId() || comment.getCommentStatus() == Comment.CommentStatus.COMMENT_ACCEPTED
         || post.getPostStatus() == Post.PostStatus.POST_ACCEPTED) {
             throw new BusinessLogicException(ExceptionCode.CANNOT_ACCEPT_COMMENT);
@@ -105,9 +110,15 @@ public class CommentService {
         Member member = memberService.findMemberByEmail(email);
         Comment comment = commentRepository.findById(commentId).get();
 
+        // 포인트 수정
+        Member memberForPoint = comment.getMember();
+        memberForPoint.setPoint(memberForPoint.getPoint() + 1);
+        memberService.updateRating(memberForPoint);
+
         verifyExistsLike(member, comment);
 
         commentLikeRepository.save(comment.addLike(new CommentLike(comment, member, like)));
+        comment.setTotalLike(comment.getTotalLike());
     }
 
     // 좋아요 여부 검증

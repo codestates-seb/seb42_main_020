@@ -30,7 +30,7 @@ public class PostResponseDto {
 
     private String postType;
 
-    /*    private Integer likes;*/
+    private Integer totalLike;
 
     private String medicalTagTitle;
 
@@ -39,4 +39,5 @@ public class PostResponseDto {
     private WriterResponse writerResponse;
 
     private List<CommentResponseDto> comments;
+
 }

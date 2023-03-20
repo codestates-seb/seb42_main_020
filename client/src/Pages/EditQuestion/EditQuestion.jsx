@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { loginState } from '../../atoms/atoms';
+import { useNavigate } from 'react-router-dom';
 
 import TextEditor from '../../Components/AskForm/TextEditor';
 import {
@@ -20,10 +18,9 @@ import { locationData, typeData } from '../../Components/AskForm/PostData';
 import LocationInput from '../../Components/AskForm/LocationInput';
 import TypeInput from '../../Components/AskForm/TypeInput';
 
-const AskQuestion = () => {
+const EditQuestion = () => {
   const navigate = useNavigate();
-  const locations = useLocation();
-  console.log(locations.state);
+
   //로컬에 있는 토큰
   const token = localStorage.getItem('accessToken');
   // 제목 입력값
@@ -34,7 +31,7 @@ const AskQuestion = () => {
   const [titleMessage, setTitleMessage] = useState('');
 
   // 내용 입력값
-  const [questionContent, setQuestionContent] = useState('내용입니다');
+  const [questionContent, setQuestionContent] = useState('');
   // 내용 유효성 검사
   const [textValid, setTextValid] = useState(false);
   // 내용이 적합하지 않을 경우 표출
@@ -53,16 +50,25 @@ const AskQuestion = () => {
   // 입력값 총 합
   const [questionData, setQuestionData] = useState({});
 
-  //f로그인 상태정보
-  const [isLogin, setIsLogin] = useRecoilState(loginState);
-
+  // 데이터 받아오기
   useEffect(() => {
-    // 로그인 상태가 아닐경우
-    if (!isLogin) {
-      alert('로그인을 해 주세요');
-      navigate('/home');
-    }
-  }, [setIsLogin]);
+    axios
+      .get('/posts/2', {
+        headers: {
+          'Content-Type': `application/json`,
+          'ngrok-skip-browser-warning': '69420',
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setQuestionTitle(res.data.title);
+        setQuestionContent(res.data.content);
+        setLocation(res.data.regionName);
+        setMedicalTagTitle(res.data.medicalTagTitle);
+        console.log(questionContent);
+      });
+  }, []);
 
   //데이터가 변경될때마다 종합에 넣어줌
   useEffect(() => {
@@ -76,7 +82,6 @@ const AskQuestion = () => {
 
   // 작성 내용
   const handleText = (value) => {
-    setQuestionContent(value);
     if (value.length < 5) {
       setTextValid(false);
       setTextMessage('내용은 5글자 이상 입력해주세요');
@@ -86,6 +91,7 @@ const AskQuestion = () => {
     } else {
       setTextValid(true);
     }
+
     setQuestionContent(value);
   };
 
@@ -135,18 +141,16 @@ const AskQuestion = () => {
     }
 
     axios
-      .post('/posts', questionData, {
-        headers: { Authorization: token },
+      .patch('/posts/2', questionData, {
+        header: { Authorization: token },
       })
       .then((res) => {
         console.log(res);
       });
 
-    alert('질문이 작성되었습니다.');
-    navigate('/');
+    alert('질문이 수정되었습니다.');
+    navigate('/posts/2');
   };
-
-  console.log(questionData);
 
   return (
     <SAskQuestionContainer>
@@ -191,4 +195,4 @@ const AskQuestion = () => {
   );
 };
 
-export default AskQuestion;
+export default EditQuestion;

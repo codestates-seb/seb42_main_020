@@ -1,5 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { loginState, loggedUserInfo } from '../../atoms/atoms';
+import CommentForm from '../../Components/CommentForm/CommentForm';
+import Answers from '../../Components/Answers/Answers';
 
 import {
   SQuestionDetailContainer,
@@ -8,182 +13,149 @@ import {
   SQuestionInfoBlock,
   SQuestionTextBlock,
   SQuestionButtonBlock,
-  SAnswerHeader,
   SAnswerProfilePic,
   SPostAnswerBlock,
-  SAnswerBlock,
-  SAnswerInfoBlock,
-  SAnswerUserInfoBlock,
-  SAnswerButtonBlock,
+  SQuestionLikeButtonBlock,
 } from '../../Style/QuestionDetailStyle';
 
 const QuestionDetail = () => {
+  // const { params } = useParams();
+  // 로그인 상태 정보 확인
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const userInfo = useRecoilState(loggedUserInfo);
+  const token = localStorage.getItem('accessToken');
+
   // 글을 삭제할 경우 삭제 후 다른 페이지로 이동하기 위해
   const navigate = useNavigate();
   // 현재 로그인 상태가 글 작성자일 경우
-  const [isWriter, setIsWriter] = useState(true);
-  // 글의 채택여부(전문가)
-  const [expertChoice, setExpertChoice] = useState(false);
-  // 글의 채택여부 (일반인)
-  const [normalChoice, setNormalChoice] = useState(false);
+  // 질문 데이터
+  const [questionData, setQuestionData] = useState({});
+  // 질문 작성자 정보
+  const [writerInfo, setWriterInfo] = useState({});
+  // 답글 목록
+  const [comments, setComments] = useState([]);
+  // 답글 작성자
+  const [commentFrom, setCommentFrom] = useState({});
+  // 답변창 다루기
+  const [postComment, setPostComment] = useState(false);
 
-  // 사용자 변경
-  const userHandler = () => {
-    setIsWriter((prev) => !prev);
-  };
-
-  const expertChoiceHandler = () => {
-    if (!expertChoice) {
-      const expertChoiceConfirm = confirm('답변을 채택하시겠습니까?');
-      if (expertChoiceConfirm) {
-        alert('채택하였습니다.');
-        setExpertChoice((prev) => !prev);
-        setNormalChoice(false);
-      }
+  useEffect(() => {
+    // 로그인 상태가 아닐경우
+    if (!isLogin) {
+      alert('로그인을 해 주세요');
+      navigate('/home');
     }
+  }, [setIsLogin]);
 
-    if (expertChoice) {
-      const expertChoiceConfirmCancel =
-        confirm('답변 채택을 취소하시겠습니까?');
-      if (expertChoiceConfirmCancel) {
-        alert('채택을 취소하였습니다.');
-        setExpertChoice((prev) => !prev);
-      }
-    }
-  };
+  // 서버로부터 데이터 가져오기
+  // paht는 수정 예정
 
-  const normalChoiceHandler = () => {
-    if (!normalChoice) {
-      const normalChoiceConfirm = confirm('답변을 채택하시겠습니까?');
-      if (normalChoiceConfirm) {
-        alert('채택하였습니다.');
-        setNormalChoice((prev) => !prev);
-        setExpertChoice(false);
-      }
-    }
+  useEffect(() => {
+    axios
+      .get('/posts/2', {
+        headers: {
+          'Content-Type': `application/json`,
+          'ngrok-skip-browser-warning': '69420',
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        setQuestionData(res.data);
+        setWriterInfo(res.data.writerResponse);
+        setComments(res.data.comments);
+        setCommentFrom(res.data.comments.writerResponse);
+      });
+  }, []);
 
-    if (normalChoice) {
-      const expertChoiceCancel = confirm('답변 채택을 취소하시겠습니까?');
-      if (expertChoiceCancel) {
-        alert('채택을 취소하였습니다.');
-        setNormalChoice((prev) => !prev);
-      }
-    }
-  };
+  console.log('작성자');
+  console.log(comments);
+  console.log(commentFrom);
 
   const modifyHandler = () => {
     const modifyResult = confirm('질문을 수정하시겠습니까???');
     if (modifyResult) {
-      navigate('/askquestion');
+      navigate('/editquestion/2');
     }
+  };
+
+  const postCommentHandler = () => {
+    setPostComment((prev) => !prev);
   };
 
   const deleteHandler = () => {
     const deleteResult = confirm('질문을 삭제하시겠습니까???');
     if (deleteResult) {
       alert('질문을 삭제하였습니다.');
+      axios
+        .delete(`/posts/${questionData.postId}`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+        });
       navigate('/');
     }
   };
 
+  const likeHandler = () => {
+    axios({
+      method: 'post',
+      url: `/posts/${questionData?.postId}/likes`,
+      headers: { Authorization: token },
+    }).then((res) => {
+      location.reload();
+      console.log(res);
+    });
+  };
+
   return (
     <SQuestionDetailContainer className="detail-block">
-      <button onClick={userHandler}> 글쓴이=사용자!</button>
       <SQuestionDetailBlock className="question-block">
         <SQuestionHeaderBlock className="header-block">
-          <h1>🤔 제가 머리도 아프고 배도 아프고 목도 아픕니다</h1>
+          <h1>🤔 {questionData?.title}</h1>
           <SQuestionInfoBlock className="info-block">
-            <span>승민짱짱맨 [서구]</span>
-            <span>2023-03-11 12:34</span>
+            <span>
+              {writerInfo?.displayName} [{questionData?.regionName}]
+            </span>
+            <span>{questionData?.createdAt}</span>
           </SQuestionInfoBlock>
         </SQuestionHeaderBlock>
         <SQuestionTextBlock className="contents-block">
-          <p>
-            제가 머리도 아프고 배도 아프고 목도 아프고 이제 정신까지
-            나갈거같은데 어디로 가야될까요?? 아니면 좋은 병원있는지
-            추천해주세요!
-          </p>
+          <p>{questionData?.content}</p>
         </SQuestionTextBlock>
-        {isWriter ? (
+
+        {userInfo[0].memberId === writerInfo?.memberId ? (
           <SQuestionButtonBlock className="button-block">
             <button onClick={modifyHandler}>수정</button>
             <button onClick={deleteHandler}>삭제</button>
           </SQuestionButtonBlock>
-        ) : null}
+        ) : (
+          <SQuestionLikeButtonBlock className="button-block">
+            <button onClick={likeHandler}>❤️ {questionData?.totalLike}</button>
+          </SQuestionLikeButtonBlock>
+        )}
       </SQuestionDetailBlock>
-      {isWriter ? null : (
+      {userInfo[0].memberId === writerInfo?.memberId ? null : (
         <SPostAnswerBlock className="want-answer-block">
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
           <div className="want-answer-text">
-            <h1>승민님의 답변을 기다리고 있어요!</h1>
+            <h1>대현자님의 답변을 기다리고 있어요!</h1>
             <span>지금 답변하여 채택받으시면 15점을 얻습니다.</span>
           </div>
-          <button>답변하기!</button>
+          <button onClick={postCommentHandler}>답변하기!</button>
         </SPostAnswerBlock>
       )}
-
-      <SAnswerBlock
-        className={
-          expertChoice ? 'expoert-choiced expert-answer' : 'expert-answer'
-        }
-      >
-        {expertChoice ? <span>채택된 답변</span> : null}
-        <SAnswerHeader className="header">
-          <h1>전문가 답변</h1>
-          {isWriter ? null : (
-            <div>
-              <button>수정</button>
-              <button>삭제</button>
-            </div>
-          )}
-        </SAnswerHeader>
-        <SAnswerInfoBlock className="answer-header-block">
-          <SAnswerUserInfoBlock className="answer-user-info">
-            <span>작성자</span>
-            <span>2023-03-02</span>
-          </SAnswerUserInfoBlock>
-          <SAnswerProfilePic src="/images/Swear.png" alt="img" />
-        </SAnswerInfoBlock>
-        <div className="answer-contents-block">
-          <p>답변 내용입니다. 제 생각은 이렇습니다. 어쩌구 저쩌구~</p>
-        </div>
-        <SAnswerButtonBlock className="answer-button-block">
-          <button onClick={expertChoiceHandler}>
-            {expertChoice ? '채택 취소' : '채택 하기'}
-          </button>
-        </SAnswerButtonBlock>
-      </SAnswerBlock>
-      <SAnswerBlock
-        className={
-          normalChoice ? 'normal-choiced normal-answer' : 'normal-answer'
-        }
-      >
-        {normalChoice ? <span>채택된 답변</span> : null}
-        <SAnswerHeader className="header">
-          <h1>일반인 답변</h1>
-          {isWriter ? null : (
-            <div>
-              <button>수정</button>
-              <button>삭제</button>
-            </div>
-          )}
-        </SAnswerHeader>
-        <SAnswerInfoBlock className="answer-header-block">
-          <SAnswerUserInfoBlock className="answer-user-info">
-            <span>작성자</span>
-            <span>2023-03-02</span>
-          </SAnswerUserInfoBlock>
-          <SAnswerProfilePic src="/images/Swear.png" alt="img" />
-        </SAnswerInfoBlock>
-        <div className="answer-contents-block">
-          <p>답변 내용입니다. 제 생각은 이렇습니다. 어쩌구 저쩌구~</p>
-        </div>
-        <SAnswerButtonBlock className="answer-button-block">
-          <button onClick={normalChoiceHandler}>
-            {normalChoice ? '채택 취소' : '채택 하기'}
-          </button>
-        </SAnswerButtonBlock>
-      </SAnswerBlock>
+      {postComment ? <CommentForm /> : <></>}
+      {/*  답글 여부에따라서 내용 변경, 서버가 완성되면 수정하겠음 */}
+      {comments?.length === 0 ? (
+        <></>
+      ) : (
+        comments?.map((ele) => {
+          return <Answers ele={ele} key={ele.commentId} userInfo={userInfo} />;
+        })
+      )}
     </SQuestionDetailContainer>
   );
 };
