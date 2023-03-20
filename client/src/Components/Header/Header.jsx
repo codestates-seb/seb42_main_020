@@ -52,7 +52,10 @@ function Header() {
           <div className="layout-div">
             <SLogo>
               <Link to="/">
-                <img src="images/logo.png" alt="logo" />
+                <img
+                  src={process.env.PUBLIC_URL + 'images/logo.png'}
+                  alt="logo"
+                />
                 <span>다나아</span>
               </Link>
             </SLogo>
