@@ -88,6 +88,10 @@ public class PostService {
             throw new BusinessLogicException(ExceptionCode.DOCTOR_CANNOT_POST);
         }
 
+        // 포인트 수정
+        member.setPoint(member.getPoint() + 5);
+        memberService.updateRating(member);
+
         post.setMedicalTag(medicalTag);
         post.setRegion(region);
         post.setMember(member);
@@ -95,10 +99,6 @@ public class PostService {
         post.setPostStatus(Post.PostStatus.POST_REGISTERED);
         post.setCreatedAt(LocalDateTime.now());
         post.setModifiedAt(LocalDateTime.now());
-
-        // 포인트 수정
-        member.setPoint(member.getPoint() + 5);
-        memberService.updateRating(member);
 
         postRepository.save(post);
 
@@ -187,7 +187,10 @@ public class PostService {
         memberForPoint.setPoint(memberForPoint.getPoint() + 10);
         memberService.updateRating(memberForPoint);
 
+        post.setMember(memberForPoint);
         post.setPostStatus(Post.PostStatus.POST_REGISTERED);
+
+        postRepository.save(post);
     }
 
     // 좋아요 기능
