@@ -23,6 +23,7 @@ public class ReviewPostDto {
 
     private String regionName;
 
+    @NotBlank(message = "병원을 입력하셔야 합니다.")
     private String hospitalName;
 
     private int starRating;

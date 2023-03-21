@@ -2,6 +2,11 @@ package com.mainproject.subEntity.service;
 
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
+import com.mainproject.member.dto.DoctorDto;
+import com.mainproject.member.entity.Member;
+import com.mainproject.member.service.MemberService;
+import com.mainproject.post.entity.Post;
+import com.mainproject.post.service.PostService;
 import com.mainproject.subEntity.hospital.Hospital;
 import com.mainproject.subEntity.hospital.HospitalRepository;
 import com.mainproject.subEntity.medicalTag.MedicalTag;
@@ -21,6 +26,11 @@ public class SubService {
     private final HospitalRepository hospitalRepository;
     private final MedicalTagRepository medicalTagRepository;
     private final RegionRepository regionRepository;
+
+    // 병원 저장
+    public void createHospital(Hospital hospital) {
+        hospitalRepository.save(hospital);
+    }
 
     public Hospital findHospital(String name) {
 

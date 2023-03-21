@@ -28,11 +28,11 @@ public class Hospital {
     @Column
     private String name;
 
-    /*@Column
+    @Column
     private String phone;
 
     @Column
-    private String address;*/
+    private String address;
 
     @Column(nullable = false)
     @ColumnDefault("0")

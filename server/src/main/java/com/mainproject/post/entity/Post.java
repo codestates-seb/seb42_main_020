@@ -35,6 +35,10 @@ public class Post extends Auditable {
     @Column(name = "CONTENT", length = 1000, nullable = false)
     private String content;
 
+    // 리뷰용 병원 이름
+    @Column(name = "HOSPITAL_NAME")
+    private String hospitalName;
+
     // 리뷰 별점
     @Column(name = "STAR_RATING")
     private int starRating;
