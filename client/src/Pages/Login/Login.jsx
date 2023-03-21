@@ -47,6 +47,13 @@ const Login = () => {
   const cookies = new Cookies();
   const navigate = useNavigate();
 
+  // enter key를 이용한 submit 구현
+  const handdlerEnter = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
   const handleSubmit = async () => {
     try {
       const res = await axios.post('/login', {
@@ -198,6 +205,7 @@ const Login = () => {
             onFocus={handleFocusAlert}
             placeholder="비밀번호"
             ref={refPassowrd}
+            onKeyPress={handdlerEnter}
           />
           <div>
             <SSubmitBtn

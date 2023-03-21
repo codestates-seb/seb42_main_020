@@ -5,25 +5,23 @@ import axios from 'axios';
 import PostList from './PostList';
 
 function PostPagination() {
-  const [data, setData] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [total, setTotal] = useState(0);
-  const accessToken = localStorage.getItem('accessToken');
 
   const getPost = async () => {
-    if (JSON.parse(localStorage.getItem('recoil-persist')).loginState)
-      axios.defaults.headers.common['Authorization'] = `${accessToken}`;
+    //로그인이 되어있는 유저라면 자신의 게시글을 볼 수 있게 설정
     const response = await axios.get('/posts', {
       headers: {
         'ngrok-skip-browser-warning': 'skip',
       },
-      params: {
-        page: currentPage,
-        size: pageSize,
-      },
+      // params: {
+      //   page: currentPage,
+      //   size: pageSize,
+      // },
     });
-    setData(response.data);
+    setPosts(response.data);
     setTotal(response.data.length);
   };
 
@@ -38,7 +36,7 @@ function PostPagination() {
 
   return (
     <>
-      <PostList data={data} />
+      <PostList posts={posts} />
       <PostPaginationStyle>
         <Pagination
           current={currentPage}

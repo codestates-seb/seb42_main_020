@@ -2,9 +2,7 @@ package com.mainproject.subEntity.medicalTag;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mainproject.post.entity.Post;
-import com.mainproject.subEntity.hospital.Hospital;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

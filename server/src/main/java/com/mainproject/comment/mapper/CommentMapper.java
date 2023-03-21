@@ -7,11 +7,13 @@ import com.mainproject.comment.dto.CommentResponseDtoDoctorInfo;
 import com.mainproject.comment.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CommentMapper {
+
     Comment commentPostDtoToComment(CommentPostDto commentPostDto);
     Comment commentPatchDtoToComment(CommentPatchDto commentPatchDto);
 

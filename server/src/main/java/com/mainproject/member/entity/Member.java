@@ -9,7 +9,6 @@ import com.mainproject.subEntity.hospital.Hospital;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,6 +36,9 @@ public class Member extends Auditable {
     // 닉네임
     @Column(length = 30)
     private String displayName;
+
+    @Column(name = "HOSPITAL_NAME")
+    private String hospitalName;
 
     @Column(length = 30)
     private String area;

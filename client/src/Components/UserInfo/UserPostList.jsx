@@ -1,13 +1,14 @@
-import PostListStyle from '../../Style/PostListStyle';
+import UserPostListStyle from '../../Style/UserPostListStyle';
 import { RxDotsHorizontal } from 'react-icons/rx';
 import { FiUserCheck } from 'react-icons/fi';
 
-function PostList({ posts }) {
+function UserPostList({ posts }) {
+  console.log(posts);
   return (
     <>
-      {posts?.data?.map((item) => {
+      {posts?.postResponseMyPageInfos?.map((item) => {
         return (
-          <PostListStyle key={item?.postId}>
+          <UserPostListStyle key={item?.postId}>
             <li className="number">{item?.postId}</li>
             <li className="subject">{item?.medicalTagTitle}</li>
             <li className="doctor">
@@ -23,8 +24,8 @@ function PostList({ posts }) {
             <li className="title">
               <span>{item?.title}</span>
             </li>
-            <li className="time" style={{ fontSize: '14px' }}>
-              {item?.createdAt && item.createdAt.slice(0, 10)}
+            <li className="time" style={{ fontSize: '12px' }}>
+              {item?.createdAt && item.createdAt.slice(5, 10)}
             </li>
             <li className="type">
               {item?.postType === 'question' ? (
@@ -33,13 +34,15 @@ function PostList({ posts }) {
                 <span className="review">리뷰</span>
               )}
             </li>
-            <li className="nickname">{item?.postId}</li>
+            <li className="nickname" style={{ fontSize: '12px' }}>
+              {posts?.displayName}
+            </li>
             <li className="like">{item?.totalLike}</li>
-          </PostListStyle>
+          </UserPostListStyle>
         );
       })}
     </>
   );
 }
 
-export default PostList;
+export default UserPostList;

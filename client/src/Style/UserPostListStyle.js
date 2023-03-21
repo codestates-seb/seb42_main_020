@@ -18,7 +18,7 @@ const PostListStyle = styled.ul`
     flex: 0.7;
   }
   .title {
-    flex: 4;
+    flex: 3.5;
     text-align: initial;
     overflow: hidden;
     white-space: nowrap;
@@ -55,6 +55,7 @@ const PostListStyle = styled.ul`
   }
   .time {
     flex: 0.6;
+    font-size: 14px;
   }
   .like {
     flex: 0.3;

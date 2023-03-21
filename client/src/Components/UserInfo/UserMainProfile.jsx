@@ -1,3 +1,4 @@
+import EditUserInfo from './EditUserInfo';
 import {
   UserMainProfileStyle,
   STitle,
@@ -14,9 +15,15 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 import { CiMemoPad } from 'react-icons/ci';
 import { loggedUserInfo } from '../../atoms/atoms';
 import { useRecoilValue } from 'recoil';
+import { useState } from 'react';
 
 function UserMainProfile() {
   const userInfo = useRecoilValue(loggedUserInfo);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const handleModal = () => {
+    setIsOpenModal(!isOpenModal);
+  };
 
   return (
     <UserMainProfileStyle>
@@ -25,7 +32,7 @@ function UserMainProfile() {
           <CiMemoPad />
           <h2>User Information</h2>
         </div>
-        <button className="edit-profile">
+        <button className="edit-profile" onClick={handleModal}>
           <FiEdit size={25} color="#00663b" />
           <span>Edit Profile</span>
         </button>
@@ -79,6 +86,15 @@ function UserMainProfile() {
         <div className="line"></div>
       </SMyPost>
       <UserPost />
+      {isOpenModal ? (
+        <EditUserInfo
+          handleModal={handleModal}
+          isOpenModal={isOpenModal}
+          setIsOpenModal={setIsOpenModal}
+        />
+      ) : (
+        <></>
+      )}
     </UserMainProfileStyle>
   );
 }

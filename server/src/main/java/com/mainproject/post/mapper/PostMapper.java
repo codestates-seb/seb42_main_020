@@ -28,6 +28,7 @@ public interface PostMapper {
     @Mapping(target = "medicalTagTitle", source = "post.medicalTag.title")
     @Mapping(target = "regionName", source = "post.region.name")
     @Mapping(target = "hospitalName", source = "post.hospital.name")
+    @Mapping(target = "displayName", source = "post.member.displayName")
     PostResponseDtoOfPage postToPostResponsePageDto(Post post);
     List<PostResponseDtoOfPage> postsToPostsResponsePageDto(List<Post> posts);
 
@@ -46,6 +47,7 @@ public interface PostMapper {
     @Mapping(target = "hospitalName", source = "post.hospital.name")
     PostResponseMyPageInfo postToMyPageInfo(Post post);
 
+    // 댓글 작성자 매핑
     WriterResponse memberToWriterResponse(Member member);
 
     @Mapping(target = "writerResponse", source = "comment.member")

@@ -1,6 +1,5 @@
 package com.mainproject.post.dto;
 
-
 import com.mainproject.comment.dto.CommentResponseDto;
 import com.mainproject.member.dto.WriterResponse;
 import com.mainproject.post.entity.Post;

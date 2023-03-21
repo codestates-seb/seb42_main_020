@@ -24,6 +24,7 @@ public class PostReportService {
     private final MemberService memberService;
     private final PostRepository postRepository;
 
+    // 게시글 신고
     public PostReport createReport(PostReport postReport, String email, long postId) {
 
         Member member = memberService.findMemberByEmail(email);

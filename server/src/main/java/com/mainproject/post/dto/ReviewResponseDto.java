@@ -16,28 +16,16 @@ import java.time.LocalDateTime;
 public class ReviewResponseDto {
 
     private Long postId;
-
     private String title;
-
     private String content;
-
     private int starRating;
-
     private LocalDateTime createdAt;
-
     private LocalDateTime modifiedAt;
-
     private Post.PostStatus postStatus;
-
     private String postType;
-
     private Integer totalLike;
-
     private String hospitalName;
-
     private String medicalTagTitle;
-
     private String regionName;
-
     private WriterResponse writerResponse;
 }

@@ -87,6 +87,7 @@ public class CommentService {
         return commentRepository.save(findComment);
     }
 
+    // 댓글 채택
     public void acceptComment(String email, long postId, long commentId) {
 
         Member member = memberService.findMemberByEmail(email);
@@ -150,6 +151,7 @@ public class CommentService {
 
     // 실시간 댓글 알림
     public void noticeComment(Comment comment) {
+
         // 알림 페이로드 생성
         NoticePayload payload = new NoticePayload();
         payload.setType("comment");

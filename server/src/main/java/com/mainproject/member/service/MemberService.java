@@ -7,7 +7,7 @@ import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.repository.MemberRepository;
 import com.mainproject.post.entity.Post;
-import com.mainproject.subEntity.hospital.HospitalRepository;
+import com.mainproject.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomAuthorityUtils authorityUtils;
-    private final HospitalRepository hospitalRepository;
 
     // 일반 회원가입
     public Member createMember(Member member) {
@@ -155,6 +154,8 @@ public class MemberService {
 
         Member findMember = findPendingMember(memberId);
 
+        if(findMember.getHospital() == null) throw new BusinessLogicException(ExceptionCode.CANNOT_APPROVE_MEMBER);
+
         findMember.setMemberStatus(Member.MemberStatus.MEMBER_ACTIVE);
 
         return memberRepository.save(findMember);
@@ -194,6 +195,11 @@ public class MemberService {
         return findMember;
     }
 
+    // 회원가입 승인 대기중인 회원 조회(관리자)
+    public List<Member> findPendingMembers() {
+        return memberRepository.findByMemberStatus(Member.MemberStatus.MEMBER_PENDING);
+    }
+
     // 회원 존재와 휴면,탈퇴 유무 체크
     public Member findVerifiedMember(long memberId) {
 
@@ -216,9 +222,10 @@ public class MemberService {
             member.setMemberRating(Member.MemberRating.SLIVER);
         } else if (member.getPoint() >= 100) {
             member.setMemberRating(Member.MemberRating.BRONZE);
-        } member.setMemberRating(Member.MemberRating.UNRANKED);
+        }
     }
 
+    // multipartFile -> byte 변환
     private byte[] convertMultipartFileToByte(MultipartFile multipartFile) throws IOException {
         return multipartFile.getBytes();
     }

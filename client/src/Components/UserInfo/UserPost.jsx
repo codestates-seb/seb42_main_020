@@ -1,12 +1,12 @@
 import UserPostCategory from './UserPostCategory';
-import PostPagination from '../Section/PostPagination';
+import UserPostPagination from './UserPostPagination';
 import UserPostStyle from '../../Style/UserPostStyle';
 
 function UserPost() {
   return (
     <UserPostStyle>
       <UserPostCategory />
-      <PostPagination />
+      <UserPostPagination />
     </UserPostStyle>
   );
 }

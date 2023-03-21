@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 public class CommentLike {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long commentLikesId;

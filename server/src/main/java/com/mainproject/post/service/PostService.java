@@ -54,7 +54,6 @@ public class PostService {
         PageRequest pageRequest = PageRequest.of(page, pageSize, Sort.by(sortType).descending());
         List<Post.PostStatus> status = Arrays.asList(POST_PENDING, POST_DELETED);
 
-
         if(filterType == 1) {
             return postRepository.findByTitleContainingAndPostStatusNotIn(titleKeyword, status, pageRequest);
         } else if(filterType == 2) {
@@ -106,10 +105,9 @@ public class PostService {
     }
 
     // 리뷰글 작성
-    public Long createReview(Post post, String email, String hospitalName, String medicalTitle, String regionName, MultipartFile img) throws IOException{
+    public Long createReview(Post post, String email, String medicalTitle, String regionName, MultipartFile img) throws IOException{
 
         Member member = memberService.findMemberByEmail(email);
-        Hospital hospital = subService.findHospital(hospitalName);
         MedicalTag medicalTag = subService.findMedicalTag(medicalTitle);
         Region region = subService.findRegion(regionName);
         byte[] imgByte = convertMultipartFileToByte(img);
@@ -118,9 +116,6 @@ public class PostService {
             throw new BusinessLogicException(ExceptionCode.DOCTOR_CANNOT_POST);
         }
 
-        subService.updateHospitalGrade(hospital.getHospitalId(), post.getStarRating());
-
-        post.setHospital(hospital);
         post.setMedicalTag(medicalTag);
         post.setRegion(region);
         post.setMember(member);
@@ -136,7 +131,6 @@ public class PostService {
     }
 
     // 게시글 수정
-
     public void updatePost(Post post, Long postId, String email, String medicalTitle, String regionName){
 
         // 본인 검증
@@ -181,6 +175,10 @@ public class PostService {
         // 관리자 검증 필요
 
         Post post = findPendingPost(postId);
+
+        if(post.getHospital() == null) throw new BusinessLogicException(ExceptionCode.CANNOT_APPROVE_POST);
+
+        subService.updateHospitalGrade(post.getHospital().getHospitalId(), post.getStarRating());
 
         // 포인트 수정
         Member memberForPoint = post.getMember();
@@ -232,8 +230,8 @@ public class PostService {
         return findPost;
     }
 
-    // 승인대기중인 게시글 찾기
-    private Post findPendingPost(long postId) {
+    // 승인 대기중인 게시글 찾기(관리자)
+    public Post findPendingPost(long postId) {
 
         Post findPost = postRepository.findById(postId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
@@ -243,6 +241,12 @@ public class PostService {
         return findPost;
     }
 
+    // 승인 대기중인 리뷰글 조회(관리자)
+    public List<Post> findPendingReviews() {
+        return postRepository.findByPostStatus(POST_PENDING);
+    }
+
+    // multipartFile -> byte 변환
     private byte[] convertMultipartFileToByte(MultipartFile multipartFile) throws IOException {
         return multipartFile.getBytes();
     }
