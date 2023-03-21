@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { loginState } from '../../atoms/atoms';
+import { loginState, loggedUserInfo } from '../../atoms/atoms';
 
 import TextEditor from '../../Components/AskForm/TextEditor';
 import {
@@ -55,11 +55,17 @@ const AskQuestion = () => {
 
   //f로그인 상태정보
   const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const userInfo = useRecoilState(loggedUserInfo);
 
   useEffect(() => {
     // 로그인 상태가 아닐경우
     if (!isLogin) {
       alert('로그인을 해 주세요');
+      navigate('/home');
+    }
+    // 전문가일 경우
+    if (userInfo[0].doctor) {
+      alert('죄송합니다.전문가는 작성하실 수 없습니다.');
       navigate('/home');
     }
   }, [setIsLogin]);
