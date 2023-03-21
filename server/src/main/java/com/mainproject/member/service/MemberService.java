@@ -87,8 +87,8 @@ public class MemberService {
                 .ifPresent(area -> findMember.setArea(area));
 
         // 패스워드 암호화
-        String encryptedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encryptedPassword);
+        String encryptedPassword = passwordEncoder.encode(findMember.getPassword());
+        findMember.setPassword(encryptedPassword);
 
         findMember.setModifiedAt(LocalDateTime.now());
 
