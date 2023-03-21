@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import ReportModal from '../../Components/ReportModal/ReportModal';
+import { FaHeart } from 'react-icons/fa';
 // import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
   SReviewDetailContainer,
@@ -102,11 +103,13 @@ const ReviewDetail = () => {
           <p>{reviewData.content?.slice(3, -4)}~</p>
           <SReviewButtonBlock className="review-footer">
             {loginInfo?.memberId === reviewFrom?.memberId ? (
-              <></>
+              <button>
+                <FaHeart /> {reviewData?.totalLike}
+              </button>
             ) : (
               <>
                 <button onClick={likeHandler}>
-                  ❤️ {reviewData?.totalLike}
+                  <FaHeart /> {reviewData?.totalLike}
                 </button>
                 <div className="review-button">
                   <button onClick={reportModalHandler}>신 고</button>
