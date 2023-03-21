@@ -35,7 +35,7 @@ const PostCategoryStyle = styled.ul`
     flex: 0.5;
   }
   .type {
-    flex: 0.4;
+    flex: 0.6;
   }
   .time {
     flex: 0.6;
