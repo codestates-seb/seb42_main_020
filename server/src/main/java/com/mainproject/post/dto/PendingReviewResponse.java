@@ -1,5 +1,6 @@
 package com.mainproject.post.dto;
 
+import com.mainproject.member.dto.WriterResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -154,6 +154,8 @@ public class MemberService {
 
         Member findMember = findPendingMember(memberId);
 
+        if(findMember.getHospital() == null) throw new BusinessLogicException(ExceptionCode.CANNOT_APPROVE_MEMBER);
+
         findMember.setMemberStatus(Member.MemberStatus.MEMBER_ACTIVE);
 
         return memberRepository.save(findMember);

@@ -29,6 +29,7 @@ public class DoctorDto {
 
         private String area;
 
+        @NotBlank(message = "병원을 입력하셔야 합니다.")
         private String hospitalName;
 
         @NotBlank
@@ -56,6 +57,7 @@ public class DoctorDto {
         private long memberId;
         private String email;
         private String name;
+        private String hospitalName;
         private String area;
         private int point;
         private boolean isDoctor;

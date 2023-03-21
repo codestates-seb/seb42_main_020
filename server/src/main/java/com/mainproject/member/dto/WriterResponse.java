@@ -14,5 +14,6 @@ public class WriterResponse {
     private boolean isDoctor;
     private String name;
     private String displayName;
+    private String hospitalName;
     private Member.MemberRating memberRating;
 }

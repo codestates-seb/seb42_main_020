@@ -37,6 +37,9 @@ public class Member extends Auditable {
     @Column(length = 30)
     private String displayName;
 
+    @Column(name = "HOSPITAL_NAME")
+    private String hospitalName;
+
     @Column(length = 30)
     private String area;
 
