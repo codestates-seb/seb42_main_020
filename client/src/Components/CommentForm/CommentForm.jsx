@@ -13,7 +13,7 @@ import {
   SSubmitBtn,
 } from '../../Style/CommentFormStyle';
 
-const CommentForm = () => {
+const CommentForm = ({ setPostComment }) => {
   const token = localStorage.getItem('accessToken');
 
   const [comment, setComment] = useState();
@@ -29,6 +29,7 @@ const CommentForm = () => {
 
   const resetHandler = () => {
     setComment('');
+    setPostComment(false);
   };
 
   const submitHandler = () => {

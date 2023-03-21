@@ -3,9 +3,8 @@ import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
-// import { useNavigate } from 'react-router-dom';
 import ReportModal from '../../Components/ReportModal/ReportModal';
-import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
+// import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
   SReviewDetailContainer,
   SReviewDetailBlock,
@@ -89,7 +88,9 @@ const ReviewDetail = () => {
           <img src="/images/Swear.png" alt="사진" />
           <SReviewUserInfo className="review-info">
             <span>{reviewFrom?.displayName}</span>
-            <span>{reviewData?.modifiedAt.replace('T', ' ').slice(0, -7)}</span>
+            <span>
+              {reviewData?.modifiedAt?.replace('T', ' ').slice(0, -7)}
+            </span>
           </SReviewUserInfo>
         </SReviewHeader>
         <SReviewHospitalInfo className="hopital-info">
@@ -115,7 +116,7 @@ const ReviewDetail = () => {
           </SReviewButtonBlock>
         </SReviewContent>
       </SReviewDetailBlock>
-      <HospitalLocation reviewData={reviewData} />
+      {/* <HospitalLocation reviewData={reviewData} /> */}
     </SReviewDetailContainer>
   );
 };

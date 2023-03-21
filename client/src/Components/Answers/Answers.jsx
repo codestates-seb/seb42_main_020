@@ -1,11 +1,16 @@
 import axios from 'axios';
 import { useState } from 'react';
 import EditCommentForm from '../../Components/CommentForm/EditCommentForm';
+import { useRecoilState } from 'recoil';
+import { loggedUserInfo } from '../../atoms/atoms';
 import ReportCommentModal from '../ReportModal/ReportComment';
+import { Modal } from 'antd';
+import { FaUserTie, FaUserMd } from 'react-icons/fa';
 import {
   SAnswerHeader,
   SAnswerProfilePic,
   SAnswerBlock,
+  SAnswerHeaderTitleBlock,
   SAnswerInfoBlock,
   SAnswerUserInfoBlock,
   SAnswerButtonBlock,
@@ -13,21 +18,22 @@ import {
 
 // import { SButtonBlock } from '../../Style/Answer';
 
-const Answers = ({ ele, userInfo }) => {
+const Answers = ({ ele }) => {
   const token = localStorage.getItem('accessToken');
   //수정 모달 관리
   const [openEdit, setOpenEdit] = useState(false);
   // 신고 모달 관리
   const [reportModal, setReportModal] = useState(false);
-  // 댓글 채택 관리
-  // const [choiced, setChoiced] = useState(false);
-
+  // 유저 정보 관리
+  const userInfo = useRecoilState(loggedUserInfo);
   // 댓글 작성자 관리
   const commentFrom = ele.writerResponse;
+  // 삭제 알람 다루기
+  const [deleteModal, setDeleteModal] = useState(false);
 
-  console.log(ele);
   // 댓글 삭제
-  const deleteHandler = () => {
+
+  const handleOk = () => {
     axios({
       method: 'delete',
       url: `/comments/${ele.commentId}`,
@@ -36,6 +42,14 @@ const Answers = ({ ele, userInfo }) => {
       location.reload();
       console.log(res);
     });
+    setDeleteModal(false);
+  };
+
+  const showModal = () => {
+    setDeleteModal(true);
+  };
+  const handleCancel = () => {
+    setDeleteModal(false);
   };
 
   // 댓글 채택
@@ -72,10 +86,16 @@ const Answers = ({ ele, userInfo }) => {
     setReportModal((prev) => !prev);
   };
 
-  console.log(userInfo[0]);
-
   return (
     <>
+      <Modal
+        title="다나아"
+        open={deleteModal}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>정말로 삭제하시겠습니까??</p>
+      </Modal>
       {reportModal ? (
         <ReportCommentModal
           setReportModal={setReportModal}
@@ -87,14 +107,25 @@ const Answers = ({ ele, userInfo }) => {
       )}
 
       <SAnswerBlock
-        className={commentFrom.isDoctor ? ' expert-answer' : 'expert-answer'}
+        className={commentFrom?.doctor ? ' expert-answer' : 'expert-answer'}
       >
         {ele.commentStatus === 'COMMENT_ACCEPTED' ? (
           <span>채택된 답변</span>
         ) : null}
         <SAnswerHeader className="header">
-          {commentFrom?.isDoctor ? <h1>전문가 답변</h1> : <h1>일반인 답변</h1>}
-          {ele.commentStatus === 'COMMENT_ACCEPTED' ? (
+          {commentFrom?.doctor ? (
+            <SAnswerHeaderTitleBlock>
+              <FaUserMd />
+              <h1>전문가 답변</h1>
+            </SAnswerHeaderTitleBlock>
+          ) : (
+            <SAnswerHeaderTitleBlock>
+              <FaUserTie />
+              <h1>일반인 답변</h1>
+            </SAnswerHeaderTitleBlock>
+          )}
+          {ele.commentStatus === 'COMMENT_ACCEPTED' ||
+          userInfo[0]?.memberId !== commentFrom?.memberId ? (
             <></>
           ) : (
             <button onClick={choiceHandler}>채택 하기</button>
@@ -102,7 +133,11 @@ const Answers = ({ ele, userInfo }) => {
         </SAnswerHeader>
         <SAnswerInfoBlock className="answer-header-block">
           <SAnswerUserInfoBlock className="answer-user-info">
-            <span>{commentFrom?.displayName}</span>
+            <span>
+              {commentFrom?.doctor
+                ? `${commentFrom?.name} 님`
+                : `${commentFrom?.displayName} 님`}
+            </span>
             <span>{ele.createdAt.replace('T', ' ').slice(0, -7)}</span>
           </SAnswerUserInfoBlock>
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
@@ -121,7 +156,9 @@ const Answers = ({ ele, userInfo }) => {
           {userInfo[0]?.memberId === commentFrom?.memberId ? (
             <div>
               <button onClick={editCommentHandler}>수정하기</button>
-              <button onClick={deleteHandler}>삭제하기</button>
+              <button type="primary" onClick={showModal}>
+                삭제하기
+              </button>
             </div>
           ) : (
             <div>
