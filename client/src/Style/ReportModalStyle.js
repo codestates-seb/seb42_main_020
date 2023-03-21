@@ -18,8 +18,8 @@ export const SReportModalBlock = styled.div`
   top: 300px;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: gray;
-  border: 1px solid black;
+  background-color: var(--gray-400);
+  border: none;
   border-radius: 8px;
   opacity: none;
 
@@ -78,4 +78,12 @@ export const SReportModalButtonBlock = styled.div`
 
 export const SReportModalClose = styled.div`
   cursor: pointer;
+`;
+
+export const SFailMessage = styled.span`
+  display: flex;
+  color: var(--peach-600);
+  margin-bottom: 15px;
+  font-style: italic;
+  font-weight: lighter;
 `;

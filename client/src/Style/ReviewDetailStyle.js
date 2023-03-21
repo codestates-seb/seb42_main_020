@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const beat = keyframes`	to { transform: scale(1.4); }`;
 
 export const SReviewDetailContainer = styled.div`
   font-family: 'TheJamsil5Bold';
@@ -6,11 +8,15 @@ export const SReviewDetailContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 1000px;
   background-color: var(--blue-50);
 
   button {
     cursor: pointer;
+    font-family: 'TheJamsil5Bold';
+    height: 30px;
+    border: none;
+    border-radius: 3px;
   }
 `;
 
@@ -33,7 +39,6 @@ export const SReviewHeader = styled.div`
   width: 100%;
   margin-bottom: 15px;
 
-  // 추후에 img로 수정 예정
   > img {
     width: 50px;
     height: 50px;
@@ -46,6 +51,7 @@ export const SReviewUserInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 90%;
+
   > span:first-child {
     margin-bottom: 8px;
     font-size: 20px;
@@ -89,15 +95,34 @@ export const SReviewButtonBlock = styled.div`
   justify-content: space-between;
   width: 100%;
 
+  > button:first-child {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+
+    > svg {
+      margin-right: 5px;
+      color: var(--peach-600);
+      font-size: 25px;
+      &:hover {
+        animation: ${beat} 0.5s infinite alternate;
+        transform-origin: center;
+      }
+    }
+  }
+
   > div {
     display: flex;
     width: 80%;
     justify-content: flex-end;
 
     > button {
-      font-family: 'TheJamsil5Bold';
       border: none;
-      background-color: var(--peach-400);
+      background-color: var(--peach-200);
+      &:hover {
+        background-color: var(--peach-400);
+      }
+
       width: 25%;
       height: 30px;
     }
@@ -106,6 +131,5 @@ export const SReviewButtonBlock = styled.div`
     font-size: 20px;
     border: none;
     background-color: white;
-    cursor: pointer;
   }
 `;

@@ -1,11 +1,11 @@
 import { TreeSelect } from 'antd';
 import { reasonData } from '../AskForm/PostData';
 
-const ReviewReason = ({ reportReason, reportReasonHandler }) => {
+const ReviewReason = ({ value, reportReasonHandler }) => {
   return (
     <TreeSelect
       showSearch
-      value={reportReason}
+      value={value}
       style={{
         width: '100%',
       }}
@@ -13,10 +13,9 @@ const ReviewReason = ({ reportReason, reportReasonHandler }) => {
         maxHeight: 400,
         overflow: 'auto',
       }}
-      defaultValue="신고 사유"
+      placeholder="사유를 선택해 주세요"
       allowClear
       treeDefaultExpandAll
-      //value={reason}
       onChange={reportReasonHandler}
       treeData={reasonData}
     />

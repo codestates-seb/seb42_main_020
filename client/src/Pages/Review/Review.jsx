@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { loginState } from '../../atoms/atoms';
+import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import { useNavigate } from 'react-router-dom';
 import TextEditor from '../../Components/AskForm/TextEditor';
 import {
@@ -29,6 +29,8 @@ const Review = () => {
   const token = localStorage.getItem('accessToken');
   // 로그인 상태
   const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const userInfo = useRecoilState(loggedUserInfo);
+
   // 제목 입력값
   const [reviewTitle, setReviewTitle] = useState('');
   // 제목 유효성 검사
@@ -74,6 +76,11 @@ const Review = () => {
     // 로그인 상태가 아닐경우
     if (!isLogin) {
       alert('로그인을 해 주세요');
+      navigate('/home');
+    }
+    // 전문가일 경우
+    if (userInfo[0].doctor) {
+      alert('죄송합니다.전문가는 작성하실 수 없습니다.');
       navigate('/home');
     }
   }, [setIsLogin]);

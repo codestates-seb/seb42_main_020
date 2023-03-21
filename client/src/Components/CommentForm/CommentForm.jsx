@@ -13,7 +13,7 @@ import {
   SSubmitBtn,
 } from '../../Style/CommentFormStyle';
 
-const CommentForm = () => {
+const CommentForm = ({ setPostComment }) => {
   const token = localStorage.getItem('accessToken');
 
   const [comment, setComment] = useState();
@@ -29,19 +29,18 @@ const CommentForm = () => {
 
   const resetHandler = () => {
     setComment('');
+    setPostComment(false);
   };
 
   const submitHandler = () => {
-    axios.defaults.baseURL = 'http://localhost:3000';
     axios
-      .post(`comments/?post-id=2`, submitData, {
+      .post(`/comments/?post-id=2`, submitData, {
         headers: {
           Authorization: `${token}`,
         },
       })
       .then((res) => {
         location.reload();
-
         console.log(res);
       });
   };
