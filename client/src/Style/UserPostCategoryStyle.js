@@ -24,7 +24,7 @@ const UserPostCategoryStyle = styled.ul`
     font-size: 12px;
   }
   .title {
-    flex: 3.5;
+    flex: 3;
   }
   .nickname {
     flex: 1;

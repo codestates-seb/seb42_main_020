@@ -11,15 +11,10 @@ function PostPagination() {
   const [total, setTotal] = useState(0);
 
   const getPost = async () => {
-    //로그인이 되어있는 유저라면 자신의 게시글을 볼 수 있게 설정
     const response = await axios.get('/posts', {
       headers: {
         'ngrok-skip-browser-warning': 'skip',
       },
-      // params: {
-      //   page: currentPage,
-      //   size: pageSize,
-      // },
     });
     setPosts(response.data);
     setTotal(response.data.length);
