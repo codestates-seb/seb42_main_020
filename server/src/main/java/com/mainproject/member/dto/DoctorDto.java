@@ -29,7 +29,8 @@ public class DoctorDto {
 
         private String area;
 
-        // 병원이름 추가
+        @NotBlank(message = "병원을 입력하셔야 합니다.")
+        private String hospitalName;
 
         @NotBlank
         @Pattern(regexp = "^[a-zA-Z\\\\d`~!@#$%^&*()-_=+]{8,15}$",
@@ -56,6 +57,7 @@ public class DoctorDto {
         private long memberId;
         private String email;
         private String name;
+        private String hospitalName;
         private String area;
         private int point;
         private boolean isDoctor;

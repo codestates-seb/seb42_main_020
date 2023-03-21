@@ -53,7 +53,7 @@ const DoctorSignup = () => {
 
     const dataString = {
       email,
-      hospital,
+      hospitalName: hospital,
       name,
       password,
     };
@@ -73,7 +73,7 @@ const DoctorSignup = () => {
       lockScroll();
       setIsOpenAutoModal(!isOpenAutoModal);
     } catch (error) {
-      const errorStatus = error.response.status;
+      const errorStatus = error.response?.status;
       // 회원가입 실패 안내창 띄우기
       if (errorStatus === 409) {
         // 409 : 중복 아이디

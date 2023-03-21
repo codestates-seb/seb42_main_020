@@ -1,9 +1,9 @@
 package com.mainproject.member.mapper;
 
-import com.mainproject.member.dto.DoctorDto;
-import com.mainproject.member.dto.MemberDto;
-import com.mainproject.member.dto.WriterResponse;
+import com.mainproject.member.dto.*;
 import com.mainproject.member.entity.Member;
+import com.mainproject.post.dto.PendingReviewResponse;
+import com.mainproject.post.entity.Post;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -32,4 +32,17 @@ public interface MemberMapper {
 
     // 게시글 작성자
     WriterResponse memberToWriterResponse(Member member);
+
+    PendingMemberResponse pendingMemberResponse(Member member);
+    List<PendingMemberResponse> pendingMemberResponses(List<Member> members);
+
+    PendingReviewResponse pendingReviewResponse(Post post);
+    List<PendingReviewResponse> pendingReviewResponses(List<Post> posts);
+
+    // 승인 대기중인 회원, 리뷰글 조회
+    @Mapping(target = "pendingMemberResponses", source = "members")
+    @Mapping(target = "pendingReviewResponses", source = "posts")
+    PendingResponse pendingResponse(List<Member> members, List<Post> posts);
+
+
 }

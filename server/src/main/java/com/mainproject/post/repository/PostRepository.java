@@ -15,6 +15,8 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     Page<Post> findByMember_displayNameAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn(String keyword, String postType, String name, String title, List<Post.PostStatus> status, Pageable pageable);
 
+    List<Post> findByPostStatus(Post.PostStatus postStatus);
+
     // 직접 쿼리
     /*
     @Query(value = "SELECT * FROM Post WHERE post.post_title LIKE %:titleKeyword%  AND post_Status NOT IN :status", nativeQuery = true)
