@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { loggedUserInfo } from '../../atoms/atoms';
 import ReportCommentModal from '../ReportModal/ReportComment';
 import { Modal } from 'antd';
-import { FaUserTie, FaUserMd } from 'react-icons/fa';
+import { FaUserTie, FaUserMd, FaHeart } from 'react-icons/fa';
 import {
   SAnswerHeader,
   SAnswerProfilePic,
@@ -151,7 +151,7 @@ const Answers = ({ ele }) => {
               commentLikeHandler(ele.commentId);
             }}
           >
-            ❤️ {ele.totalLike}
+            <FaHeart /> {ele.totalLike}
           </button>
           {userInfo[0]?.memberId === commentFrom?.memberId ? (
             <div>

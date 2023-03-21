@@ -7,7 +7,7 @@ import CommentForm from '../../Components/CommentForm/CommentForm';
 import Answers from '../../Components/Answers/Answers';
 import ReportModal from '../../Components/ReportModal/ReportModal';
 import { Modal } from 'antd';
-import { FaBook } from 'react-icons/fa';
+import { FaBook, FaHeart } from 'react-icons/fa';
 
 import {
   SQuestionDetailContainer,
@@ -173,7 +173,9 @@ const QuestionDetail = () => {
           </SQuestionButtonBlock>
         ) : (
           <SQuestionLikeButtonBlock className="button-block not-same-from">
-            <button onClick={likeHandler}>❤️ {questionData?.totalLike}</button>
+            <button onClick={likeHandler}>
+              <FaHeart /> {questionData?.totalLike}
+            </button>
             <button onClick={reportModalHandler}>신고하기</button>
           </SQuestionLikeButtonBlock>
         )}

@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const beat = keyframes`	to { transform: scale(1.4); }`;
 
 export const SQuestionDetailContainer = styled.div`
   font-family: 'TheJamsil5Bold';
@@ -124,8 +126,20 @@ export const SQuestionLikeButtonBlock = styled.div`
     border-radius: 3px;
   }
   button:first-child {
+    display: flex;
+    align-items: center;
     width: 10%;
     font-size: 20px;
+    cursor: pointer;
+    > svg {
+      margin-right: 5px;
+      color: var(--peach-600);
+      font-size: 25px;
+      &:hover {
+        animation: ${beat} 0.5s infinite alternate;
+        transform-origin: center;
+      }
+    }
   }
 
   button:last-child {
@@ -297,11 +311,23 @@ export const SAnswerButtonBlock = styled.div`
   margin: 15px 0;
 
   > button {
+    display: flex;
+    align-items: center;
     background-color: white;
     width: 10%;
     height: 30px;
     border: none;
     font-size: 20px;
+    cursor: pointer;
+    > svg {
+      margin-right: 5px;
+      color: var(--peach-600);
+      font-size: 25px;
+      &:hover {
+        animation: ${beat} 0.5s infinite alternate;
+        transform-origin: center;
+      }
+    }
   }
 
   > div {
