@@ -8,7 +8,6 @@ import com.mainproject.post.entity.Post;
 import com.mainproject.post.entity.PostLike;
 import com.mainproject.post.repository.PostLikeRepository;
 import com.mainproject.post.repository.PostRepository;
-import com.mainproject.subEntity.hospital.Hospital;
 import com.mainproject.subEntity.medicalTag.MedicalTag;
 import com.mainproject.subEntity.region.Region;
 import com.mainproject.subEntity.service.SubService;
