@@ -14,7 +14,7 @@ import {
   SFailMessage,
 } from '../../Style/ReportModalStyle';
 
-const ReportModal = ({ reportModalHandler }) => {
+const ReportModal = ({ reportModalHandler, setReportModal }) => {
   //토큰
   const token = localStorage.getItem('accessToken');
 
@@ -37,6 +37,13 @@ const ReportModal = ({ reportModalHandler }) => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setReportInfo({
+      reason: reportReason,
+      content: reportText,
+    });
+  }, [reportReason, reportText]);
+
   const showModal = () => {
     if (reasonValid && textValid) {
       setIsModalOpen(true);
@@ -46,9 +53,8 @@ const ReportModal = ({ reportModalHandler }) => {
   };
   const handleOk = () => {
     if (textValid && reasonValid) {
-      axios.defaults.baseURL = 'http://localhost:3000';
       axios
-        .post(`posts/2/report`, reportInfo, {
+        .post(`/posts/2/report`, reportInfo, {
           headers: {
             Authorization: `${token}`,
           },
@@ -57,6 +63,7 @@ const ReportModal = ({ reportModalHandler }) => {
           console.log(res);
         });
       setIsModalOpen(false);
+      setReportModal(false);
       navigate('/question/1234');
     }
   };
@@ -64,12 +71,6 @@ const ReportModal = ({ reportModalHandler }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  useEffect(() => {
-    setReportInfo({
-      reason: reportReason,
-      content: reportText,
-    });
-  }, [reportReason, reportText]);
 
   // 신고 사유
   const reportReasonHandler = (e) => {
@@ -108,7 +109,7 @@ const ReportModal = ({ reportModalHandler }) => {
         </SReportModalHeader>
         <div>
           <ReviewReason
-            reportReason={reportReason}
+            value={reportReason}
             reportReasonHandler={reportReasonHandler}
             className="review_reson"
           />

@@ -124,6 +124,7 @@ const QuestionDetail = () => {
       {reportModal ? (
         <ReportModal
           reportModal={reportModal}
+          setReportModal={setReportModal}
           reportModalHandler={reportModalHandler}
         />
       ) : (

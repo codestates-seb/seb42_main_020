@@ -1,11 +1,11 @@
 import { TreeSelect } from 'antd';
 import { reasonData } from '../AskForm/PostData';
 
-const ReviewReason = ({ reportReason, reportReasonHandler }) => {
+const ReviewReason = ({ value, reportReasonHandler }) => {
   return (
     <TreeSelect
       showSearch
-      value={reportReason}
+      value={value}
       style={{
         width: '100%',
       }}
