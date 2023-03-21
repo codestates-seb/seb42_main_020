@@ -7,7 +7,6 @@ import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.repository.MemberRepository;
 import com.mainproject.post.entity.Post;
-import com.mainproject.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -87,8 +86,8 @@ public class MemberService {
                 .ifPresent(area -> findMember.setArea(area));
 
         // 패스워드 암호화
-        String encryptedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encryptedPassword);
+        String encryptedPassword = passwordEncoder.encode(findMember.getPassword());
+        findMember.setPassword(encryptedPassword);
 
         findMember.setModifiedAt(LocalDateTime.now());
 
@@ -99,10 +98,6 @@ public class MemberService {
     public Member findMember(String email) {
 
         Member findMember = findMemberByEmail(email);
-
-        if(findMember.getIsDoctor() != false) {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-        }
 
         // 삭제 및 대기 상태 질문 필터링
         List<Post> filteredPosts = findMember.getPosts().stream()
