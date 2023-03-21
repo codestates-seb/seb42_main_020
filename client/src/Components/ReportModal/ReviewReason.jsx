@@ -13,10 +13,9 @@ const ReviewReason = ({ reportReason, reportReasonHandler }) => {
         maxHeight: 400,
         overflow: 'auto',
       }}
-      defaultValue="신고 사유"
+      placeholder="사유를 선택해 주세요"
       allowClear
       treeDefaultExpandAll
-      //value={reason}
       onChange={reportReasonHandler}
       treeData={reasonData}
     />
