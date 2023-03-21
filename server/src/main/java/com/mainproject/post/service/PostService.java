@@ -230,7 +230,7 @@ public class PostService {
         return findPost;
     }
 
-    // 승인대기중인 게시글 찾기
+    // 승인 대기중인 게시글 찾기(관리자)
     private Post findPendingPost(long postId) {
 
         Post findPost = postRepository.findById(postId)
@@ -239,6 +239,11 @@ public class PostService {
         if (findPost.getPostStatus() != POST_PENDING) throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
 
         return findPost;
+    }
+
+    // 승인 대기중인 리뷰글 조회(관리자)
+    private List<Post> findPendingReviews() {
+        return postRepository.findByPostStatus(POST_PENDING);
     }
 
     // multipartFile -> byte 변환

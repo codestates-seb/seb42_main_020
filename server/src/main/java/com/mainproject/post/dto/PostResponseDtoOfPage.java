@@ -15,6 +15,7 @@ public class PostResponseDtoOfPage {
     private Long postId;
     private String title;
     private String content;
+    private String displayName;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
     private Post.PostStatus postStatus;

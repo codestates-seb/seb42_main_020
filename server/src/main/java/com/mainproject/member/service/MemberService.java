@@ -7,7 +7,7 @@ import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.repository.MemberRepository;
 import com.mainproject.post.entity.Post;
-import com.mainproject.subEntity.hospital.HospitalRepository;
+import com.mainproject.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -191,6 +191,11 @@ public class MemberService {
         if(findMember.getMemberStatus() != Member.MemberStatus.MEMBER_PENDING) throw new BusinessLogicException(ExceptionCode.DOCTOR_NOT_FOUND);
 
         return findMember;
+    }
+
+    // 회원가입 승인 대기중인 회원 조회(관리자)
+    public List<Member> findPendingMembers() {
+        return memberRepository.findByMemberStatus(Member.MemberStatus.MEMBER_PENDING);
     }
 
     // 회원 존재와 휴면,탈퇴 유무 체크

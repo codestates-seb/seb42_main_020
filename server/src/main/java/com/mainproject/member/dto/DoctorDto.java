@@ -29,7 +29,7 @@ public class DoctorDto {
 
         private String area;
 
-        // 병원이름 추가
+        private String hospitalName;
 
         @NotBlank
         @Pattern(regexp = "^[a-zA-Z\\\\d`~!@#$%^&*()-_=+]{8,15}$",
