@@ -41,6 +41,7 @@ const QuestionDetail = () => {
   const [postComment, setPostComment] = useState(false);
   // 신고 모달 다루기
   const [reportModal, setReportModal] = useState(false);
+  //시간 상태
 
   useEffect(() => {
     // 로그인 상태가 아닐경우
@@ -86,7 +87,7 @@ const QuestionDetail = () => {
     setPostComment((prev) => !prev);
   };
 
-  const reportHandler = () => {
+  const reportModalHandler = () => {
     setReportModal((prev) => !prev);
   };
 
@@ -120,7 +121,14 @@ const QuestionDetail = () => {
 
   return (
     <SQuestionDetailContainer className="detail-block">
-      {reportModal ? <ReportModal /> : <></>}
+      {reportModal ? (
+        <ReportModal
+          reportModal={reportModal}
+          reportModalHandler={reportModalHandler}
+        />
+      ) : (
+        <></>
+      )}
       <SQuestionDetailBlock className="question-block">
         <SQuestionHeaderBlock className="header-block">
           <h1>🤔 {questionData?.title}</h1>
@@ -128,14 +136,16 @@ const QuestionDetail = () => {
             <span>
               {writerInfo?.displayName} [{questionData?.regionName}]
             </span>
-            <span>{questionData?.createdAt}</span>
+            <span>
+              {questionData?.createdAt?.replace('T', ' ').slice(0, -7)}
+            </span>
           </SQuestionInfoBlock>
         </SQuestionHeaderBlock>
         <SQuestionTextBlock className="contents-block">
-          <p>{questionData.content?.slice(3, -4)}</p>
+          <p>{questionData?.content?.slice(3, -4)}</p>
         </SQuestionTextBlock>
 
-        {userInfo[0].memberId === writerInfo?.memberId ? (
+        {userInfo[0]?.memberId === writerInfo?.memberId ? (
           <SQuestionButtonBlock className="button-block">
             <button onClick={modifyHandler}>수정</button>
             <button onClick={deleteHandler}>삭제</button>
@@ -143,15 +153,15 @@ const QuestionDetail = () => {
         ) : (
           <SQuestionLikeButtonBlock className="button-block not-same-from">
             <button onClick={likeHandler}>❤️ {questionData?.totalLike}</button>
-            <button onClick={reportHandler}>신고하기</button>
+            <button onClick={reportModalHandler}>신고하기</button>
           </SQuestionLikeButtonBlock>
         )}
       </SQuestionDetailBlock>
-      {userInfo[0].memberId === writerInfo?.memberId ? null : (
+      {userInfo[0]?.memberId === writerInfo?.memberId ? null : (
         <SPostAnswerBlock className="want-answer-block">
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
           <div className="want-answer-text">
-            <h1>{userInfo[0].displayName}의 답변을 기다리고 있어요!</h1>
+            <h1>{userInfo[0]?.displayName}의 답변을 기다리고 있어요!</h1>
             <span>지금 답변하여 채택받으시면 15점을 얻습니다.</span>
           </div>
           <button onClick={postCommentHandler}>답변하기!</button>

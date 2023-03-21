@@ -4,8 +4,6 @@ import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 // import { useNavigate } from 'react-router-dom';
-import CommentForm from '../../Components/CommentForm/CommentForm';
-import Comment from '../../Components/CommentForm/Comment';
 import ReportModal from '../../Components/ReportModal/ReportModal';
 import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
@@ -35,13 +33,11 @@ const ReviewDetail = () => {
 
   // 로그인 정보를 확인
   useEffect(() => {
-    console.log(loginInfo);
-    console.log(setLoginInfo);
     if (!isLogin) {
       alert('로그인을 해 주세요');
       navigate('/home');
     }
-  }, [setIsLogin]);
+  }, [setIsLogin, setLoginInfo]);
 
   //상세 경로 수정 예쩡
   useEffect(() => {
@@ -54,8 +50,10 @@ const ReviewDetail = () => {
         },
       })
       .then((res) => {
+        console.log('응답');
         console.log(res.data);
         setReviewData(res.data);
+
         setReviewFrom(res.data.writerResponse);
       });
   }, [setReviewData]);
@@ -91,7 +89,7 @@ const ReviewDetail = () => {
           <img src="/images/Swear.png" alt="사진" />
           <SReviewUserInfo className="review-info">
             <span>{reviewFrom?.displayName}</span>
-            <span>{reviewData?.modifiedAt}</span>
+            <span>{reviewData?.modifiedAt.replace('T', ' ').slice(0, -7)}</span>
           </SReviewUserInfo>
         </SReviewHeader>
         <SReviewHospitalInfo className="hopital-info">
@@ -102,7 +100,7 @@ const ReviewDetail = () => {
         <SReviewContent className="contents">
           <p>{reviewData.content?.slice(3, -4)}~</p>
           <SReviewButtonBlock className="review-footer">
-            {loginInfo.memberId === reviewFrom?.memberId ? (
+            {loginInfo?.memberId === reviewFrom?.memberId ? (
               <></>
             ) : (
               <>
@@ -118,8 +116,6 @@ const ReviewDetail = () => {
         </SReviewContent>
       </SReviewDetailBlock>
       <HospitalLocation reviewData={reviewData} />
-      <CommentForm />
-      <Comment />
     </SReviewDetailContainer>
   );
 };
