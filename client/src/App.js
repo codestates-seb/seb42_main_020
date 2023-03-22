@@ -38,7 +38,7 @@ function App() {
         <Route path="/medicalprovider" element={<DoctorSignup />} />
         <Route path="/myinfo" element={<UserInfo />} />
         <Route path="/askquestion" element={<AskQuestion />} />
-        <Route path="/home" element={<Review />} />
+        <Route path="/review" element={<Review />} />
         <Route path="/home/question/:postId" element={<QuestionDetail />} />
         <Route path="/home/review/:postId/" element={<ReviewDetail />} />
         <Route path="/home/question/edit/:postId" element={<EditQuestion />} />
