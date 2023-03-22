@@ -149,7 +149,7 @@ const AskQuestion = () => {
       });
 
     alert('질문이 작성되었습니다.');
-    navigate('/');
+    navigate('/home');
   };
 
   console.log(questionData);
