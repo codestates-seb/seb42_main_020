@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Cookies from 'universal-cookie';
 import Nav from '../Nav/Nav';
 import { Popover, Avatar } from 'antd';
 import { UserOutlined, BellOutlined } from '@ant-design/icons';
@@ -18,13 +17,12 @@ import {
 } from '../../Style/HeaderStyle';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { loginState, loggedUserInfo, adminState } from '../../atoms/atoms';
+import { logout } from '../../util/Token';
 
 function Header() {
   const [isLogged, setIsLogged] = useRecoilState(loginState); // 로그인 여부
   const userInfo = useRecoilValue(loggedUserInfo);
   const isAdmin = useRecoilValue(adminState);
-
-  const cookies = new Cookies();
 
   const [isOpenNav, setIsOpenNav] = useState(false);
 
@@ -34,11 +32,7 @@ function Header() {
 
   const handleClickLogout = () => {
     setIsLogged(!isLogged);
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('recoil-persist');
-    localStorage.removeItem('loggedUserInfo');
-    cookies.remove('refreshToken');
-    location.reload();
+    logout();
   };
 
   return (
