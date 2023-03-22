@@ -6,7 +6,8 @@ import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import CommentForm from '../../Components/CommentForm/CommentForm';
 import Answers from '../../Components/Answers/Answers';
 import ReportModal from '../../Components/ReportModal/ReportModal';
-import { Modal } from 'antd';
+import { Modal, notification } from 'antd';
+import { BorderTopOutlined } from '@ant-design/icons';
 import { FaBook, FaHeart } from 'react-icons/fa';
 
 import {
@@ -46,6 +47,8 @@ const QuestionDetail = () => {
   const [reportModal, setReportModal] = useState(false);
   // 삭제 알람 다루기
   const [deleteModal, setDeleteModal] = useState(false);
+
+  const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
     // 로그인 상태가 아닐경우
@@ -117,23 +120,31 @@ const QuestionDetail = () => {
       method: 'post',
       url: `/posts/${questionData?.postId}/likes`,
       headers: { Authorization: token },
-    }).then((res) => {
-      location.reload();
-      console.log(res);
-    });
+    })
+      .then((res) => {
+        // location.reload();
+        console.log(res);
+      })
+      .catch((error) => {
+        api.info({
+          message: `다나아`,
+          description: '좋아요는 한 게시물에 한번만 가능합니다!',
+          placement: 'top',
+        });
+        console.log(error);
+      });
   };
 
   return (
     <SQuestionDetailContainer className="detail-block">
+      {contextHolder}
       <Modal
-        title="Basic Modal"
+        title="다나아"
         open={deleteModal}
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <p>정말로 삭제하시겠습니까?</p>
       </Modal>
       {reportModal ? (
         <ReportModal
@@ -173,7 +184,11 @@ const QuestionDetail = () => {
           </SQuestionButtonBlock>
         ) : (
           <SQuestionLikeButtonBlock className="button-block not-same-from">
-            <button onClick={likeHandler}>
+            <button
+              onClick={likeHandler}
+              type="primary"
+              icon={<BorderTopOutlined />}
+            >
               <FaHeart /> {questionData?.totalLike}
             </button>
             <button onClick={reportModalHandler}>신고하기</button>

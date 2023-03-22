@@ -10,8 +10,6 @@ import { loggedUserInfo } from '../../atoms/atoms';
 import { notification } from 'antd';
 import { BorderTopOutlined } from '@ant-design/icons';
 
-// Divider, Space,
-
 const MakeContents = () => {
   const navigate = useNavigate();
   const userInfo = useRecoilState(loggedUserInfo);
