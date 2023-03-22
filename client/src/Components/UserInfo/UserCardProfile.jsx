@@ -102,14 +102,14 @@ function UserCardProfile() {
                 <BiCommentDetail size={25} />
                 <span>댓글:</span>
               </span>
-              <span>None 개</span>
+              <span>{userInfo?.totalComments} 개</span>
             </div>
             <div className="adoptComment">
               <span className="post-title">
                 <BiCommentCheck size={25} />
                 <span>채택된 댓글:</span>
               </span>
-              <span>None 개</span>
+              <span>{userInfo?.acceptComments} 개</span>
             </div>
           </div>
           <div className="linebottom"></div>

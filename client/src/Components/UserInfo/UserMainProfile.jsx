@@ -25,6 +25,7 @@ function UserMainProfile() {
     setIsOpenModal(!isOpenModal);
   };
 
+  console.log(userInfo);
   return (
     <UserMainProfileStyle>
       <STitle>
