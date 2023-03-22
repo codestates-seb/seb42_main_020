@@ -29,7 +29,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
-
     public JwtVerificationFilter(JwtTokenizer jwtTokenizer,
                                  CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
@@ -51,6 +50,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             request.setAttribute("exception", ee);
             // Access Token 만료 시  재발급
             response.setHeader("Authorization", "Bearer " + accessToken);
+
         } catch (Exception e) {
             request.setAttribute("exception", e);
         }

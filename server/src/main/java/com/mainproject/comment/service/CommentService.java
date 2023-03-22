@@ -41,6 +41,8 @@ public class CommentService {
         Member member = memberService.findMemberByEmail(email);
         Post post = postService.findPost(postId);
 
+        if(member == post.getMember()) throw new BusinessLogicException(ExceptionCode.CANNOT_COMMENT_MYSELF);
+
         if (post.getPostType() == "review") {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);
         }
@@ -118,6 +120,8 @@ public class CommentService {
 
         Member member = memberService.findMemberByEmail(email);
         Comment comment = commentRepository.findById(commentId).get();
+
+        if(member == comment.getMember()) throw new BusinessLogicException(ExceptionCode.CANNOT_LIKE_MYSELF);
 
         // 포인트 수정
         Member memberForPoint = comment.getMember();

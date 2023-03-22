@@ -19,6 +19,8 @@ public enum ExceptionCode {
     DOCTOR_CANNOT_POST(400, "Doctor cannot post"),
     POST_ACCEPTED(400, "Post accepted"),
     COMMENT_ACCEPTED(400, "Comment accepted"),
+    CANNOT_LIKE_MYSELF(400, "Cannot like myself"),
+    CANNOT_COMMENT_MYSELF(400, "Cannot comment myself"),
 
     NOT_COMMENTS_MEMBER(400, "Not comment's member"),
     NOT_POSTS_MEMBER(400, "Not post's member"),
