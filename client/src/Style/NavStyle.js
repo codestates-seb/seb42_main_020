@@ -6,6 +6,7 @@ export const SNavContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--blue-50);
 `;
 
 export const SNavBlock = styled.div`

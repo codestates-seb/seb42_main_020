@@ -56,6 +56,21 @@ export const SNav = styled.nav`
   }
 `;
 
+export const SAdminNav = styled(SNav)`
+  padding: 16px 0 !important;
+  a {
+    text-decoration: none;
+    font-family: 'TheJamsil';
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--blue-600);
+    :hover {
+      color: var(--blue-400);
+    }
+  }
+  cursor: pointer;
+`;
+
 export const SLogin = styled.div`
   padding: 16px 16px;
   button {

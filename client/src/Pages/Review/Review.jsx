@@ -16,6 +16,8 @@ import {
   SSubmitButton,
   SButtonBlock,
   SCancalButton,
+  SImgBlock,
+  SInputImg,
 } from '../../Style/AskQuestionStyle';
 import AskQuestionTitle from '../../Components/AskForm/AskQuestionTitle';
 import { locationData, typeData } from '../../Components/AskForm/PostData';
@@ -24,6 +26,7 @@ import TypeInput from '../../Components/AskForm/TypeInput';
 import HospitalInput from '../../Components/ReviewForm/HospitalInput';
 import RateStar from '../../Components/ReviewForm/RateStar';
 import WaitModal from '../../Components/ReviewForm/WaitModal';
+
 const Review = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
@@ -71,6 +74,10 @@ const Review = () => {
   const [reviewWait, setReviewWait] = useState(false);
   // 사진
   const [recipte, setRecipte] = useState(null);
+  // 사진 유효성
+  const [recipteValid, setRecipteValid] = useState(false);
+  // 사진 유효성 실패시 메시지
+  const [recipteMessage, setRecipteMessage] = useState('');
 
   useEffect(() => {
     // 로그인 상태가 아닐경우
@@ -163,6 +170,7 @@ const Review = () => {
   // 사진 받아오기
   const recipteHandler = (e) => {
     const uploadFile = e.target.files[0];
+    setRecipteValid(true);
     setRecipte(uploadFile);
   };
 
@@ -196,13 +204,18 @@ const Review = () => {
     if (!rateValid) {
       setRateMesasge('별점을 선택해 주세요');
     }
+
+    if (!recipteValid) {
+      setRecipteMessage('사진을 넣주세요');
+    }
     // 모든 입력이 정상적으로 되었을 경우
     if (
       reviewContentValid &&
       reviewTitleValid &&
       reviewRegionNameValid &&
       medicalTagTitleValid &&
-      rateValid
+      rateValid &&
+      recipteValid
     ) {
       // 사진과 텍스트를 같이 보내기 위해서 formdata 사용
       const formData = new FormData();
@@ -308,16 +321,17 @@ const Review = () => {
         <SValidFail>
           {reviewContentValid ? null : contentFailMessage}
         </SValidFail>
-        <div>
+        <SImgBlock className="imgBlock">
           <label htmlFor="pics">영수증 사진</label>
-          <input
+          <SInputImg
             id="pics"
             type="file"
             accept="image/png, image/jpeg"
             placeholder="영수증 사진을 업로드 해주세요"
             onChange={recipteHandler}
           />
-        </div>
+        </SImgBlock>
+        <SValidFail>{recipteValid ? null : recipteMessage}</SValidFail>
         <SButtonBlock>
           <SCancalButton>취 소</SCancalButton>
           <SSubmitButton onClick={submitDataHandler}>작 성</SSubmitButton>

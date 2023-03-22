@@ -8,7 +8,8 @@ export const SQuestionDetailContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 1000px;
+  min-height: 1000px;
+  height: 100%;
   background-color: var(--blue-50);
   padding-top: 20px;
 
@@ -89,28 +90,55 @@ export const SQuestionTextBlock = styled.div`
 
 export const SQuestionButtonBlock = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
   margin-bottom: 15px;
+  align-items: center;
+
+  > button:first-child {
+    display: flex;
+    align-items: center;
+    width: 10%;
+    font-size: 20px;
+    background-color: white;
+
+    > svg {
+      margin-right: 5px;
+      color: var(--peach-600);
+      font-size: 25px;
+      &:hover {
+        animation: ${beat} 0.5s infinite alternate;
+        transform-origin: center;
+      }
+    }
+  }
+
+  > div {
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+
+    > button:first-child {
+      width: 20%;
+      background-color: var(--blue-200);
+      &:hover {
+        background-color: var(--mint-200);
+      }
+    }
+
+    > button:last-child {
+      width: 20%;
+      margin-left: 20px;
+      background-color: var(--peach-200);
+      &:hover {
+        background-color: var(--peach-400);
+      }
+    }
+  }
 
   button {
     width: 15%;
     background-color: var(--blue-200);
-  }
-
-  button:first-child {
-    background-color: var(--blue-200);
-    &:hover {
-      background-color: var(--mint-200);
-    }
-  }
-
-  button:last-child {
-    margin-left: 20px;
-    background-color: var(--peach-200);
-    &:hover {
-      background-color: var(--peach-400);
-    }
   }
 `;
 
