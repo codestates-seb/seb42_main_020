@@ -1,60 +1,67 @@
 import PostSearchStyle from '../../Style/PostSearchStyle';
 import { Input, Space, Select } from 'antd';
 import { useReducer, useState } from 'react';
-import PostList from './PostList';
 import axios from 'axios';
+import PostPagination from './PostPagination';
 
 const { Search } = Input;
 function PostSearch() {
-  //! filterType=1&keyword=""
-  //? 제목
-  //! filterType=2&keyword=""
-  //? 내용
-  //! filterType=3&keyword=""
-  //? 작성자
   const [keyword, setKeyword] = useState('');
+  const [isFiltered, setIsFiltered] = useState(false);
   const categoryReducer = async (state, action) => {
-    switch (action.type) {
-      case 'title':
-        return await axios
-          .get('/posts', {
-            headers: {
-              'ngrok-skip-browser-warning': 'skip',
-            },
-            params: {
-              filterType: 1,
-              keyword: keyword,
-            },
-          })
-          .then((res) => <PostList data={res.data} />)
-          .catch((err) => Promise.reject(new Error(err)));
-      case 'content':
-        return await axios
-          .get('/posts', {
-            headers: {
-              'ngrok-skip-browser-warning': 'skip',
-            },
-            params: {
-              filterType: 2,
-              keyword: keyword,
-            },
-          })
-          .then((res) => console.log(res.data));
-      case 'user':
-        return await axios
-          .get('/posts', {
-            headers: {
-              'ngrok-skip-browser-warning': 'skip',
-            },
-            params: {
-              filterType: 3,
-              keyword: keyword,
-            },
-          })
-          .then((res) => console.log(res.data));
-
-      default:
-        return state;
+    if (keyword.length !== 0) {
+      switch (action.type) {
+        case 'title':
+          return await axios
+            .get('/posts', {
+              headers: {
+                'ngrok-skip-browser-warning': 'skip',
+              },
+              params: {
+                filterType: 1,
+                keyword: keyword,
+              },
+            })
+            .then((res) => {
+              setKeyword(res.data);
+              setIsFiltered(true);
+            })
+            .catch((err) => Promise.reject(new Error(err)));
+        case 'content':
+          return await axios
+            .get('/posts', {
+              headers: {
+                'ngrok-skip-browser-warning': 'skip',
+              },
+              params: {
+                filterType: 2,
+                keyword: keyword,
+              },
+            })
+            .then((res) => {
+              setKeyword(res.data);
+              setIsFiltered(true);
+            })
+            .catch((err) => Promise.reject(new Error(err)));
+        case 'user':
+          return await axios
+            .get('/posts', {
+              headers: {
+                'ngrok-skip-browser-warning': 'skip',
+              },
+              params: {
+                filterType: 3,
+                keyword: keyword,
+              },
+            })
+            .then((res) => {
+              setKeyword(res.data);
+              setIsFiltered(true);
+            })
+            .catch((err) => Promise.reject(new Error(err)));
+        default:
+          return state;
+      }
     }
   };
 
@@ -84,43 +91,50 @@ function PostSearch() {
   };
 
   return (
-    <PostSearchStyle>
-      <Space wrap style={{ marginBottom: -10 }}>
-        <Select
-          defaultValue={category.type}
-          style={{ width: 120, marginBottom: 8, marginRight: 20 }}
-          size="large"
-          onChange={(e) => setCategory(e)}
-          options={[
-            {
-              value: 'titleContent',
-              label: '제목+내용',
-            },
-            {
-              value: 'title',
-              label: '제목',
-            },
-            {
-              value: 'content',
-              label: '내용',
-            },
-            {
-              value: 'user',
-              label: '글쓴이',
-            },
-          ]}
-        />
-      </Space>
-      <Space direction="vertical">
-        <Search
-          placeholder="input search text"
-          allowClear
-          enterButton="Search"
-          onSearch={onSearch}
-          size="large"
-        />
-      </Space>
-    </PostSearchStyle>
+    <>
+      <PostPagination
+        keyword={keyword}
+        isFiltered={isFiltered}
+        setIsFiltered={setIsFiltered}
+      />
+      <PostSearchStyle>
+        <Space wrap style={{ marginBottom: -10 }}>
+          <Select
+            defaultValue={category.type}
+            style={{ width: 120, marginBottom: 8, marginRight: 20 }}
+            size="large"
+            onChange={(e) => setCategory(e)}
+            options={[
+              {
+                value: 'titleContent',
+                label: '제목+내용',
+              },
+              {
+                value: 'title',
+                label: '제목',
+              },
+              {
+                value: 'content',
+                label: '내용',
+              },
+              {
+                value: 'user',
+                label: '글쓴이',
+              },
+            ]}
+          />
+        </Space>
+        <Space direction="vertical">
+          <Search
+            placeholder="input search text"
+            allowClear
+            enterButton="Search"
+            onSearch={onSearch}
+            size="large"
+          />
+        </Space>
+      </PostSearchStyle>
+    </>
   );
 }
 
