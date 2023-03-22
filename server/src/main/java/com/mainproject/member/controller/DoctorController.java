@@ -41,16 +41,4 @@ public class DoctorController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @GetMapping
-    public ResponseEntity getDoctor(@AuthenticationPrincipal String email) {
-
-        Member member = memberService.findDoctor(email);
-
-        return new ResponseEntity<>(response(member), HttpStatus.OK);
-    }
-
-    public DoctorDto.response response(Member member) {
-        return memberMapper.memberToDoctorResponse(member);
-    }
 }

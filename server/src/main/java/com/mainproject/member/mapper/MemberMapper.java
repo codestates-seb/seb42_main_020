@@ -3,6 +3,7 @@ package com.mainproject.member.mapper;
 import com.mainproject.member.dto.*;
 import com.mainproject.member.entity.Member;
 import com.mainproject.post.dto.PendingReviewResponse;
+import com.mainproject.post.dto.PostResponseMyPageInfo;
 import com.mainproject.post.entity.Post;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -44,5 +45,9 @@ public interface MemberMapper {
     @Mapping(target = "pendingReviewResponses", source = "posts")
     PendingResponse pendingResponse(List<Member> members, List<Post> posts);
 
-
+    // 마이페이지 매핑
+    @Mapping(target = "medicalTagTitle", source = "post.medicalTag.title")
+    @Mapping(target = "regionName", source = "post.region.name")
+    @Mapping(target = "hospitalName", source = "post.hospital.name")
+    PostResponseMyPageInfo postToMyPageInfo(Post post);
 }

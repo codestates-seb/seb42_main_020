@@ -1,5 +1,6 @@
 package com.mainproject.member.controller;
 
+import com.mainproject.member.dto.DoctorDto;
 import com.mainproject.member.dto.MemberDto;
 import com.mainproject.member.entity.Member;
 import com.mainproject.member.mapper.MemberMapper;
@@ -41,7 +42,7 @@ public class MemberController {
         Member patchMember =
                 memberService.updateMember(memberMapper.memberPatchToMember(requestBody), email);
 
-        return new ResponseEntity<>(response(patchMember), HttpStatus.OK);
+        return new ResponseEntity<>(memberResponse(patchMember), HttpStatus.OK);
     }
 
     // 특정 회원 조회
@@ -50,7 +51,11 @@ public class MemberController {
 
         Member member = memberService.findMember(email);
 
-        return new ResponseEntity<>(response(member), HttpStatus.OK);
+        if(member.getIsDoctor() == false) {
+            return new ResponseEntity<>(memberResponse(member), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(doctorResponse(member), HttpStatus.OK);
+        }
     }
 
     // 회원 탈퇴
@@ -63,8 +68,11 @@ public class MemberController {
     }
 
     // 답변 채택 로직 필요
-
-    public MemberDto.response response(Member member) {
+    public MemberDto.response memberResponse(Member member) {
         return memberMapper.memberToMemberResponse(member);
+    }
+
+    public DoctorDto.response doctorResponse(Member member) {
+        return memberMapper.memberToDoctorResponse(member);
     }
 }

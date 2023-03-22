@@ -184,7 +184,7 @@ const EditQuestion = () => {
             </SValidFail>
           </div>
         </SAskQuestionInfoBlock>
-        <TextEditor handleText={handleText} questionContent={questionContent} />
+        <TextEditor handleText={handleText} value={questionContent} />
         <SValidFail> {textValid ? null : textMessage}</SValidFail>
         <SButtonBlock>
           <SCancalButton>취소</SCancalButton>

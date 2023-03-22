@@ -6,11 +6,14 @@ import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import CommentForm from '../../Components/CommentForm/CommentForm';
 import Answers from '../../Components/Answers/Answers';
 import ReportModal from '../../Components/ReportModal/ReportModal';
+import { Modal } from 'antd';
+import { FaBook, FaHeart } from 'react-icons/fa';
 
 import {
   SQuestionDetailContainer,
   SQuestionDetailBlock,
   SQuestionHeaderBlock,
+  SQuestionHeaderTitleBlock,
   SQuestionInfoBlock,
   SQuestionTextBlock,
   SQuestionButtonBlock,
@@ -36,11 +39,13 @@ const QuestionDetail = () => {
   // 답글 목록
   const [comments, setComments] = useState([]);
   // 답글 작성자
-  const [commentFrom, setCommentFrom] = useState({});
+  // const [commentFrom, setCommentFrom] = useState({});
   // 답변창 다루기
   const [postComment, setPostComment] = useState(false);
   // 신고 모달 다루기
   const [reportModal, setReportModal] = useState(false);
+  // 삭제 알람 다루기
+  const [deleteModal, setDeleteModal] = useState(false);
 
   useEffect(() => {
     // 로그인 상태가 아닐경우
@@ -66,14 +71,9 @@ const QuestionDetail = () => {
       setQuestionData(res.data);
       setWriterInfo(res.data.writerResponse);
       setComments(res.data.comments);
-      setCommentFrom(res.data.comments.writerResponse);
+      // setCommentFrom(res.data.comments.writerResponse);
     });
   }, []);
-
-  console.log('댓글');
-  console.log(comments);
-  console.log(commentFrom);
-  console.log(questionData);
 
   const modifyHandler = () => {
     const modifyResult = confirm('질문을 수정하시겠습니까???');
@@ -86,25 +86,30 @@ const QuestionDetail = () => {
     setPostComment((prev) => !prev);
   };
 
-  const reportHandler = () => {
+  const reportModalHandler = () => {
     setReportModal((prev) => !prev);
   };
 
-  const deleteHandler = () => {
-    const deleteResult = confirm('질문을 삭제하시겠습니까???');
-    if (deleteResult) {
-      alert('질문을 삭제하였습니다.');
-      axios
-        .delete(`/posts/${questionData.postId}`, {
-          headers: {
-            Authorization: `${token}`,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-        });
-      navigate('/');
-    }
+  const showModal = () => {
+    setDeleteModal(true);
+  };
+
+  const handleOk = () => {
+    axios
+      .delete(`/posts/${questionData.postId}`, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      });
+    navigate('/');
+    setDeleteModal(false);
+  };
+
+  const handleCancel = () => {
+    setDeleteModal(false);
   };
 
   const likeHandler = () => {
@@ -120,44 +125,72 @@ const QuestionDetail = () => {
 
   return (
     <SQuestionDetailContainer className="detail-block">
-      {reportModal ? <ReportModal /> : <></>}
+      <Modal
+        title="Basic Modal"
+        open={deleteModal}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Modal>
+      {reportModal ? (
+        <ReportModal
+          reportModal={reportModal}
+          setReportModal={setReportModal}
+          reportModalHandler={reportModalHandler}
+        />
+      ) : (
+        <></>
+      )}
       <SQuestionDetailBlock className="question-block">
         <SQuestionHeaderBlock className="header-block">
-          <h1>🤔 {questionData?.title}</h1>
+          <SQuestionHeaderTitleBlock>
+            <FaBook />
+            <h1>{questionData?.title}</h1>
+          </SQuestionHeaderTitleBlock>
+
           <SQuestionInfoBlock className="info-block">
             <span>
               {writerInfo?.displayName} [{questionData?.regionName}]
             </span>
-            <span>{questionData?.createdAt}</span>
+            <span>
+              {questionData?.createdAt?.replace('T', ' ').slice(0, -7)}
+            </span>
           </SQuestionInfoBlock>
         </SQuestionHeaderBlock>
         <SQuestionTextBlock className="contents-block">
-          <p>{questionData.content?.slice(3, -4)}</p>
+          <p>{questionData?.content?.slice(3, -4)}</p>
         </SQuestionTextBlock>
 
-        {userInfo[0].memberId === writerInfo?.memberId ? (
+        {userInfo[0]?.memberId === writerInfo?.memberId ? (
           <SQuestionButtonBlock className="button-block">
             <button onClick={modifyHandler}>수정</button>
-            <button onClick={deleteHandler}>삭제</button>
+            <button type="primary" onClick={showModal}>
+              삭제
+            </button>
           </SQuestionButtonBlock>
         ) : (
           <SQuestionLikeButtonBlock className="button-block not-same-from">
-            <button onClick={likeHandler}>❤️ {questionData?.totalLike}</button>
-            <button onClick={reportHandler}>신고하기</button>
+            <button onClick={likeHandler}>
+              <FaHeart /> {questionData?.totalLike}
+            </button>
+            <button onClick={reportModalHandler}>신고하기</button>
           </SQuestionLikeButtonBlock>
         )}
       </SQuestionDetailBlock>
-      {userInfo[0].memberId === writerInfo?.memberId ? null : (
+      {userInfo[0]?.memberId === writerInfo?.memberId ? null : (
         <SPostAnswerBlock className="want-answer-block">
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
           <div className="want-answer-text">
-            <h1>{userInfo[0].displayName}의 답변을 기다리고 있어요!</h1>
+            <h1>{userInfo[0]?.displayName}의 답변을 기다리고 있어요!</h1>
             <span>지금 답변하여 채택받으시면 15점을 얻습니다.</span>
           </div>
           <button onClick={postCommentHandler}>답변하기!</button>
         </SPostAnswerBlock>
       )}
-      {postComment ? <CommentForm /> : <></>}
+      {postComment ? <CommentForm setPostComment={setPostComment} /> : <></>}
       {/*  답글 여부에따라서 내용 변경, 서버가 완성되면 수정하겠음 */}
       {comments?.length === 0 ? (
         <></>
