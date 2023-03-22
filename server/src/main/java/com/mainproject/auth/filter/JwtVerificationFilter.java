@@ -48,9 +48,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             request.setAttribute("exception", se);
         } catch (ExpiredJwtException ee) {
             request.setAttribute("exception", ee);
-            // Access Token 만료 시  재발급
-            response.setHeader("Authorization", "Bearer " + accessToken);
-
         } catch (Exception e) {
             request.setAttribute("exception", e);
         }

@@ -11,6 +11,7 @@ public enum ExceptionCode {
     MEMBER_ALREADY_REPORTED(400, "Member already reported"),
     CANNOT_APPROVE_MEMBER(400, "Cannot approve member"),
     CANNOT_APPROVE_POST(400, "Cannot approve post"),
+    EXPIRED_TOKEN(401, "This is expired token!"),
 
     POST_NOT_FOUND(404, "Post not found"),
     POST_DELETED(404, "Post deleted"),

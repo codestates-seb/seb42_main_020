@@ -172,7 +172,7 @@ public class MemberService {
 
         Member findMember =
                 optionalMember.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+                        new BusinessLogicException(ExceptionCode.EXPIRED_TOKEN));
 
         return findMember;
     }
