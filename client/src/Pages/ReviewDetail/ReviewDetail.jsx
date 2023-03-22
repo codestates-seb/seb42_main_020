@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import ReportModal from '../../Components/ReportModal/ReportModal';
 import { FaHeart } from 'react-icons/fa';
@@ -19,6 +19,7 @@ import {
 const ReviewDetail = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
+  const { posId } = useParams();
 
   // 로그인 상태 정보 확인
   const [isLogin, setIsLogin] = useRecoilState(loginState);
@@ -42,7 +43,7 @@ const ReviewDetail = () => {
   //상세 경로 수정 예쩡
   useEffect(() => {
     axios
-      .get('/posts/3', {
+      .get(`/home/posts/${posId}`, {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
@@ -53,7 +54,6 @@ const ReviewDetail = () => {
         console.log('응답');
         console.log(res.data);
         setReviewData(res.data);
-
         setReviewFrom(res.data.writerResponse);
       });
   }, [setReviewData]);

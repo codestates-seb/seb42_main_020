@@ -19,6 +19,7 @@ const QuestionDetail = lazy(() =>
 
 import { createGlobalStyle } from 'styled-components';
 import { reset } from 'styled-reset';
+import EditQuestion from './Pages/EditQuestion/EditQuestion';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -37,9 +38,10 @@ function App() {
         <Route path="/medicalprovider" element={<DoctorSignup />} />
         <Route path="/myinfo" element={<UserInfo />} />
         <Route path="/askquestion" element={<AskQuestion />} />
-        <Route path="/review" element={<Review />} />
-        <Route path="/question/1234" element={<QuestionDetail />} />
-        <Route path="/review/123" element={<ReviewDetail />} />
+        <Route path="/home" element={<Review />} />
+        <Route path="/home/question/:postId" element={<QuestionDetail />} />
+        <Route path="/home/review/:postId/" element={<ReviewDetail />} />
+        <Route path="/home/question/edit/:postId" element={<EditQuestion />} />
       </Routes>
       <Footer />
     </>
