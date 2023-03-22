@@ -13,33 +13,33 @@ import { BorderTopOutlined } from '@ant-design/icons';
 const MakeContents = () => {
   const navigate = useNavigate();
   const userInfo = useRecoilState(loggedUserInfo);
-  console.log(userInfo[0].doctor);
+  console.log(userInfo[0]?.doctor);
 
   const [openMake, setOpenMake] = useState(false);
 
   const [api, contextHolder] = notification.useNotification();
 
   const reviewClickHandler = () => {
-    if (userInfo[0].doctor) {
+    if (userInfo[0]?.doctor) {
       api.info({
         message: `OOPS, SORRY`,
         description: '죄송합니다! 전문가는 게시글을 작성하실 수 없습니다.',
         placement: 'top',
       });
-    } else if (!userInfo[0].isDoctor) {
+    } else if (!userInfo[0]?.isDoctor) {
       setOpenMake((prev) => !prev);
       navigate('/review');
     }
   };
 
   const questionClickHandler = () => {
-    if (userInfo[0].doctor) {
+    if (userInfo[0]?.doctor) {
       api.info({
         message: `OOPS, SORRY`,
         description: '죄송합니다! 전문가는 게시글을 작성하실 수 없습니다.',
         placement: 'top',
       });
-    } else if (!userInfo[0].isDoctor) {
+    } else if (!userInfo[0]?.isDoctor) {
       setOpenMake((prev) => !prev);
       navigate('/askquestion');
     }
