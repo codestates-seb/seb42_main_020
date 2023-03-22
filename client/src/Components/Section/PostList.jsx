@@ -1,6 +1,7 @@
 import PostListStyle from '../../Style/PostListStyle';
 import { RxDotsHorizontal } from 'react-icons/rx';
 import { FiUserCheck } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 function PostList({ posts }) {
   return (
@@ -21,7 +22,12 @@ function PostList({ posts }) {
               {item?.regionName}
             </li>
             <li className="title">
-              <span>{item?.title}</span>
+              <Link
+                to={`question/${item?.postId}`}
+                style={{ color: 'black', textDecoration: 'none' }}
+              >
+                <div>{item?.title}</div>
+              </Link>
             </li>
             <li className="time" style={{ fontSize: '14px' }}>
               {item?.createdAt && item.createdAt.slice(0, 10)}
@@ -33,7 +39,7 @@ function PostList({ posts }) {
                 <span className="review">리뷰</span>
               )}
             </li>
-            <li className="nickname">{item?.postId}</li>
+            <li className="nickname">{item?.displayName}</li>
             <li className="like">{item?.totalLike}</li>
           </PostListStyle>
         );

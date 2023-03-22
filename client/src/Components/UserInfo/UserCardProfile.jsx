@@ -24,8 +24,9 @@ function UserCardProfile() {
   const navigate = useNavigate();
   const cookies = new Cookies();
 
+  console.log(userInfo);
+
   const LogOut = async () => {
-    //서버에 post 요청 꼭 들어가야 함. 아직 미구현인거 같음.
     localStorage.removeItem('accessToken');
     localStorage.removeItem('loggedUserInfo');
     cookies.remove('refreshToken');
@@ -84,7 +85,7 @@ function UserCardProfile() {
           {userInfo?.memberRating === 'UNRANKED' ? '일반' : '브론즈'}
         </div>
         <div className="sign-up">
-          <strong>가입:</strong> None
+          <strong>가입:</strong> {userInfo?.createdAt.slice(0, 10)}
         </div>
         <SActivity>
           <div className="linetop"></div>
