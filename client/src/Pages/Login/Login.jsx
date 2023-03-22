@@ -23,12 +23,12 @@ import {
   SModalSignupBtn,
 } from '../../Style/LoginStyle';
 import axios from 'axios';
-import { useSetRecoilState } from 'recoil';
-import { loginState, loggedUserInfo } from '../../atoms/atoms';
+import { useSetRecoilState, useRecoilState } from 'recoil';
+import { loginState, loggedUserInfo, adminState } from '../../atoms/atoms';
 
 const Login = () => {
   const setIsLogged = useSetRecoilState(loginState);
-  const setUserInfo = useSetRecoilState(loggedUserInfo);
+  const [userInfo, setUserInfo] = useRecoilState(loggedUserInfo);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,6 +46,16 @@ const Login = () => {
 
   const cookies = new Cookies();
   const navigate = useNavigate();
+
+  const [isAdmin, setIsAdmin] = useRecoilState(adminState);
+
+  useEffect(() => {
+    if (userInfo?.email === 'admin@mail.com') {
+      setIsAdmin(!isAdmin);
+    } else {
+      setIsAdmin(isAdmin);
+    }
+  }, [userInfo]);
 
   // enter key를 이용한 submit 구현
   const handdlerEnter = (event) => {

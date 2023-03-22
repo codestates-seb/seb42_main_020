@@ -16,3 +16,10 @@ export const loggedUserInfo = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+// 관리자 로그인 상태
+export const adminState = atom({
+  key: 'adminState',
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
