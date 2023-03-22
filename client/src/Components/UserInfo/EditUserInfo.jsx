@@ -2,6 +2,10 @@ import axios from 'axios';
 import { useState } from 'react';
 import { BsArrowReturnLeft } from 'react-icons/bs';
 import styled from 'styled-components';
+import {
+  getRefreshTokenToCookie,
+  setAccessTokenToLocal,
+} from '../../util/Token';
 
 const SModalLayout = styled.div`
   background-color: rgb(0 0 0 / 30%);
@@ -103,6 +107,7 @@ const EditUserInfo = ({ handleModal, isOpenModal, setIsOpenModal }) => {
   const [password, setPassword] = useState('');
   const [area, setArea] = useState('');
 
+  const refreshToken = getRefreshTokenToCookie('refreshToken');
   const token = localStorage.getItem('accessToken');
 
   const handleSubmit = async () => {
@@ -124,7 +129,22 @@ const EditUserInfo = ({ handleModal, isOpenModal, setIsOpenModal }) => {
         // 성공 안내 창 띄우기 TBA
       }
     } catch (error) {
-      // 실패 안내창 띄우기
+      if (error.code === 'This is expired token!') {
+        console.log('에러 코드 일치');
+        // 리프레시 토큰 사용 , 엑세스 토큰 재발급 요청
+        try {
+          const res = await axios({
+            method: 'post',
+            url: '/auth/refresh',
+            headers: { Refresh: refreshToken },
+          });
+          // 엑세스 토큰 재발급 받은 것으로 변경
+          const newAccessToken = res.headers.authorization;
+          setAccessTokenToLocal(newAccessToken);
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
   };
 
