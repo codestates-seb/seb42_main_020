@@ -4,6 +4,7 @@ import { useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import { useNavigate } from 'react-router-dom';
 import TextEditor from '../../Components/AskForm/TextEditor';
+import { Modal } from 'antd';
 import {
   SAskQuestionContainer,
   SAskQuestionBlock,
@@ -25,7 +26,6 @@ import LocationInput from '../../Components/AskForm/LocationInput';
 import TypeInput from '../../Components/AskForm/TypeInput';
 import HospitalInput from '../../Components/ReviewForm/HospitalInput';
 import RateStar from '../../Components/ReviewForm/RateStar';
-import WaitModal from '../../Components/ReviewForm/WaitModal';
 
 const Review = () => {
   const navigate = useNavigate();
@@ -33,7 +33,6 @@ const Review = () => {
   // 로그인 상태
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const userInfo = useRecoilState(loggedUserInfo);
-
   // 제목 입력값
   const [reviewTitle, setReviewTitle] = useState('');
   // 제목 유효성 검사
@@ -70,14 +69,14 @@ const Review = () => {
   const [rateMessage, setRateMesasge] = useState();
   // 종합적인 리뷰 데이터
   const [reviewData, setReviewData] = useState({});
-  // 리뷰 대기 안내창
-  const [reviewWait, setReviewWait] = useState(false);
   // 사진
   const [recipte, setRecipte] = useState(null);
   // 사진 유효성
   const [recipteValid, setRecipteValid] = useState(false);
   // 사진 유효성 실패시 메시지
   const [recipteMessage, setRecipteMessage] = useState('');
+  // 제출 승인 대기 모달 표시
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   useEffect(() => {
     // 로그인 상태가 아닐경우
@@ -243,14 +242,19 @@ const Review = () => {
         });
 
       // 승인 대기중 모달창 노출
-      setReviewWait(true);
+      setIsPostModalOpen(true);
     }
   };
 
-  // 모달 닫기
-  const closeModal = () => {
-    setReviewWait(false);
-    navigate('/');
+  // const showModal = () => {
+  //   setIsPostModalOpen(true);
+  // };
+  const handleOk = () => {
+    setIsPostModalOpen(false);
+    navigate('/home');
+  };
+  const handleCancel = () => {
+    setIsPostModalOpen(false);
   };
 
   console.log(reviewData);
@@ -337,7 +341,15 @@ const Review = () => {
           <SSubmitButton onClick={submitDataHandler}>작 성</SSubmitButton>
         </SButtonBlock>
       </SAskQuestionBlock>
-      {reviewWait && <WaitModal closeModal={closeModal} />}
+      <Modal
+        title="다나아"
+        open={isPostModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>리뷰가 정상적으로 등록되었습니다.</p>
+        <p>등록된 리뷰는 관리자 승인 후 공개됩니다.</p>
+      </Modal>
     </SAskQuestionContainer>
   );
 };
