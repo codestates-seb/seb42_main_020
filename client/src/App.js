@@ -16,6 +16,7 @@ const ReviewDetail = lazy(() => import('./Pages/ReviewDetail/ReviewDetail'));
 const QuestionDetail = lazy(() =>
   import('./Pages/QuestionDetail/QuestionDetail')
 );
+const Admin = lazy(() => import('./Pages/Admin/Admin'));
 
 import { createGlobalStyle } from 'styled-components';
 import { reset } from 'styled-reset';
@@ -42,6 +43,7 @@ function App() {
         <Route path="/home/question/:postId" element={<QuestionDetail />} />
         <Route path="/home/review/:postId/" element={<ReviewDetail />} />
         <Route path="/home/question/edit/:postId" element={<EditQuestion />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Footer />
     </>
