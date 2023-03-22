@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
 import EditCommentForm from '../../Components/CommentForm/EditCommentForm';
-import { useRecoilState } from 'recoil';
-import { loggedUserInfo } from '../../atoms/atoms';
 import ReportCommentModal from '../ReportModal/ReportComment';
 import { Modal, notification } from 'antd';
 import { BorderTopOutlined } from '@ant-design/icons';
@@ -19,22 +17,17 @@ import {
 
 // import { SButtonBlock } from '../../Style/Answer';
 
-const Answers = ({ ele }) => {
-  const token = localStorage.getItem('accessToken');
+const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
   //수정 모달 관리
   const [openEdit, setOpenEdit] = useState(false);
   // 신고 모달 관리
   const [reportModal, setReportModal] = useState(false);
-  // 유저 정보 관리
-  const userInfo = useRecoilState(loggedUserInfo);
-  // 댓글 작성자 관리
+  // 게시글 작성자 관리
   const commentFrom = ele.writerResponse;
   // 삭제 알람 다루기
   const [deleteModal, setDeleteModal] = useState(false);
   // 좋아요 중복 경고 창
   const [api, contextHolder] = notification.useNotification();
-
-  // 댓글 삭제
 
   const handleOk = () => {
     axios({
@@ -74,23 +67,27 @@ const Answers = ({ ele }) => {
 
   // 좋아요
   const commentLikeHandler = (id) => {
-    axios({
-      method: 'post',
-      url: `/comments/${id}/likes`,
-      headers: { Authorization: token },
-    })
-      .then((res) => {
-        location.reload();
-        console.log(res);
+    if (userInfo[0]?.memberId === commentFrom?.memberId) {
+      return null;
+    } else {
+      axios({
+        method: 'post',
+        url: `/comments/${id}/likes`,
+        headers: { Authorization: token },
       })
-      .catch((error) => {
-        api.info({
-          message: `다나아`,
-          description: '좋아요는 한 게시물에 한번만 가능합니다!',
-          placement: 'top',
+        .then((res) => {
+          location.reload();
+          console.log(res);
+        })
+        .catch((error) => {
+          api.info({
+            message: `다나아`,
+            description: '좋아요는 한 게시물에 한번만 가능합니다!',
+            placement: 'top',
+          });
+          console.log(error);
         });
-        console.log(error);
-      });
+    }
   };
 
   // 모달창 관리하기
@@ -121,7 +118,7 @@ const Answers = ({ ele }) => {
       )}
 
       <SAnswerBlock
-        className={commentFrom?.doctor ? ' expert-answer' : 'expert-answer'}
+        className={commentFrom?.doctor ? ' expert-answer' : 'normal-answer'}
       >
         {ele.commentStatus === 'COMMENT_ACCEPTED' ? (
           <span>채택된 답변</span>
@@ -138,11 +135,16 @@ const Answers = ({ ele }) => {
               <h1>일반인 답변</h1>
             </SAnswerHeaderTitleBlock>
           )}
-          {ele.commentStatus === 'COMMENT_ACCEPTED' ||
-          userInfo[0]?.memberId !== commentFrom?.memberId ? (
-            <></>
-          ) : (
+          {/* // 질문작성자와 현재 로그인한 사람일 동일인물 
+          // 질문이 채택되지않은
+          상태 */}
+          {ele.commentStatus !== 'COMMENT_ACCEPTED' &&
+          questionData.postStatus !== 'POST_ACCEPTED' &&
+          userInfo[0].memberId !== commentFrom?.memberId &&
+          userInfo[0].memberId === writerInfo.memberId ? (
             <button onClick={choiceHandler}>채택 하기</button>
+          ) : (
+            <></>
           )}
         </SAnswerHeader>
         <SAnswerInfoBlock className="answer-header-block">
@@ -152,12 +154,12 @@ const Answers = ({ ele }) => {
                 ? `${commentFrom?.name} 님`
                 : `${commentFrom?.displayName} 님`}
             </span>
-            <span>{ele.createdAt.replace('T', ' ').slice(0, -7)}</span>
+            <span>{ele?.createdAt?.replace('T', ' ').slice(0, -7)}</span>
           </SAnswerUserInfoBlock>
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
         </SAnswerInfoBlock>
         <div className="answer-contents-block">
-          <p>{ele.content.slice(3, -4)}</p>
+          <p>{ele?.content?.slice(3, -4)}</p>
         </div>
         <SAnswerButtonBlock className="answer-button-block">
           <button

@@ -131,9 +131,9 @@ export const SButtonBlock = styled.div`
 
   button {
     font-weight: bold;
-    color: #636e72;
     border: none;
     border-radius: 5px;
+    cursor: pointer;
   }
 `;
 
@@ -144,20 +144,49 @@ export const SValidFail = styled.span`
 `;
 
 export const SSubmitButton = styled.button`
-  background-color: var(--mint-400);
+  background-color: var(--mint-200);
   width: 80px;
-  height: 50px;
+  height: 35px;
+  &:hover {
+    background-color: var(--mint-400);
+  }
 `;
 
 export const SCancalButton = styled.button`
-  background-color: var(--peach-400);
+  background-color: var(--peach-200);
   width: 80px;
-  height: 50px;
+  height: 35px;
   margin-right: 20px;
+  &:hover {
+    background-color: var(--peach-400);
+  }
 `;
 
 export const SOpenModal = styled.div`
   width: 500px;
   height: 500px;
   background-color: red;
+`;
+
+export const SImgBlock = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const SInputImg = styled.input`
+  font-family: 'TheJamsil5Bold';
+  ::file-selector-button {
+    font-family: 'TheJamsil5Bold';
+    width: 150px;
+    height: 30px;
+    background: var(--mint-200);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+      background: var(--mint-400);
+    }
+  }
 `;

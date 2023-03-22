@@ -110,24 +110,31 @@ const QuestionDetail = () => {
   };
 
   const likeHandler = () => {
-    axios({
-      method: 'post',
-      url: `/posts/${questionData?.postId}/likes`,
-      headers: { Authorization: token },
-    })
-      .then((res) => {
-        location.reload();
-        console.log(res);
+    // 게시글 작성자와 현재 유저가 같으면 작동 X
+    if (writerInfo?.memberId === userInfo[0]?.memberId) {
+      return null;
+    } else {
+      axios({
+        method: 'post',
+        url: `/posts/${questionData?.postId}/likes`,
+        headers: { Authorization: token },
       })
-      .catch((error) => {
-        api.info({
-          message: `다나아`,
-          description: '좋아요는 한 게시물에 한번만 가능합니다!',
-          placement: 'top',
+        .then((res) => {
+          location.reload();
+          console.log(res);
+        })
+        .catch((error) => {
+          api.info({
+            message: `다나아`,
+            description: '좋아요는 한 게시물에 한번만 가능합니다!',
+            placement: 'top',
+          });
+          console.log(error);
         });
-        console.log(error);
-      });
+    }
   };
+
+  console.log('정보', questionData);
 
   return (
     <SQuestionDetailContainer className="detail-block">
@@ -171,10 +178,19 @@ const QuestionDetail = () => {
 
         {userInfo[0]?.memberId === writerInfo?.memberId ? (
           <SQuestionButtonBlock className="button-block">
-            <button onClick={modifyHandler}>수정</button>
-            <button type="primary" onClick={showModal}>
-              삭제
+            <button
+              onClick={likeHandler}
+              type="primary"
+              icon={<BorderTopOutlined />}
+            >
+              <FaHeart /> {questionData?.totalLike}
             </button>
+            <div>
+              <button onClick={modifyHandler}>수정</button>
+              <button type="primary" onClick={showModal}>
+                삭제
+              </button>
+            </div>
           </SQuestionButtonBlock>
         ) : (
           <SQuestionLikeButtonBlock className="button-block not-same-from">
@@ -189,7 +205,8 @@ const QuestionDetail = () => {
           </SQuestionLikeButtonBlock>
         )}
       </SQuestionDetailBlock>
-      {userInfo[0]?.memberId === writerInfo?.memberId ? null : (
+      {userInfo[0]?.memberId === writerInfo?.memberId ||
+      questionData?.postStatus === 'POST_ACCEPTED' ? null : (
         <SPostAnswerBlock className="want-answer-block">
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
           <div className="want-answer-text">
