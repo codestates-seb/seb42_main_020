@@ -14,7 +14,11 @@ export const SQuestionDetailContainer = styled.div`
 
   button {
     font-family: 'TheJamsil5Bold';
+    cursor: pointer;
     color: black;
+    height: 30px;
+    border: none;
+    border-radius: 3px;
   }
 
   > div {
@@ -91,10 +95,7 @@ export const SQuestionButtonBlock = styled.div`
 
   button {
     width: 15%;
-    height: 30px;
-    border: none;
     background-color: var(--blue-200);
-    border-radius: 3px;
   }
 
   button:first-child {
@@ -120,17 +121,14 @@ export const SQuestionLikeButtonBlock = styled.div`
   margin: 15px 0px;
 
   button {
-    height: 30px;
-    border: none;
     background-color: white;
-    border-radius: 3px;
   }
   button:first-child {
     display: flex;
     align-items: center;
     width: 10%;
     font-size: 20px;
-    cursor: pointer;
+
     > svg {
       margin-right: 5px;
       color: var(--peach-600);
@@ -166,9 +164,6 @@ export const SAnswerHeader = styled.div`
 
   button {
     width: 15%;
-    height: 30px;
-    border: none;
-    border-radius: 3px;
   }
 
   button:first-child {
@@ -226,10 +221,7 @@ export const SPostAnswerBlock = styled.div`
 
   > button {
     width: 15%;
-    height: 30px;
-    border: none;
     background-color: var(--blue-200);
-    border-radius: 3px;
     &:hover {
       background-color: var(--mint-200);
     }
@@ -315,10 +307,8 @@ export const SAnswerButtonBlock = styled.div`
     align-items: center;
     background-color: white;
     width: 10%;
-    height: 30px;
-    border: none;
     font-size: 20px;
-    cursor: pointer;
+
     > svg {
       margin-right: 5px;
       color: var(--peach-600);
@@ -337,10 +327,7 @@ export const SAnswerButtonBlock = styled.div`
 
     > button {
       width: 17%;
-      height: 30px;
-      border: none;
       background-color: var(--blue-200);
-      border-radius: 3px;
 
       &:hover {
         background-color: var(--mint-200);

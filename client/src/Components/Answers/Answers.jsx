@@ -4,7 +4,8 @@ import EditCommentForm from '../../Components/CommentForm/EditCommentForm';
 import { useRecoilState } from 'recoil';
 import { loggedUserInfo } from '../../atoms/atoms';
 import ReportCommentModal from '../ReportModal/ReportComment';
-import { Modal } from 'antd';
+import { Modal, notification } from 'antd';
+import { BorderTopOutlined } from '@ant-design/icons';
 import { FaUserTie, FaUserMd, FaHeart } from 'react-icons/fa';
 import {
   SAnswerHeader,
@@ -30,6 +31,8 @@ const Answers = ({ ele }) => {
   const commentFrom = ele.writerResponse;
   // 삭제 알람 다루기
   const [deleteModal, setDeleteModal] = useState(false);
+  // 좋아요 중복 경고 창
+  const [api, contextHolder] = notification.useNotification();
 
   // 댓글 삭제
 
@@ -75,10 +78,19 @@ const Answers = ({ ele }) => {
       method: 'post',
       url: `/comments/${id}/likes`,
       headers: { Authorization: token },
-    }).then((res) => {
-      location.reload();
-      console.log(res);
-    });
+    })
+      .then((res) => {
+        location.reload();
+        console.log(res);
+      })
+      .catch((error) => {
+        api.info({
+          message: `다나아`,
+          description: '좋아요는 한 게시물에 한번만 가능합니다!',
+          placement: 'top',
+        });
+        console.log(error);
+      });
   };
 
   // 모달창 관리하기
@@ -88,6 +100,8 @@ const Answers = ({ ele }) => {
 
   return (
     <>
+      {contextHolder}
+
       <Modal
         title="다나아"
         open={deleteModal}
@@ -147,6 +161,8 @@ const Answers = ({ ele }) => {
         </div>
         <SAnswerButtonBlock className="answer-button-block">
           <button
+            type="primary"
+            icon={<BorderTopOutlined />}
             onClick={() => {
               commentLikeHandler(ele.commentId);
             }}
