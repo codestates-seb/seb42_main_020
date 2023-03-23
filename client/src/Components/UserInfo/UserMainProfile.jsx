@@ -6,6 +6,7 @@ import {
   SMyPost,
 } from '../../Style/UserMainProfileStyle';
 import UserPost from './UserPost';
+import MakeContents from '../MakeContents/MakeContents';
 
 import { FiEdit } from 'react-icons/fi';
 import { CiMemoPad } from 'react-icons/ci';
@@ -56,7 +57,7 @@ function UserMainProfile({ userInfo }) {
       <SMyPost>
         <div className="my-post">
           <h3>나의 게시글</h3>
-          <button className="create-post">글쓰기</button>
+          <MakeContents />
         </div>
         <div className="line"></div>
       </SMyPost>
