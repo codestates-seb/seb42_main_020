@@ -68,7 +68,11 @@ function UserCardProfile({ userInfo }) {
   return (
     <UserCardProfileStyle>
       <SName>
-        <div className="block"></div>
+        <div
+          className={
+            userInfo?.doctor === 'doctor' ? 'block doctor' : 'block member'
+          }
+        ></div>
         <h3 className="user-nick-name">{userInfo?.displayName}</h3>
       </SName>
       <SPicture>
@@ -77,7 +81,15 @@ function UserCardProfile({ userInfo }) {
         </div>
       </SPicture>
       <SUserInfo>
-        <div className="usertype">{userInfo?.doctor ? 'doctor' : 'Member'}</div>
+        <div
+          className={
+            userInfo?.doctor === 'doctor'
+              ? 'usertype doctor'
+              : 'usertype member'
+          }
+        >
+          {userInfo?.doctor ? 'doctor' : 'Member'}
+        </div>
         <div className="class">
           <strong>회원등급:</strong>&nbsp;
           {userInfo?.point < 100
