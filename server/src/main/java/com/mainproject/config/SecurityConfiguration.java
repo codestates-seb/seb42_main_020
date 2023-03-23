@@ -1,17 +1,15 @@
 package com.mainproject.config;
 
-import com.mainproject.auth.CustomAuthorityUtils;
-import com.mainproject.auth.JwtTokenizer;
+import com.mainproject.auth.utils.CustomAuthorityUtils;
+import com.mainproject.auth.jwt.JwtTokenizer;
 import com.mainproject.auth.filter.JwtAuthenticationFilter;
 import com.mainproject.auth.filter.JwtVerificationFilter;
 import com.mainproject.auth.handler.CustomAccessDeniedHandler;
 import com.mainproject.auth.handler.CustomAuthenticationEntryPoint;
 import com.mainproject.auth.handler.CustomAuthenticationFailureHandler;
 import com.mainproject.auth.handler.CustomAuthenticationSuccessHandler;
-import com.mainproject.member.service.MemberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,14 +26,10 @@ public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
-    private final MemberService memberService;
 
-    public SecurityConfiguration(JwtTokenizer jwtTokenizer,
-                                 CustomAuthorityUtils authorityUtils,
-                                 @Lazy MemberService memberService) {
+    public SecurityConfiguration(JwtTokenizer jwtTokenizer, CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
-        this.memberService = memberService;
     }
 
     @Bean
@@ -73,7 +67,7 @@ public class SecurityConfiguration {
 
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer, memberService);
+            JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
 
             jwtAuthenticationFilter.setFilterProcessesUrl("/login");
 

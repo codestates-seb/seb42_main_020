@@ -22,6 +22,12 @@ export const SName = styled.div`
     height: 100%;
     margin-right: 20px;
   }
+  .doctor {
+    background: #178ca1;
+  }
+  .member {
+    background: #00663b;
+  }
   .user-nick-name {
     display: inline-block;
     font-size: 20px;
@@ -62,6 +68,12 @@ export const SUserInfo = styled.div`
     padding: 8px 20px;
     border-radius: 3px;
     color: #ffffff;
+  }
+
+  .doctor {
+    background: #178ca1;
+  }
+  .member {
     background: #00663b;
   }
   .class {

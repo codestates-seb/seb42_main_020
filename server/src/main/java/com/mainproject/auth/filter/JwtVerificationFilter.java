@@ -1,7 +1,7 @@
 package com.mainproject.auth.filter;
 
-import com.mainproject.auth.CustomAuthorityUtils;
-import com.mainproject.auth.JwtTokenizer;
+import com.mainproject.auth.utils.CustomAuthorityUtils;
+import com.mainproject.auth.jwt.JwtTokenizer;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,7 +29,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
-
     public JwtVerificationFilter(JwtTokenizer jwtTokenizer,
                                  CustomAuthorityUtils authorityUtils) {
         this.jwtTokenizer = jwtTokenizer;
@@ -49,8 +48,6 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
             request.setAttribute("exception", se);
         } catch (ExpiredJwtException ee) {
             request.setAttribute("exception", ee);
-            // Access Token 만료 시  재발급
-            response.setHeader("Authorization", "Bearer " + accessToken);
         } catch (Exception e) {
             request.setAttribute("exception", e);
         }
