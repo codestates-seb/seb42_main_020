@@ -23,7 +23,7 @@ function UserPostList({ posts }) {
             </li>
             <li className="title">
               <Link
-                to={`question/${item?.postId}`}
+                to={`${process.env.PUBLIC_URL}/home/question/${item?.postId}`}
                 style={{ color: 'black', textDecoration: 'none' }}
               >
                 <div>{item?.title}</div>

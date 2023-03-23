@@ -6,6 +6,8 @@ import {
   SMyPost,
 } from '../../Style/UserMainProfileStyle';
 import UserPost from './UserPost';
+import MakeContents from '../MakeContents/MakeContents';
+import styled from 'styled-components';
 
 import { FiEdit } from 'react-icons/fi';
 import { CiMemoPad } from 'react-icons/ci';
@@ -37,8 +39,14 @@ function UserMainProfile({ userInfo }) {
             <span className="value">{userInfo?.email}</span>
           </li>
           <li className="nickname">
-            <span className="type">Nickname</span>
-            <span className="value">{userInfo?.displayName}</span>
+            <span className="type">
+              {userInfo?.doctor === true ? 'Hospital' : 'Nickname'}
+            </span>
+            <span className="value">
+              {userInfo?.doctor === true
+                ? userInfo?.hospitalName
+                : userInfo?.displayName}
+            </span>
           </li>
           <li className="name">
             <span className="type">Name</span>
@@ -53,14 +61,22 @@ function UserMainProfile({ userInfo }) {
           <img src="/images/care.png" alt="pill-img"></img>
         </div>
       </SInfo>
-      <SMyPost>
-        <div className="my-post">
-          <h3>나의 게시글</h3>
-          <button className="create-post">글쓰기</button>
-        </div>
-        <div className="line"></div>
-      </SMyPost>
-      <UserPost />
+      {userInfo?.doctor === true ? (
+        <CommingSoon>
+          <span>Comming Soon!</span>
+        </CommingSoon>
+      ) : (
+        <>
+          <SMyPost>
+            <div className="my-post">
+              <h3>나의 게시글</h3>
+              <MakeContents />
+            </div>
+            <div className="line"></div>
+          </SMyPost>
+          <UserPost />
+        </>
+      )}
       {isOpenModal ? (
         <EditUserInfo
           handleModal={handleModal}
@@ -73,5 +89,16 @@ function UserMainProfile({ userInfo }) {
     </UserMainProfileStyle>
   );
 }
+
+const CommingSoon = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 80px;
+  font-weight: bold;
+  color: #d6d6d6;
+`;
 
 export default UserMainProfile;
