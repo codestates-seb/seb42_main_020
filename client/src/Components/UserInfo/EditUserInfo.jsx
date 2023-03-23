@@ -108,6 +108,7 @@ const EditUserInfo = ({ handleModal, isOpenModal, setIsOpenModal }) => {
   const [area, setArea] = useState('');
 
   const refreshToken = getRefreshTokenToCookie('refreshToken');
+  console.log(refreshToken);
   const token = localStorage.getItem('accessToken');
 
   const handleSubmit = async () => {
@@ -129,21 +130,38 @@ const EditUserInfo = ({ handleModal, isOpenModal, setIsOpenModal }) => {
         // 성공 안내 창 띄우기 TBA
       }
     } catch (error) {
-      if (error.code === 'This is expired token!') {
+      console.log(error.response.statusText);
+
+      if (error.response.statusText === 'Unauthorized') {
         console.log('에러 코드 일치');
         // 리프레시 토큰 사용 , 엑세스 토큰 재발급 요청
         try {
-          const res = await axios({
-            method: 'post',
-            url: '/auth/refresh',
+          const sndRes = await axios.post('/auth/refresh', null, {
             headers: { Refresh: refreshToken },
           });
+          console.log(sndRes);
           // 엑세스 토큰 재발급 받은 것으로 변경
-          const newAccessToken = res.headers.authorization;
+          const newAccessToken = sndRes.headers.authorization;
           setAccessTokenToLocal(newAccessToken);
         } catch (error) {
           console.log(error);
         }
+      }
+      const res = await axios.patch(
+        '/members',
+        {
+          displayName,
+          password,
+          area,
+        },
+        {
+          headers: { Authorization: token },
+        }
+      );
+      if (res.status === 200) {
+        // 모달창 닫힘
+        setIsOpenModal(!isOpenModal);
+        // 성공 안내 창 띄우기 TBA
       }
     }
   };
