@@ -108,7 +108,12 @@ const Answers = ({
   const commentLikeHandler = (id) => {
     console.log('상태', userInfo[0]?.memberId, commentFrom?.memberId);
     if (userInfo[0]?.memberId === commentFrom?.memberId) {
-      return setLikeModal(false);
+      api.info({
+        message: `다나아`,
+        description: '본인 댓글에는 좋아요를 누를 수 없습니다.',
+        placement: 'top',
+      });
+      setLikeModal(false);
     } else {
       axios({
         method: 'post',
@@ -140,7 +145,6 @@ const Answers = ({
   return (
     <>
       {contextHolder}
-
       <Modal
         title="다나아"
         open={selectModal}
