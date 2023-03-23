@@ -80,7 +80,13 @@ function UserCardProfile({ userInfo }) {
         <div className="usertype">{userInfo?.doctor ? 'doctor' : 'Member'}</div>
         <div className="class">
           <strong>회원등급:</strong>&nbsp;
-          {userInfo?.memberRating === 'UNRANKED' ? '일반' : '브론즈'}
+          {userInfo?.point < 100
+            ? '일반'
+            : userInfo?.point < 200
+            ? '실버'
+            : userInfo?.point >= 500
+            ? '골드'
+            : null}
         </div>
         <div className="sign-up">
           <strong>가입:</strong> {userInfo?.createdAt?.slice(0, 10)}
