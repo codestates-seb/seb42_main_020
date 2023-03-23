@@ -83,9 +83,7 @@ function UserCardProfile({ userInfo }) {
       <SUserInfo>
         <div
           className={
-            userInfo?.doctor === 'doctor' || userInfo?.doctor === true
-              ? 'usertype doctor'
-              : 'usertype member'
+            userInfo?.doctor === true ? 'usertype doctor' : 'usertype member'
           }
         >
           {userInfo?.doctor ? 'Doctor' : 'Member'}

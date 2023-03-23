@@ -51,8 +51,6 @@ function PostList({ posts }) {
     fetchData();
   }, [posts]);
 
-  console.log(data);
-
   return (
     <>
       {data.map((item) => {
