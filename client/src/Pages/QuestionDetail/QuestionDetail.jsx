@@ -47,16 +47,19 @@ const QuestionDetail = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   // 좋아요 모달 다루기
   const [likeModal, setLikeModal] = useState(false);
+  // 좋아요 누른 여부
+  const [isLike, setIsLike] = useState(false);
   // 게시글 수정 모달 다루기
   const [editModal, setEditModal] = useState(false);
-
+  // 댓글 채택 여부
+  const [selected, setSelected] = useState(false);
   const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
     // 로그인 상태가 아닐경우
     if (!isLogin) {
       alert('로그인을 해 주세요');
-      navigate('/');
+      navigate('/login');
     }
   }, [setIsLogin]);
 
@@ -72,9 +75,9 @@ const QuestionDetail = () => {
     }).then((res) => {
       setQuestionData(res.data);
       setWriterInfo(res.data.writerResponse);
-      setComments(res.data.comments);
+      console.log(res.data.comments);
     });
-  }, []);
+  }, [isLike, editModal, postComment, comments, selected]);
 
   // 게시글 수정
   const modifyHandler = () => {
@@ -141,8 +144,10 @@ const QuestionDetail = () => {
         headers: { Authorization: token },
       })
         .then((res) => {
-          location.reload();
+          // location.reload();
           console.log(res);
+          setIsLike(true);
+          setLikeModal(false);
         })
         .catch((error) => {
           api.info({
@@ -155,6 +160,8 @@ const QuestionDetail = () => {
         });
     }
   };
+
+  console.log(comments);
 
   return (
     <SQuestionDetailContainer className="detail-block">
@@ -183,6 +190,7 @@ const QuestionDetail = () => {
       >
         <p>게시글을 수정하시겠습니까??</p>
       </Modal>
+
       {reportModal ? (
         <ReportModal
           reportModal={reportModal}
@@ -258,10 +266,10 @@ const QuestionDetail = () => {
         <></>
       )}
       {/* 채택된 답변 우선 렌더링 */}
-      {comments?.length === 0 ? (
+      {questionData?.comments?.length === 0 ? (
         <></>
       ) : (
-        comments
+        questionData?.comments
           ?.filter((ele) => ele.commentStatus === 'COMMENT_ACCEPTED')
           .map((ele) => {
             return (
@@ -272,15 +280,19 @@ const QuestionDetail = () => {
                 userInfo={userInfo}
                 writerInfo={writerInfo}
                 questionData={questionData}
+                comments={comments}
+                setComments={setComments}
+                setPostComment={setPostComment}
+                setSelected={setSelected}
               />
             );
           })
       )}
 
-      {comments?.length === 0 ? (
+      {questionData?.comments?.length === 0 ? (
         <></>
       ) : (
-        comments
+        questionData?.comments
           ?.filter((ele) => ele.commentStatus !== 'COMMENT_ACCEPTED')
           .map((ele) => {
             if (ele.commentStatus !== 'COMMENT_DELETED') {
@@ -292,6 +304,10 @@ const QuestionDetail = () => {
                   userInfo={userInfo}
                   writerInfo={writerInfo}
                   questionData={questionData}
+                  comments={comments}
+                  setComments={setComments}
+                  setPostComment={setPostComment}
+                  setSelected={setSelected}
                 />
               );
             }

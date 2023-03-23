@@ -18,7 +18,15 @@ import {
 
 // import { SButtonBlock } from '../../Style/Answer';
 
-const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
+const Answers = ({
+  ele,
+  token,
+  userInfo,
+  questionData,
+  writerInfo,
+  comments,
+  setComments,
+}) => {
   // poarms 값
   const { postId } = useParams();
   //수정 모달 관리
@@ -42,8 +50,11 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
       url: `/comments/${ele.commentId}`,
       headers: { Authorization: token },
     }).then((res) => {
-      location.reload();
       console.log(res);
+      const newData = comments.filter(
+        (el) => el.commentId !== comments.commentId
+      );
+      setComments(newData);
     });
     setDeleteModal(false);
   };
@@ -211,7 +222,12 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
         </SAnswerButtonBlock>
       </SAnswerBlock>
       {openEdit ? (
-        <EditCommentForm commentId={ele.commentId} value={ele.content} />
+        <EditCommentForm
+          commentId={ele.commentId}
+          value={ele.content}
+          setOpenEdit={setOpenEdit}
+          setComments={setComments}
+        />
       ) : (
         <></>
       )}

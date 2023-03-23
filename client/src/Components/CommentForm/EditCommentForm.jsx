@@ -14,7 +14,7 @@ import {
   SSubmitBtn,
 } from '../../Style/CommentFormStyle';
 
-const CommentForm = ({ commentId, value }) => {
+const CommentForm = ({ commentId, value, setComments, setOpenEdit }) => {
   const token = localStorage.getItem('accessToken');
 
   const [comment, setComment] = useState(value);
@@ -32,10 +32,10 @@ const CommentForm = ({ commentId, value }) => {
 
   const resetHandler = () => {
     setComment('');
+    setOpenEdit(false);
   };
 
   const handleOk = () => {
-    setEditModal(false);
     axios
       .patch(`/comments/${commentId}`, submitData, {
         headers: {
@@ -43,8 +43,9 @@ const CommentForm = ({ commentId, value }) => {
         },
       })
       .then((res) => {
-        location.reload();
-        console.log(res);
+        setComments(res.data);
+        setEditModal(false);
+        setOpenEdit(false);
       });
   };
 
