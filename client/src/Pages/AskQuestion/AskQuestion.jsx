@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
-import { Modal } from 'antd';
+import { Modal, Space } from 'antd';
 
 import TextEditor from '../../Components/AskForm/TextEditor';
 import {
@@ -61,13 +61,23 @@ const AskQuestion = () => {
   useEffect(() => {
     // 로그인 상태가 아닐경우
     if (!isLogin) {
-      alert('로그인을 해 주세요');
-      navigate('/home');
+      Modal.warning({
+        title: '다나아',
+        content: '로그인을 해주세요!',
+        onOk() {
+          navigate('/home');
+        },
+      });
     }
     // 전문가일 경우
-    if (userInfo[0].doctor) {
-      alert('죄송합니다.전문가는 작성하실 수 없습니다.');
-      navigate('/home');
+    if (userInfo[0]?.doctor) {
+      Modal.warning({
+        title: '다나아',
+        content: '죄송합니다! 전문가는 질문을 등록하실 수 없습니다.',
+        onOk() {
+          navigate('/home');
+        },
+      });
     }
   }, [setIsLogin]);
 
@@ -134,8 +144,12 @@ const AskQuestion = () => {
         console.log(res);
       });
 
-    alert('질문이 작성되었습니다.');
-    navigate('/home');
+    Modal.success({
+      content: '질문이 작성되었습니다.',
+      onOk() {
+        navigate('/home');
+      },
+    });
   };
 
   // 제출하기 모달 관리
@@ -168,6 +182,7 @@ const AskQuestion = () => {
 
   return (
     <SAskQuestionContainer>
+      <Space wrap></Space>
       <Modal
         title="다나아"
         open={submitModal}

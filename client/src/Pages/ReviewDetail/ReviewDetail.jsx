@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import ReportModal from '../../Components/ReportModal/ReportModal';
-import { Modal, notification } from 'antd';
+import { Modal, notification, Space } from 'antd';
 import { FaHeart } from 'react-icons/fa';
 // import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
@@ -40,8 +40,13 @@ const ReviewDetail = () => {
   // 로그인 정보를 확인
   useEffect(() => {
     if (!isLogin) {
-      alert('로그인을 해 주세요');
-      navigate('/home');
+      Modal.warning({
+        title: '다나아',
+        content: '로그인을 해주세요!',
+        onOk() {
+          navigate('/home');
+        },
+      });
     }
   }, [setIsLogin]);
 
@@ -105,6 +110,7 @@ const ReviewDetail = () => {
   return (
     <SReviewDetailContainer>
       {contextHolder}
+      <Space wrap></Space>
       <Modal
         title="다나아"
         open={likeModal}
