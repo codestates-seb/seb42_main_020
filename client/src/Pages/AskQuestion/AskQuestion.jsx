@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
+import { Modal } from 'antd';
 
 import TextEditor from '../../Components/AskForm/TextEditor';
 import {
@@ -52,6 +53,8 @@ const AskQuestion = () => {
   const [validFailMessage, setValidFailMessage] = useState('');
   // 입력값 총 합
   const [questionData, setQuestionData] = useState({});
+  //제출하기 모달
+  const [submitModal, setSubmitModal] = useState(false);
 
   //f로그인 상태정보
   const [isLogin, setIsLogin] = useRecoilState(loginState);
@@ -86,9 +89,9 @@ const AskQuestion = () => {
     if (value.length < 5) {
       setTextValid(false);
       setTextMessage('내용은 5글자 이상 입력해주세요');
-    } else if (value.length > 100) {
+    } else if (value.length > 500) {
       setTextValid(false);
-      setTextMessage('내용은 100글자 이하로 입력해주세요');
+      setTextMessage('내용은 500글자 이하로 입력해주세요');
     } else {
       setTextValid(true);
     }
@@ -139,23 +142,47 @@ const AskQuestion = () => {
       setTitleMessage('제목은 5글자 이상 입력해주세요');
       setTitleValid(false);
     }
+    if (questionContent.length < 5) {
+      setTextValid(false);
+      setTextMessage('내용은 5글자 이상 입력해주세요');
+    }
+    if (
+      setLocationValid &&
+      setMedicalTagTitleValid &&
+      setTitleMessage &&
+      setTextValid
+    ) {
+      axios
+        .post('/posts', questionData, {
+          headers: { Authorization: token },
+        })
+        .then((res) => {
+          console.log(res);
+        });
 
-    axios
-      .post('/posts', questionData, {
-        headers: { Authorization: token },
-      })
-      .then((res) => {
-        console.log(res);
-      });
-
-    alert('질문이 작성되었습니다.');
-    navigate('/home');
+      alert('질문이 작성되었습니다.');
+      navigate('/home');
+    }
   };
 
-  console.log(questionData);
+  // 제출하기 모달 관리
+  const showSubmitModal = () => {
+    setSubmitModal(true);
+  };
+  const submitHandleCancel = () => {
+    setSubmitModal(false);
+  };
 
   return (
     <SAskQuestionContainer>
+      <Modal
+        title="다나아"
+        open={submitModal}
+        onOk={submitDataHandler}
+        onCancel={submitHandleCancel}
+      >
+        <p>질문을 작성하시겠습니까??</p>
+      </Modal>
       <SAskQuestionBlock>
         <STitle>질문 작성하기</STitle>
         <span>제목</span>
@@ -190,7 +217,7 @@ const AskQuestion = () => {
         <SValidFail> {textValid ? null : textMessage}</SValidFail>
         <SButtonBlock>
           <SCancalButton>취소</SCancalButton>
-          <SSubmitButton onClick={submitDataHandler}>작성</SSubmitButton>
+          <SSubmitButton onClick={showSubmitModal}>작성</SSubmitButton>
         </SButtonBlock>
       </SAskQuestionBlock>
     </SAskQuestionContainer>

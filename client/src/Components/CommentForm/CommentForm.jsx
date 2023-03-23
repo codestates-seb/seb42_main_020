@@ -1,6 +1,8 @@
 import ReactQuill from 'react-quill';
 import axios from 'axios';
 import { useState } from 'react';
+import { Modal } from 'antd';
+
 import 'react-quill/dist/quill.bubble.css';
 
 import {
@@ -17,6 +19,8 @@ const CommentForm = ({ setPostComment, postId }) => {
   const token = localStorage.getItem('accessToken');
 
   const [comment, setComment] = useState();
+  //제출하기 모달
+  const [submitModal, setSubmitModal] = useState(false);
 
   const submitData = {
     content: `${comment}`,
@@ -30,6 +34,14 @@ const CommentForm = ({ setPostComment, postId }) => {
   const resetHandler = () => {
     setComment('');
     setPostComment(false);
+  };
+
+  // 제출하기 모달 관리
+  const showSubmitModal = () => {
+    setSubmitModal(true);
+  };
+  const submitHandleCancel = () => {
+    setSubmitModal(false);
   };
 
   const submitHandler = () => {
@@ -47,6 +59,14 @@ const CommentForm = ({ setPostComment, postId }) => {
 
   return (
     <SLayout>
+      <Modal
+        title="다나아"
+        open={submitModal}
+        onOk={submitHandler}
+        onCancel={submitHandleCancel}
+      >
+        <p>댓글을 작성하시겠습니까??</p>
+      </Modal>
       <SCommentOfferText>댓글 작성</SCommentOfferText>
       <SwritingSection>
         <SWritingForm>
@@ -67,7 +87,7 @@ const CommentForm = ({ setPostComment, postId }) => {
           <SResetBtn type="reset" onClick={resetHandler}>
             취소
           </SResetBtn>
-          <SSubmitBtn type="submit" onClick={submitHandler}>
+          <SSubmitBtn type="submit" onClick={showSubmitModal}>
             확인
           </SSubmitBtn>
         </SBtnSection>

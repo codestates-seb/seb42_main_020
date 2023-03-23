@@ -93,12 +93,17 @@ const QuestionDetail = () => {
     setPostComment((prev) => !prev);
   };
 
+  // 신고하기 모달
   const reportModalHandler = () => {
     setReportModal((prev) => !prev);
   };
-
+  // 삭제하기 확인 모달
   const showModal = () => {
     setDeleteModal(true);
+  };
+
+  const handleCancel = () => {
+    setDeleteModal(false);
   };
 
   const handleOk = () => {
@@ -112,10 +117,6 @@ const QuestionDetail = () => {
         console.log(res);
       });
     navigate('/home');
-    setDeleteModal(false);
-  };
-
-  const handleCancel = () => {
     setDeleteModal(false);
   };
 
@@ -155,7 +156,6 @@ const QuestionDetail = () => {
     }
   };
 
-  console.log('답변', comments);
   return (
     <SQuestionDetailContainer className="detail-block">
       {contextHolder}
