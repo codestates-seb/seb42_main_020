@@ -56,11 +56,6 @@ function Header() {
               </Link>
             </SLogo>
             <SNav onClick={handleClickNav}>커뮤니티</SNav>
-            {/* 아래 div 4개는 테스트용 ID */}
-            <div>xptmxm1@naver.com </div>
-            <div style={{ color: 'red' }}>xptmxm1!</div>
-            <div>admin@mail.com </div>
-            <div style={{ color: 'red' }}>qwer1234!</div>
             {isAdmin ? (
               <SAdminNav>
                 <Link to="/admin">Admin</Link>
