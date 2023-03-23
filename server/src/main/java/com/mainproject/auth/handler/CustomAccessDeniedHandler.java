@@ -1,7 +1,7 @@
 package com.mainproject.auth.handler;
 
 
-import com.mainproject.auth.ErrorResponder;
+import com.mainproject.auth.utils.ErrorResponder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;

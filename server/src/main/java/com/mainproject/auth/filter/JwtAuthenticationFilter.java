@@ -1,7 +1,7 @@
 package com.mainproject.auth.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mainproject.auth.JwtTokenizer;
+import com.mainproject.auth.jwt.JwtTokenizer;
 import com.mainproject.global.dto.LoginDto;
 import com.mainproject.member.entity.Member;
 import lombok.SneakyThrows;

@@ -39,16 +39,16 @@ public class PostService {
     public Page<Post> findQuestions(int filterType, String keyword, String postType, String medicalTag, String region, List<Post.PostStatus> status, Pageable pageable) {
 
         if (filterType == 1) {
-            return postRepository.findByTitleContainingAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn
+            return postRepository.findByTitleContainingAndPostTypeAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn
                     (keyword, postType, medicalTag, region, status, pageable); // 제목으로 검색
         } else if(filterType == 2) {
-            return postRepository.findByContentContainingAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn
+            return postRepository.findByContentContainingAndPostTypeAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn
                     (keyword, postType, medicalTag, region, status, pageable); // 내용으로 검색
         } else if (filterType == 3) {
-            return postRepository.findByMember_displayNameAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn
+            return postRepository.findByMember_displayNameContainingAndPostTypeAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn
                     (keyword, postType, medicalTag, region, status, pageable); // 작성자로 검색
         } else if (filterType == 4) {
-            return postRepository.findByTitleContainingAndContentContainingAndPostTypeContainingAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn
+            return postRepository.findByTitleContainingAndContentContainingAndPostTypeAndMedicalTag_titleContainingAndRegion_nameContainingAndPostStatusNotIn
                     (keyword, keyword, postType, medicalTag, region, status, pageable); // 제목 + 내용 검색
         }
         throw new BusinessLogicException(ExceptionCode.POST_NOT_FOUND);

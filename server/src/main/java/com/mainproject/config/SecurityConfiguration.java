@@ -1,22 +1,18 @@
 package com.mainproject.config;
 
-import com.mainproject.auth.CustomAuthorityUtils;
-import com.mainproject.auth.JwtTokenizer;
+import com.mainproject.auth.utils.CustomAuthorityUtils;
+import com.mainproject.auth.jwt.JwtTokenizer;
 import com.mainproject.auth.filter.JwtAuthenticationFilter;
 import com.mainproject.auth.filter.JwtVerificationFilter;
 import com.mainproject.auth.handler.CustomAccessDeniedHandler;
 import com.mainproject.auth.handler.CustomAuthenticationEntryPoint;
 import com.mainproject.auth.handler.CustomAuthenticationFailureHandler;
 import com.mainproject.auth.handler.CustomAuthenticationSuccessHandler;
-import com.mainproject.member.service.MemberService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;

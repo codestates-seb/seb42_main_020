@@ -1,7 +1,7 @@
 package com.mainproject.auth.filter;
 
-import com.mainproject.auth.CustomAuthorityUtils;
-import com.mainproject.auth.JwtTokenizer;
+import com.mainproject.auth.utils.CustomAuthorityUtils;
+import com.mainproject.auth.jwt.JwtTokenizer;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
