@@ -80,27 +80,10 @@ export const SInfo = styled.div`
     margin-bottom: 20px;
   }
 
-  // sns 내용
-  .sns {
-    width: 50%;
-  }
-  .sns > li {
-    display: flex;
-    align-items: center;
-    margin-left: 100px;
-  }
-  .google,
-  .facebook,
-  .naver {
-    margin-bottom: 20px;
-  }
-  .sns-value {
-    margin-left: 30px;
-  }
-
   //picture 내용
   .picture {
-    width: 30%;
+    margin-left: 50px;
+    width: 30vh;
     position: relative;
     display: flex;
     justify-content: flex-end;
