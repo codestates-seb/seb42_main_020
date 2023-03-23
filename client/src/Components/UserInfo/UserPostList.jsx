@@ -4,6 +4,7 @@ import { FiUserCheck } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 function UserPostList({ posts }) {
+  console.log(posts);
   return (
     <>
       {posts?.postResponseMyPageInfos?.map((item) => {
@@ -23,7 +24,7 @@ function UserPostList({ posts }) {
             </li>
             <li className="title">
               <Link
-                to={`question/${item?.postId}`}
+                to={`${process.env.PUBLIC_URL}/home/question/${item?.postId}`}
                 style={{ color: 'black', textDecoration: 'none' }}
               >
                 <div>{item?.title}</div>
