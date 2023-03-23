@@ -4,7 +4,6 @@ import { FiUserCheck } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 function UserPostList({ posts }) {
-  console.log(posts);
   return (
     <>
       {posts?.postResponseMyPageInfos?.map((item) => {

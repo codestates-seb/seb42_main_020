@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import { Modal } from 'antd';
@@ -23,8 +23,6 @@ import TypeInput from '../../Components/AskForm/TypeInput';
 
 const AskQuestion = () => {
   const navigate = useNavigate();
-  const locations = useLocation();
-  console.log(locations.state);
   //로컬에 있는 토큰
   const token = localStorage.getItem('accessToken');
   // 제목 입력값

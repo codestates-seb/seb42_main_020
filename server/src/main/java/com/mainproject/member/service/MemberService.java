@@ -1,6 +1,6 @@
 package com.mainproject.member.service;
 
-import com.mainproject.auth.CustomAuthorityUtils;
+import com.mainproject.auth.utils.CustomAuthorityUtils;
 import com.mainproject.comment.entity.Comment;
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
@@ -172,7 +172,7 @@ public class MemberService {
 
         Member findMember =
                 optionalMember.orElseThrow(() ->
-                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+                        new BusinessLogicException(ExceptionCode.EXPIRED_TOKEN));
 
         return findMember;
     }

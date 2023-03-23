@@ -63,6 +63,8 @@ function UserCardProfile({ userInfo }) {
     };
   }, [isModalOpen]);
 
+  console.log(userInfo);
+
   return (
     <UserCardProfileStyle>
       <SName>
