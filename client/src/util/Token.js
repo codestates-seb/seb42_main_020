@@ -2,6 +2,10 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 export const getRefreshTokenToCookie = (refreshToken) => {
+  return cookies.get(refreshToken);
+};
+
+export const setRefreshTokenToCookie = (refreshToken) => {
   return cookies.set('refreshToken', refreshToken, { sameSite: 'strict' });
 };
 
