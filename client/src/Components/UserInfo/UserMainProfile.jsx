@@ -8,17 +8,10 @@ import {
 import UserPost from './UserPost';
 
 import { FiEdit } from 'react-icons/fi';
-import { FcGoogle } from 'react-icons/fc';
-import { BsFacebook } from 'react-icons/bs';
-import { SiNaver } from 'react-icons/si';
-import { RiKakaoTalkFill } from 'react-icons/ri';
 import { CiMemoPad } from 'react-icons/ci';
-import { loggedUserInfo } from '../../atoms/atoms';
-import { useRecoilValue } from 'recoil';
 import { useState } from 'react';
 
-function UserMainProfile() {
-  const userInfo = useRecoilValue(loggedUserInfo);
+function UserMainProfile({ userInfo }) {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleModal = () => {
@@ -54,24 +47,6 @@ function UserMainProfile() {
           <li className="area">
             <span className="type">Area</span>
             <span className="value">None</span>
-          </li>
-        </ul>
-        <ul className="sns">
-          <li className="google">
-            <FcGoogle size={25} />
-            <span className="sns-value">None</span>
-          </li>
-          <li className="facebook">
-            <BsFacebook size={25} />
-            <span className="sns-value">None</span>
-          </li>
-          <li className="naver">
-            <SiNaver size={25} />
-            <span className="sns-value">None</span>
-          </li>
-          <li className="kakao">
-            <RiKakaoTalkFill size={25} />
-            <span className="sns-value">None</span>
           </li>
         </ul>
         <div className="picture">
