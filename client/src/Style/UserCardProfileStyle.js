@@ -17,7 +17,6 @@ export const SName = styled.div`
   align-items: center;
   .block {
     display: inline-block;
-    background: #00b86a;
     width: 10px;
     height: 100%;
     margin-right: 20px;

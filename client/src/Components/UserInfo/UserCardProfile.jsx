@@ -63,17 +63,17 @@ function UserCardProfile({ userInfo }) {
     };
   }, [isModalOpen]);
 
-  console.log(userInfo);
-
   return (
     <UserCardProfileStyle>
       <SName>
         <div
           className={
-            userInfo?.doctor === 'doctor' ? 'block doctor' : 'block member'
+            userInfo?.doctor === true ? 'block doctor' : 'block member'
           }
         ></div>
-        <h3 className="user-nick-name">{userInfo?.displayName}</h3>
+        <h3 className="user-nick-name">
+          {userInfo?.doctor === true ? userInfo?.name : userInfo?.displayName}
+        </h3>
       </SName>
       <SPicture>
         <div className="frame">
@@ -83,12 +83,12 @@ function UserCardProfile({ userInfo }) {
       <SUserInfo>
         <div
           className={
-            userInfo?.doctor === 'doctor'
+            userInfo?.doctor === 'doctor' || userInfo?.doctor === true
               ? 'usertype doctor'
               : 'usertype member'
           }
         >
-          {userInfo?.doctor ? 'doctor' : 'Member'}
+          {userInfo?.doctor ? 'Doctor' : 'Member'}
         </div>
         <div className="class">
           <strong>회원등급:</strong>&nbsp;
@@ -108,10 +108,16 @@ function UserCardProfile({ userInfo }) {
           <div className="user-activity">
             <div className="post">
               <span className="post-title">
-                <BsPencilSquare size={25} />
-                <span>게시글:</span>
+                {userInfo?.doctor ? null : (
+                  <>
+                    <BsPencilSquare size={25} />
+                    <span>게시글:</span>
+                  </>
+                )}
               </span>
-              <span>{userInfo?.postResponseMyPageInfos?.length} 개</span>
+              {userInfo?.doctor ? null : (
+                <span>{userInfo?.postResponseMyPageInfos?.length} 개</span>
+              )}
             </div>
             <div className="comment">
               <span className="post-title">
