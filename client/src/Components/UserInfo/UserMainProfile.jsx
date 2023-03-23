@@ -13,19 +13,15 @@ import { BsFacebook } from 'react-icons/bs';
 import { SiNaver } from 'react-icons/si';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { CiMemoPad } from 'react-icons/ci';
-import { loggedUserInfo } from '../../atoms/atoms';
-import { useRecoilValue } from 'recoil';
 import { useState } from 'react';
 
-function UserMainProfile() {
-  const userInfo = useRecoilValue(loggedUserInfo);
+function UserMainProfile({ userInfo }) {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleModal = () => {
     setIsOpenModal(!isOpenModal);
   };
 
-  console.log(userInfo);
   return (
     <UserMainProfileStyle>
       <STitle>

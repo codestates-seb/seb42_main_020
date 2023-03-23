@@ -12,25 +12,21 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { BiCommentDetail, BiCommentCheck } from 'react-icons/bi';
 import { useState, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loggedUserInfo, loginState } from '../../atoms/atoms';
+import { loginState } from '../../atoms/atoms';
 import { useRecoilState } from 'recoil';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
-function UserCardProfile() {
-  const [userInfo, setUserInfo] = useRecoilState(loggedUserInfo);
+function UserCardProfile({ userInfo }) {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const cookies = new Cookies();
 
-  console.log(userInfo);
-
   const LogOut = async () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('loggedUserInfo');
     cookies.remove('refreshToken');
-    setUserInfo('');
     setIsLogin(!isLogin);
     navigate('/home');
     window.scrollTo(0, 0);
@@ -67,6 +63,8 @@ function UserCardProfile() {
     };
   }, [isModalOpen]);
 
+  console.log(userInfo);
+
   return (
     <UserCardProfileStyle>
       <SName>
@@ -85,7 +83,7 @@ function UserCardProfile() {
           {userInfo?.memberRating === 'UNRANKED' ? '일반' : '브론즈'}
         </div>
         <div className="sign-up">
-          <strong>가입:</strong> {userInfo?.createdAt.slice(0, 10)}
+          <strong>가입:</strong> {userInfo?.createdAt?.slice(0, 10)}
         </div>
         <SActivity>
           <div className="linetop"></div>
