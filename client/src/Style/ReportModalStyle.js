@@ -18,8 +18,8 @@ export const SReportModalBlock = styled.div`
   top: 300px;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: gray;
-  border: 1px solid black;
+  background-color: var(--gray-400);
+  border: none;
   border-radius: 8px;
   opacity: none;
 
@@ -64,18 +64,34 @@ export const SReportModalButtonBlock = styled.div`
   button {
     font-family: 'TheJamsil5Bold';
     border: none;
-    background-color: var(--peach-400);
     width: 20%;
     height: 30px;
     border-radius: 3px;
   }
+  button:first-child {
+    background-color: var(--peach-200);
+    &:hover {
+      background-color: var(--peach-400);
+    }
+  }
 
   button:last-child {
     margin-left: 15px;
-    background-color: var(--mint-400);
+    background-color: var(--mint-200);
+    &:hover {
+      background-color: var(--mint-400);
+    }
   }
 `;
 
 export const SReportModalClose = styled.div`
   cursor: pointer;
+`;
+
+export const SFailMessage = styled.span`
+  display: flex;
+  color: var(--peach-600);
+  margin-bottom: 15px;
+  font-style: italic;
+  font-weight: lighter;
 `;

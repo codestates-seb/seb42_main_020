@@ -1,4 +1,6 @@
 import { SNavContainer, SNavBlock, SNavContents } from '../../Style/NavStyle';
+import LocationButton from './LocationButton';
+import TypeButton from './TypeButton';
 import { Link } from 'react-router-dom';
 
 const Nav = () => {
@@ -10,17 +12,13 @@ const Nav = () => {
           <Link to="/home">전체</Link>
         </SNavContents>
         <SNavContents>
-          <Link to="/question/1234">질문</Link>
+          <Link to="/home">질문</Link>
         </SNavContents>
         <SNavContents>
-          <Link to="/review/123">리뷰</Link>
+          <Link to="/home">리뷰</Link>
         </SNavContents>
-        <SNavContents>
-          <Link to="/locations">지역별</Link>
-        </SNavContents>
-        <SNavContents>
-          <Link to="/type">진료 과목</Link>
-        </SNavContents>
+        <LocationButton />
+        <TypeButton />
       </SNavBlock>
     </SNavContainer>
   );

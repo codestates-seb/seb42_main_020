@@ -12,24 +12,21 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { BiCommentDetail, BiCommentCheck } from 'react-icons/bi';
 import { useState, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loggedUserInfo, loginState } from '../../atoms/atoms';
+import { loginState } from '../../atoms/atoms';
 import { useRecoilState } from 'recoil';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
-function UserCardProfile() {
-  const [userInfo, setUserInfo] = useRecoilState(loggedUserInfo);
+function UserCardProfile({ userInfo }) {
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const cookies = new Cookies();
 
   const LogOut = async () => {
-    //서버에 post 요청 꼭 들어가야 함. 아직 미구현인거 같음.
     localStorage.removeItem('accessToken');
     localStorage.removeItem('loggedUserInfo');
     cookies.remove('refreshToken');
-    setUserInfo('');
     setIsLogin(!isLogin);
     navigate('/home');
     window.scrollTo(0, 0);
@@ -66,10 +63,16 @@ function UserCardProfile() {
     };
   }, [isModalOpen]);
 
+  console.log(userInfo);
+
   return (
     <UserCardProfileStyle>
       <SName>
-        <div className="block"></div>
+        <div
+          className={
+            userInfo?.doctor === 'doctor' ? 'block doctor' : 'block member'
+          }
+        ></div>
         <h3 className="user-nick-name">{userInfo?.displayName}</h3>
       </SName>
       <SPicture>
@@ -78,13 +81,27 @@ function UserCardProfile() {
         </div>
       </SPicture>
       <SUserInfo>
-        <div className="usertype">{userInfo?.doctor ? 'doctor' : 'Member'}</div>
+        <div
+          className={
+            userInfo?.doctor === 'doctor'
+              ? 'usertype doctor'
+              : 'usertype member'
+          }
+        >
+          {userInfo?.doctor ? 'doctor' : 'Member'}
+        </div>
         <div className="class">
           <strong>회원등급:</strong>&nbsp;
-          {userInfo?.memberRating === 'UNRANKED' ? '일반' : '브론즈'}
+          {userInfo?.point < 100
+            ? '일반'
+            : userInfo?.point < 200
+            ? '실버'
+            : userInfo?.point >= 500
+            ? '골드'
+            : null}
         </div>
         <div className="sign-up">
-          <strong>가입:</strong> None
+          <strong>가입:</strong> {userInfo?.createdAt?.slice(0, 10)}
         </div>
         <SActivity>
           <div className="linetop"></div>
@@ -101,14 +118,14 @@ function UserCardProfile() {
                 <BiCommentDetail size={25} />
                 <span>댓글:</span>
               </span>
-              <span>None 개</span>
+              <span>{userInfo?.totalComments} 개</span>
             </div>
             <div className="adoptComment">
               <span className="post-title">
                 <BiCommentCheck size={25} />
                 <span>채택된 댓글:</span>
               </span>
-              <span>None 개</span>
+              <span>{userInfo?.acceptComments} 개</span>
             </div>
           </div>
           <div className="linebottom"></div>

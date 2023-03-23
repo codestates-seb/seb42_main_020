@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { loginState } from '../../atoms/atoms';
+import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import { useNavigate } from 'react-router-dom';
 import TextEditor from '../../Components/AskForm/TextEditor';
+import { Modal } from 'antd';
 import {
   SAskQuestionContainer,
   SAskQuestionBlock,
@@ -16,6 +17,8 @@ import {
   SSubmitButton,
   SButtonBlock,
   SCancalButton,
+  SImgBlock,
+  SInputImg,
 } from '../../Style/AskQuestionStyle';
 import AskQuestionTitle from '../../Components/AskForm/AskQuestionTitle';
 import { locationData, typeData } from '../../Components/AskForm/PostData';
@@ -23,12 +26,13 @@ import LocationInput from '../../Components/AskForm/LocationInput';
 import TypeInput from '../../Components/AskForm/TypeInput';
 import HospitalInput from '../../Components/ReviewForm/HospitalInput';
 import RateStar from '../../Components/ReviewForm/RateStar';
-import WaitModal from '../../Components/ReviewForm/WaitModal';
+
 const Review = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
   // 로그인 상태
   const [isLogin, setIsLogin] = useRecoilState(loginState);
+  const userInfo = useRecoilState(loggedUserInfo);
   // 제목 입력값
   const [reviewTitle, setReviewTitle] = useState('');
   // 제목 유효성 검사
@@ -42,11 +46,11 @@ const Review = () => {
   //  내용이 적합하지 않을 경우 메시지
   const [contentFailMessage, setContentFailMessage] = useState('');
   // 지역 입력값
-  const [reviewRegionName, setReviewRegionName] = useState('');
+  const [reviewRegionName, setReviewRegionName] = useState(null);
   // 지역 유효성
   const [reviewRegionNameValid, setReviewRegionNameValid] = useState(false);
   // 진료 과목 입력값
-  const [medicalTagTitle, setMedicalTagTitle] = useState('');
+  const [medicalTagTitle, setMedicalTagTitle] = useState(null);
   // 진료 과목 유효성
   const [medicalTagTitleValid, setMedicalTagTitleValid] = useState(false);
   // 지역 or 진료 과목이 실패할 경우 메시지
@@ -65,15 +69,24 @@ const Review = () => {
   const [rateMessage, setRateMesasge] = useState();
   // 종합적인 리뷰 데이터
   const [reviewData, setReviewData] = useState({});
-  // 리뷰 대기 안내창
-  const [reviewWait, setReviewWait] = useState(false);
   // 사진
   const [recipte, setRecipte] = useState(null);
+  // 사진 유효성
+  const [recipteValid, setRecipteValid] = useState(false);
+  // 사진 유효성 실패시 메시지
+  const [recipteMessage, setRecipteMessage] = useState('');
+  // 제출 승인 대기 모달 표시
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   useEffect(() => {
     // 로그인 상태가 아닐경우
     if (!isLogin) {
       alert('로그인을 해 주세요');
+      navigate('/home');
+    }
+    // 전문가일 경우
+    if (userInfo[0].doctor) {
+      alert('죄송합니다.전문가는 작성하실 수 없습니다.');
       navigate('/home');
     }
   }, [setIsLogin]);
@@ -156,17 +169,18 @@ const Review = () => {
   // 사진 받아오기
   const recipteHandler = (e) => {
     const uploadFile = e.target.files[0];
+    setRecipteValid(true);
     setRecipte(uploadFile);
   };
 
   //받아온 데이터 받아온걸 종합하기
   const submitDataHandler = () => {
-    if (reviewRegionName === '') {
+    if (reviewRegionName === '' || !reviewRegionName) {
       setReviewRegionNameValid(false);
       setReviewFailMessage('내용을 입력해 주세요');
     }
 
-    if (medicalTagTitle === '') {
+    if (medicalTagTitle === '' || !medicalTagTitle) {
       setMedicalTagTitleValid(false);
       setReviewFailMessage('내용을 입력해 주세요');
     }
@@ -189,13 +203,18 @@ const Review = () => {
     if (!rateValid) {
       setRateMesasge('별점을 선택해 주세요');
     }
+
+    if (!recipteValid) {
+      setRecipteMessage('사진을 넣주세요');
+    }
     // 모든 입력이 정상적으로 되었을 경우
     if (
       reviewContentValid &&
       reviewTitleValid &&
       reviewRegionNameValid &&
       medicalTagTitleValid &&
-      rateValid
+      rateValid &&
+      recipteValid
     ) {
       // 사진과 텍스트를 같이 보내기 위해서 formdata 사용
       const formData = new FormData();
@@ -223,14 +242,19 @@ const Review = () => {
         });
 
       // 승인 대기중 모달창 노출
-      setReviewWait(true);
+      setIsPostModalOpen(true);
     }
   };
 
-  // 모달 닫기
-  const closeModal = () => {
-    setReviewWait(false);
-    navigate('/');
+  // const showModal = () => {
+  //   setIsPostModalOpen(true);
+  // };
+  const handleOk = () => {
+    setIsPostModalOpen(false);
+    navigate('/home');
+  };
+  const handleCancel = () => {
+    setIsPostModalOpen(false);
   };
 
   console.log(reviewData);
@@ -251,7 +275,7 @@ const Review = () => {
             <span>지역</span>
             <LocationInput
               treeData={locationData}
-              location={reviewRegionName}
+              value={reviewRegionName}
               locationChangeHandler={locationChangeHandler}
             />
             <SValidFail>
@@ -262,7 +286,7 @@ const Review = () => {
             <span>진료 과목</span>
             <TypeInput
               treeData={typeData}
-              type={medicalTagTitle}
+              value={medicalTagTitle}
               typeChangeHandler={typeChangeHandler}
               medicalTagTitleValid
             />
@@ -301,22 +325,31 @@ const Review = () => {
         <SValidFail>
           {reviewContentValid ? null : contentFailMessage}
         </SValidFail>
-        <div>
+        <SImgBlock className="imgBlock">
           <label htmlFor="pics">영수증 사진</label>
-          <input
+          <SInputImg
             id="pics"
             type="file"
             accept="image/png, image/jpeg"
             placeholder="영수증 사진을 업로드 해주세요"
             onChange={recipteHandler}
           />
-        </div>
+        </SImgBlock>
+        <SValidFail>{recipteValid ? null : recipteMessage}</SValidFail>
         <SButtonBlock>
           <SCancalButton>취 소</SCancalButton>
           <SSubmitButton onClick={submitDataHandler}>작 성</SSubmitButton>
         </SButtonBlock>
       </SAskQuestionBlock>
-      {reviewWait && <WaitModal closeModal={closeModal} />}
+      <Modal
+        title="다나아"
+        open={isPostModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>리뷰가 정상적으로 등록되었습니다.</p>
+        <p>등록된 리뷰는 관리자 승인 후 공개됩니다.</p>
+      </Modal>
     </SAskQuestionContainer>
   );
 };

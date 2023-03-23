@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
-// import { useNavigate } from 'react-router-dom';
-import CommentForm from '../../Components/CommentForm/CommentForm';
-import Comment from '../../Components/CommentForm/Comment';
 import ReportModal from '../../Components/ReportModal/ReportModal';
-import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
+import { Modal, notification } from 'antd';
+import { FaHeart } from 'react-icons/fa';
+// import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
   SReviewDetailContainer,
   SReviewDetailBlock,
@@ -21,10 +20,11 @@ import {
 const ReviewDetail = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('accessToken');
+  const { postId } = useParams();
 
   // 로그인 상태 정보 확인
   const [isLogin, setIsLogin] = useRecoilState(loginState);
-  const [loginInfo, setLoginInfo] = useRecoilState(loggedUserInfo);
+  const userInfo = useRecoilState(loggedUserInfo);
 
   // 신고 모달 관리
   const [reportModal, setReportModal] = useState(true);
@@ -32,53 +32,87 @@ const ReviewDetail = () => {
   const [reviewData, setReviewData] = useState({});
   // 작성자 정보 관리
   const [reviewFrom, setReviewFrom] = useState({});
+  // 좋아요 알람 다루기
+  const [likeModal, setLikeModal] = useState(false);
+  // 알림창 관리
+  const [api, contextHolder] = notification.useNotification();
 
   // 로그인 정보를 확인
   useEffect(() => {
-    console.log(loginInfo);
-    console.log(setLoginInfo);
     if (!isLogin) {
       alert('로그인을 해 주세요');
       navigate('/home');
     }
   }, [setIsLogin]);
 
-  //상세 경로 수정 예쩡
   useEffect(() => {
-    axios
-      .get('/posts/3', {
-        headers: {
-          'Content-Type': `application/json`,
-          'ngrok-skip-browser-warning': '69420',
-          Authorization: `${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setReviewData(res.data);
-        setReviewFrom(res.data.writerResponse);
-      });
+    axios({
+      method: 'get',
+      url: `/posts/${postId}`,
+      headers: {
+        'Content-Type': `application/json`,
+        'ngrok-skip-browser-warning': '69420',
+        Authorization: `${token}`,
+      },
+    }).then((res) => {
+      console.log('응답');
+      console.log(res.data);
+      setReviewData(res.data);
+      setReviewFrom(res.data.writerResponse);
+    });
   }, [setReviewData]);
 
   // 버튼 클릭시 좋아요 넣기
   const likeHandler = () => {
-    axios({
-      method: 'post',
-      url: `/posts/${reviewData?.postId}/likes`,
-      headers: { Authorization: token },
-    }).then((res) => {
-      location.reload();
-      console.log(res);
-    });
+    // 게시글 작성자와 현재 유저가 같으면 작동 X
+    if (reviewFrom?.memberId === userInfo[0]?.memberId) {
+      setLikeModal(false);
+      return null;
+    } else {
+      axios({
+        method: 'post',
+        url: `/posts/${reviewData?.postId}/likes`,
+        headers: { Authorization: token },
+      })
+        .then((res) => {
+          location.reload();
+          console.log(res);
+        })
+        .catch((error) => {
+          api.info({
+            message: `다나아`,
+            description: '좋아요는 한 게시물에 한번만 가능합니다!',
+            placement: 'top',
+          });
+          console.log(error);
+        });
+    }
   };
 
-  // 모달창 관리하기
+  // 좋아요 모달 관리
+  const showLikeModal = () => {
+    setLikeModal(true);
+  };
+  const likeHandleCancel = () => {
+    setLikeModal(false);
+  };
+
+  // 신고 모달창 관리하기
   const reportModalHandler = () => {
     setReportModal((prev) => !prev);
   };
 
   return (
     <SReviewDetailContainer>
+      {contextHolder}
+      <Modal
+        title="다나아"
+        open={likeModal}
+        onOk={likeHandler}
+        onCancel={likeHandleCancel}
+      >
+        <p>해당 리뷰가 맘에 드시나요???</p>
+      </Modal>
       {reportModal ? null : (
         <ReportModal
           reportModalHandler={reportModalHandler}
@@ -91,7 +125,9 @@ const ReviewDetail = () => {
           <img src="/images/Swear.png" alt="사진" />
           <SReviewUserInfo className="review-info">
             <span>{reviewFrom?.displayName}</span>
-            <span>{reviewData?.modifiedAt}</span>
+            <span>
+              {reviewData?.modifiedAt?.replace('T', ' ').slice(0, -7)}
+            </span>
           </SReviewUserInfo>
         </SReviewHeader>
         <SReviewHospitalInfo className="hopital-info">
@@ -102,12 +138,14 @@ const ReviewDetail = () => {
         <SReviewContent className="contents">
           <p>{reviewData.content?.slice(3, -4)}~</p>
           <SReviewButtonBlock className="review-footer">
-            {loginInfo.memberId === reviewFrom?.memberId ? (
-              <></>
+            {userInfo[0]?.memberId === reviewFrom?.memberId ? (
+              <button>
+                <FaHeart /> {reviewData?.totalLike}
+              </button>
             ) : (
               <>
-                <button onClick={likeHandler}>
-                  ❤️ {reviewData?.totalLike}
+                <button onClick={showLikeModal}>
+                  <FaHeart /> {reviewData?.totalLike}
                 </button>
                 <div className="review-button">
                   <button onClick={reportModalHandler}>신 고</button>
@@ -117,9 +155,7 @@ const ReviewDetail = () => {
           </SReviewButtonBlock>
         </SReviewContent>
       </SReviewDetailBlock>
-      <HospitalLocation reviewData={reviewData} />
-      <CommentForm />
-      <Comment />
+      {/* <HospitalLocation reviewData={reviewData} /> */}
     </SReviewDetailContainer>
   );
 };

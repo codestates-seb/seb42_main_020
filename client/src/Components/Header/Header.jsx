@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import Nav from '../Nav/Nav';
-import { Popover, Avatar, Badge } from 'antd';
+import { Popover, Avatar } from 'antd';
 import { UserOutlined, BellOutlined } from '@ant-design/icons';
 import {
   SHeader,
@@ -14,35 +14,31 @@ import {
   SNotification,
   SMyInfo,
   SLogout,
+  SAdminNav,
 } from '../../Style/HeaderStyle';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { loginState, loggedUserInfo } from '../../atoms/atoms';
+import { loginState, loggedUserInfo, adminState } from '../../atoms/atoms';
 
 function Header() {
   const [isLogged, setIsLogged] = useRecoilState(loginState); // 로그인 여부
   const userInfo = useRecoilValue(loggedUserInfo);
-
-  const [isNoticed, setIsNoticed] = useState(false); // 답변 알림 유무
+  const isAdmin = useRecoilValue(adminState);
 
   const cookies = new Cookies();
-  const navigate = useNavigate();
 
   const [isOpenNav, setIsOpenNav] = useState(false);
-
-  console.log(setIsNoticed); // 답변 알림 미사용으로 인한 ESLint 오류 발생 방지 콘솔
 
   const handleClickNav = () => {
     setIsOpenNav(!isOpenNav);
   };
 
-  const handleClickLogout = (e) => {
-    e.preventDefault();
+  const handleClickLogout = () => {
     setIsLogged(!isLogged);
     localStorage.removeItem('accessToken');
     localStorage.removeItem('recoil-persist');
     localStorage.removeItem('loggedUserInfo');
     cookies.remove('refreshToken');
-    navigate('/home');
+    location.reload();
   };
 
   return (
@@ -60,6 +56,18 @@ function Header() {
               </Link>
             </SLogo>
             <SNav onClick={handleClickNav}>커뮤니티</SNav>
+            {/* 아래 div 4개는 테스트용 ID */}
+            <div>xptmxm1@naver.com </div>
+            <div style={{ color: 'red' }}>xptmxm1!</div>
+            <div>admin@mail.com </div>
+            <div style={{ color: 'red' }}>qwer1234!</div>
+            {isAdmin ? (
+              <SAdminNav>
+                <Link to="/admin">Admin</Link>
+              </SAdminNav>
+            ) : (
+              <></>
+            )}
           </div>
           <div>
             {!isLogged ? (
@@ -74,7 +82,7 @@ function Header() {
               <SPrivateContent>
                 <SMyInfo>
                   <SNotification>
-                    {!isNoticed ? null : <Badge dot />}
+                    {/* <Badge dot /> */}
                     <BellOutlined />
                   </SNotification>
                   <Popover

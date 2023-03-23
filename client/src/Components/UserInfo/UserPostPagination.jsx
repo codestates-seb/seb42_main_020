@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Pagination } from 'antd';
-import UserPostPaginationStyle from '../../Style/UserPostPaginationStyle';
+import PostPaginationStyle from '../../Style/PostPaginationStyle';
 import UserPostList from './UserPostList';
 import axios from 'axios';
 
@@ -35,7 +35,7 @@ function UserPostPagination() {
   return (
     <>
       <UserPostList posts={posts} />
-      <UserPostPaginationStyle>
+      <PostPaginationStyle>
         <Pagination
           current={currentPage}
           pageSize={pageSize}
@@ -43,7 +43,7 @@ function UserPostPagination() {
           onChange={handlePageChange}
           showSizeChanger={false}
         />
-      </UserPostPaginationStyle>
+      </PostPaginationStyle>
     </>
   );
 }

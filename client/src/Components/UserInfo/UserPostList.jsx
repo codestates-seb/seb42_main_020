@@ -1,14 +1,14 @@
-import UserPostListStyle from '../../Style/UserPostListStyle';
+import PostListStyle from '../../Style/PostListStyle';
 import { RxDotsHorizontal } from 'react-icons/rx';
 import { FiUserCheck } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 function UserPostList({ posts }) {
-  console.log(posts);
   return (
     <>
       {posts?.postResponseMyPageInfos?.map((item) => {
         return (
-          <UserPostListStyle key={item?.postId}>
+          <PostListStyle key={item?.postId}>
             <li className="number">{item?.postId}</li>
             <li className="subject">{item?.medicalTagTitle}</li>
             <li className="doctor">
@@ -22,7 +22,12 @@ function UserPostList({ posts }) {
               {item?.regionName}
             </li>
             <li className="title">
-              <span>{item?.title}</span>
+              <Link
+                to={`question/${item?.postId}`}
+                style={{ color: 'black', textDecoration: 'none' }}
+              >
+                <div>{item?.title}</div>
+              </Link>
             </li>
             <li className="time" style={{ fontSize: '12px' }}>
               {item?.createdAt && item.createdAt.slice(5, 10)}
@@ -38,7 +43,7 @@ function UserPostList({ posts }) {
               {posts?.displayName}
             </li>
             <li className="like">{item?.totalLike}</li>
-          </UserPostListStyle>
+          </PostListStyle>
         );
       })}
     </>

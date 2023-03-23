@@ -1,4 +1,6 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const beat = keyframes`	to { transform: scale(1.4); }`;
 
 export const SQuestionDetailContainer = styled.div`
   font-family: 'TheJamsil5Bold';
@@ -6,9 +8,19 @@ export const SQuestionDetailContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 1000px;
+  min-height: 1000px;
+  height: 100%;
   background-color: var(--blue-50);
   padding-top: 20px;
+
+  button {
+    font-family: 'TheJamsil5Bold';
+    cursor: pointer;
+    color: black;
+    height: 30px;
+    border: none;
+    border-radius: 3px;
+  }
 
   > div {
     box-shadow: 3px 2px 3px 2px var(--gray-200);
@@ -20,18 +32,6 @@ export const SQuestionDetailContainer = styled.div`
 
   .expert-answer {
     border-top: 5px solid var(--mint-400);
-  }
-
-  .expoert-choiced {
-    box-shadow: 3px 2px 3px 2px var(--mint-200);
-    border: 5px solid var(--mint-300);
-    border-radius: 5px;
-  }
-
-  .normal-choiced {
-    box-shadow: 3px 2px 3px 2px var(--blue-200);
-    border: 5px solid var(--blue-300);
-    border-radius: 5px;
   }
 `;
 
@@ -54,8 +54,17 @@ export const SQuestionHeaderBlock = styled.div`
   margin-bottom: 15px;
 
   h1 {
-    font-size: 25px;
-    margin-bottom: 15px;
+    margin-left: 10px;
+  }
+`;
+
+export const SQuestionHeaderTitleBlock = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+  margin-bottom: 15px;
+  > svg {
+    color: var(--blue-800);
   }
 `;
 
@@ -81,26 +90,55 @@ export const SQuestionTextBlock = styled.div`
 
 export const SQuestionButtonBlock = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 100%;
   margin-bottom: 15px;
+  align-items: center;
+
+  > button:first-child {
+    display: flex;
+    align-items: center;
+    width: 10%;
+    font-size: 20px;
+    background-color: white;
+
+    > svg {
+      margin-right: 5px;
+      color: var(--peach-600);
+      font-size: 25px;
+      &:hover {
+        animation: ${beat} 0.5s infinite alternate;
+        transform-origin: center;
+      }
+    }
+  }
+
+  > div {
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+
+    > button:first-child {
+      width: 20%;
+      background-color: var(--blue-200);
+      &:hover {
+        background-color: var(--mint-200);
+      }
+    }
+
+    > button:last-child {
+      width: 20%;
+      margin-left: 20px;
+      background-color: var(--peach-200);
+      &:hover {
+        background-color: var(--peach-400);
+      }
+    }
+  }
 
   button {
     width: 15%;
-    height: 30px;
-    border: none;
     background-color: var(--blue-200);
-    border-radius: 3px;
-    color: #636e72;
-  }
-
-  button:first-child {
-    background-color: var(--mint-400);
-  }
-
-  button:last-child {
-    margin-left: 20px;
-    background-color: var(--peach-400);
   }
 `;
 
@@ -108,20 +146,34 @@ export const SQuestionLikeButtonBlock = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 15px;
+  margin: 15px 0px;
 
   button {
-    width: 15%;
-    height: 30px;
-    border: none;
     background-color: white;
-    border-radius: 3px;
-    color: #636e72;
+  }
+  button:first-child {
+    display: flex;
+    align-items: center;
+    width: 10%;
+    font-size: 20px;
+
+    > svg {
+      margin-right: 5px;
+      color: var(--peach-600);
+      font-size: 25px;
+      &:hover {
+        animation: ${beat} 0.5s infinite alternate;
+        transform-origin: center;
+      }
+    }
   }
 
   button:last-child {
-    background-color: var(--peach-400);
-    color: #636e72;
+    width: 15%;
+    background-color: var(--peach-200);
+    &:hover {
+      background-color: var(--peach-400);
+    }
   }
 `;
 
@@ -132,23 +184,14 @@ export const SAnswerHeader = styled.div`
   align-items: center;
   margin-bottom: 15px;
 
-  > div {
-    width: 80%;
-    text-align: right;
-  }
-
   h1 {
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-left: 8px;
   }
 
   button {
     width: 15%;
-    height: 30px;
-    border: none;
-    border-radius: 3px;
-    color: #636e72;
   }
 
   button:first-child {
@@ -157,7 +200,25 @@ export const SAnswerHeader = styled.div`
 
   button:last-child {
     margin-left: 20px;
-    background-color: var(--peach-400);
+    background-color: var(--blue-200);
+
+    &:hover {
+      background-color: var(--mint-200);
+    }
+  }
+`;
+
+export const SAnswerHeaderTitleBlock = styled.div`
+  display: flex;
+  align-items: center;
+
+  > svg {
+    color: var(--blue-800);
+    font-size: 20px;
+  }
+  > div {
+    width: 80%;
+    text-align: right;
   }
 `;
 
@@ -188,11 +249,10 @@ export const SPostAnswerBlock = styled.div`
 
   > button {
     width: 15%;
-    height: 30px;
-    border: none;
     background-color: var(--blue-200);
-    border-radius: 3px;
-    color: #636e72;
+    &:hover {
+      background-color: var(--mint-200);
+    }
   }
 
   h1 {
@@ -223,10 +283,12 @@ export const SAnswerBlock = styled.div`
   }
 
   > span {
-    font-size: 15px;
+    font-size: 20px;
     color: var(--peach-600);
+    padding-bottom: 15px;
     margin-bottom: 15px;
     font-style: italic;
+    border-bottom: 3px solid var(--peach-200);
   }
 `;
 
@@ -267,10 +329,23 @@ export const SAnswerButtonBlock = styled.div`
   justify-content: space-between;
   width: 100%;
   margin: 15px 0;
+
   > button {
+    display: flex;
+    align-items: center;
     background-color: white;
     width: 10%;
-    border: none;
+    font-size: 20px;
+
+    > svg {
+      margin-right: 5px;
+      color: var(--peach-600);
+      font-size: 25px;
+      &:hover {
+        animation: ${beat} 0.5s infinite alternate;
+        transform-origin: center;
+      }
+    }
   }
 
   > div {
@@ -280,15 +355,19 @@ export const SAnswerButtonBlock = styled.div`
 
     > button {
       width: 17%;
-      height: 30px;
-      border: none;
       background-color: var(--blue-200);
-      border-radius: 3px;
-      color: #636e72;
+
+      &:hover {
+        background-color: var(--mint-200);
+      }
     }
 
-    > button:nth-child(2) {
+    > button:last-child {
       margin: 0px 10px;
+      background-color: var(--peach-200);
+      &:hover {
+        background-color: var(--peach-400);
+      }
     }
   }
 `;

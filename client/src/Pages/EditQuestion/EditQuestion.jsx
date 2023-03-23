@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import TextEditor from '../../Components/AskForm/TextEditor';
 import {
@@ -19,6 +19,8 @@ import LocationInput from '../../Components/AskForm/LocationInput';
 import TypeInput from '../../Components/AskForm/TypeInput';
 
 const EditQuestion = () => {
+  const { postId } = useParams();
+  console.log(postId);
   const navigate = useNavigate();
 
   //로컬에 있는 토큰
@@ -53,7 +55,7 @@ const EditQuestion = () => {
   // 데이터 받아오기
   useEffect(() => {
     axios
-      .get('/posts/2', {
+      .get(`/posts/${postId}`, {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
@@ -141,15 +143,15 @@ const EditQuestion = () => {
     }
 
     axios
-      .patch('/posts/2', questionData, {
-        header: { Authorization: token },
+      .patch(`/posts/${postId}`, questionData, {
+        headers: { Authorization: token },
       })
       .then((res) => {
         console.log(res);
       });
 
     alert('질문이 수정되었습니다.');
-    navigate('/posts/2');
+    navigate(`/home/question/${postId}`);
   };
 
   return (
@@ -184,7 +186,7 @@ const EditQuestion = () => {
             </SValidFail>
           </div>
         </SAskQuestionInfoBlock>
-        <TextEditor handleText={handleText} questionContent={questionContent} />
+        <TextEditor handleText={handleText} value={questionContent} />
         <SValidFail> {textValid ? null : textMessage}</SValidFail>
         <SButtonBlock>
           <SCancalButton>취소</SCancalButton>
