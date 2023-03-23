@@ -1,6 +1,6 @@
 import { TreeSelect } from 'antd';
 
-const TypeInput = ({ treeData, type, typeChangeHandler }) => {
+const TypeInput = ({ treeData, value, typeChangeHandler }) => {
   return (
     <TreeSelect
       showSearch
@@ -11,10 +11,11 @@ const TypeInput = ({ treeData, type, typeChangeHandler }) => {
         maxHeight: 400,
         overflow: 'auto',
       }}
-      defaultValue={type}
+      // defaultValue={value}
+      placeholder="진료과목"
       allowClear
       treeDefaultExpandAll
-      value={type}
+      value={value}
       onChange={typeChangeHandler}
       treeData={treeData}
     />

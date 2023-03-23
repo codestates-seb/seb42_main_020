@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import ReviewReason from './ReviewReason';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import { Button, Modal } from 'antd';
+import { Modal } from 'antd';
 import {
   SReportModalContainer,
   SReportModalBlock,
@@ -17,6 +17,8 @@ import {
 const ReportModal = ({ reportModalHandler, setReportModal }) => {
   //토큰
   const token = localStorage.getItem('accessToken');
+  // 파람값
+  const { postId } = useParams();
 
   //모달 제출 내용
   const [reportText, setReportText] = useState('');
@@ -45,16 +47,27 @@ const ReportModal = ({ reportModalHandler, setReportModal }) => {
   }, [reportReason, reportText]);
 
   const showModal = () => {
+    if (reportText === '') {
+      setTextValid(false);
+      setTextFailMessage('내용은 5글자 이상 입력해주세요');
+    }
+
+    if (reportReason === null) {
+      setReasonValid(false);
+      setReasonFailMessage('올바른 사유를 선택해 주세요');
+    }
+
     if (reasonValid && textValid) {
       setIsModalOpen(true);
     } else {
       setIsModalOpen(false);
     }
   };
+
   const handleOk = () => {
     if (textValid && reasonValid) {
       axios
-        .post(`/posts/2/report`, reportInfo, {
+        .post(`/posts/${postId}/report`, reportInfo, {
           headers: {
             Authorization: `${token}`,
           },
@@ -64,7 +77,7 @@ const ReportModal = ({ reportModalHandler, setReportModal }) => {
         });
       setIsModalOpen(false);
       setReportModal(false);
-      navigate('/question/1234');
+      navigate(`/home`);
     }
   };
 
@@ -128,9 +141,9 @@ const ReportModal = ({ reportModalHandler, setReportModal }) => {
           {textValid ? <></> : <SFailMessage>{textFailMessage}</SFailMessage>}
           <SReportModalButtonBlock>
             <button onClick={reportModalHandler}>취 소</button>
-            <Button type="primary" onClick={showModal}>
+            <button type="primary" onClick={showModal}>
               제 출
-            </Button>
+            </button>
           </SReportModalButtonBlock>
         </div>
       </SReportModalBlock>

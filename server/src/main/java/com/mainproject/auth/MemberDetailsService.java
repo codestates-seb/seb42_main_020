@@ -1,5 +1,6 @@
 package com.mainproject.auth;
 
+import com.mainproject.auth.utils.CustomAuthorityUtils;
 import com.mainproject.global.exception.BusinessLogicException;
 import com.mainproject.global.exception.ExceptionCode;
 import com.mainproject.member.entity.Member;

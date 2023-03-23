@@ -45,14 +45,21 @@ const QuestionDetail = () => {
   const [reportModal, setReportModal] = useState(false);
   // 삭제 알람 다루기
   const [deleteModal, setDeleteModal] = useState(false);
-
+  // 좋아요 모달 다루기
+  const [likeModal, setLikeModal] = useState(false);
+  // 좋아요 누른 여부
+  const [isLike, setIsLike] = useState(false);
+  // 게시글 수정 모달 다루기
+  const [editModal, setEditModal] = useState(false);
+  // 댓글 채택 여부
+  const [selected, setSelected] = useState(false);
   const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
     // 로그인 상태가 아닐경우
     if (!isLogin) {
       alert('로그인을 해 주세요');
-      navigate('/');
+      navigate('/login');
     }
   }, [setIsLogin]);
 
@@ -68,27 +75,38 @@ const QuestionDetail = () => {
     }).then((res) => {
       setQuestionData(res.data);
       setWriterInfo(res.data.writerResponse);
-      setComments(res.data.comments);
+      console.log(res.data.comments);
     });
-  }, []);
+  }, [isLike, editModal, postComment, comments, selected]);
 
+  // 게시글 수정
   const modifyHandler = () => {
-    const modifyResult = confirm('질문을 수정하시겠습니까???');
-    if (modifyResult) {
-      navigate(`/home/question/edit/${questionData?.postId}`);
-    }
+    navigate(`/home/question/edit/${questionData?.postId}`);
+  };
+
+  const showEditModal = () => {
+    setEditModal(true);
+  };
+
+  const editHandleCancel = () => {
+    setEditModal(false);
   };
 
   const postCommentHandler = () => {
     setPostComment((prev) => !prev);
   };
 
+  // 신고하기 모달
   const reportModalHandler = () => {
     setReportModal((prev) => !prev);
   };
-
+  // 삭제하기 확인 모달
   const showModal = () => {
     setDeleteModal(true);
+  };
+
+  const handleCancel = () => {
+    setDeleteModal(false);
   };
 
   const handleOk = () => {
@@ -105,13 +123,19 @@ const QuestionDetail = () => {
     setDeleteModal(false);
   };
 
-  const handleCancel = () => {
-    setDeleteModal(false);
+  // 좋아요 모달 관리
+  const showLikeModal = () => {
+    setLikeModal(true);
+  };
+  const likeHandleCancel = () => {
+    setLikeModal(false);
   };
 
+  // 좋아요 관리
   const likeHandler = () => {
     // 게시글 작성자와 현재 유저가 같으면 작동 X
     if (writerInfo?.memberId === userInfo[0]?.memberId) {
+      setLikeModal(false);
       return null;
     } else {
       axios({
@@ -120,8 +144,10 @@ const QuestionDetail = () => {
         headers: { Authorization: token },
       })
         .then((res) => {
-          location.reload();
+          // location.reload();
           console.log(res);
+          setIsLike(true);
+          setLikeModal(false);
         })
         .catch((error) => {
           api.info({
@@ -130,11 +156,12 @@ const QuestionDetail = () => {
             placement: 'top',
           });
           console.log(error);
+          setLikeModal(false);
         });
     }
   };
 
-  console.log('정보', questionData);
+  console.log(comments);
 
   return (
     <SQuestionDetailContainer className="detail-block">
@@ -147,6 +174,23 @@ const QuestionDetail = () => {
       >
         <p>정말로 삭제하시겠습니까?</p>
       </Modal>
+      <Modal
+        title="다나아"
+        open={likeModal}
+        onOk={likeHandler}
+        onCancel={likeHandleCancel}
+      >
+        <p>해당 댓글이 맘에 드시나요???</p>
+      </Modal>
+      <Modal
+        title="다나아"
+        open={editModal}
+        onOk={modifyHandler}
+        onCancel={editHandleCancel}
+      >
+        <p>게시글을 수정하시겠습니까??</p>
+      </Modal>
+
       {reportModal ? (
         <ReportModal
           reportModal={reportModal}
@@ -186,7 +230,7 @@ const QuestionDetail = () => {
               <FaHeart /> {questionData?.totalLike}
             </button>
             <div>
-              <button onClick={modifyHandler}>수정</button>
+              <button onClick={showEditModal}>수정</button>
               <button type="primary" onClick={showModal}>
                 삭제
               </button>
@@ -195,7 +239,7 @@ const QuestionDetail = () => {
         ) : (
           <SQuestionLikeButtonBlock className="button-block not-same-from">
             <button
-              onClick={likeHandler}
+              onClick={showLikeModal}
               type="primary"
               icon={<BorderTopOutlined />}
             >
@@ -221,13 +265,13 @@ const QuestionDetail = () => {
       ) : (
         <></>
       )}
-      {/*  답글 여부에따라서 내용 변경, 서버가 완성되면 수정하겠음 */}
-      {comments?.length === 0 ? (
+      {/* 채택된 답변 우선 렌더링 */}
+      {questionData?.comments?.length === 0 ? (
         <></>
       ) : (
-        // 채택된 답변 우선 렌더링
-        comments?.map((ele) => {
-          if (ele.commentStatus !== 'COMMENT_DELETED') {
+        questionData?.comments
+          ?.filter((ele) => ele.commentStatus === 'COMMENT_ACCEPTED')
+          .map((ele) => {
             return (
               <Answers
                 key={ele.commentId}
@@ -236,10 +280,38 @@ const QuestionDetail = () => {
                 userInfo={userInfo}
                 writerInfo={writerInfo}
                 questionData={questionData}
+                comments={comments}
+                setComments={setComments}
+                setPostComment={setPostComment}
+                setSelected={setSelected}
               />
             );
-          }
-        })
+          })
+      )}
+
+      {questionData?.comments?.length === 0 ? (
+        <></>
+      ) : (
+        questionData?.comments
+          ?.filter((ele) => ele.commentStatus !== 'COMMENT_ACCEPTED')
+          .map((ele) => {
+            if (ele.commentStatus !== 'COMMENT_DELETED') {
+              return (
+                <Answers
+                  key={ele.commentId}
+                  ele={ele}
+                  token={token}
+                  userInfo={userInfo}
+                  writerInfo={writerInfo}
+                  questionData={questionData}
+                  comments={comments}
+                  setComments={setComments}
+                  setPostComment={setPostComment}
+                  setSelected={setSelected}
+                />
+              );
+            }
+          })
       )}
     </SQuestionDetailContainer>
   );

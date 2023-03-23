@@ -1,6 +1,7 @@
 import ReactQuill from 'react-quill';
 import axios from 'axios';
 import { useState } from 'react';
+import { Modal } from 'antd';
 import 'react-quill/dist/quill.bubble.css';
 
 import {
@@ -13,10 +14,12 @@ import {
   SSubmitBtn,
 } from '../../Style/CommentFormStyle';
 
-const CommentForm = ({ commentId, value }) => {
+const CommentForm = ({ commentId, value, setComments, setOpenEdit }) => {
   const token = localStorage.getItem('accessToken');
 
-  const [comment, setComment] = useState();
+  const [comment, setComment] = useState(value);
+  // 수정 확인 모달
+  const [editModal, setEditModal] = useState(false);
 
   const submitData = {
     content: `${comment}`,
@@ -29,24 +32,41 @@ const CommentForm = ({ commentId, value }) => {
 
   const resetHandler = () => {
     setComment('');
+    setOpenEdit(false);
   };
 
-  const submitHandler = () => {
-    axios.defaults.baseURL = 'http://localhost:3000';
+  const handleOk = () => {
     axios
-      .patch(`comments/${commentId}`, submitData, {
+      .patch(`/comments/${commentId}`, submitData, {
         headers: {
           Authorization: `${token}`,
         },
       })
       .then((res) => {
-        location.reload();
-        console.log(res);
+        setComments(res.data);
+        setEditModal(false);
+        setOpenEdit(false);
       });
+  };
+
+  const handleCancel = () => {
+    setEditModal(false);
+  };
+
+  const submitHandler = () => {
+    setEditModal(true);
   };
 
   return (
     <SLayout>
+      <Modal
+        title="다나아"
+        open={editModal}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <p>정말로 수정하시겠습니까?</p>
+      </Modal>
       <SCommentOfferText>댓글 작성</SCommentOfferText>
       <SwritingSection>
         <SWritingForm>

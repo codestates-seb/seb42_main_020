@@ -11,6 +11,22 @@ function PostSearch() {
   const categoryReducer = async (state, action) => {
     if (keyword.length !== 0) {
       switch (action.type) {
+        case 'titleContent':
+          return await axios
+            .get('/posts', {
+              headers: {
+                'ngrok-skip-browser-warning': 'skip',
+              },
+              params: {
+                filterType: 4,
+                keyword: keyword,
+              },
+            })
+            .then((res) => {
+              setKeyword(res.data);
+              setIsFiltered(true);
+            })
+            .catch((err) => Promise.reject(new Error(err)));
         case 'title':
           return await axios
             .get('/posts', {

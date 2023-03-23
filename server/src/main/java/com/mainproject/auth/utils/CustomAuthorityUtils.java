@@ -1,4 +1,4 @@
-package com.mainproject.auth;
+package com.mainproject.auth.utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
