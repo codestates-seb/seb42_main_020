@@ -1,6 +1,6 @@
 import { TreeSelect } from 'antd';
 
-const LocationInput = ({ treeData, location, locationChangeHandler }) => {
+const LocationInput = ({ treeData, value, locationChangeHandler }) => {
   return (
     <TreeSelect
       showSearch
@@ -11,10 +11,11 @@ const LocationInput = ({ treeData, location, locationChangeHandler }) => {
         maxHeight: 400,
         overflow: 'auto',
       }}
-      defaultValue={location}
+      // defaultValue={value}
+      placeholder="지역"
       allowClear
       treeDefaultExpandAll
-      value={location}
+      value={value}
       onChange={locationChangeHandler}
       treeData={treeData}
     />

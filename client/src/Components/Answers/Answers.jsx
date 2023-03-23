@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import EditCommentForm from '../../Components/CommentForm/EditCommentForm';
 import ReportCommentModal from '../ReportModal/ReportComment';
 import { Modal, notification } from 'antd';
@@ -18,6 +19,8 @@ import {
 // import { SButtonBlock } from '../../Style/Answer';
 
 const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
+  // poarms 값
+  const { postId } = useParams();
   //수정 모달 관리
   const [openEdit, setOpenEdit] = useState(false);
   // 신고 모달 관리
@@ -26,9 +29,13 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
   const commentFrom = ele.writerResponse;
   // 삭제 알람 다루기
   const [deleteModal, setDeleteModal] = useState(false);
+  // 좋아요 모달 다루기
+  const [likeModal, setLikeModal] = useState(false);
+
   // 좋아요 중복 경고 창
   const [api, contextHolder] = notification.useNotification();
 
+  // 삭제 모달 관리
   const handleOk = () => {
     axios({
       method: 'delete',
@@ -52,7 +59,7 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
   const choiceHandler = () => {
     axios({
       method: 'patch',
-      url: `/posts/2/comments/${ele.commentId}`,
+      url: `/posts/${postId}/comments/${ele.commentId}`,
       headers: { Authorization: token },
     }).then((res) => {
       location.reload();
@@ -65,10 +72,19 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
     setOpenEdit((prev) => !prev);
   };
 
-  // 좋아요
+  // 좋아요 모달 관리
+  const showLikeModal = () => {
+    setLikeModal(true);
+  };
+  const likeHandleCancel = () => {
+    setLikeModal(false);
+  };
+
+  // 좋아요 모달 + axios
   const commentLikeHandler = (id) => {
+    console.log('상태', userInfo[0]?.memberId, commentFrom?.memberId);
     if (userInfo[0]?.memberId === commentFrom?.memberId) {
-      return null;
+      return setLikeModal(false);
     } else {
       axios({
         method: 'post',
@@ -106,6 +122,14 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
         onCancel={handleCancel}
       >
         <p>정말로 삭제하시겠습니까??</p>
+      </Modal>
+      <Modal
+        title="다나아"
+        open={likeModal}
+        onOk={() => commentLikeHandler(ele.commentId)}
+        onCancel={likeHandleCancel}
+      >
+        <p>해당 댓글이 맘에 드시나요???</p>
       </Modal>
       {reportModal ? (
         <ReportCommentModal
@@ -165,9 +189,10 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
           <button
             type="primary"
             icon={<BorderTopOutlined />}
-            onClick={() => {
-              commentLikeHandler(ele.commentId);
-            }}
+            // onClick={() => {
+            //   commentLikeHandler(ele.commentId);
+            // }}
+            onClick={showLikeModal}
           >
             <FaHeart /> {ele.totalLike}
           </button>

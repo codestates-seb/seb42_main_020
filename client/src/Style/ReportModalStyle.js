@@ -64,15 +64,23 @@ export const SReportModalButtonBlock = styled.div`
   button {
     font-family: 'TheJamsil5Bold';
     border: none;
-    background-color: var(--peach-400);
     width: 20%;
     height: 30px;
     border-radius: 3px;
   }
+  button:first-child {
+    background-color: var(--peach-200);
+    &:hover {
+      background-color: var(--peach-400);
+    }
+  }
 
   button:last-child {
     margin-left: 15px;
-    background-color: var(--mint-400);
+    background-color: var(--mint-200);
+    &:hover {
+      background-color: var(--mint-400);
+    }
   }
 `;
 
