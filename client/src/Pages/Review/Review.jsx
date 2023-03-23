@@ -46,11 +46,11 @@ const Review = () => {
   //  내용이 적합하지 않을 경우 메시지
   const [contentFailMessage, setContentFailMessage] = useState('');
   // 지역 입력값
-  const [reviewRegionName, setReviewRegionName] = useState('');
+  const [reviewRegionName, setReviewRegionName] = useState(null);
   // 지역 유효성
   const [reviewRegionNameValid, setReviewRegionNameValid] = useState(false);
   // 진료 과목 입력값
-  const [medicalTagTitle, setMedicalTagTitle] = useState('');
+  const [medicalTagTitle, setMedicalTagTitle] = useState(null);
   // 진료 과목 유효성
   const [medicalTagTitleValid, setMedicalTagTitleValid] = useState(false);
   // 지역 or 진료 과목이 실패할 경우 메시지
@@ -175,12 +175,12 @@ const Review = () => {
 
   //받아온 데이터 받아온걸 종합하기
   const submitDataHandler = () => {
-    if (reviewRegionName === '') {
+    if (reviewRegionName === '' || !reviewRegionName) {
       setReviewRegionNameValid(false);
       setReviewFailMessage('내용을 입력해 주세요');
     }
 
-    if (medicalTagTitle === '') {
+    if (medicalTagTitle === '' || !medicalTagTitle) {
       setMedicalTagTitleValid(false);
       setReviewFailMessage('내용을 입력해 주세요');
     }
@@ -275,7 +275,7 @@ const Review = () => {
             <span>지역</span>
             <LocationInput
               treeData={locationData}
-              location={reviewRegionName}
+              value={reviewRegionName}
               locationChangeHandler={locationChangeHandler}
             />
             <SValidFail>
@@ -286,7 +286,7 @@ const Review = () => {
             <span>진료 과목</span>
             <TypeInput
               treeData={typeData}
-              type={medicalTagTitle}
+              value={medicalTagTitle}
               typeChangeHandler={typeChangeHandler}
               medicalTagTitleValid
             />

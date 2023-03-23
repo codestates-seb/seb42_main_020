@@ -42,11 +42,11 @@ const AskQuestion = () => {
   const [textMessage, setTextMessage] = useState('');
 
   // 지역 입력값
-  const [location, setLocation] = useState('지역');
+  const [location, setLocation] = useState(null);
   // 지역 유효성
   const [locationValid, setLocationValid] = useState(false);
   // 진료 과목 입력값
-  const [medicalTagTitle, setMedicalTagTitle] = useState('진료과목');
+  const [medicalTagTitle, setMedicalTagTitle] = useState(null);
   // // 진료 과목 유효값
   const [medicalTagTitleValid, setMedicalTagTitleValid] = useState(false);
   // 지역,타입 유효성 실패 메시지
@@ -128,12 +128,26 @@ const AskQuestion = () => {
 
   //받아온 데이터 받아온걸 종합하기
   const submitDataHandler = () => {
-    if (location === '') {
+    axios
+      .post('/posts', questionData, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        console.log(res);
+      });
+
+    alert('질문이 작성되었습니다.');
+    navigate('/home');
+  };
+
+  // 제출하기 모달 관리
+  const showSubmitModal = () => {
+    if (location === '' || !location) {
       setLocationValid(false);
       setValidFailMessage('내용을 입력해 주세요');
     }
 
-    if (medicalTagTitle === '') {
+    if (medicalTagTitle === '' || !medicalTagTitle) {
       setMedicalTagTitleValid(false);
       setValidFailMessage('내용을 입력해 주세요');
     }
@@ -146,28 +160,9 @@ const AskQuestion = () => {
       setTextValid(false);
       setTextMessage('내용은 5글자 이상 입력해주세요');
     }
-    if (
-      setLocationValid &&
-      setMedicalTagTitleValid &&
-      setTitleMessage &&
-      setTextValid
-    ) {
-      axios
-        .post('/posts', questionData, {
-          headers: { Authorization: token },
-        })
-        .then((res) => {
-          console.log(res);
-        });
-
-      alert('질문이 작성되었습니다.');
-      navigate('/home');
+    if (locationValid && medicalTagTitleValid && titleMessage && textValid) {
+      setSubmitModal(true);
     }
-  };
-
-  // 제출하기 모달 관리
-  const showSubmitModal = () => {
-    setSubmitModal(true);
   };
   const submitHandleCancel = () => {
     setSubmitModal(false);
@@ -196,7 +191,7 @@ const AskQuestion = () => {
             <span>지역</span>
             <LocationInput
               treeData={locationData}
-              location={location}
+              value={location}
               locationChangeHandler={locationChangeHandler}
             />
             <SValidFail> {locationValid ? null : validFailMessage}</SValidFail>
@@ -205,11 +200,11 @@ const AskQuestion = () => {
             <span>진료과목</span>
             <TypeInput
               treeData={typeData}
-              type={medicalTagTitle}
+              value={medicalTagTitle}
               typeChangeHandler={typeChangeHandler}
             />
             <SValidFail>
-              {medicalTagTitleValid === '' ? null : validFailMessage}
+              {medicalTagTitleValid ? null : validFailMessage}
             </SValidFail>
           </div>
         </SAskQuestionInfoBlock>
