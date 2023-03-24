@@ -19,7 +19,6 @@ function UserInfo() {
       .then((res) => setUserInfo(res.data));
   };
 
-  console.log(userInfo);
   useEffect(() => {
     getUserInfo();
   }, []);
