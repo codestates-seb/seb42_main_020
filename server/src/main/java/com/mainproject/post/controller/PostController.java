@@ -66,15 +66,9 @@ public class PostController {
 
         Post post = postService.findPost(postId);
 
-        if (post.getPostType() == "question") {
-            PostResponseDto postResponseDto = postMapper.postToPostResponseDto(post);
+        PostResponseDto postResponseDto = postMapper.postToPostResponseDto(post);
 
-            return new ResponseEntity<>(postResponseDto, HttpStatus.OK);
-        } else {
-            ReviewResponseDto reviewResponseDto = postMapper.reviewToReviewResponseDto(post);
-
-            return new ResponseEntity<>(reviewResponseDto, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(postResponseDto, HttpStatus.OK);
     }
 
     // 글 작성
