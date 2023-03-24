@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import parse from 'html-react-parser';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import CommentForm from '../../Components/CommentForm/CommentForm';
 import Answers from '../../Components/Answers/Answers';
@@ -53,6 +54,10 @@ const QuestionDetail = () => {
   const [editModal, setEditModal] = useState(false);
   // 댓글 채택 여부
   const [selected, setSelected] = useState(false);
+  // 댓글 좋아요 여부
+  const [commentLike, setCommetLike] = useState(false);
+  // 서버에서 가져온 질문 내용
+  const [content, setContent] = useState('');
   const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
@@ -70,14 +75,15 @@ const QuestionDetail = () => {
       headers: {
         'Content-Type': `application/json`,
         'ngrok-skip-browser-warning': '69420',
-        Authorization: `${token}`,
+        // 'Content-Security-Policy': 'upgrade-insecure-requests',
+        Authorization: token,
       },
     }).then((res) => {
       setQuestionData(res.data);
       setWriterInfo(res.data.writerResponse);
-      console.log(res.data.comments);
+      setContent(res.data.content);
     });
-  }, [isLike, editModal, postComment, comments, selected]);
+  }, [isLike, editModal, postComment, comments, selected, commentLike]);
 
   // 게시글 수정
   const modifyHandler = () => {
@@ -113,7 +119,8 @@ const QuestionDetail = () => {
     axios
       .delete(`/posts/${questionData.postId}`, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: token,
+          // 'Content-Security-Policy': 'upgrade-insecure-requests',
         },
       })
       .then((res) => {
@@ -135,13 +142,21 @@ const QuestionDetail = () => {
   const likeHandler = () => {
     // 게시글 작성자와 현재 유저가 같으면 작동 X
     if (writerInfo?.memberId === userInfo[0]?.memberId) {
+      api.info({
+        message: `다나아`,
+        description: '본인의 게시글엔 좋아요를 할 수 없습니다!',
+        placement: 'top',
+      });
       setLikeModal(false);
       return null;
     } else {
       axios({
         method: 'post',
         url: `/posts/${questionData?.postId}/likes`,
-        headers: { Authorization: token },
+        headers: {
+          Authorization: token,
+          // 'Content-Security-Policy': 'upgrade-insecure-requests',
+        },
       })
         .then((res) => {
           // location.reload();
@@ -160,8 +175,6 @@ const QuestionDetail = () => {
         });
     }
   };
-
-  console.log(comments);
 
   return (
     <SQuestionDetailContainer className="detail-block">
@@ -217,13 +230,12 @@ const QuestionDetail = () => {
           </SQuestionInfoBlock>
         </SQuestionHeaderBlock>
         <SQuestionTextBlock className="contents-block">
-          <p>{questionData?.content?.slice(3, -4)}</p>
+          <div>{parse(content)}</div>
         </SQuestionTextBlock>
-
         {userInfo[0]?.memberId === writerInfo?.memberId ? (
           <SQuestionButtonBlock className="button-block">
             <button
-              onClick={likeHandler}
+              onClick={showLikeModal}
               type="primary"
               icon={<BorderTopOutlined />}
             >
@@ -254,7 +266,11 @@ const QuestionDetail = () => {
         <SPostAnswerBlock className="want-answer-block">
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
           <div className="want-answer-text">
-            <h1>{userInfo[0]?.displayName}의 답변을 기다리고 있어요!</h1>
+            <h1>
+              {userInfo[0]?.doctor
+                ? `${userInfo[0]?.name}의 답변을 기다리고 있어요!`
+                : `${userInfo[0]?.displayName}의 답변을 기다리고 있어요!`}
+            </h1>
             <span>지금 답변하여 채택받으시면 15점을 얻습니다.</span>
           </div>
           <button onClick={postCommentHandler}>답변하기!</button>
@@ -284,6 +300,7 @@ const QuestionDetail = () => {
                 setComments={setComments}
                 setPostComment={setPostComment}
                 setSelected={setSelected}
+                setCommetLike={setCommetLike}
               />
             );
           })
@@ -308,6 +325,7 @@ const QuestionDetail = () => {
                   setComments={setComments}
                   setPostComment={setPostComment}
                   setSelected={setSelected}
+                  setCommetLike={setCommetLike}
                 />
               );
             }
