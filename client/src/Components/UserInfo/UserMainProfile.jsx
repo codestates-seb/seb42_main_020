@@ -54,7 +54,11 @@ function UserMainProfile({ userInfo }) {
           </li>
           <li className="area">
             <span className="type">Area</span>
-            <span className="value">None</span>
+            <span className="value">
+              {userInfo?.area === null
+                ? '활동 지역을 입력하세요!'
+                : userInfo?.area}
+            </span>
           </li>
         </ul>
         <div className="picture">
