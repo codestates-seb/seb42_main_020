@@ -25,6 +25,8 @@ public class PostResponseDto {
     private Integer totalLike;
     private String medicalTagTitle;
     private String regionName;
+    private String hospitalName;
+    private int starRating;
     private WriterResponse writerResponse;
     private List<CommentResponseDto> comments;
 }
