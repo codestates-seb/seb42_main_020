@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import parse from 'html-react-parser';
 import EditCommentForm from '../../Components/CommentForm/EditCommentForm';
 import ReportCommentModal from '../ReportModal/ReportComment';
 import { Modal, notification } from 'antd';
@@ -52,7 +53,10 @@ const Answers = ({
     axios({
       method: 'delete',
       url: `/comments/${ele.commentId}`,
-      headers: { Authorization: token },
+      headers: {
+        Authorization: token,
+        // 'Content-Security-Policy': 'upgrade-insecure-requests',
+      },
     }).then((res) => {
       console.log(res);
       const newData = comments.filter(
@@ -83,7 +87,10 @@ const Answers = ({
     axios({
       method: 'patch',
       url: `/posts/${postId}/comments/${ele.commentId}`,
-      headers: { Authorization: token },
+      headers: {
+        Authorization: token,
+        // 'Content-Security-Policy': 'upgrade-insecure-requests',
+      },
     }).then((res) => {
       console.log(res);
       setSelected(true);
@@ -118,7 +125,10 @@ const Answers = ({
       axios({
         method: 'post',
         url: `/comments/${id}/likes`,
-        headers: { Authorization: token },
+        headers: {
+          Authorization: token,
+          // 'Content-Security-Policy': 'upgrade-insecure-requests',
+        },
       })
         .then((res) => {
           setCommetLike(true);
@@ -222,7 +232,8 @@ const Answers = ({
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
         </SAnswerInfoBlock>
         <div className="answer-contents-block">
-          <p>{ele?.content?.slice(3, -4)}</p>
+          {/* <p>{ele?.content?.slice(3, -4)}</p> */}
+          <div>{parse(ele.content)}</div>
         </div>
         <SAnswerButtonBlock className="answer-button-block">
           <button
