@@ -303,7 +303,7 @@ const DoctorSignup = () => {
                   value="service"
                   onClick={handleClickTermService}
                 />
-                서비스 이용약관
+                [필수] 서비스 이용약관
               </div>
               <div>
                 <input
@@ -312,7 +312,7 @@ const DoctorSignup = () => {
                   value="location"
                   onClick={handleClickTermLocation}
                 />
-                위치 기반 서비스
+                [필수] 위치 기반 서비스
               </div>
             </STerm>
           </STermSection>
