@@ -18,7 +18,17 @@ import {
 
 // import { SButtonBlock } from '../../Style/Answer';
 
-const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
+const Answers = ({
+  ele,
+  token,
+  userInfo,
+  questionData,
+  writerInfo,
+  comments,
+  setComments,
+  setSelected,
+  setCommetLike,
+}) => {
   // poarms 값
   const { postId } = useParams();
   //수정 모달 관리
@@ -31,6 +41,8 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   // 좋아요 모달 다루기
   const [likeModal, setLikeModal] = useState(false);
+  // 채택 모달 다루기
+  const [selectModal, setSelectModal] = useState(false);
 
   // 좋아요 중복 경고 창
   const [api, contextHolder] = notification.useNotification();
@@ -42,8 +54,11 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
       url: `/comments/${ele.commentId}`,
       headers: { Authorization: token },
     }).then((res) => {
-      location.reload();
       console.log(res);
+      const newData = comments.filter(
+        (el) => el.commentId !== comments.commentId
+      );
+      setComments(newData);
     });
     setDeleteModal(false);
   };
@@ -55,6 +70,14 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
     setDeleteModal(false);
   };
 
+  // 채택 모달 관리
+  const showSelectModal = () => {
+    setSelectModal(true);
+  };
+  const selectHandleCancel = () => {
+    setSelectModal(false);
+  };
+
   // 댓글 채택
   const choiceHandler = () => {
     axios({
@@ -62,8 +85,9 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
       url: `/posts/${postId}/comments/${ele.commentId}`,
       headers: { Authorization: token },
     }).then((res) => {
-      location.reload();
       console.log(res);
+      setSelected(true);
+      setSelectModal(false);
     });
   };
 
@@ -84,7 +108,12 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
   const commentLikeHandler = (id) => {
     console.log('상태', userInfo[0]?.memberId, commentFrom?.memberId);
     if (userInfo[0]?.memberId === commentFrom?.memberId) {
-      return setLikeModal(false);
+      api.info({
+        message: `다나아`,
+        description: '본인 댓글에는 좋아요를 누를 수 없습니다.',
+        placement: 'top',
+      });
+      setLikeModal(false);
     } else {
       axios({
         method: 'post',
@@ -92,7 +121,8 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
         headers: { Authorization: token },
       })
         .then((res) => {
-          location.reload();
+          setCommetLike(true);
+          setLikeModal(false);
           console.log(res);
         })
         .catch((error) => {
@@ -101,6 +131,7 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
             description: '좋아요는 한 게시물에 한번만 가능합니다!',
             placement: 'top',
           });
+          setLikeModal(false);
           console.log(error);
         });
     }
@@ -114,6 +145,14 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
   return (
     <>
       {contextHolder}
+      <Modal
+        title="다나아"
+        open={selectModal}
+        onOk={choiceHandler}
+        onCancel={selectHandleCancel}
+      >
+        <p>해당 답변을 채택하시겠습니까??</p>
+      </Modal>
 
       <Modal
         title="다나아"
@@ -166,7 +205,7 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
           questionData.postStatus !== 'POST_ACCEPTED' &&
           userInfo[0].memberId !== commentFrom?.memberId &&
           userInfo[0].memberId === writerInfo.memberId ? (
-            <button onClick={choiceHandler}>채택 하기</button>
+            <button onClick={showSelectModal}>채택 하기</button>
           ) : (
             <></>
           )}
@@ -211,7 +250,12 @@ const Answers = ({ ele, token, userInfo, questionData, writerInfo }) => {
         </SAnswerButtonBlock>
       </SAnswerBlock>
       {openEdit ? (
-        <EditCommentForm commentId={ele.commentId} value={ele.content} />
+        <EditCommentForm
+          commentId={ele.commentId}
+          value={ele.content}
+          setOpenEdit={setOpenEdit}
+          setComments={setComments}
+        />
       ) : (
         <></>
       )}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ReviewReason from './ReviewReason';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import { Button, Modal } from 'antd';
@@ -15,6 +15,9 @@ import {
 } from '../../Style/ReportModalStyle';
 
 const ReportCommentModal = ({ reportModalHandler, setReportModal }) => {
+  // 파람값
+  const { postId } = useParams();
+
   //토큰
   const token = localStorage.getItem('accessToken');
 
@@ -36,9 +39,6 @@ const ReportCommentModal = ({ reportModalHandler, setReportModal }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
-
-  console.log('데이터');
-  console.log(reportInfo);
 
   useEffect(() => {
     setReportInfo({
@@ -70,7 +70,7 @@ const ReportCommentModal = ({ reportModalHandler, setReportModal }) => {
         });
       setReportModal(false);
       setIsModalOpen(false);
-      navigate('/question/1234');
+      navigate(`/home/question/${postId}`);
     }
   };
   // 신고하기 취소

@@ -5,6 +5,7 @@ export const SPostModalBlock = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  position: relative;
 
   button {
     border: none;
@@ -28,19 +29,20 @@ export const SModalWrapper = styled.div`
   display: flex;
   position: absolute;
   justify-content: center;
-  width: 20%;
-  height: 20%;
-  top: 230px;
-  right: 50px;
+  width: 50%;
+  height: 50%;
+  top: -100%;
+  right: 50%;
 `;
 export const SModal = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
   background-color: white;
-
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   width: 250px;
   height: 150px;
   border-radius: 20px;

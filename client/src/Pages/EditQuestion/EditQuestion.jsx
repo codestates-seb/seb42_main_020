@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { Modal, Space } from 'antd';
 import TextEditor from '../../Components/AskForm/TextEditor';
 import {
   SAskQuestionContainer,
@@ -20,7 +20,6 @@ import TypeInput from '../../Components/AskForm/TypeInput';
 
 const EditQuestion = () => {
   const { postId } = useParams();
-  console.log(postId);
   const navigate = useNavigate();
 
   //로컬에 있는 토큰
@@ -63,12 +62,10 @@ const EditQuestion = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setQuestionTitle(res.data.title);
         setQuestionContent(res.data.content);
         setLocation(res.data.regionName);
         setMedicalTagTitle(res.data.medicalTagTitle);
-        console.log(questionContent);
       });
   }, []);
 
@@ -149,13 +146,17 @@ const EditQuestion = () => {
       .then((res) => {
         console.log(res);
       });
-
-    alert('질문이 수정되었습니다.');
-    navigate(`/home/question/${postId}`);
+    Modal.success({
+      content: '질문이 수정되었습니다.',
+      onOk() {
+        navigate(`/home/question/${postId}`);
+      },
+    });
   };
 
   return (
     <SAskQuestionContainer>
+      <Space wrap></Space>
       <SAskQuestionBlock>
         <STitle>질문 작성하기</STitle>
         <span>제목</span>
@@ -169,7 +170,7 @@ const EditQuestion = () => {
             <span>지역</span>
             <LocationInput
               treeData={locationData}
-              location={location}
+              value={location}
               locationChangeHandler={locationChangeHandler}
             />
             <SValidFail> {locationValid ? null : validFailMessage}</SValidFail>
@@ -178,7 +179,7 @@ const EditQuestion = () => {
             <span>진료과목</span>
             <TypeInput
               treeData={typeData}
-              type={medicalTagTitle}
+              value={medicalTagTitle}
               typeChangeHandler={typeChangeHandler}
             />
             <SValidFail>
