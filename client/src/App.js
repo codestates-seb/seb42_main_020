@@ -6,8 +6,9 @@ import Footer from './Components/Footer/Footer';
 
 const Landing = lazy(() => import('./Pages/Landing/Landing'));
 
+//게시글
 const AllPost = lazy(() => import('./Pages/home/AllPost'));
-const AreaPosts = lazy(() => import('./Pages/home/AreaPosts'));
+const LocationPosts = lazy(() => import('./Pages/home/LocationPosts'));
 const QuestionPosts = lazy(() => import('./Pages/home/QuestionPosts'));
 const ReviewPosts = lazy(() => import('./Pages/home/ReviewPosts'));
 const SubjectsPosts = lazy(() => import('./Pages/home/SubjectsPosts'));
@@ -40,10 +41,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<AllPost />} />
-        <Route path="/home/areapost" element={<AreaPosts />} />
-        <Route path="/home/questionposts" element={<QuestionPosts />} />
-        <Route path="/home/reviewposts" element={<ReviewPosts />} />
-        <Route path="/home/subjectsposts" element={<SubjectsPosts />} />
+        <Route path="/home/question" element={<QuestionPosts />} />
+        <Route path="/home/review" element={<ReviewPosts />} />
+        <Route path="/home/location" element={<LocationPosts />} />
+        <Route path="/home/subject" element={<SubjectsPosts />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/medicalprovider" element={<DoctorSignup />} />

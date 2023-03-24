@@ -1,7 +1,8 @@
 import Section from '../../Components/Section/Section';
 
 function AllPost() {
-  return <Section />;
+  const currentPath = window.location.href;
+  return <Section path={currentPath} />;
 }
 
 export default AllPost;

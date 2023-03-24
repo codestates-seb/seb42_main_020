@@ -54,7 +54,7 @@ const LocationButton = () => {
         }}
       >
         <SNavContents onClick={(e) => e.preventDefault()}>
-          <Link to="/locations">지역별</Link>
+          <Link to="/home/location">지역별</Link>
         </SNavContents>
       </Dropdown>
     </>

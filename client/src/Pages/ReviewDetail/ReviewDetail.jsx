@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import ReportModal from '../../Components/ReportModal/ReportModal';
-import { Modal, notification } from 'antd';
+import { Modal, notification, Space } from 'antd';
 import { FaHeart } from 'react-icons/fa';
 // import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
@@ -36,12 +36,19 @@ const ReviewDetail = () => {
   const [likeModal, setLikeModal] = useState(false);
   // 알림창 관리
   const [api, contextHolder] = notification.useNotification();
+  // 좋아요 누른거 확인
+  const [isLike, seIsLike] = useState(false);
 
   // 로그인 정보를 확인
   useEffect(() => {
     if (!isLogin) {
-      alert('로그인을 해 주세요');
-      navigate('/home');
+      Modal.warning({
+        title: '다나아',
+        content: '로그인을 해주세요!',
+        onOk() {
+          navigate('/home');
+        },
+      });
     }
   }, [setIsLogin]);
 
@@ -55,12 +62,10 @@ const ReviewDetail = () => {
         Authorization: `${token}`,
       },
     }).then((res) => {
-      console.log('응답');
-      console.log(res.data);
       setReviewData(res.data);
       setReviewFrom(res.data.writerResponse);
     });
-  }, [setReviewData]);
+  }, [setReviewData, isLike]);
 
   // 버튼 클릭시 좋아요 넣기
   const likeHandler = () => {
@@ -75,7 +80,7 @@ const ReviewDetail = () => {
         headers: { Authorization: token },
       })
         .then((res) => {
-          location.reload();
+          seIsLike(true);
           console.log(res);
         })
         .catch((error) => {
@@ -85,6 +90,7 @@ const ReviewDetail = () => {
             placement: 'top',
           });
           console.log(error);
+          setLikeModal(false);
         });
     }
   };
@@ -105,6 +111,7 @@ const ReviewDetail = () => {
   return (
     <SReviewDetailContainer>
       {contextHolder}
+      <Space wrap></Space>
       <Modal
         title="다나아"
         open={likeModal}

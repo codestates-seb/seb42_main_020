@@ -95,7 +95,7 @@ const TypeButton = () => {
         }}
       >
         <SNavContents onClick={(e) => e.preventDefault()}>
-          <Link to="/locations">지역별</Link>
+          <Link to="/home/subject">과목별</Link>
         </SNavContents>
       </Dropdown>
     </>

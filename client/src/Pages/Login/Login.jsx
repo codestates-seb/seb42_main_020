@@ -2,7 +2,8 @@ import Cookies from 'universal-cookie';
 import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useBodyScrollLock } from '../../util/useBodyScrollLock';
-import { FcGoogle } from 'react-icons/fc';
+// import { GoogleOAuthProvider } from '@react-oauth/google';
+
 import { BsArrowReturnLeft } from 'react-icons/bs';
 import { message, notification } from 'antd';
 import {
@@ -12,7 +13,6 @@ import {
   SFormSection,
   SInput,
   SSubmitBtn,
-  SGoogleLoginBtn,
   SSignupInfo,
   SSignupBtn,
   SModalLayout,
@@ -25,6 +25,7 @@ import {
 import axios from 'axios';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo, adminState } from '../../atoms/atoms';
+// import GoolgeButton from '../../Components/Login/GoolgeButton';
 
 const Login = () => {
   const setIsLogged = useSetRecoilState(loginState);
@@ -226,10 +227,9 @@ const Login = () => {
               로그인
             </SSubmitBtn>
           </div>
-          <SGoogleLoginBtn>
-            <FcGoogle />
-            <span>구글로 시작하기</span>
-          </SGoogleLoginBtn>
+          {/* <GoogleOAuthProvider clientId={`${process.env.GOOGLE_API_KEY}`}>
+            <GoolgeButton />
+          </GoogleOAuthProvider> */}
         </SFormSection>
         <SSignupInfo>
           <p>다나아 시작하기</p>
