@@ -52,8 +52,9 @@ const CommentForm = ({ setPostComment, postId }) => {
         },
       })
       .then((res) => {
-        location.reload();
         console.log(res);
+        setPostComment(false);
+        setSubmitModal(false);
       });
   };
 
