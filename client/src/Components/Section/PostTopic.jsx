@@ -2,7 +2,7 @@ import PostTopicStlye from '../../Style/PostTopicStlye';
 import MakeContents from '../MakeContents/MakeContents';
 import { Select, Space } from 'antd';
 
-function PostTopic() {
+function PostTopic({ topicName }) {
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
@@ -10,7 +10,7 @@ function PostTopic() {
   return (
     <PostTopicStlye>
       <div className="topicTemplate">
-        <h2>전체 게시판 ✍</h2>
+        <h2>{topicName} 게시판 ✍</h2>
         <Space wrap style={{ marginBottom: -10 }}>
           <Select
             defaultValue="latest"
