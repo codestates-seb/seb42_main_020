@@ -61,10 +61,14 @@ const QuestionDetail = () => {
   const [api, contextHolder] = notification.useNotification();
 
   useEffect(() => {
-    // 로그인 상태가 아닐경우
     if (!isLogin) {
-      alert('로그인을 해 주세요');
-      navigate('/login');
+      Modal.warning({
+        title: '다나아',
+        content: '로그인을 해주세요!',
+        onOk() {
+          navigate('/login');
+        },
+      });
     }
   }, [setIsLogin]);
 
@@ -91,7 +95,15 @@ const QuestionDetail = () => {
   };
 
   const showEditModal = () => {
-    setEditModal(true);
+    if (questionData?.postStatus === 'POST_ACCEPTED') {
+      api.info({
+        message: `다나아`,
+        description: '채택된 답변이 있을 경우 게시글을 수정하실 수 없습니다!',
+        placement: 'top',
+      });
+    } else {
+      setEditModal(true);
+    }
   };
 
   const editHandleCancel = () => {
@@ -108,7 +120,15 @@ const QuestionDetail = () => {
   };
   // 삭제하기 확인 모달
   const showModal = () => {
-    setDeleteModal(true);
+    if (questionData?.postStatus === 'POST_ACCEPTED') {
+      api.info({
+        message: `다나아`,
+        description: '채택된 답변이 있을 경우 게시글을 삭제하실 수 없습니다!',
+        placement: 'top',
+      });
+    } else {
+      setDeleteModal(true);
+    }
   };
 
   const handleCancel = () => {
