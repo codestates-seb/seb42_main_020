@@ -36,6 +36,8 @@ const ReviewDetail = () => {
   const [likeModal, setLikeModal] = useState(false);
   // 알림창 관리
   const [api, contextHolder] = notification.useNotification();
+  // 좋아요 누른거 확인
+  const [isLike, seIsLike] = useState(false);
 
   // 로그인 정보를 확인
   useEffect(() => {
@@ -60,12 +62,10 @@ const ReviewDetail = () => {
         Authorization: `${token}`,
       },
     }).then((res) => {
-      console.log('응답');
-      console.log(res.data);
       setReviewData(res.data);
       setReviewFrom(res.data.writerResponse);
     });
-  }, [setReviewData]);
+  }, [setReviewData, isLike]);
 
   // 버튼 클릭시 좋아요 넣기
   const likeHandler = () => {
@@ -80,7 +80,7 @@ const ReviewDetail = () => {
         headers: { Authorization: token },
       })
         .then((res) => {
-          location.reload();
+          seIsLike(true);
           console.log(res);
         })
         .catch((error) => {
@@ -90,6 +90,7 @@ const ReviewDetail = () => {
             placement: 'top',
           });
           console.log(error);
+          setLikeModal(false);
         });
     }
   };
