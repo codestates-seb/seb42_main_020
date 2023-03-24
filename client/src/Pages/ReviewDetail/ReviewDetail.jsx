@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
+import parse from 'html-react-parser';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import ReportModal from '../../Components/ReportModal/ReportModal';
 import { Modal, notification, Space, Rate } from 'antd';
@@ -40,6 +41,8 @@ const ReviewDetail = () => {
   const [api, contextHolder] = notification.useNotification();
   // 좋아요 누른거 확인
   const [isLike, seIsLike] = useState(false);
+  // 서버에서 가져온 질문 내용
+  const [content, setContent] = useState('');
 
   // 별점 관리
   const desc = ['1점', '2점', '3점', '4점', '5점'];
@@ -51,7 +54,7 @@ const ReviewDetail = () => {
         title: '다나아',
         content: '로그인을 해주세요!',
         onOk() {
-          navigate('/home');
+          navigate('/login');
         },
       });
     }
@@ -65,12 +68,14 @@ const ReviewDetail = () => {
       headers: {
         'Content-Type': `application/json`,
         'ngrok-skip-browser-warning': '69420',
-        Authorization: `${token}`,
+        'Content-Security-Policy': 'upgrade-insecure-requests',
+        Authorization: token,
       },
     }).then((res) => {
       setReviewData(res.data);
       setReviewFrom(res.data.writerResponse);
       setStarts(res.data.starRating);
+      setContent(res.data.content);
     });
   }, [setReviewData, isLike]);
 
@@ -89,10 +94,14 @@ const ReviewDetail = () => {
       axios({
         method: 'post',
         url: `/posts/${reviewData?.postId}/likes`,
-        headers: { Authorization: token },
+        headers: {
+          Authorization: token,
+          'Content-Security-Policy': 'upgrade-insecure-requests',
+        },
       })
         .then((res) => {
           seIsLike(true);
+          setLikeModal(false);
           console.log(res);
         })
         .catch((error) => {
@@ -161,7 +170,7 @@ const ReviewDetail = () => {
           </span>
         </SReviewHospitalInfo>
         <SReviewContent className="contents">
-          <p>{reviewData.content?.slice(3, -4)}~</p>
+          <div>{parse(content)}</div>
           <SReviewButtonBlock className="review-footer">
             {userInfo[0]?.memberId === reviewFrom?.memberId ? (
               <button onClick={showLikeModal}>
