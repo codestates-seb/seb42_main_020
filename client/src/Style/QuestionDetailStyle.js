@@ -27,11 +27,11 @@ export const SQuestionDetailContainer = styled.div`
   }
 
   .normal-answer {
-    border-top: 5px solid var(--blue-600);
+    border-top: 5px solid #00663b;
   }
 
   .expert-answer {
-    border-top: 5px solid var(--mint-400);
+    border-top: 5px solid #178ca1;
   }
 `;
 

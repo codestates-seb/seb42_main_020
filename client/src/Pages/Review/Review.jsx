@@ -4,7 +4,8 @@ import { useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import { useNavigate } from 'react-router-dom';
 import TextEditor from '../../Components/AskForm/TextEditor';
-import { Modal } from 'antd';
+import { Modal, Space } from 'antd';
+
 import {
   SAskQuestionContainer,
   SAskQuestionBlock,
@@ -81,13 +82,23 @@ const Review = () => {
   useEffect(() => {
     // 로그인 상태가 아닐경우
     if (!isLogin) {
-      alert('로그인을 해 주세요');
-      navigate('/home');
+      Modal.warning({
+        title: '다나아',
+        content: '로그인을 해주세요!',
+        onOk() {
+          navigate('/home');
+        },
+      });
     }
     // 전문가일 경우
-    if (userInfo[0].doctor) {
-      alert('죄송합니다.전문가는 작성하실 수 없습니다.');
-      navigate('/home');
+    if (userInfo[0]?.doctor) {
+      Modal.warning({
+        title: '다나아',
+        content: '죄송합니다! 전문가는 리뷰를 등록하실 수 없습니다',
+        onOk() {
+          navigate('/home');
+        },
+      });
     }
   }, [setIsLogin]);
 
@@ -261,6 +272,7 @@ const Review = () => {
 
   return (
     <SAskQuestionContainer>
+      <Space wrap></Space>
       <SAskQuestionBlock>
         <STitle>리뷰 작성하기</STitle>
         <span>제목</span>
