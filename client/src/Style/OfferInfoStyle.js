@@ -9,6 +9,14 @@ export const SOfferInfoLayout = styled.div`
     justify-content: center;
     align-items: center;
   }
+  @media only screen and (max-width: 500px) {
+    > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 `;
 
 export const SGradiant = styled.div`
