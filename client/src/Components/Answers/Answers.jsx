@@ -47,7 +47,7 @@ const Answers = ({
 
   // 좋아요 중복 경고 창
   const [api, contextHolder] = notification.useNotification();
-
+  console.log(questionData);
   // 삭제 모달 관리
   const handleOk = () => {
     axios({
@@ -100,7 +100,16 @@ const Answers = ({
 
   // 댓글 수정
   const editCommentHandler = () => {
-    setOpenEdit((prev) => !prev);
+    if (questionData?.postStatus === 'POST_ACCEPTED') {
+      api.info({
+        message: `다나아`,
+        description: '채택된 답변이 있을 경우 댓글을 수정 할 수 없습니다.',
+        placement: 'top',
+      });
+      setOpenEdit(false);
+    } else {
+      setOpenEdit((prev) => !prev);
+    }
   };
 
   // 좋아요 모달 관리
