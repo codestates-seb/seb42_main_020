@@ -85,7 +85,7 @@ export const SQuestionInfoBlock = styled.div`
 export const SQuestionTextBlock = styled.div`
   text-align: left;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 `;
 
 export const SQuestionButtonBlock = styled.div`

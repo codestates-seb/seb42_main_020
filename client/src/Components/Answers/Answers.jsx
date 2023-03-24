@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import parse from 'html-react-parser';
 import EditCommentForm from '../../Components/CommentForm/EditCommentForm';
 import ReportCommentModal from '../ReportModal/ReportComment';
 import { Modal, notification } from 'antd';
@@ -46,13 +47,16 @@ const Answers = ({
 
   // 좋아요 중복 경고 창
   const [api, contextHolder] = notification.useNotification();
-
+  console.log(questionData);
   // 삭제 모달 관리
   const handleOk = () => {
     axios({
       method: 'delete',
       url: `/comments/${ele.commentId}`,
-      headers: { Authorization: token },
+      headers: {
+        Authorization: token,
+        // 'Content-Security-Policy': 'upgrade-insecure-requests',
+      },
     }).then((res) => {
       console.log(res);
       const newData = comments.filter(
@@ -83,7 +87,10 @@ const Answers = ({
     axios({
       method: 'patch',
       url: `/posts/${postId}/comments/${ele.commentId}`,
-      headers: { Authorization: token },
+      headers: {
+        Authorization: token,
+        // 'Content-Security-Policy': 'upgrade-insecure-requests',
+      },
     }).then((res) => {
       console.log(res);
       setSelected(true);
@@ -93,7 +100,16 @@ const Answers = ({
 
   // 댓글 수정
   const editCommentHandler = () => {
-    setOpenEdit((prev) => !prev);
+    if (questionData?.postStatus === 'POST_ACCEPTED') {
+      api.info({
+        message: `다나아`,
+        description: '채택된 답변이 있을 경우 댓글을 수정 할 수 없습니다.',
+        placement: 'top',
+      });
+      setOpenEdit(false);
+    } else {
+      setOpenEdit((prev) => !prev);
+    }
   };
 
   // 좋아요 모달 관리
@@ -118,7 +134,10 @@ const Answers = ({
       axios({
         method: 'post',
         url: `/comments/${id}/likes`,
-        headers: { Authorization: token },
+        headers: {
+          Authorization: token,
+          // 'Content-Security-Policy': 'upgrade-insecure-requests',
+        },
       })
         .then((res) => {
           setCommetLike(true);
@@ -222,7 +241,8 @@ const Answers = ({
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
         </SAnswerInfoBlock>
         <div className="answer-contents-block">
-          <p>{ele?.content?.slice(3, -4)}</p>
+          {/* <p>{ele?.content?.slice(3, -4)}</p> */}
+          <div>{parse(ele.content)}</div>
         </div>
         <SAnswerButtonBlock className="answer-button-block">
           <button

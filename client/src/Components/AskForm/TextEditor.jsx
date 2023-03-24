@@ -60,9 +60,6 @@ const TextEditor = ({ handleText, value }) => {
         modules={modules}
         formats={formats}
         theme="snow"
-        // onChange={(content, delta, source, editor) =>
-        //   handleText(editor.getText())
-        // }
         onChange={handleText}
         placeholder="내용을 작성해 주세요"
       />
