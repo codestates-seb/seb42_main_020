@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import ReportModal from '../../Components/ReportModal/ReportModal';
-import { Modal, notification, Space } from 'antd';
+import { Modal, notification, Space, Rate } from 'antd';
 import { FaHeart } from 'react-icons/fa';
 // import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
@@ -30,6 +30,8 @@ const ReviewDetail = () => {
   const [reportModal, setReportModal] = useState(true);
   // 받아오는 정보 관리
   const [reviewData, setReviewData] = useState({});
+  // 별점 관리
+  const [stars, setStarts] = useState(null);
   // 작성자 정보 관리
   const [reviewFrom, setReviewFrom] = useState({});
   // 좋아요 알람 다루기
@@ -38,6 +40,9 @@ const ReviewDetail = () => {
   const [api, contextHolder] = notification.useNotification();
   // 좋아요 누른거 확인
   const [isLike, seIsLike] = useState(false);
+
+  // 별점 관리
+  const desc = ['1점', '2점', '3점', '4점', '5점'];
 
   // 로그인 정보를 확인
   useEffect(() => {
@@ -52,6 +57,7 @@ const ReviewDetail = () => {
     }
   }, [setIsLogin]);
 
+  // 서버에서 데이터 받아오기
   useEffect(() => {
     axios({
       method: 'get',
@@ -64,15 +70,21 @@ const ReviewDetail = () => {
     }).then((res) => {
       setReviewData(res.data);
       setReviewFrom(res.data.writerResponse);
+      setStarts(res.data.starRating);
     });
   }, [setReviewData, isLike]);
 
   // 버튼 클릭시 좋아요 넣기
+
   const likeHandler = () => {
     // 게시글 작성자와 현재 유저가 같으면 작동 X
     if (reviewFrom?.memberId === userInfo[0]?.memberId) {
+      api.info({
+        message: `다나아`,
+        description: '본인의 게시글엔 좋아요를 할 수 없습니다!',
+        placement: 'top',
+      });
       setLikeModal(false);
-      return null;
     } else {
       axios({
         method: 'post',
@@ -139,14 +151,20 @@ const ReviewDetail = () => {
         </SReviewHeader>
         <SReviewHospitalInfo className="hopital-info">
           <span>{reviewData?.hospitalName}</span>
-          {/* 추 후에 서버작업 완료되면 수정 예정 */}
-          <span>⭐⭐⭐⭐⭐ ({reviewData?.starRating}) 점</span>
+          <span>
+            <Rate disabled value={stars} />
+            {stars ? (
+              <span className="ant-rate-text">{desc[stars - 1]}</span>
+            ) : (
+              ''
+            )}
+          </span>
         </SReviewHospitalInfo>
         <SReviewContent className="contents">
           <p>{reviewData.content?.slice(3, -4)}~</p>
           <SReviewButtonBlock className="review-footer">
             {userInfo[0]?.memberId === reviewFrom?.memberId ? (
-              <button>
+              <button onClick={showLikeModal}>
                 <FaHeart /> {reviewData?.totalLike}
               </button>
             ) : (
