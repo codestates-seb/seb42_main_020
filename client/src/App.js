@@ -5,7 +5,13 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 
 const Landing = lazy(() => import('./Pages/Landing/Landing'));
-const Section = lazy(() => import('./Components/Section/Section'));
+
+const AllPost = lazy(() => import('./Pages/home/AllPost'));
+const AreaPosts = lazy(() => import('./Pages/home/AreaPosts'));
+const QuestionPosts = lazy(() => import('./Pages/home/QuestionPosts'));
+const ReviewPosts = lazy(() => import('./Pages/home/ReviewPosts'));
+const SubjectsPosts = lazy(() => import('./Pages/home/SubjectsPosts'));
+
 const Login = lazy(() => import('./Pages/Login/Login'));
 const Signup = lazy(() => import('./Pages/Signup/Signup'));
 const DoctorSignup = lazy(() => import('./Pages/DoctorSignup/DoctorSignup'));
@@ -33,7 +39,11 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/home" element={<Section />} />
+        <Route path="/home" element={<AllPost />} />
+        <Route path="/home/areapost" element={<AreaPosts />} />
+        <Route path="/home/questionposts" element={<QuestionPosts />} />
+        <Route path="/home/reviewposts" element={<ReviewPosts />} />
+        <Route path="/home/subjectsposts" element={<SubjectsPosts />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/medicalprovider" element={<DoctorSignup />} />
