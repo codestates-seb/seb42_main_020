@@ -71,12 +71,21 @@ function PostList({ posts }) {
               {item?.regionName}
             </li>
             <li className="title">
-              <Link
-                to={`question/${item?.postId}`}
-                style={{ color: 'black', textDecoration: 'none' }}
-              >
-                <div>{item?.title}</div>
-              </Link>
+              {item.postType === 'question' ? (
+                <Link
+                  to={`question/${item?.postId}`}
+                  style={{ color: 'black', textDecoration: 'none' }}
+                >
+                  <div>{item?.title}</div>
+                </Link>
+              ) : (
+                <Link
+                  to={`review/${item?.postId}`}
+                  style={{ color: 'black', textDecoration: 'none' }}
+                >
+                  <div>{item?.title}</div>
+                </Link>
+              )}
             </li>
             <li className="time" style={{ fontSize: '14px' }}>
               {item?.createdAt && item.createdAt.slice(0, 10)}

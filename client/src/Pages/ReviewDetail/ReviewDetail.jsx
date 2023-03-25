@@ -7,7 +7,7 @@ import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import ReportModal from '../../Components/ReportModal/ReportModal';
 import { Modal, notification, Space, Rate } from 'antd';
 import { FaHeart } from 'react-icons/fa';
-// import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
+import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
   SReviewDetailContainer,
   SReviewDetailBlock,
@@ -189,7 +189,7 @@ const ReviewDetail = () => {
           </SReviewButtonBlock>
         </SReviewContent>
       </SReviewDetailBlock>
-      {/* <HospitalLocation reviewData={reviewData} /> */}
+      <HospitalLocation reviewData={reviewData} />
     </SReviewDetailContainer>
   );
 };
