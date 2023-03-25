@@ -2,9 +2,13 @@ import styled from 'styled-components';
 
 export const SLayout = styled.article`
   font-weight: 600;
-  width: 790px;
+  width: 40%;
   margin: 30px 0 30px 0;
-  padding: 30px 10px;
+  padding: 30px 0px;
+
+  * {
+    font-family: 'TheJamsil5Bold';
+  }
 `;
 
 export const SCommentOfferText = styled.h1`

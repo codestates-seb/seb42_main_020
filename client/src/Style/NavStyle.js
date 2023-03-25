@@ -7,6 +7,9 @@ export const SNavContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: var(--blue-50);
+  * {
+    font-family: 'TheJamsil5Bold';
+  }
 `;
 
 export const SNavBlock = styled.div`

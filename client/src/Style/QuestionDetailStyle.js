@@ -12,9 +12,11 @@ export const SQuestionDetailContainer = styled.div`
   height: 100%;
   background-color: var(--blue-50);
   padding-top: 20px;
+  * {
+    font-family: 'TheJamsil5Bold';
+  }
 
   button {
-    font-family: 'TheJamsil5Bold';
     cursor: pointer;
     color: black;
     height: 30px;
