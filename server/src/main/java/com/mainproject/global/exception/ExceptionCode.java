@@ -28,7 +28,9 @@ public enum ExceptionCode {
     POST_NOT_CHANGED(400, "Post not changed"),
     COMMENT_NOT_CHANGED(400, "Comment not changed"),
     NOT_RESOURCE_OWNER(400, "Not resource owner"),
-    HOSPITAL_NOT_FOUND(404, "Hospital not found");
+    HOSPITAL_NOT_FOUND(404, "Hospital not found"),
+    INVALID_PASSWORD_FORMAT(400,"Invalid password format");
+
 
 
     @Getter
