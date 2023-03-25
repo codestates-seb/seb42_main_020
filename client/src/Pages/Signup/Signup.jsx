@@ -41,7 +41,7 @@ const Signup = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('/members/signup', {
+      const res = await axios.post('members/signup', {
         email,
         name,
         displayName,
@@ -51,6 +51,7 @@ const Signup = () => {
         navigate('/login');
       }
     } catch (error) {
+      console.log(error);
       const errorStatus = error.response?.status;
       // 회원가입 실패 안내창 띄우기
       if (errorStatus === 409) {
@@ -254,7 +255,7 @@ const Signup = () => {
                   value="service"
                   onClick={handleClickTermService}
                 />
-                서비스 이용약관
+                [필수] 서비스 이용약관
               </div>
               <div>
                 <input
@@ -263,7 +264,7 @@ const Signup = () => {
                   value="location"
                   onClick={handleClickTermLocation}
                 />
-                위치 기반 서비스
+                [필수] 위치 기반 서비스
               </div>
             </STerm>
           </STermSection>

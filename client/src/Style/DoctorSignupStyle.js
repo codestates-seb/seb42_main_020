@@ -225,3 +225,7 @@ export const DoctorRegiInfo = styled.div`
     text-align: center;
   }
 `;
+
+export const SPolicyInfoImg = styled.img`
+  margin: 0 215px 50px 0;
+`;

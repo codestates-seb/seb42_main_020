@@ -1,10 +1,7 @@
 import Cookies from 'universal-cookie';
 import { useEffect, useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useBodyScrollLock } from '../../util/useBodyScrollLock';
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { useNavigate } from 'react-router-dom';
 
-import { BsArrowReturnLeft } from 'react-icons/bs';
 import { message, notification } from 'antd';
 import {
   SMain,
@@ -15,17 +12,10 @@ import {
   SSubmitBtn,
   SSignupInfo,
   SSignupBtn,
-  SModalLayout,
-  SModal,
-  SModalInfoSection,
-  SModalBtnSection,
-  SModalInfo,
-  SModalSignupBtn,
 } from '../../Style/LoginStyle';
 import axios from 'axios';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo, adminState } from '../../atoms/atoms';
-import GoolgeButton from '../../Components/Login/GoolgeButton';
 
 const Login = () => {
   const setIsLogged = useSetRecoilState(loginState);
@@ -42,11 +32,10 @@ const Login = () => {
   const [isError, setIsError] = useState(false);
   const [noticeApi, notificationHolder] = notification.useNotification();
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const { lockScroll, openScroll } = useBodyScrollLock();
-
   const cookies = new Cookies();
   const navigate = useNavigate();
+  const moveToSignup = () => navigate('/register');
+  const moveToDoctorSingup = () => navigate('/medicalprovider');
 
   const [isAdmin, setIsAdmin] = useRecoilState(adminState);
 
@@ -77,7 +66,7 @@ const Login = () => {
       // token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
       axios.defaults.headers.common['Authorization'] = `${accessToken}`;
       try {
-        const userInfoRes = await axios.get('/members', {
+        const userInfoRes = await axios.get('members', {
           headers: {
             'ngrok-skip-browser-warning': 'skip', // ngrok error skip용 헤더 추후 삭제 예정
           },
@@ -175,16 +164,6 @@ const Login = () => {
   const isNotNull = notTobeNull({ email, password });
   const isAllValid = isEmailValid && isPwdValid && isNotNull;
 
-  const handleOpen = () => {
-    lockScroll();
-    setIsOpenModal(!isOpenModal);
-  };
-
-  const handleClose = () => {
-    openScroll();
-    setIsOpenModal(!isOpenModal);
-  };
-
   const refEmail = useRef();
   const refPassowrd = useRef();
 
@@ -227,34 +206,18 @@ const Login = () => {
               로그인
             </SSubmitBtn>
           </div>
-          <GoogleOAuthProvider clientId={`${process.env.GOOGLE_API_KEY}`}>
-            <GoolgeButton />
-          </GoogleOAuthProvider>
         </SFormSection>
         <SSignupInfo>
-          <p>다나아 시작하기</p>
-          <SSignupBtn onClick={handleOpen}>회원 가입</SSignupBtn>
-          {isOpenModal ? (
-            <SModalLayout>
-              <SModal>
-                <SModalInfoSection>
-                  <SModalInfo>
-                    <p>회원 가입을 통해</p>
-                    <p>다나아의 다양한 서비스를 이용해 보세요</p>
-                  </SModalInfo>
-                  <BsArrowReturnLeft onClick={handleClose} />
-                </SModalInfoSection>
-                <SModalBtnSection>
-                  <SModalSignupBtn>
-                    <Link to="/register">회원 가입</Link>
-                  </SModalSignupBtn>
-                  <SModalSignupBtn>
-                    <Link to="/medicalprovider">의료인 회원가입</Link>
-                  </SModalSignupBtn>
-                </SModalBtnSection>
-              </SModal>
-            </SModalLayout>
-          ) : null}
+          <div>
+            <p>다나아 시작하기</p>
+            <SSignupBtn onClick={moveToSignup}>회원 가입</SSignupBtn>
+          </div>
+          <div>
+            <p>의사 회원 가입을 찾으시면</p>
+            <SSignupBtn onClick={moveToDoctorSingup}>
+              의료인 회원 가입
+            </SSignupBtn>
+          </div>
         </SSignupInfo>
       </SLayout>
     </SMain>
