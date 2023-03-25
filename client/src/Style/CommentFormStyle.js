@@ -58,3 +58,9 @@ export const SResetBtn = styled.button`
 export const SSubmitBtn = styled(SResetBtn)`
   margin-right: 0px;
 `;
+
+export const SValidFail = styled.span`
+  color: red;
+  margin-top: 8px;
+  font-size: 13px;
+`;
