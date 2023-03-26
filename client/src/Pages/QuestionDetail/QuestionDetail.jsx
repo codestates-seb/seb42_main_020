@@ -76,7 +76,7 @@ const QuestionDetail = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `/posts/${postId}`,
+      url: `${process.env.REACT_APP_API_URL}/posts/${postId}`,
       headers: {
         'Content-Type': `application/json`,
         'ngrok-skip-browser-warning': '69420',
@@ -138,7 +138,7 @@ const QuestionDetail = () => {
 
   const handleOk = () => {
     axios
-      .delete(`/posts/${questionData.postId}`, {
+      .delete(`${process.env.REACT_APP_API_URL}/posts/${questionData.postId}`, {
         headers: {
           Authorization: token,
           // 'Content-Security-Policy': 'upgrade-insecure-requests',
@@ -173,7 +173,7 @@ const QuestionDetail = () => {
     } else {
       axios({
         method: 'post',
-        url: `/posts/${questionData?.postId}/likes`,
+        url: `${process.env.REACT_APP_API_URL}/posts/${questionData?.postId}/likes`,
         headers: {
           Authorization: token,
           // 'Content-Security-Policy': 'upgrade-insecure-requests',

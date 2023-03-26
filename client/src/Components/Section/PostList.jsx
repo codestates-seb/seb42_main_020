@@ -12,11 +12,14 @@ function PostList({ posts, topicName }) {
   const loadDoctorComment = async (id) => {
     try {
       setLoading(true);
-      const response = await axios.get(`/posts/${id}`, {
-        headers: {
-          'ngrok-skip-browser-warning': '69420',
-        },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/posts/${id}`,
+        {
+          headers: {
+            'ngrok-skip-browser-warning': '69420',
+          },
+        }
+      );
       const comments = response.data.comments;
       const isDoctorComment = Boolean(
         comments.filter((isDoctor) => isDoctor.writerResponse.doctor === true)

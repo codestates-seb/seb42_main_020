@@ -48,12 +48,16 @@ const CommentForm = ({ commentId, value, setComments, setOpenEdit }) => {
 
   const handleOk = () => {
     axios
-      .patch(`/comments/${commentId}`, submitData, {
-        headers: {
-          Authorization: token,
-          'Content-Security-Policy': 'upgrade-insecure-requests',
-        },
-      })
+      .patch(
+        `${process.env.REACT_APP_API_URL}/comments/${commentId}`,
+        submitData,
+        {
+          headers: {
+            Authorization: token,
+            'Content-Security-Policy': 'upgrade-insecure-requests',
+          },
+        }
+      )
       .then((res) => {
         setComments(res.data);
         setEditModal(false);

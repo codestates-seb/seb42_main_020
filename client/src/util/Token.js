@@ -19,7 +19,7 @@ export const getAccessTokenFromLocal = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
     axios
-      .get('/auth/access', {
+      .get(`${process.env.REACT_APP_API_URL}/auth/access`, {
         headers: { Authorization: accessToken },
       })
       .then((res) => {
@@ -40,7 +40,7 @@ export const getAccessTokenFromLocal = () => {
           error?.response?.statusText === 'Unauthorized'
         ) {
           axios
-            .post('/auth/refresh', null, {
+            .post(`${process.env.REACT_APP_API_URL}/auth/refresh`, null, {
               headers: { Refresh: refreshToken },
             })
             .then((res) => {

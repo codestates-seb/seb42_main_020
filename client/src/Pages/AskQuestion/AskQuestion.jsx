@@ -137,7 +137,7 @@ const AskQuestion = () => {
   //받아온 데이터 받아온걸 종합하기
   const submitDataHandler = () => {
     axios
-      .post('/posts', questionData, {
+      .post(`${process.env.REACT_APP_API_URL}/posts`, questionData, {
         headers: {
           Authorization: token,
           // 'Content-Security-Policy': 'upgrade-insecure-requests',

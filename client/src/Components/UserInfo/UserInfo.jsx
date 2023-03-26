@@ -11,7 +11,7 @@ function UserInfo() {
 
   const getUserInfo = async () => {
     await axios
-      .get('/members', {
+      .get(`${process.env.REACT_APP_API_URL}/members`, {
         headers: {
           Authorization: accessToken,
         },
