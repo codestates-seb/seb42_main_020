@@ -1,4 +1,4 @@
-import SectionStyle from '../../Style/SectionStyle';
+import { SectionStyle } from '../../Style/SectionStyle';
 import PostTopic from './PostTopic';
 import Category from './Category';
 import PostSearch from './PostSearch';

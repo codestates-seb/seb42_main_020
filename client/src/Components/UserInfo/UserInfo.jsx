@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getAccessTokenFromLocal } from '../../util/Token';
-import UserInfoStyle from '../../Style/UserInfoStyle';
+import { UserInfoStyle } from '../../Style/UserInfoStyle';
 import UserCardProfile from './UserCardProfile';
 import UserMainProfile from './UserMainProfile';
 
