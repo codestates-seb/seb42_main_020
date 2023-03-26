@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
+import parse from 'html-react-parser';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import ReportModal from '../../Components/ReportModal/ReportModal';
-import { Modal, notification, Space } from 'antd';
+import { Modal, notification, Space, Rate } from 'antd';
 import { FaHeart } from 'react-icons/fa';
-// import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
+import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
 import {
   SReviewDetailContainer,
   SReviewDetailBlock,
@@ -30,6 +31,8 @@ const ReviewDetail = () => {
   const [reportModal, setReportModal] = useState(true);
   // 받아오는 정보 관리
   const [reviewData, setReviewData] = useState({});
+  // 별점 관리
+  const [stars, setStarts] = useState(null);
   // 작성자 정보 관리
   const [reviewFrom, setReviewFrom] = useState({});
   // 좋아요 알람 다루기
@@ -38,6 +41,11 @@ const ReviewDetail = () => {
   const [api, contextHolder] = notification.useNotification();
   // 좋아요 누른거 확인
   const [isLike, seIsLike] = useState(false);
+  // 서버에서 가져온 질문 내용
+  const [content, setContent] = useState('');
+
+  // 별점 관리
+  const desc = ['1점', '2점', '3점', '4점', '5점'];
 
   // 로그인 정보를 확인
   useEffect(() => {
@@ -46,12 +54,13 @@ const ReviewDetail = () => {
         title: '다나아',
         content: '로그인을 해주세요!',
         onOk() {
-          navigate('/home');
+          navigate('/login');
         },
       });
     }
   }, [setIsLogin]);
 
+  // 서버에서 데이터 받아오기
   useEffect(() => {
     axios({
       method: 'get',
@@ -59,28 +68,40 @@ const ReviewDetail = () => {
       headers: {
         'Content-Type': `application/json`,
         'ngrok-skip-browser-warning': '69420',
-        Authorization: `${token}`,
+        'Content-Security-Policy': 'upgrade-insecure-requests',
+        Authorization: token,
       },
     }).then((res) => {
       setReviewData(res.data);
       setReviewFrom(res.data.writerResponse);
+      setStarts(res.data.starRating);
+      setContent(res.data.content);
     });
   }, [setReviewData, isLike]);
 
   // 버튼 클릭시 좋아요 넣기
+
   const likeHandler = () => {
     // 게시글 작성자와 현재 유저가 같으면 작동 X
     if (reviewFrom?.memberId === userInfo[0]?.memberId) {
+      api.info({
+        message: `다나아`,
+        description: '본인의 게시글엔 좋아요를 할 수 없습니다!',
+        placement: 'top',
+      });
       setLikeModal(false);
-      return null;
     } else {
       axios({
         method: 'post',
         url: `/posts/${reviewData?.postId}/likes`,
-        headers: { Authorization: token },
+        headers: {
+          Authorization: token,
+          'Content-Security-Policy': 'upgrade-insecure-requests',
+        },
       })
         .then((res) => {
           seIsLike(true);
+          setLikeModal(false);
           console.log(res);
         })
         .catch((error) => {
@@ -139,14 +160,20 @@ const ReviewDetail = () => {
         </SReviewHeader>
         <SReviewHospitalInfo className="hopital-info">
           <span>{reviewData?.hospitalName}</span>
-          {/* 추 후에 서버작업 완료되면 수정 예정 */}
-          <span>⭐⭐⭐⭐⭐ ({reviewData?.starRating}) 점</span>
+          <span>
+            <Rate disabled value={stars} />
+            {stars ? (
+              <span className="ant-rate-text">{desc[stars - 1]}</span>
+            ) : (
+              ''
+            )}
+          </span>
         </SReviewHospitalInfo>
         <SReviewContent className="contents">
-          <p>{reviewData.content?.slice(3, -4)}~</p>
+          <div>{parse(content)}</div>
           <SReviewButtonBlock className="review-footer">
             {userInfo[0]?.memberId === reviewFrom?.memberId ? (
-              <button>
+              <button onClick={showLikeModal}>
                 <FaHeart /> {reviewData?.totalLike}
               </button>
             ) : (
@@ -162,7 +189,7 @@ const ReviewDetail = () => {
           </SReviewButtonBlock>
         </SReviewContent>
       </SReviewDetailBlock>
-      {/* <HospitalLocation reviewData={reviewData} /> */}
+      <HospitalLocation reviewData={reviewData} />
     </SReviewDetailContainer>
   );
 };

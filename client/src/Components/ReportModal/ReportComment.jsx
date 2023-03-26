@@ -14,7 +14,7 @@ import {
   SFailMessage,
 } from '../../Style/ReportModalStyle';
 
-const ReportCommentModal = ({ reportModalHandler, setReportModal }) => {
+const ReportCommentModal = ({ reportModalHandler, setReportModal, ele }) => {
   // 파람값
   const { postId } = useParams();
 
@@ -60,9 +60,10 @@ const ReportCommentModal = ({ reportModalHandler, setReportModal }) => {
   const handleOk = () => {
     if (textValid && reasonValid) {
       axios
-        .post(`/comments/1/report`, reportInfo, {
+        .post(`/comments/${ele.commentId}/report`, reportInfo, {
           headers: {
-            Authorization: `${token}`,
+            Authorization: token,
+            'Content-Security-Policy': 'upgrade-insecure-requests',
           },
         })
         .then((res) => {

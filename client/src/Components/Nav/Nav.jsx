@@ -8,7 +8,6 @@ const Nav = () => {
     <SNavContainer>
       <SNavBlock>
         <SNavContents>
-          {/* // 자세한 링크는 수정 예정 */}
           <Link to="/home">전체</Link>
         </SNavContents>
         <SNavContents>

@@ -43,8 +43,8 @@ function App() {
         <Route path="/home" element={<AllPost />} />
         <Route path="/home/question" element={<QuestionPosts />} />
         <Route path="/home/review" element={<ReviewPosts />} />
-        <Route path="/home/location" element={<LocationPosts />} />
-        <Route path="/home/subject" element={<SubjectsPosts />} />
+        <Route path="/home/location/:key" element={<LocationPosts />} />
+        <Route path="/home/subject/:key" element={<SubjectsPosts />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/medicalprovider" element={<DoctorSignup />} />
@@ -52,7 +52,7 @@ function App() {
         <Route path="/askquestion" element={<AskQuestion />} />
         <Route path="/review" element={<Review />} />
         <Route path="/home/question/:postId" element={<QuestionDetail />} />
-        <Route path="/home/review/:postId/" element={<ReviewDetail />} />
+        <Route path="/home/review/:postId" element={<ReviewDetail />} />
         <Route path="/home/question/edit/:postId" element={<EditQuestion />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>

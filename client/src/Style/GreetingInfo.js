@@ -14,6 +14,11 @@ export const SBackgroundLayout = styled.div`
   * {
     text-decoration: none;
   }
+  @media only screen and (max-width: 500px) {
+    background-image: url(${landingTitle});
+    background-size: contain;
+    height: 290px;
+  }
 `;
 
 export const SGradiant = styled.div`
@@ -21,6 +26,9 @@ export const SGradiant = styled.div`
   height: 180px;
   background: linear-gradient(180deg, var(--white), rgb(255 255 255 / 9%));
   position: absolute;
+  @media only screen and (max-width: 500px) {
+    display: none;
+  }
 `;
 
 export const STextInfoSection = styled.div`
@@ -39,6 +47,25 @@ export const STextInfoSection = styled.div`
     font-size: 30px;
     font-weight: 500;
   }
+  @media only screen and (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 50px;
+    color: var(--gray-900);
+    margin: 0 0 0 0;
+    h1 {
+      font-size: 35px;
+      font-weight: 500;
+      padding-bottom: 25px;
+    }
+    h2 {
+      font-size: 15px;
+      font-weight: 500;
+      padding-bottom: 40px;
+    }
+  }
 `;
 
 export const SBtnSection = styled.div`
@@ -55,6 +82,9 @@ export const SBtnSection = styled.div`
       cursor: pointer;
       background-color: rgba(0, 12, 30, 0.5);
     }
+  }
+  @media only screen and (max-width: 500px) {
+    top: -90px;
   }
 `;
 
@@ -75,5 +105,8 @@ export const SNavigateBtnSection = styled.div`
   svg {
     color: var(--gray-900);
     animation: ${motion} 0.5s linear 0s infinite alternate;
+  }
+  @media only screen and (max-width: 500px) {
+    display: none;
   }
 `;

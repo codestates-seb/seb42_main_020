@@ -85,9 +85,9 @@ export const SReviewContent = styled.div`
   flex-direction: column;
   width: 100%;
 
-  > p {
+  > div:first-child {
     font-size: 18px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
 `;
 

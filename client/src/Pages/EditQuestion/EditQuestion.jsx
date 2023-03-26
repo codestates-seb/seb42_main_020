@@ -58,7 +58,8 @@ const EditQuestion = () => {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
-          Authorization: `${token}`,
+          'Content-Security-Policy': 'upgrade-insecure-requests',
+          Authorization: token,
         },
       })
       .then((res) => {
@@ -141,7 +142,10 @@ const EditQuestion = () => {
 
     axios
       .patch(`/posts/${postId}`, questionData, {
-        headers: { Authorization: token },
+        headers: {
+          Authorization: token,
+          'Content-Security-Policy': 'upgrade-insecure-requests',
+        },
       })
       .then((res) => {
         console.log(res);
