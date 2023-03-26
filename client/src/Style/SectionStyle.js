@@ -13,7 +13,7 @@ export const SSectionBlock = styled.div`
 export const SectionStyle = styled.div`
   display: flex;
   flex-direction: column;
-  width: 85%;
+  width: 75%;
   height: 100%;
   min-height: 100%;
   margin-bottom: 100px;

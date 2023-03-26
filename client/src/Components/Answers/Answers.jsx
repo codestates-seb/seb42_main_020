@@ -17,6 +17,7 @@ import {
   SAnswerUserInfoBlock,
   SAnswerButtonBlock,
 } from '../../Style/QuestionDetailStyle';
+import { SAnswerTextBlock } from '../../Style/Answer';
 
 // import { SButtonBlock } from '../../Style/Answer';
 
@@ -243,7 +244,7 @@ const Answers = ({
         </SAnswerInfoBlock>
         <div className="answer-contents-block">
           {/* <p>{ele?.content?.slice(3, -4)}</p> */}
-          <div>{parse(ele.content)}</div>
+          <SAnswerTextBlock>{parse(ele.content)}</SAnswerTextBlock>
         </div>
         <SAnswerButtonBlock className="answer-button-block">
           <button
