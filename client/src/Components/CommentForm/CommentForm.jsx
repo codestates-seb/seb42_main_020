@@ -2,6 +2,7 @@ import ReactQuill from 'react-quill';
 import axios from 'axios';
 import { useState } from 'react';
 import { Modal } from 'antd';
+import { getAccessTokenFromLocal } from '../../util/Token';
 
 import 'react-quill/dist/quill.bubble.css';
 import {
@@ -16,7 +17,7 @@ import {
 } from '../../Style/CommentFormStyle';
 
 const CommentForm = ({ setPostComment, postId }) => {
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
 
   const [comment, setComment] = useState();
   const [commentValid, setCommentValid] = useState(false);

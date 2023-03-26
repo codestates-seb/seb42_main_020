@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { getAccessTokenFromLocal } from '../../util/Token';
 import UserInfoStyle from '../../Style/UserInfoStyle';
 import UserCardProfile from './UserCardProfile';
 import UserMainProfile from './UserMainProfile';
@@ -8,7 +9,7 @@ function UserInfo() {
   const [userInfo, setUserInfo] = useState([]);
 
   const getUserInfo = async () => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessTokenFromLocal();
     await axios
       .get('/members', {
         headers: {
