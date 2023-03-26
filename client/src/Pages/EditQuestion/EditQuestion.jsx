@@ -46,7 +46,7 @@ const EditQuestion = () => {
   const [locationValid, setLocationValid] = useState(false);
   // 진료 과목 입력값
   const [medicalTagTitle, setMedicalTagTitle] = useState('진료과목');
-  // // 진료 과목 유효값
+  // 진료 과목 유효값
   const [medicalTagTitleValid, setMedicalTagTitleValid] = useState(false);
   // 지역,타입 유효성 실패 메시지
   const [validFailMessage, setValidFailMessage] = useState('');
@@ -149,9 +149,7 @@ const EditQuestion = () => {
           'Content-Security-Policy': 'upgrade-insecure-requests',
         },
       })
-      .then((res) => {
-        console.log(res);
-      });
+      .then(() => {});
     Modal.success({
       content: '질문이 수정되었습니다.',
       onOk() {

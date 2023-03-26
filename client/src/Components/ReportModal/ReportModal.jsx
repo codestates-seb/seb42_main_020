@@ -74,9 +74,7 @@ const ReportModal = ({ reportModalHandler, setReportModal }) => {
             // 'Content-Security-Policy': 'upgrade-insecure-requests',
           },
         })
-        .then((res) => {
-          console.log(res);
-        });
+        .then(() => {});
       setIsModalOpen(false);
       setReportModal(false);
       navigate(`/home`);

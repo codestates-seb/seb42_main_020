@@ -179,9 +179,8 @@ const QuestionDetail = () => {
           // 'Content-Security-Policy': 'upgrade-insecure-requests',
         },
       })
-        .then((res) => {
+        .then(() => {
           // location.reload();
-          console.log(res);
           setIsLike(true);
           setLikeModal(false);
         })
