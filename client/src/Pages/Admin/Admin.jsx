@@ -54,7 +54,7 @@ const Admin = () => {
     try {
       const res = await axios({
         method: 'patch',
-        url: `/doctors/${memberId}/approval`,
+        url: `${process.env.REACT_APP_API_URL}/doctors/${memberId}/approval`,
       });
       console.log(res);
       if (res.status === 200) {
@@ -69,7 +69,7 @@ const Admin = () => {
     try {
       const res = await axios({
         method: 'patch',
-        url: `/reviews/${postId}/approval`,
+        url: `${process.env.REACT_APP_API_URL}/reviews/${postId}/approval`,
       });
       if (res.status === 200) {
         // 승인 성공
@@ -83,7 +83,7 @@ const Admin = () => {
     try {
       const res = await axios({
         method: 'post',
-        url: `/admin/hospital`,
+        url: `${process.env.REACT_APP_API_URL}/admin/hospital`,
         data: {
           name: hospitalName,
           phone: hospitalContact,
@@ -103,7 +103,7 @@ const Admin = () => {
     try {
       const res = await axios({
         method: 'patch',
-        url: `/admin/members/${memberId}?hospitalName=${hospitalName}`,
+        url: `${process.env.REACT_APP_API_URL}/admin/members/${memberId}?hospitalName=${hospitalName}`,
       });
       if (res.status === 200) {
         // 승인 성공
@@ -118,7 +118,7 @@ const Admin = () => {
     try {
       const res = await axios({
         method: 'patch',
-        url: `/admin/posts/${postId}?hospitalName=${hospitalName}`,
+        url: `${process.env.REACT_APP_API_URL}/admin/posts/${postId}?hospitalName=${hospitalName}`,
       });
       if (res.status === 200) {
         // 승인 성공
@@ -131,7 +131,7 @@ const Admin = () => {
   const handleClickMemLsit = () => {
     axios({
       method: 'get',
-      url: '/admin',
+      url: `${process.env.REACT_APP_API_URL}/admin`,
       headers: {
         'ngrok-skip-browser-warning': '69420',
       },

@@ -55,7 +55,7 @@ const Login = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('/login', {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/login`, {
         email: email,
         password: password,
       });
@@ -65,11 +65,14 @@ const Login = () => {
       // token이 필요한 API 요청 시 header Authorization에 token 담아서 보내기
       axios.defaults.headers.common['Authorization'] = `${accessToken}`;
       try {
-        const userInfoRes = await axios.get('members', {
-          headers: {
-            'ngrok-skip-browser-warning': 'skip', // ngrok error skip용 헤더 추후 삭제 예정
-          },
-        });
+        const userInfoRes = await axios.get(
+          `${process.env.REACT_APP_API_URL}/members`,
+          {
+            headers: {
+              'ngrok-skip-browser-warning': 'skip', // ngrok error skip용 헤더 추후 삭제 예정
+            },
+          }
+        );
         localStorage.setItem('loggedUserInfo', userInfoRes.data);
         setUserInfo(userInfoRes.data);
       } catch (error) {

@@ -16,7 +16,7 @@ function UserPostPagination() {
 
   const getUserPost = async () => {
     await axios
-      .get('/members', {
+      .get(`${process.env.REACT_APP_API_URL}/members`, {
         headers: {
           Authorization: accessToken,
         },

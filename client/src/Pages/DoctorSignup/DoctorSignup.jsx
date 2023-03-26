@@ -63,11 +63,15 @@ const DoctorSignup = () => {
     );
 
     try {
-      await axios.post('/doctors/signup', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/doctors/signup`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
       // 운영진 승인 안내 모달
       lockScroll();
       setIsOpenAutoModal(!isOpenAutoModal);

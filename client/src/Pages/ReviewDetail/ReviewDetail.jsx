@@ -65,7 +65,7 @@ const ReviewDetail = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `/posts/${postId}`,
+      url: `${process.env.REACT_APP_API_URL}/posts/${postId}`,
       headers: {
         'Content-Type': `application/json`,
         'ngrok-skip-browser-warning': '69420',
@@ -94,7 +94,7 @@ const ReviewDetail = () => {
     } else {
       axios({
         method: 'post',
-        url: `/posts/${reviewData?.postId}/likes`,
+        url: `${process.env.REACT_APP_API_URL}/posts/${reviewData?.postId}/likes`,
         headers: {
           Authorization: token,
           'Content-Security-Policy': 'upgrade-insecure-requests',

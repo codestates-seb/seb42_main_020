@@ -41,12 +41,15 @@ const Signup = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('members/signup', {
-        email,
-        name,
-        displayName,
-        password,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/members/signup`,
+        {
+          email,
+          name,
+          displayName,
+          password,
+        }
+      );
       if (res.status === 201) {
         navigate('/login');
       }

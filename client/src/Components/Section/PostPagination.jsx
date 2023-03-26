@@ -15,15 +15,18 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
 
   const locationGetPost = async () => {
     if (!isFiltered) {
-      const response = await axios.get('/posts', {
-        headers: {
-          'ngrok-skip-browser-warning': 'skip',
-        },
-        params: {
-          region: topicName,
-          page: currentPage === 0 ? 0 : currentPage - 1,
-        },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/posts`,
+        {
+          headers: {
+            'ngrok-skip-browser-warning': 'skip',
+          },
+          params: {
+            region: topicName,
+            page: currentPage === 0 ? 0 : currentPage - 1,
+          },
+        }
+      );
       setPosts(response.data);
       setTotal(response.data.pageInfo.totalElements);
       setIsFiltered(() => false);
@@ -31,15 +34,18 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
   };
   const subjectGetPost = async () => {
     if (!isFiltered) {
-      const response = await axios.get('/posts', {
-        headers: {
-          'ngrok-skip-browser-warning': 'skip',
-        },
-        params: {
-          medicalTag: topicName,
-          page: currentPage === 0 ? 0 : currentPage - 1,
-        },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/posts`,
+        {
+          headers: {
+            'ngrok-skip-browser-warning': 'skip',
+          },
+          params: {
+            medicalTag: topicName,
+            page: currentPage === 0 ? 0 : currentPage - 1,
+          },
+        }
+      );
       setPosts(response.data);
       setTotal(response.data.pageInfo.totalElements);
       setIsFiltered(() => false);
@@ -50,14 +56,17 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
     switch (topicName) {
       case '전체':
         if (!isFiltered) {
-          const response = await axios.get('/posts', {
-            headers: {
-              'ngrok-skip-browser-warning': 'skip',
-            },
-            params: {
-              page: currentPage === 0 ? 0 : currentPage - 1,
-            },
-          });
+          const response = await axios.get(
+            `${process.env.REACT_APP_API_URL}/posts`,
+            {
+              headers: {
+                'ngrok-skip-browser-warning': 'skip',
+              },
+              params: {
+                page: currentPage === 0 ? 0 : currentPage - 1,
+              },
+            }
+          );
           setPosts(response.data);
           setTotal(response.data.pageInfo.totalElements);
           setIsFiltered(() => false);
@@ -65,15 +74,18 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
         break;
       case '질문':
         if (!isFiltered) {
-          const response = await axios.get('/posts', {
-            headers: {
-              'ngrok-skip-browser-warning': 'skip',
-            },
-            params: {
-              postType: 'question',
-              page: currentPage === 0 ? 0 : currentPage - 1,
-            },
-          });
+          const response = await axios.get(
+            `${process.env.REACT_APP_API_URL}/posts`,
+            {
+              headers: {
+                'ngrok-skip-browser-warning': 'skip',
+              },
+              params: {
+                postType: 'question',
+                page: currentPage === 0 ? 0 : currentPage - 1,
+              },
+            }
+          );
           setPosts(response.data);
           setTotal(response.data.pageInfo.totalElements);
           setIsFiltered(() => false);
@@ -81,15 +93,18 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
         break;
       case '리뷰':
         if (!isFiltered) {
-          const response = await axios.get('/posts', {
-            headers: {
-              'ngrok-skip-browser-warning': 'skip',
-            },
-            params: {
-              postType: 'review',
-              page: currentPage === 0 ? 0 : currentPage - 1,
-            },
-          });
+          const response = await axios.get(
+            `${process.env.REACT_APP_API_URL}/posts`,
+            {
+              headers: {
+                'ngrok-skip-browser-warning': 'skip',
+              },
+              params: {
+                postType: 'review',
+                page: currentPage === 0 ? 0 : currentPage - 1,
+              },
+            }
+          );
           setPosts(response.data);
           setTotal(response.data.pageInfo.totalElements);
           setIsFiltered(() => false);

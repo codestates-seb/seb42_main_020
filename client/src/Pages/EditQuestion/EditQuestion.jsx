@@ -56,7 +56,7 @@ const EditQuestion = () => {
   // 데이터 받아오기
   useEffect(() => {
     axios
-      .get(`/posts/${postId}`, {
+      .get(`${process.env.REACT_APP_API_URL}/posts/${postId}`, {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
@@ -143,7 +143,7 @@ const EditQuestion = () => {
     }
 
     axios
-      .patch(`/posts/${postId}`, questionData, {
+      .patch(`${process.env.REACT_APP_API_URL}/posts/${postId}`, questionData, {
         headers: {
           Authorization: token,
           'Content-Security-Policy': 'upgrade-insecure-requests',

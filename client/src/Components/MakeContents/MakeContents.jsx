@@ -21,7 +21,7 @@ const MakeContents = () => {
   const reviewClickHandler = () => {
     if (userInfo[0]?.doctor) {
       api.info({
-        message: `OOPS, SORRY`,
+        message: `다나아`,
         description: '죄송합니다! 전문가는 게시글을 작성하실 수 없습니다.',
         placement: 'top',
       });
@@ -34,7 +34,7 @@ const MakeContents = () => {
   const questionClickHandler = () => {
     if (userInfo[0]?.doctor) {
       api.info({
-        message: `OOPS, SORRY`,
+        message: `다나아`,
         description: '죄송합니다! 전문가는 게시글을 작성하실 수 없습니다.',
         placement: 'top',
       });
