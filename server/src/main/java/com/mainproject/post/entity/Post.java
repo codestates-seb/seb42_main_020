@@ -32,7 +32,7 @@ public class Post extends Auditable {
     private String title;
 
     // 본문
-    @Column(name = "CONTENT", length = 1000, nullable = false)
+    @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
     // 리뷰용 병원 이름

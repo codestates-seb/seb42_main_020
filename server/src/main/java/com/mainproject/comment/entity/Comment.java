@@ -28,7 +28,7 @@ public class Comment extends Auditable {
     private Long commentId;
 
     // 댓글 본문
-    @Column(length = 50, nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Column(name = "TOTAL_LIKE")

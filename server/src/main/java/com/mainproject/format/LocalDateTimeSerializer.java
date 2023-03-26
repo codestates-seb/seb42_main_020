@@ -1,4 +1,4 @@
-package com.mainproject.page;
+package com.mainproject.format;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

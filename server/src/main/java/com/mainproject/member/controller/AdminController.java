@@ -66,4 +66,28 @@ public class AdminController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/members/{member-id}")
+    public ResponseEntity deleteMember(@PathVariable("member-id") long memberId) {
+
+        adminService.deleteMember(memberId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/posts/{post-id}")
+    public ResponseEntity deletePost(@PathVariable("post-id") long postId) {
+
+        adminService.deletePost(postId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/comments/{comment-id}")
+    public ResponseEntity deleteComment(@PathVariable("comment-id") long commentId) {
+
+        adminService.deleteComment(commentId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

@@ -20,10 +20,10 @@ public class CommentReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long commentReportId;
 
-    @Column(name = "REASON",columnDefinition = "TEXT", nullable = false)
+    @Column(name = "REASON", columnDefinition = "TEXT", nullable = false)
     private String reason;
 
-    @Column(name = "CONTENT",columnDefinition = "TEXT", nullable = false)
+    @Column(name = "CONTENT", columnDefinition = "TEXT", nullable = false)
     private String content;
 
     private LocalDateTime createdAt;

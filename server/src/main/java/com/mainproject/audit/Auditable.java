@@ -1,7 +1,7 @@
 package com.mainproject.audit;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.mainproject.page.LocalDateTimeSerializer;
+import com.mainproject.format.LocalDateTimeSerializer;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;

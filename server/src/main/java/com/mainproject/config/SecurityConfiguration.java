@@ -61,6 +61,7 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.POST, "/doctors/signup").permitAll()
                         // 로그인
                         .antMatchers("/login").permitAll()
+                        .antMatchers("/admin/**").hasRole("ADMIN")
                 );
         return http.build();
     }
