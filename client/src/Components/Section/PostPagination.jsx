@@ -231,7 +231,6 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
   const handlePageChange = (page, pageSize) => {
     setCurrentPage(page);
     setPageSize(pageSize);
-    console.log(currentPage);
   };
 
   return (
