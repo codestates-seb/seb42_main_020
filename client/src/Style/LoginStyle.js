@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SMain = styled.main`
-  width: 1920px;
+  width: 100vw;
   height: 1000px;
   display: flex;
   flex-direction: row;

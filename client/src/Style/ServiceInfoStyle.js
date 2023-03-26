@@ -58,7 +58,7 @@ export const SIntroduceImg3 = styled(SIntroduceImg1)`
 `;
 
 export const STextIntroduceSection = styled.div`
-  width: 400px;
+  width: 485px;
   @media only screen and (max-width: 500px) {
     height: 300px;
   }

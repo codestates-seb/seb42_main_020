@@ -17,6 +17,7 @@ import {
   SContentSection,
   SCallBtnSection,
 } from '../../Style/AdminStyle';
+import { getAccessTokenFromLocal } from '../../util/Token';
 
 const Admin = () => {
   const [memberId, setMemberId] = useState('');
@@ -50,11 +51,14 @@ const Admin = () => {
     setHospitalAddress(e.target.value);
   };
 
+  const accessToken = getAccessTokenFromLocal();
+
   const handleDocRegiSubmit = async () => {
     try {
       const res = await axios({
         method: 'patch',
         url: `${process.env.REACT_APP_API_URL}/doctors/${memberId}/approval`,
+        headers: { Authorization: accessToken },
       });
       console.log(res);
       if (res.status === 200) {
@@ -70,6 +74,7 @@ const Admin = () => {
       const res = await axios({
         method: 'patch',
         url: `${process.env.REACT_APP_API_URL}/reviews/${postId}/approval`,
+        headers: { Authorization: accessToken },
       });
       if (res.status === 200) {
         // 승인 성공
@@ -104,6 +109,7 @@ const Admin = () => {
       const res = await axios({
         method: 'patch',
         url: `${process.env.REACT_APP_API_URL}/admin/members/${memberId}?hospitalName=${hospitalName}`,
+        headers: { Authorization: accessToken },
       });
       if (res.status === 200) {
         // 승인 성공
@@ -119,6 +125,7 @@ const Admin = () => {
       const res = await axios({
         method: 'patch',
         url: `${process.env.REACT_APP_API_URL}/admin/posts/${postId}?hospitalName=${hospitalName}`,
+        headers: { Authorization: accessToken },
       });
       if (res.status === 200) {
         // 승인 성공
@@ -132,13 +139,59 @@ const Admin = () => {
     axios({
       method: 'get',
       url: `${process.env.REACT_APP_API_URL}/admin`,
-      headers: {
-        'ngrok-skip-browser-warning': '69420',
-      },
+      headers: { Authorization: accessToken },
     }).then((res) => {
       setPendingReviewList(res.data);
       setPendingMemberList(res.data);
     });
+  };
+
+  // 회원 삭제
+  const handleMemberDeleteSubmit = async () => {
+    try {
+      const res = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_API_URL}/admin/members/${memberId}`,
+        headers: { Authorization: accessToken },
+      });
+      if (res.status === 200) {
+        // 승인 성공
+      }
+    } catch (error) {
+      console.log('Error!', error);
+    }
+  };
+
+  // 게시글 삭제
+  const handlePostDeleteSubmit = async () => {
+    try {
+      const res = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_API_URL}/admin/posts/${postId}`,
+        headers: { Authorization: accessToken },
+      });
+      if (res.status === 200) {
+        // 승인 성공
+      }
+    } catch (error) {
+      console.log('Error!', error);
+    }
+  };
+
+  // 댓글 삭제
+  const handleCommentDeleteSubmit = async () => {
+    try {
+      const res = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_API_URL}/admin/comments/${postId}`,
+        headers: { Authorization: accessToken },
+      });
+      if (res.status === 200) {
+        // 승인 성공
+      }
+    } catch (error) {
+      console.log('Error!', error);
+    }
   };
 
   return (
@@ -221,6 +274,33 @@ const Admin = () => {
                 <SInput onChange={handleChangePost} placeholder="post-id" />
               </SForm>
               <SSubmitBtn onClick={handleReviewPostSubmit}>승인</SSubmitBtn>
+            </SContent>
+            <SContent>
+              <SSubTitle>회원 삭제</SSubTitle>
+              <SSubText>회원의 멤버 아이디를 입력해 주세요</SSubText>
+              <SForm>
+                <SInput
+                  onChange={handleChangeDocRegi}
+                  placeholder="member-id"
+                />
+              </SForm>
+              <SSubmitBtn onClick={handleMemberDeleteSubmit}>승인</SSubmitBtn>
+            </SContent>
+            <SContent>
+              <SSubTitle>게시글 삭제</SSubTitle>
+              <SSubText>게시물의 ID 입력해 주세요</SSubText>
+              <SForm>
+                <SInput onChange={handleChangePost} placeholder="post-id" />
+              </SForm>
+              <SSubmitBtn onClick={handlePostDeleteSubmit}>승인</SSubmitBtn>
+            </SContent>
+            <SContent>
+              <SSubTitle>댓글 삭제</SSubTitle>
+              <SSubText>게시물의 ID 입력해 주세요</SSubText>
+              <SForm>
+                <SInput onChange={handleChangePost} placeholder="comment-id" />
+              </SForm>
+              <SSubmitBtn onClick={handleCommentDeleteSubmit}>승인</SSubmitBtn>
             </SContent>
           </div>
           <SItemListSection>
