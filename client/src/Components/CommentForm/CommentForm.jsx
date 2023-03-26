@@ -66,12 +66,16 @@ const CommentForm = ({ setPostComment, postId }) => {
 
   const submitHandler = () => {
     axios
-      .post(`/comments/?post-id=${postId}`, submitData, {
-        headers: {
-          Authorization: token,
-          'Content-Security-Policy': 'upgrade-insecure-requests',
-        },
-      })
+      .post(
+        `${process.env.REACT_APP_API_URL}/comments/?post-id=${postId}`,
+        submitData,
+        {
+          headers: {
+            Authorization: token,
+            'Content-Security-Policy': 'upgrade-insecure-requests',
+          },
+        }
+      )
       .then(() => {
         setPostComment(false);
         setSubmitModal(false);

@@ -241,7 +241,7 @@ const Review = () => {
       );
 
       axios
-        .post('/reviews', formData, {
+        .post(`${process.env.REACT_APP_API_URL}/reviews`, formData, {
           //이미지와 json파일이 가기때문에
           headers: {
             'Content-Type': 'multipart/form-data',

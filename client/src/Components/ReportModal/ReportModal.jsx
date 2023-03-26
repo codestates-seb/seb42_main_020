@@ -68,12 +68,16 @@ const ReportModal = ({ reportModalHandler, setReportModal }) => {
   const handleOk = () => {
     if (textValid && reasonValid) {
       axios
-        .post(`/posts/${postId}/report`, reportInfo, {
-          headers: {
-            Authorization: token,
-            // 'Content-Security-Policy': 'upgrade-insecure-requests',
-          },
-        })
+        .post(
+          `${process.env.REACT_APP_API_URL}/posts/${postId}/report`,
+          reportInfo,
+          {
+            headers: {
+              Authorization: token,
+              // 'Content-Security-Policy': 'upgrade-insecure-requests',
+            },
+          }
+        )
         .then(() => {});
       setIsModalOpen(false);
       setReportModal(false);

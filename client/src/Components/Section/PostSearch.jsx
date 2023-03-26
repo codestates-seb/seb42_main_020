@@ -14,7 +14,7 @@ function PostSearch({ topicName }) {
       switch (action.type) {
         case 'titleContent':
           return await axios
-            .get('/posts', {
+            .get(`${process.env.REACT_APP_API_URL}/posts`, {
               headers: {
                 'ngrok-skip-browser-warning': 'skip',
               },
@@ -30,7 +30,7 @@ function PostSearch({ topicName }) {
             .catch((err) => Promise.reject(new Error(err)));
         case 'title':
           return await axios
-            .get('/posts', {
+            .get(`${process.env.REACT_APP_API_URL}/posts`, {
               headers: {
                 'ngrok-skip-browser-warning': 'skip',
               },
@@ -46,7 +46,7 @@ function PostSearch({ topicName }) {
             .catch((err) => Promise.reject(new Error(err)));
         case 'content':
           return await axios
-            .get('/posts', {
+            .get(`${process.env.REACT_APP_API_URL}/posts`, {
               headers: {
                 'ngrok-skip-browser-warning': 'skip',
               },
@@ -62,7 +62,7 @@ function PostSearch({ topicName }) {
             .catch((err) => Promise.reject(new Error(err)));
         case 'user':
           return await axios
-            .get('/posts', {
+            .get(`${process.env.REACT_APP_API_URL}/posts`, {
               headers: {
                 'ngrok-skip-browser-warning': 'skip',
               },

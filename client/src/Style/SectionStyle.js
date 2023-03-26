@@ -18,4 +18,7 @@ export const SectionStyle = styled.div`
   min-height: 100%;
   margin-bottom: 100px;
   margin-top: 100px;
+  background-color: var(--white);
+  padding: 30px 25px;
+  border-radius: 20px;
 `;

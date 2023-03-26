@@ -55,10 +55,10 @@ const Answers = ({
   const handleOk = () => {
     axios({
       method: 'delete',
-      url: `/comments/${ele.commentId}`,
+      url: `${process.env.REACT_APP_API_URL}/comments/${ele.commentId}`,
       headers: {
         Authorization: token,
-        // 'Content-Security-Policy': 'upgrade-insecure-requests',
+        'Content-Security-Policy': 'upgrade-insecure-requests',
       },
     }).then((res) => {
       console.log(res);
@@ -90,7 +90,7 @@ const Answers = ({
   const choiceHandler = () => {
     axios({
       method: 'patch',
-      url: `/posts/${postId}/comments/${ele.commentId}`,
+      url: `${process.env.REACT_APP_API_URL}/posts/${postId}/comments/${ele.commentId}`,
       headers: {
         Authorization: token,
         // 'Content-Security-Policy': 'upgrade-insecure-requests',
@@ -125,7 +125,6 @@ const Answers = ({
 
   // 좋아요 모달 + axios
   const commentLikeHandler = (id) => {
-    console.log('상태', userInfo[0]?.memberId, commentFrom?.memberId);
     if (userInfo[0]?.memberId === commentFrom?.memberId) {
       api.info({
         message: `다나아`,
@@ -136,7 +135,7 @@ const Answers = ({
     } else {
       axios({
         method: 'post',
-        url: `/comments/${id}/likes`,
+        url: `${process.env.REACT_APP_API_URL}/comments/${id}/likes`,
         headers: {
           Authorization: token,
           // 'Content-Security-Policy': 'upgrade-insecure-requests',

@@ -24,7 +24,7 @@ const EditUserInfo = ({ handleModal, isOpenModal, setIsOpenModal }) => {
   const handleSubmit = async () => {
     try {
       const res = await axios.patch(
-        '/members',
+        `${process.env.REACT_APP_API_URL}/members`,
         {
           displayName,
           password,

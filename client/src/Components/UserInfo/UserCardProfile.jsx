@@ -39,7 +39,7 @@ function UserCardProfile({ userInfo }) {
     try {
       await axios({
         method: 'DELETE',
-        url: '/members',
+        url: `${process.env.REACT_APP_API_URL}/members`,
         headers: { Authorization: token },
       });
     } catch (error) {

@@ -61,12 +61,16 @@ const ReportCommentModal = ({ reportModalHandler, setReportModal, ele }) => {
   const handleOk = () => {
     if (textValid && reasonValid) {
       axios
-        .post(`/comments/${ele.commentId}/report`, reportInfo, {
-          headers: {
-            Authorization: token,
-            'Content-Security-Policy': 'upgrade-insecure-requests',
-          },
-        })
+        .post(
+          `${process.env.REACT_APP_API_URL}/comments/${ele.commentId}/report`,
+          reportInfo,
+          {
+            headers: {
+              Authorization: token,
+              'Content-Security-Policy': 'upgrade-insecure-requests',
+            },
+          }
+        )
         .then((res) => {
           console.log(res);
         });
