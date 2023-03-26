@@ -7,17 +7,19 @@ import UserMainProfile from './UserMainProfile';
 
 function UserInfo() {
   const [userInfo, setUserInfo] = useState([]);
+  const accessToken = getAccessTokenFromLocal();
 
   const getUserInfo = async () => {
-    const accessToken = getAccessTokenFromLocal();
     await axios
       .get('/members', {
         headers: {
-          'ngrok-skip-browser-warning': 'skip',
           Authorization: accessToken,
         },
       })
-      .then((res) => setUserInfo(res.data));
+      .then((res) => {
+        console.log(res);
+        setUserInfo(res.data);
+      });
   };
 
   useEffect(() => {
