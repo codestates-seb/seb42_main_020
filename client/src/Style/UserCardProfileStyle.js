@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 
 export const UserCardProfileStyle = styled.aside`
+  background-color: white;
   display: flex;
   flex-direction: column;
   width: 300px;
   height: 100%;
   border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
-    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  box-shadow: var(--big-box);
 `;
 
 export const SName = styled.div`

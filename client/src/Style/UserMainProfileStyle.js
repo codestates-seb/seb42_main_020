@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 export const UserMainProfileStyle = styled.main`
+  background-color: white;
   display: flex;
   flex-direction: column;
   width: 1200px;
   margin-left: 50px;
   border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
-    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  box-shadow: var(--big-box);
+
   & > * {
     width: 95%;
     display: flex;
