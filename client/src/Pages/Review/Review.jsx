@@ -265,11 +265,14 @@ const Review = () => {
     setIsPostModalOpen(false);
     navigate('/home');
   };
+
   const handleCancel = () => {
     setIsPostModalOpen(false);
   };
 
-  console.log(reviewData);
+  const handlePostCancel = () => {
+    navigate('/home');
+  };
 
   return (
     <SAskQuestionContainer>
@@ -350,7 +353,7 @@ const Review = () => {
         </SImgBlock>
         <SValidFail>{recipteValid ? null : recipteMessage}</SValidFail>
         <SButtonBlock>
-          <SCancalButton>취 소</SCancalButton>
+          <SCancalButton onClick={handlePostCancel}>취 소</SCancalButton>
           <SSubmitButton onClick={submitDataHandler}>작 성</SSubmitButton>
         </SButtonBlock>
       </SAskQuestionBlock>

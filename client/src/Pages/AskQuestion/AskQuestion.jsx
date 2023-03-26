@@ -183,6 +183,10 @@ const AskQuestion = () => {
     setSubmitModal(false);
   };
 
+  const handlePostCancel = () => {
+    navigate('/home');
+  };
+
   return (
     <SAskQuestionContainer>
       <Space wrap></Space>
@@ -227,7 +231,7 @@ const AskQuestion = () => {
         <TextEditor handleText={handleText} value={questionContent} />
         <SValidFail> {textValid ? null : textMessage}</SValidFail>
         <SButtonBlock>
-          <SCancalButton>취소</SCancalButton>
+          <SCancalButton onClick={handlePostCancel}>취소</SCancalButton>
           <SSubmitButton onClick={showSubmitModal}>작성</SSubmitButton>
         </SButtonBlock>
       </SAskQuestionBlock>
