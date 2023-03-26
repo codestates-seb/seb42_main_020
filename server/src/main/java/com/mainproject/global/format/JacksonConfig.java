@@ -1,4 +1,4 @@
-package com.mainproject.format;
+package com.mainproject.global.format;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
