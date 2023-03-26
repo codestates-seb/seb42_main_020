@@ -63,12 +63,11 @@ const DoctorSignup = () => {
     );
 
     try {
-      const res = await axios.post('/doctors/signup', formData, {
+      await axios.post('/doctors/signup', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(res);
       // 운영진 승인 안내 모달
       lockScroll();
       setIsOpenAutoModal(!isOpenAutoModal);
@@ -173,7 +172,7 @@ const DoctorSignup = () => {
   useEffect(() => {
     if (isFocus)
       messageApi.open({
-        type: 'warning',
+        type: '다나아',
         content: nameMsg || emailMsg || passwordMsg || '내용을 입력해 주세요',
       });
   }, [isFocus]);
@@ -182,7 +181,7 @@ const DoctorSignup = () => {
   useEffect(() => {
     if (isError)
       noticeApi.info({
-        message: `Notification`,
+        message: `다나아`,
         description: '이미 가입 완료된 이메일 입니다',
         placement: 'top',
       });

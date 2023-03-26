@@ -72,8 +72,7 @@ const CommentForm = ({ setPostComment, postId }) => {
           'Content-Security-Policy': 'upgrade-insecure-requests',
         },
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         setPostComment(false);
         setSubmitModal(false);
       });

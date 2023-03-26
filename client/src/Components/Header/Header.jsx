@@ -77,7 +77,6 @@ function Header() {
               <SPrivateContent>
                 <SMyInfo>
                   <SNotification>
-                    {/* <Badge dot /> */}
                     <BellOutlined />
                   </SNotification>
                   <Popover

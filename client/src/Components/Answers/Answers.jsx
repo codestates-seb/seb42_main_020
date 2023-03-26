@@ -49,7 +49,7 @@ const Answers = ({
 
   // 좋아요 중복 경고 창
   const [api, contextHolder] = notification.useNotification();
-  console.log(questionData);
+
   // 삭제 모달 관리
   const handleOk = () => {
     axios({
@@ -94,8 +94,7 @@ const Answers = ({
         Authorization: token,
         // 'Content-Security-Policy': 'upgrade-insecure-requests',
       },
-    }).then((res) => {
-      console.log(res);
+    }).then(() => {
       setSelected(true);
       setSelectModal(false);
     });
@@ -142,10 +141,9 @@ const Answers = ({
           // 'Content-Security-Policy': 'upgrade-insecure-requests',
         },
       })
-        .then((res) => {
+        .then(() => {
           setCommetLike(true);
           setLikeModal(false);
-          console.log(res);
         })
         .catch((error) => {
           api.info({

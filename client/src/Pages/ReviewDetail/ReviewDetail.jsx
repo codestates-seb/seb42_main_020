@@ -100,10 +100,9 @@ const ReviewDetail = () => {
           'Content-Security-Policy': 'upgrade-insecure-requests',
         },
       })
-        .then((res) => {
+        .then(() => {
           seIsLike(true);
           setLikeModal(false);
-          console.log(res);
         })
         .catch((error) => {
           api.info({
