@@ -48,52 +48,52 @@ export const items = [
   },
   {
     key: '11',
-    label: <Link to="/home/location">성동구</Link>,
+    label: <Link to="/home/location/11">성동구</Link>,
   },
   {
     key: '12',
-    label: <Link to="/home/location">은평구</Link>,
+    label: <Link to="/home/location/12">은평구</Link>,
   },
   {
     key: '13',
-    label: <Link to="/home/location">동대문구</Link>,
+    label: <Link to="/home/location/13">동대문구</Link>,
   },
   {
     key: '14',
-    label: <Link to="/home/location">동작구</Link>,
+    label: <Link to="/home/location/14">동작구</Link>,
   },
   {
     key: '15',
-    label: <Link to="/home/location">노원구</Link>,
+    label: <Link to="/home/location15">노원구</Link>,
   },
   {
     key: '16',
-    label: <Link to="/home/location">도봉구</Link>,
+    label: <Link to="/home/location/16">도봉구</Link>,
   },
   {
     key: '17',
-    label: <Link to="/home/location">영등포구</Link>,
+    label: <Link to="/home/location/17">영등포구</Link>,
   },
   {
     key: '18',
-    label: <Link to="/home/location">중랑구</Link>,
+    label: <Link to="/home/location/18">중랑구</Link>,
   },
 
   {
     key: '19',
-    label: <Link to="/home/location">금천구</Link>,
+    label: <Link to="/home/location/19">금천구</Link>,
   },
   {
     key: '20',
-    label: <Link to="/home/location">광진구</Link>,
+    label: <Link to="/home/location/20">광진구</Link>,
   },
   {
     key: '21',
-    label: <Link to="/home/location">성북구</Link>,
+    label: <Link to="/home/location/21">성북구</Link>,
   },
   {
     key: '22',
-    label: <Link to="/home/location">구로구</Link>,
+    label: <Link to="/home/location/22">구로구</Link>,
   },
 ];
 
