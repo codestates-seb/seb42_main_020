@@ -8,5 +8,7 @@ export const PostPaginationStyle = styled.div`
 `;
 
 export const SPostListSection = styled.div`
+  background-color: white;
   height: 1180px;
+  box-shadow: var(--big-box);
 `;
