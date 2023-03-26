@@ -7,6 +7,10 @@ export const SCommentBlock = styled.div`
   border-radius: 3px;
   box-shadow: 3px 2px 3px 2px var(--gray-200);
   border-top: 2.5px solid var(--mint-400);
+
+  * {
+    font-family: 'TheJamsil5Bold';
+  }
 `;
 
 export const SCommentHeader = styled.div`
@@ -29,7 +33,6 @@ export const SButtonBlock = styled.div`
   width: 100%;
 
   > button {
-    font-family: 'TheJamsil5Bold';
     border: none;
     background-color: var(--peach-400);
     width: 20%;

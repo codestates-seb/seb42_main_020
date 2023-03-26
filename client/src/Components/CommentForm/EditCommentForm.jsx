@@ -2,6 +2,8 @@ import ReactQuill from 'react-quill';
 import axios from 'axios';
 import { useState } from 'react';
 import { Modal } from 'antd';
+import { getAccessTokenFromLocal } from '../../util/Token';
+
 import 'react-quill/dist/quill.bubble.css';
 
 import {
@@ -12,12 +14,15 @@ import {
   SBtnSection,
   SResetBtn,
   SSubmitBtn,
+  SValidFail,
 } from '../../Style/CommentFormStyle';
 
 const CommentForm = ({ commentId, value, setComments, setOpenEdit }) => {
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
 
   const [comment, setComment] = useState(value);
+  const [commentValid, setCommentValid] = useState(false);
+  const [cammentMessage, setCommentMessage] = useState('');
   // 수정 확인 모달
   const [editModal, setEditModal] = useState(false);
 
@@ -26,8 +31,14 @@ const CommentForm = ({ commentId, value, setComments, setOpenEdit }) => {
   };
 
   const handleChangeText = (content) => {
+    if (content.length - 8 > 40) {
+      setCommentMessage('내용은 40글자 이내로 입력해주세요');
+      setCommentValid(false);
+    } else {
+      setCommentMessage('');
+      setCommentValid(true);
+    }
     setComment(content);
-    console.log(content);
   };
 
   const resetHandler = () => {
@@ -39,7 +50,8 @@ const CommentForm = ({ commentId, value, setComments, setOpenEdit }) => {
     axios
       .patch(`/comments/${commentId}`, submitData, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: token,
+          'Content-Security-Policy': 'upgrade-insecure-requests',
         },
       })
       .then((res) => {
@@ -84,6 +96,7 @@ const CommentForm = ({ commentId, value, setComments, setOpenEdit }) => {
             placeholder="댓글을 작성해 주세요"
           />
         </SWritingForm>
+        <SValidFail>{commentValid ? '' : cammentMessage}</SValidFail>
         <SBtnSection>
           <SResetBtn type="reset" onClick={resetHandler}>
             취소

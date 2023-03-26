@@ -3,7 +3,6 @@ import styled, { keyframes } from 'styled-components';
 const beat = keyframes`	to { transform: scale(1.4); }`;
 
 export const SReviewDetailContainer = styled.div`
-  font-family: 'TheJamsil5Bold';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,9 +11,14 @@ export const SReviewDetailContainer = styled.div`
   height: 100%;
   background-color: var(--blue-50);
 
+  * {
+    font-weight: 500;
+  }
+
   button {
     cursor: pointer;
-    font-family: 'TheJamsil5Bold';
+    color: var(--gray-900);
+    font-weight: 600;
     height: 30px;
     border: none;
     border-radius: 3px;
@@ -49,6 +53,8 @@ export const SReviewHeader = styled.div`
 `;
 
 export const SReviewUserInfo = styled.div`
+  font-family: 'TheJamsil5Bold';
+
   display: flex;
   flex-direction: column;
   width: 90%;
@@ -76,7 +82,8 @@ export const SReviewHospitalInfo = styled.div`
   border-bottom: 1px solid var(--gray-200);
 
   > span:first-child {
-    font-size: 23px;
+    font-family: 'TheJamsil5Bold';
+    font-size: 20px;
   }
 `;
 
@@ -85,9 +92,11 @@ export const SReviewContent = styled.div`
   flex-direction: column;
   width: 100%;
 
-  > p {
+  > div:first-child {
     font-size: 18px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
+    line-height: 30px;
+    color: var(--gray-800);
   }
 `;
 
@@ -132,5 +141,35 @@ export const SReviewButtonBlock = styled.div`
     font-size: 20px;
     border: none;
     background-color: white;
+  }
+`;
+
+export const SReviewHeaderTitleBlock = styled.div`
+  font-family: 'TheJamsil5Bold';
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  font-size: 25px;
+  margin-bottom: 15px;
+  > svg {
+    color: var(--blue-800);
+  }
+`;
+
+export const SReviewInfoBlock = styled.div`
+  font-family: 'TheJamsil5Bold';
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+  padding-top: 15px;
+  font-size: 20px;
+  border-top: 1px solid var(--gray-200);
+
+  > span:last-child {
+    font-size: 13px;
+    opacity: 0.7;
   }
 `;

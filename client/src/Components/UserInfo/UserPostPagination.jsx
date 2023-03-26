@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Pagination } from 'antd';
-import PostPaginationStyle from '../../Style/PostPaginationStyle';
+
+import { PostPaginationStyle } from '../../Style/PostPaginationStyle';
 import UserPostList from './UserPostList';
 import axios from 'axios';
+import { getAccessTokenFromLocal } from '../../util/Token';
 
 function UserPostPagination() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -10,16 +12,18 @@ function UserPostPagination() {
   const [total, setTotal] = useState(0);
   const [posts, setPosts] = useState([]);
 
+  const accessToken = getAccessTokenFromLocal();
+
   const getUserPost = async () => {
-    const accessToken = localStorage.getItem('accessToken');
     await axios
       .get('/members', {
         headers: {
-          'ngrok-skip-browser-warning': 'skip',
           Authorization: accessToken,
         },
       })
-      .then((res) => setPosts(res.data));
+      .then((res) => {
+        setPosts(res.data);
+      });
   };
 
   useEffect(() => {

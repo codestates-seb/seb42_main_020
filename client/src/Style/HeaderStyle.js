@@ -10,6 +10,9 @@ export const SHeader = styled.header`
   justify-content: center;
   border-bottom: 1px solid var(--gray-200);
   box-shadow: 0 1px 3px 0 var(--gray-200);
+  @media only screen and (max-width: 500px) {
+    width: 460px;
+  }
 `;
 
 export const SLayout = styled.div`
@@ -23,6 +26,9 @@ export const SLayout = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  @media only screen and (max-width: 500px) {
+    width: 460px;
+  }
 `;
 
 export const SLogo = styled.div`
@@ -40,12 +46,19 @@ export const SLogo = styled.div`
     font-size: 22px;
     margin: 5px 0 0 0;
   }
+  @media only screen and (max-width: 500px) {
+    img {
+      margin: 0 0 0 30px;
+    }
+    span {
+      display: none;
+    }
+  }
 `;
 
 export const SNav = styled.nav`
   padding: 16px 32px !important;
   text-decoration: none;
-  padding: 16px;
   font-family: 'TheJamsil';
   font-weight: 600;
   font-size: 16px;
@@ -53,6 +66,13 @@ export const SNav = styled.nav`
   cursor: pointer;
   :hover {
     color: var(--blue-400);
+  }
+  @media only screen and (max-width: 500px) {
+    padding: 16px 10px !important;
+    text-decoration: none;
+    font-family: 'TheJamsil';
+    font-weight: 600;
+    font-size: 16px;
   }
 `;
 

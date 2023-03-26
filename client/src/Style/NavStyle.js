@@ -35,7 +35,8 @@ export const SNavContents = styled.div`
 
   a {
     text-decoration: none;
-    color: #636e72;
-    font-weight: bold;
+    color: var(--gray-800);
+    font-size: 16px;
+    font-weight: 600;
   }
 `;

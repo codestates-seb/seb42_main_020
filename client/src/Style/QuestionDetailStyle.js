@@ -3,7 +3,6 @@ import styled, { keyframes } from 'styled-components';
 const beat = keyframes`	to { transform: scale(1.4); }`;
 
 export const SQuestionDetailContainer = styled.div`
-  font-family: 'TheJamsil5Bold';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,14 +11,17 @@ export const SQuestionDetailContainer = styled.div`
   height: 100%;
   background-color: var(--blue-50);
   padding-top: 20px;
+  * {
+    font-weight: 500;
+  }
 
   button {
-    font-family: 'TheJamsil5Bold';
     cursor: pointer;
-    color: black;
+    color: var(--gray-900);
     height: 30px;
     border: none;
     border-radius: 3px;
+    font-weight: 600;
   }
 
   > div {
@@ -55,6 +57,7 @@ export const SQuestionHeaderBlock = styled.div`
 
   h1 {
     margin-left: 10px;
+    font-family: 'TheJamsil5Bold';
   }
 `;
 
@@ -69,11 +72,13 @@ export const SQuestionHeaderTitleBlock = styled.div`
 `;
 
 export const SQuestionInfoBlock = styled.div`
+  font-family: 'TheJamsil5Bold';
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 15px;
   padding-top: 15px;
+  font-size: 17px;
   border-top: 1px solid var(--gray-200);
 
   > span:last-child {
@@ -85,7 +90,9 @@ export const SQuestionInfoBlock = styled.div`
 export const SQuestionTextBlock = styled.div`
   text-align: left;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
+  line-height: 30px;
+  color: var(--gray-800);
 `;
 
 export const SQuestionButtonBlock = styled.div`
@@ -185,8 +192,8 @@ export const SAnswerHeader = styled.div`
   margin-bottom: 15px;
 
   h1 {
+    font-family: 'TheJamsil5Bold';
     font-size: 20px;
-    font-weight: bold;
     margin-left: 8px;
   }
 
@@ -256,8 +263,8 @@ export const SPostAnswerBlock = styled.div`
   }
 
   h1 {
+    font-family: 'TheJamsil5Bold';
     font-size: 20px;
-    font-weight: bold;
     margin-bottom: 10px;
   }
 
@@ -277,8 +284,8 @@ export const SAnswerBlock = styled.div`
   border-radius: 3px;
 
   > h1 {
+    font-family: 'TheJamsil5Bold';
     font-size: 20px;
-    font-weight: bold;
     margin-bottom: 15px;
   }
 
@@ -309,9 +316,9 @@ export const SAnswerUserInfoBlock = styled.div`
   align-items: center;
 
   > span:first-child {
+    font-family: 'TheJamsil5Bold';
     width: 100%;
     font-size: 18px;
-    font-weight: bold;
     text-align: left;
     margin-bottom: 15px;
   }

@@ -41,7 +41,7 @@ const Signup = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await axios.post('/members/signup', {
+      const res = await axios.post('members/signup', {
         email,
         name,
         displayName,
@@ -51,6 +51,7 @@ const Signup = () => {
         navigate('/login');
       }
     } catch (error) {
+      console.log(error);
       const errorStatus = error.response?.status;
       // 회원가입 실패 안내창 띄우기
       if (errorStatus === 409) {
@@ -156,7 +157,7 @@ const Signup = () => {
   useEffect(() => {
     if (isFocus)
       messageApi.open({
-        type: 'warning',
+        type: '다나아',
         content: emailMsg || passwordMsg || nameMsg || '내용을 입력해 주세요',
       });
   }, [isFocus]);
@@ -165,7 +166,7 @@ const Signup = () => {
   useEffect(() => {
     if (isError)
       noticeApi.info({
-        message: `Notification`,
+        message: `다나아`,
         description: '이미 가입 완료된 이메일 입니다',
         placement: 'top',
       });
@@ -254,7 +255,7 @@ const Signup = () => {
                   value="service"
                   onClick={handleClickTermService}
                 />
-                서비스 이용약관
+                [필수] 서비스 이용약관
               </div>
               <div>
                 <input
@@ -263,7 +264,7 @@ const Signup = () => {
                   value="location"
                   onClick={handleClickTermLocation}
                 />
-                위치 기반 서비스
+                [필수] 위치 기반 서비스
               </div>
             </STerm>
           </STermSection>

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-function PostList({ posts }) {
+function PostList({ posts, topicName }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -58,25 +58,28 @@ function PostList({ posts }) {
           <PostListStyle key={item?.postId}>
             <li className="number">{item?.postId}</li>
             <li className="subject">{item?.medicalTagTitle}</li>
-            <li className="doctor">
-              {loading ? (
-                <span>Loading...</span>
-              ) : item.isDoctorComment ? (
-                <FiUserCheck size={25} color={'#173ea1'} />
-              ) : (
-                <RxDotsHorizontal size={25} color={'#ff6947'} />
-              )}
-            </li>
-            <li className="area" style={{ fontSize: '14px' }}>
-              {item?.regionName}
-            </li>
+            {topicName !== '리뷰' ? (
+              <li className="doctor">
+                {loading ? (
+                  <span>Loading...</span>
+                ) : item.isDoctorComment ? (
+                  <FiUserCheck size={25} color={'#173ea1'} />
+                ) : (
+                  <RxDotsHorizontal size={25} color={'#ff6947'} />
+                )}
+              </li>
+            ) : null}
+            <li className="area">{item?.regionName}</li>
             <li className="title">
-              <Link
-                to={`question/${item?.postId}`}
-                style={{ color: 'black', textDecoration: 'none' }}
-              >
-                <div>{item?.title}</div>
-              </Link>
+              {item?.postType === 'question' ? (
+                <Link to={`/home/question/${item?.postId}`}>
+                  <div>{item?.title}</div>
+                </Link>
+              ) : (
+                <Link to={`/home/review/${item?.postId}`}>
+                  <div>{item?.title}</div>
+                </Link>
+              )}
             </li>
             <li className="time" style={{ fontSize: '14px' }}>
               {item?.createdAt && item.createdAt.slice(0, 10)}

@@ -3,6 +3,7 @@ import ReviewReason from './ReviewReason';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+import { getAccessTokenFromLocal } from '../../util/Token';
 import { Modal } from 'antd';
 import {
   SReportModalContainer,
@@ -16,7 +17,7 @@ import {
 
 const ReportModal = ({ reportModalHandler, setReportModal }) => {
   //토큰
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
   // 파람값
   const { postId } = useParams();
 
@@ -69,12 +70,11 @@ const ReportModal = ({ reportModalHandler, setReportModal }) => {
       axios
         .post(`/posts/${postId}/report`, reportInfo, {
           headers: {
-            Authorization: `${token}`,
+            Authorization: token,
+            // 'Content-Security-Policy': 'upgrade-insecure-requests',
           },
         })
-        .then((res) => {
-          console.log(res);
-        });
+        .then(() => {});
       setIsModalOpen(false);
       setReportModal(false);
       navigate(`/home`);

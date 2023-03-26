@@ -13,7 +13,6 @@ import { BorderTopOutlined } from '@ant-design/icons';
 const MakeContents = () => {
   const navigate = useNavigate();
   const userInfo = useRecoilState(loggedUserInfo);
-  console.log(userInfo[0]?.doctor);
 
   const [openMake, setOpenMake] = useState(false);
 

@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import parse from 'html-react-parser';
 import EditCommentForm from '../../Components/CommentForm/EditCommentForm';
 import ReportCommentModal from '../ReportModal/ReportComment';
 import { Modal, notification } from 'antd';
 import { BorderTopOutlined } from '@ant-design/icons';
 import { FaUserTie, FaUserMd, FaHeart } from 'react-icons/fa';
+import { getAccessTokenFromLocal } from '../../util/Token';
 import {
   SAnswerHeader,
   SAnswerProfilePic,
@@ -15,12 +17,12 @@ import {
   SAnswerUserInfoBlock,
   SAnswerButtonBlock,
 } from '../../Style/QuestionDetailStyle';
+import { SAnswerTextBlock } from '../../Style/Answer';
 
 // import { SButtonBlock } from '../../Style/Answer';
 
 const Answers = ({
   ele,
-  token,
   userInfo,
   questionData,
   writerInfo,
@@ -31,6 +33,8 @@ const Answers = ({
 }) => {
   // poarms 값
   const { postId } = useParams();
+  // 토큰
+  const token = getAccessTokenFromLocal();
   //수정 모달 관리
   const [openEdit, setOpenEdit] = useState(false);
   // 신고 모달 관리
@@ -52,7 +56,10 @@ const Answers = ({
     axios({
       method: 'delete',
       url: `/comments/${ele.commentId}`,
-      headers: { Authorization: token },
+      headers: {
+        Authorization: token,
+        // 'Content-Security-Policy': 'upgrade-insecure-requests',
+      },
     }).then((res) => {
       console.log(res);
       const newData = comments.filter(
@@ -72,6 +79,7 @@ const Answers = ({
 
   // 채택 모달 관리
   const showSelectModal = () => {
+    0;
     setSelectModal(true);
   };
   const selectHandleCancel = () => {
@@ -83,9 +91,11 @@ const Answers = ({
     axios({
       method: 'patch',
       url: `/posts/${postId}/comments/${ele.commentId}`,
-      headers: { Authorization: token },
-    }).then((res) => {
-      console.log(res);
+      headers: {
+        Authorization: token,
+        // 'Content-Security-Policy': 'upgrade-insecure-requests',
+      },
+    }).then(() => {
       setSelected(true);
       setSelectModal(false);
     });
@@ -93,7 +103,16 @@ const Answers = ({
 
   // 댓글 수정
   const editCommentHandler = () => {
-    setOpenEdit((prev) => !prev);
+    if (questionData?.postStatus === 'POST_ACCEPTED') {
+      api.info({
+        message: `다나아`,
+        description: '채택된 답변이 있을 경우 댓글을 수정 할 수 없습니다.',
+        placement: 'top',
+      });
+      setOpenEdit(false);
+    } else {
+      setOpenEdit((prev) => !prev);
+    }
   };
 
   // 좋아요 모달 관리
@@ -118,12 +137,14 @@ const Answers = ({
       axios({
         method: 'post',
         url: `/comments/${id}/likes`,
-        headers: { Authorization: token },
+        headers: {
+          Authorization: token,
+          // 'Content-Security-Policy': 'upgrade-insecure-requests',
+        },
       })
-        .then((res) => {
+        .then(() => {
           setCommetLike(true);
           setLikeModal(false);
-          console.log(res);
         })
         .catch((error) => {
           api.info({
@@ -222,7 +243,8 @@ const Answers = ({
           <SAnswerProfilePic src="/images/Swear.png" alt="img" />
         </SAnswerInfoBlock>
         <div className="answer-contents-block">
-          <p>{ele?.content?.slice(3, -4)}</p>
+          {/* <p>{ele?.content?.slice(3, -4)}</p> */}
+          <SAnswerTextBlock>{parse(ele.content)}</SAnswerTextBlock>
         </div>
         <SAnswerButtonBlock className="answer-button-block">
           <button

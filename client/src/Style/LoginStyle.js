@@ -99,19 +99,29 @@ export const SGoogleLoginBtn = styled(SSubmitBtn)`
 `;
 
 export const SSignupInfo = styled.div`
-  width: 80%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  margin: 15px 0 0 0;
   button {
     font-weight: 500;
     font-size: 16px;
+    :hover {
+      background-color: var(--blue-200);
+    }
   }
   p {
     font-weight: 400;
     font-size: 16px;
     color: var(--gray-800);
+  }
+  div {
+    width: 400px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 `;
 

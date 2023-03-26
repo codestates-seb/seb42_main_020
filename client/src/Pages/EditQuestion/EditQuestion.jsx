@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Modal, Space } from 'antd';
 import TextEditor from '../../Components/AskForm/TextEditor';
+import { getAccessTokenFromLocal } from '../../util/Token';
+
 import {
   SAskQuestionContainer,
   SAskQuestionBlock,
@@ -23,7 +25,7 @@ const EditQuestion = () => {
   const navigate = useNavigate();
 
   //로컬에 있는 토큰
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
   // 제목 입력값
   const [questionTitle, setQuestionTitle] = useState('');
   // 제목 유효성 검사
@@ -44,7 +46,7 @@ const EditQuestion = () => {
   const [locationValid, setLocationValid] = useState(false);
   // 진료 과목 입력값
   const [medicalTagTitle, setMedicalTagTitle] = useState('진료과목');
-  // // 진료 과목 유효값
+  // 진료 과목 유효값
   const [medicalTagTitleValid, setMedicalTagTitleValid] = useState(false);
   // 지역,타입 유효성 실패 메시지
   const [validFailMessage, setValidFailMessage] = useState('');
@@ -58,7 +60,8 @@ const EditQuestion = () => {
         headers: {
           'Content-Type': `application/json`,
           'ngrok-skip-browser-warning': '69420',
-          Authorization: `${token}`,
+          'Content-Security-Policy': 'upgrade-insecure-requests',
+          Authorization: token,
         },
       })
       .then((res) => {
@@ -141,11 +144,12 @@ const EditQuestion = () => {
 
     axios
       .patch(`/posts/${postId}`, questionData, {
-        headers: { Authorization: token },
+        headers: {
+          Authorization: token,
+          'Content-Security-Policy': 'upgrade-insecure-requests',
+        },
       })
-      .then((res) => {
-        console.log(res);
-      });
+      .then(() => {});
     Modal.success({
       content: '질문이 수정되었습니다.',
       onOk() {

@@ -13,6 +13,7 @@ import { BiCommentDetail, BiCommentCheck } from 'react-icons/bi';
 import { useState, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginState } from '../../atoms/atoms';
+import { getAccessTokenFromLocal } from '../../util/Token';
 import { useRecoilState } from 'recoil';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
@@ -31,7 +32,7 @@ function UserCardProfile({ userInfo }) {
     navigate('/home');
     window.scrollTo(0, 0);
   };
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
   const ModalSubmit = async () => {
     setIsModalOpen(!isModalOpen);
     // MEMBER_STATUS - MEMBER_QUIT 으로 변경
@@ -62,8 +63,6 @@ function UserCardProfile({ userInfo }) {
       document.body.style.overflow = originalStyle;
     };
   }, [isModalOpen]);
-
-  console.log(userInfo);
 
   return (
     <UserCardProfileStyle>

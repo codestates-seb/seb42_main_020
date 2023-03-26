@@ -8,6 +8,9 @@ export const SAskQuestionContainer = styled.div`
   width: 100%;
   height: 1000vh;
   background-color: var(--blue-200);
+  * {
+    font-family: 'TheJamsil5Bold';
+  }
 
   .modal_wrapper {
     position: fixed;
@@ -130,7 +133,6 @@ export const SButtonBlock = styled.div`
   margin-top: 15px;
 
   button {
-    font-weight: bold;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -176,7 +178,6 @@ export const SImgBlock = styled.div`
 `;
 
 export const SInputImg = styled.input`
-  font-family: 'TheJamsil5Bold';
   ::file-selector-button {
     font-family: 'TheJamsil5Bold';
     width: 150px;

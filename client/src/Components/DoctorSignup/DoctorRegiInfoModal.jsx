@@ -4,6 +4,7 @@ import {
   SModalLayout,
   SModal,
   DoctorRegiInfo,
+  SPolicyInfoImg,
 } from '../../Style/DoctorSignupStyle';
 
 export const DoctorRegiInfoModal = () => {
@@ -34,7 +35,10 @@ export const DoctorRegiPolicyModal = ({ handleClose }) => {
     <SModalLayout>
       <SModal>
         <BsArrowReturnLeft onClick={handleClose} />
-        <DoctorRegiInfo>안내 이미지 예정</DoctorRegiInfo>
+        <SPolicyInfoImg
+          src={process.env.PUBLIC_URL + '/images/doctor-signup.jpg'}
+          alt="policy-info"
+        />
       </SModal>
     </SModalLayout>
   );

@@ -8,11 +8,18 @@ const PostListStyle = styled.ul`
   margin-top: 2px;
   padding: 15px 10px;
   border-bottom: 1px solid #d6d6d6;
+  font-weight: 500;
+  color: var(--gray-800);
+  a {
+    text-decoration: none;
+    color: var(--gray-800);
+  }
   .number {
     flex: 0.3;
   }
   .subject {
     flex: 0.8;
+    /* font-size: 12px; */
   }
   .doctor {
     flex: 0.7;
@@ -25,7 +32,7 @@ const PostListStyle = styled.ul`
     text-overflow: ellipsis;
   }
   .title div {
-    padding: 0px 20px;
+    padding: 5px 20px;
   }
   .title div:hover {
     color: crimson;
@@ -35,6 +42,7 @@ const PostListStyle = styled.ul`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding: 5px 0;
   }
   .area {
     flex: 0.5;

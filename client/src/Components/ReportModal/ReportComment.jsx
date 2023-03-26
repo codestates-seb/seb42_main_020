@@ -3,6 +3,7 @@ import ReviewReason from './ReviewReason';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+import { getAccessTokenFromLocal } from '../../util/Token';
 import { Button, Modal } from 'antd';
 import {
   SReportModalContainer,
@@ -14,12 +15,12 @@ import {
   SFailMessage,
 } from '../../Style/ReportModalStyle';
 
-const ReportCommentModal = ({ reportModalHandler, setReportModal }) => {
+const ReportCommentModal = ({ reportModalHandler, setReportModal, ele }) => {
   // 파람값
   const { postId } = useParams();
 
   //토큰
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
 
   //모달 제출 내용
   const [reportText, setReportText] = useState('');
@@ -60,9 +61,10 @@ const ReportCommentModal = ({ reportModalHandler, setReportModal }) => {
   const handleOk = () => {
     if (textValid && reasonValid) {
       axios
-        .post(`/comments/1/report`, reportInfo, {
+        .post(`/comments/${ele.commentId}/report`, reportInfo, {
           headers: {
-            Authorization: `${token}`,
+            Authorization: token,
+            'Content-Security-Policy': 'upgrade-insecure-requests',
           },
         })
         .then((res) => {

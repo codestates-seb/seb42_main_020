@@ -2,9 +2,9 @@ import ReactQuill from 'react-quill';
 import axios from 'axios';
 import { useState } from 'react';
 import { Modal } from 'antd';
+import { getAccessTokenFromLocal } from '../../util/Token';
 
 import 'react-quill/dist/quill.bubble.css';
-
 import {
   SLayout,
   SCommentOfferText,
@@ -13,12 +13,15 @@ import {
   SBtnSection,
   SResetBtn,
   SSubmitBtn,
+  SValidFail,
 } from '../../Style/CommentFormStyle';
 
 const CommentForm = ({ setPostComment, postId }) => {
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
 
   const [comment, setComment] = useState();
+  const [commentValid, setCommentValid] = useState(false);
+  const [cammentMessage, setCommentMessage] = useState('');
   //제출하기 모달
   const [submitModal, setSubmitModal] = useState(false);
 
@@ -27,8 +30,14 @@ const CommentForm = ({ setPostComment, postId }) => {
   };
 
   const handleChangeText = (content) => {
+    if (content.length - 8 > 40) {
+      setCommentMessage('내용은 40글자 이내로 입력해주세요');
+      setCommentValid(false);
+    } else {
+      setCommentMessage('');
+      setCommentValid(true);
+    }
     setComment(content);
-    console.log(content);
   };
 
   const resetHandler = () => {
@@ -38,7 +47,18 @@ const CommentForm = ({ setPostComment, postId }) => {
 
   // 제출하기 모달 관리
   const showSubmitModal = () => {
-    setSubmitModal(true);
+    if (comment.length < 5) {
+      setCommentMessage('내용은 5글자 이상 입력해주세요');
+      setCommentValid(false);
+    }
+    if (comment.length > 50) {
+      setCommentMessage('내용은 50글자 이내로 입력해주세요');
+      setCommentValid(false);
+    }
+
+    if (commentValid) {
+      setSubmitModal(true);
+    }
   };
   const submitHandleCancel = () => {
     setSubmitModal(false);
@@ -48,12 +68,13 @@ const CommentForm = ({ setPostComment, postId }) => {
     axios
       .post(`/comments/?post-id=${postId}`, submitData, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: token,
+          'Content-Security-Policy': 'upgrade-insecure-requests',
         },
       })
-      .then((res) => {
-        location.reload();
-        console.log(res);
+      .then(() => {
+        setPostComment(false);
+        setSubmitModal(false);
       });
   };
 
@@ -83,6 +104,7 @@ const CommentForm = ({ setPostComment, postId }) => {
             placeholder="댓글을 작성해 주세요"
           />
         </SWritingForm>
+        <SValidFail>{commentValid ? '' : cammentMessage}</SValidFail>
         <SBtnSection>
           <SResetBtn type="reset" onClick={resetHandler}>
             취소
