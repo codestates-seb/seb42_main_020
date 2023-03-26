@@ -17,10 +17,11 @@ export const SQuestionDetailContainer = styled.div`
 
   button {
     cursor: pointer;
-    color: black;
+    color: var(--gray-900);
     height: 30px;
     border: none;
     border-radius: 3px;
+    font-weight: 600;
   }
 
   > div {
@@ -90,6 +91,8 @@ export const SQuestionTextBlock = styled.div`
   text-align: left;
   width: 100%;
   margin-bottom: 30px;
+  line-height: 30px;
+  color: var(--gray-800);
 `;
 
 export const SQuestionButtonBlock = styled.div`

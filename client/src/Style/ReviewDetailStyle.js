@@ -17,6 +17,8 @@ export const SReviewDetailContainer = styled.div`
 
   button {
     cursor: pointer;
+    color: var(--gray-900);
+    font-weight: 600;
     height: 30px;
     border: none;
     border-radius: 3px;
@@ -93,6 +95,8 @@ export const SReviewContent = styled.div`
   > div:first-child {
     font-size: 18px;
     margin-bottom: 30px;
+    line-height: 30px;
+    color: var(--gray-800);
   }
 `;
 
