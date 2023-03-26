@@ -69,22 +69,14 @@ function PostList({ posts, topicName }) {
                 )}
               </li>
             ) : null}
-            <li className="area" style={{ fontSize: '14px' }}>
-              {item?.regionName}
-            </li>
+            <li className="area">{item?.regionName}</li>
             <li className="title">
               {item?.postType === 'question' ? (
-                <Link
-                  to={`/home/question/${item?.postId}`}
-                  style={{ color: 'black', textDecoration: 'none' }}
-                >
+                <Link to={`/home/question/${item?.postId}`}>
                   <div>{item?.title}</div>
                 </Link>
               ) : (
-                <Link
-                  to={`/home/review/${item?.postId}`}
-                  style={{ color: 'black', textDecoration: 'none' }}
-                >
+                <Link to={`/home/review/${item?.postId}`}>
                   <div>{item?.title}</div>
                 </Link>
               )}
