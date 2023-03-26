@@ -6,6 +6,9 @@ export const SReportModalContainer = styled.div`
   height: 100%;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.4);
+  * {
+    font-family: 'TheJamsil5Bold';
+  }
 `;
 
 export const SReportModalBlock = styled.div`
@@ -62,7 +65,6 @@ export const SReportModalButtonBlock = styled.div`
   text-align: right;
 
   button {
-    font-family: 'TheJamsil5Bold';
     border: none;
     width: 20%;
     height: 30px;

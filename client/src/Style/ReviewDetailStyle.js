@@ -11,10 +11,12 @@ export const SReviewDetailContainer = styled.div`
   min-height: 1000px;
   height: 100%;
   background-color: var(--blue-50);
+  * {
+    font-family: 'TheJamsil5Bold';
+  }
 
   button {
     cursor: pointer;
-    font-family: 'TheJamsil5Bold';
     height: 30px;
     border: none;
     border-radius: 3px;

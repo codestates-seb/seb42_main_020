@@ -1,22 +1,27 @@
 import styled from 'styled-components';
 
 export const SPostModalBlock = styled.div`
+  font-family: 'TheJamsil5Bold';
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   position: relative;
 
+  * {
+    font-family: 'TheJamsil5Bold';
+  }
+
   button {
     border: none;
-    background-color: var(--mint-400);
+    background-color: var(--mint-200);
     color: #636e72;
     font-weight: bold;
     border-radius: 5px;
     cursor: pointer;
 
     &:hover {
-      background-color: var(--peach-400);
+      background-color: var(--peach-200);
     }
   }
 
