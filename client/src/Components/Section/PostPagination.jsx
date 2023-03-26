@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Pagination } from 'antd';
-import PostPaginationStyle from '../../Style/PostPaginationStyle';
+import {
+  PostPaginationStyle,
+  SPostListSection,
+} from '../../Style/PostPaginationStyle';
 import axios from 'axios';
 import PostList from './PostList';
 
 function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
   const [posts, setPosts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
   const [total, setTotal] = useState(0);
 
@@ -18,10 +21,11 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
         },
         params: {
           region: topicName,
+          page: currentPage === 0 ? 0 : currentPage - 1,
         },
       });
       setPosts(response.data);
-      setTotal(response.datalength);
+      setTotal(response.data.pageInfo.totalElements);
       setIsFiltered(() => false);
     }
   };
@@ -33,10 +37,11 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
         },
         params: {
           medicalTag: topicName,
+          page: currentPage === 0 ? 0 : currentPage - 1,
         },
       });
       setPosts(response.data);
-      setTotal(response.datalength);
+      setTotal(response.data.pageInfo.totalElements);
       setIsFiltered(() => false);
     }
   };
@@ -49,9 +54,12 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
             headers: {
               'ngrok-skip-browser-warning': 'skip',
             },
+            params: {
+              page: currentPage === 0 ? 0 : currentPage - 1,
+            },
           });
           setPosts(response.data);
-          setTotal(response.data.length);
+          setTotal(response.data.pageInfo.totalElements);
           setIsFiltered(() => false);
         }
         break;
@@ -63,10 +71,11 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
             },
             params: {
               postType: 'question',
+              page: currentPage === 0 ? 0 : currentPage - 1,
             },
           });
           setPosts(response.data);
-          setTotal(response.data.length);
+          setTotal(response.data.pageInfo.totalElements);
           setIsFiltered(() => false);
         }
         break;
@@ -78,10 +87,11 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
             },
             params: {
               postType: 'review',
+              page: currentPage === 0 ? 0 : currentPage - 1,
             },
           });
           setPosts(response.data);
-          setTotal(response.datalength);
+          setTotal(response.data.pageInfo.totalElements);
           setIsFiltered(() => false);
         }
         break;
@@ -221,14 +231,19 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
   const handlePageChange = (page, pageSize) => {
     setCurrentPage(page);
     setPageSize(pageSize);
+    console.log(currentPage);
   };
 
   return (
     <>
       {isFiltered ? (
-        <PostList posts={keyword} topicName={topicName} />
+        <SPostListSection>
+          <PostList posts={keyword} topicName={topicName} />
+        </SPostListSection>
       ) : (
-        <PostList posts={posts} topicName={topicName} />
+        <SPostListSection>
+          <PostList posts={posts} topicName={topicName} />
+        </SPostListSection>
       )}
       <PostPaginationStyle>
         <Pagination

@@ -18,7 +18,6 @@ export const setAccessTokenToLocal = (accessToken) => {
 export const getAccessTokenFromLocal = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
-    const refreshToken = cookies.get('refreshToken');
     axios
       .get('/auth/access', {
         headers: { Authorization: accessToken },
@@ -32,9 +31,10 @@ export const getAccessTokenFromLocal = () => {
         } else {
           // console.log('유효 검증 과정에서 에러 발생');
         }
-        // ! 사용자에게 노출 X
+        //! 사용자에게 노출 X
       })
       .catch((error) => {
+        const refreshToken = cookies.get('refreshToken');
         if (
           error?.response?.status === 401 &&
           error?.response?.statusText === 'Unauthorized'

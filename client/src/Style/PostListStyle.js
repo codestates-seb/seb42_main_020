@@ -26,7 +26,7 @@ const PostListStyle = styled.ul`
     text-overflow: ellipsis;
   }
   .title div {
-    padding: 0px 20px;
+    padding: 5px 20px;
   }
   .title div:hover {
     color: crimson;
