@@ -64,7 +64,7 @@ export const items = [
   },
   {
     key: '15',
-    label: <Link to="/home/location15">노원구</Link>,
+    label: <Link to="/home/location/15">노원구</Link>,
   },
   {
     key: '16',
