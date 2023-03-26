@@ -13,7 +13,6 @@ const HospitalLocation = ({ reviewData }) => {
   const [isMatched, setIsMatched] = useState(false);
 
   const ref = useRef(); // 위치 참조
-  console.log(ref.current);
 
   useEffect(() => {
     if (reviewData) setPlaceName(reviewData?.hospitalName);
@@ -60,8 +59,6 @@ const HospitalLocation = ({ reviewData }) => {
       <a style="padding:5px; text-align: center;" href=https://map.kakao.com/link/search/${placeName}> 길찾기 바로가기</a>
       </div>`);
       infowindow.open(map4, marker);
-      console.log(place.place_name);
-      console.log(placeName);
       if (placeName !== place.place_name) {
         setIsMatched(false);
       }
