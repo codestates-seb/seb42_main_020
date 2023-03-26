@@ -24,10 +24,10 @@ export const STitle = styled.div`
     margin-left: 10px;
   }
   .title {
+    font-family: 'TheJamsil5Bold';
     display: flex;
     padding: 0px 10px;
     font-size: 35px;
-    font-weight: bold;
     border-bottom: 2px solid #c2c2c2;
     padding-bottom: 6px;
   }
@@ -64,10 +64,10 @@ export const SInfo = styled.div`
     justify-content: space-between;
   }
   .type {
+    font-family: 'TheJamsil5Bold';
     width: 40%;
     font-size: 20px;
     text-align: right;
-    font-weight: bold;
   }
   .value {
     width: 60%;
@@ -101,8 +101,8 @@ export const SMyPost = styled.div`
   flex-direction: column;
   margin-top: 50px;
   h3 {
+    font-family: 'TheJamsil5Bold';
     font-size: 25px;
-    font-weight: bold;
   }
   .line {
     margin-top: 15px;

@@ -3,13 +3,14 @@ import styled from 'styled-components';
 const UserPostCategoryStyle = styled.ul`
   display: flex;
   justify-content: space-around;
+  align-items: center;
   text-align: center;
   padding: 20px 10px;
   background: #ebfff7;
   border-bottom: 1px solid #d6d6d6;
+  font-family: 'TheJamsil5Bold';
 
   li {
-    font-weight: bold;
     font-size: 14px;
   }
 

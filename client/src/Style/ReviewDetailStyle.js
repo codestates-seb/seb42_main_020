@@ -3,7 +3,6 @@ import styled, { keyframes } from 'styled-components';
 const beat = keyframes`	to { transform: scale(1.4); }`;
 
 export const SReviewDetailContainer = styled.div`
-  font-family: 'TheJamsil5Bold';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,8 +10,9 @@ export const SReviewDetailContainer = styled.div`
   min-height: 1000px;
   height: 100%;
   background-color: var(--blue-50);
+
   * {
-    font-family: 'TheJamsil5Bold';
+    font-weight: 500;
   }
 
   button {
@@ -51,6 +51,8 @@ export const SReviewHeader = styled.div`
 `;
 
 export const SReviewUserInfo = styled.div`
+  font-family: 'TheJamsil5Bold';
+
   display: flex;
   flex-direction: column;
   width: 90%;
@@ -78,7 +80,8 @@ export const SReviewHospitalInfo = styled.div`
   border-bottom: 1px solid var(--gray-200);
 
   > span:first-child {
-    font-size: 23px;
+    font-family: 'TheJamsil5Bold';
+    font-size: 20px;
   }
 `;
 

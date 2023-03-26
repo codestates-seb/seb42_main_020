@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 const PostCategoryStyle = styled.ul`
+  font-family: 'TheJamsil5Bold';
   display: flex;
   justify-content: space-around;
+  align-items: center;
   text-align: center;
   margin-top: 10px;
   padding: 20px 10px;
