@@ -62,6 +62,7 @@ public class SecurityConfiguration {
                         // 로그인
                         .antMatchers("/login").permitAll()
                         .antMatchers("/admin/**").hasRole("ADMIN")
+                        .antMatchers("/**/**/approval").hasRole("ADMIN")
                 );
         return http.build();
     }
