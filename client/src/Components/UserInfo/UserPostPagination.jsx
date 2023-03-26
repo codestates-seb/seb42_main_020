@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Pagination } from 'antd';
-import PostPaginationStyle from '../../Style/PostPaginationStyle';
+import { PostPaginationStyle } from '../../Style/PostPaginationStyle';
 import UserPostList from './UserPostList';
 import axios from 'axios';
 
