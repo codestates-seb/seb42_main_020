@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { BsArrowReturnLeft } from 'react-icons/bs';
+import { getAccessTokenFromLocal } from '../../util/Token';
+
 import {
   SModalLayout,
   SModal,
@@ -17,7 +19,7 @@ const EditUserInfo = ({ handleModal, isOpenModal, setIsOpenModal }) => {
   const [password, setPassword] = useState('');
   const [area, setArea] = useState('');
 
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
 
   const handleSubmit = async () => {
     try {

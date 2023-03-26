@@ -7,6 +7,7 @@ import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import CommentForm from '../../Components/CommentForm/CommentForm';
 import Answers from '../../Components/Answers/Answers';
 import ReportModal from '../../Components/ReportModal/ReportModal';
+import { getAccessTokenFromLocal } from '../../util/Token';
 import { Modal, notification } from 'antd';
 import { BorderTopOutlined } from '@ant-design/icons';
 import { FaBook, FaHeart } from 'react-icons/fa';
@@ -29,7 +30,7 @@ const QuestionDetail = () => {
   // 로그인 상태 정보 확인
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const userInfo = useRecoilState(loggedUserInfo);
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
 
   // 글을 삭제할 경우 삭제 후 다른 페이지로 이동하기 위해
   const navigate = useNavigate();
@@ -312,7 +313,6 @@ const QuestionDetail = () => {
               <Answers
                 key={ele.commentId}
                 ele={ele}
-                token={token}
                 userInfo={userInfo}
                 writerInfo={writerInfo}
                 questionData={questionData}
@@ -337,7 +337,6 @@ const QuestionDetail = () => {
                 <Answers
                   key={ele.commentId}
                   ele={ele}
-                  token={token}
                   userInfo={userInfo}
                   writerInfo={writerInfo}
                   questionData={questionData}

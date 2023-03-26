@@ -7,6 +7,7 @@ import ReportCommentModal from '../ReportModal/ReportComment';
 import { Modal, notification } from 'antd';
 import { BorderTopOutlined } from '@ant-design/icons';
 import { FaUserTie, FaUserMd, FaHeart } from 'react-icons/fa';
+import { getAccessTokenFromLocal } from '../../util/Token';
 import {
   SAnswerHeader,
   SAnswerProfilePic,
@@ -21,7 +22,6 @@ import {
 
 const Answers = ({
   ele,
-  token,
   userInfo,
   questionData,
   writerInfo,
@@ -32,6 +32,8 @@ const Answers = ({
 }) => {
   // poarms 값
   const { postId } = useParams();
+  // 토큰
+  const token = getAccessTokenFromLocal();
   //수정 모달 관리
   const [openEdit, setOpenEdit] = useState(false);
   // 신고 모달 관리

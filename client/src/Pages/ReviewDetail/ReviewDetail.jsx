@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import parse from 'html-react-parser';
 import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import ReportModal from '../../Components/ReportModal/ReportModal';
+import { getAccessTokenFromLocal } from '../../util/Token';
 import { Modal, notification, Space, Rate } from 'antd';
 import { FaHeart } from 'react-icons/fa';
 import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation';
@@ -20,7 +21,7 @@ import {
 
 const ReviewDetail = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
   const { postId } = useParams();
 
   // 로그인 상태 정보 확인
