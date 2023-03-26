@@ -5,7 +5,7 @@ import { loginState, loggedUserInfo } from '../../atoms/atoms';
 import { useNavigate } from 'react-router-dom';
 import TextEditor from '../../Components/AskForm/TextEditor';
 import { Modal, Space } from 'antd';
-
+import { getAccessTokenFromLocal } from '../../util/Token';
 import {
   SAskQuestionContainer,
   SAskQuestionBlock,
@@ -30,7 +30,7 @@ import RateStar from '../../Components/ReviewForm/RateStar';
 
 const Review = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
   // 로그인 상태
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   const userInfo = useRecoilState(loggedUserInfo);
@@ -244,8 +244,9 @@ const Review = () => {
         .post('/reviews', formData, {
           //이미지와 json파일이 가기때문에
           headers: {
-            'Content-Type': 'multipart/form-data', // token 추가로 넣어주기
+            'Content-Type': 'multipart/form-data',
             Authorization: token, // RequestPart 에너테이션 사용으로 토큰 필요
+            // 'Content-Security-Policy': 'upgrade-insecure-requests',
           },
         })
         .then((res) => {

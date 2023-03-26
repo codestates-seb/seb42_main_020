@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Modal, Space } from 'antd';
 import TextEditor from '../../Components/AskForm/TextEditor';
+import { getAccessTokenFromLocal } from '../../util/Token';
+
 import {
   SAskQuestionContainer,
   SAskQuestionBlock,
@@ -23,7 +25,7 @@ const EditQuestion = () => {
   const navigate = useNavigate();
 
   //로컬에 있는 토큰
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
   // 제목 입력값
   const [questionTitle, setQuestionTitle] = useState('');
   // 제목 유효성 검사

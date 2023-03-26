@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Pagination } from 'antd';
-import { PostPaginationStyle } from '../../Style/PostPaginationStyle';
+import { getAccessTokenFromLocal } from '../../util/Token';
+import PostPaginationStyle from '../../Style/PostPaginationStyle';
 import UserPostList from './UserPostList';
 import axios from 'axios';
 
@@ -11,7 +12,7 @@ function UserPostPagination() {
   const [posts, setPosts] = useState([]);
 
   const getUserPost = async () => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = getAccessTokenFromLocal();
     await axios
       .get('/members', {
         headers: {

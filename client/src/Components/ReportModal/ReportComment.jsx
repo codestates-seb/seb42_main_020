@@ -3,6 +3,7 @@ import ReviewReason from './ReviewReason';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
+import { getAccessTokenFromLocal } from '../../util/Token';
 import { Button, Modal } from 'antd';
 import {
   SReportModalContainer,
@@ -19,7 +20,7 @@ const ReportCommentModal = ({ reportModalHandler, setReportModal, ele }) => {
   const { postId } = useParams();
 
   //토큰
-  const token = localStorage.getItem('accessToken');
+  const token = getAccessTokenFromLocal();
 
   //모달 제출 내용
   const [reportText, setReportText] = useState('');
