@@ -51,12 +51,12 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-prettier": "^8.7.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0"
   },
-  "proxy": "http://ec2-13-125-252-140.ap-northeast-2.compute.amazonaws.com:8080/"
+  "proxy": "http://ec2-13-125-252-140.ap-northeast-2.compute.amazonaws.com:8080"
 }

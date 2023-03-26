@@ -22,12 +22,21 @@ function UserPostList({ posts }) {
               {item?.regionName}
             </li>
             <li className="title">
-              <Link
-                to={`${process.env.PUBLIC_URL}/home/question/${item?.postId}`}
-                style={{ color: 'black', textDecoration: 'none' }}
-              >
-                <div>{item?.title}</div>
-              </Link>
+              {item?.postType === 'question' ? (
+                <Link
+                  to={`${process.env.PUBLIC_URL}/home/question/${item?.postId}`}
+                  style={{ color: 'black', textDecoration: 'none' }}
+                >
+                  <div>{item?.title}</div>
+                </Link>
+              ) : (
+                <Link
+                  to={`${process.env.PUBLIC_URL}/home/review/${item?.postId}`}
+                  style={{ color: 'black', textDecoration: 'none' }}
+                >
+                  <div>{item?.title}</div>
+                </Link>
+              )}
             </li>
             <li className="time" style={{ fontSize: '12px' }}>
               {item?.createdAt && item.createdAt.slice(5, 10)}

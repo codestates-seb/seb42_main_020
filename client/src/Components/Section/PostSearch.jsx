@@ -5,9 +5,10 @@ import axios from 'axios';
 import PostPagination from './PostPagination';
 
 const { Search } = Input;
-function PostSearch() {
+function PostSearch({ topicName }) {
   const [keyword, setKeyword] = useState('');
   const [isFiltered, setIsFiltered] = useState(false);
+
   const categoryReducer = async (state, action) => {
     if (keyword.length !== 0) {
       switch (action.type) {
@@ -112,6 +113,7 @@ function PostSearch() {
         keyword={keyword}
         isFiltered={isFiltered}
         setIsFiltered={setIsFiltered}
+        topicName={topicName}
       />
       <PostSearchStyle>
         <Space wrap style={{ marginBottom: -10 }}>

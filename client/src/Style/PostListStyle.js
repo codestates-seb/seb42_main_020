@@ -13,6 +13,7 @@ const PostListStyle = styled.ul`
   }
   .subject {
     flex: 0.8;
+    font-size: 12px;
   }
   .doctor {
     flex: 0.7;

@@ -76,6 +76,7 @@ const Answers = ({
 
   // 채택 모달 관리
   const showSelectModal = () => {
+    0;
     setSelectModal(true);
   };
   const selectHandleCancel = () => {

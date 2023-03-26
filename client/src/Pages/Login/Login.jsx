@@ -1,7 +1,6 @@
 import Cookies from 'universal-cookie';
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { message, notification } from 'antd';
 import {
   SMain,
@@ -16,6 +15,7 @@ import {
 import axios from 'axios';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo, adminState } from '../../atoms/atoms';
+// import GoolgeButton from '../../Components/Login/GoolgeButton';
 
 const Login = () => {
   const setIsLogged = useSetRecoilState(loginState);
@@ -206,6 +206,9 @@ const Login = () => {
               로그인
             </SSubmitBtn>
           </div>
+          {/* <GoogleOAuthProvider clientId={`${process.env.GOOGLE_API_KEY}`}>
+            <GoolgeButton />
+          </GoogleOAuthProvider> */}
         </SFormSection>
         <SSignupInfo>
           <div>
