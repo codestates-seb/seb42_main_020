@@ -10,7 +10,6 @@ const HospitalLocation = ({ reviewData }) => {
   const { kakao } = window;
 
   const [placeName, setPlaceName] = useState(['']); // 병원 이름 상태
-  const [isMatched, setIsMatched] = useState(false);
 
   const ref = useRef(); // 위치 참조
 
@@ -59,9 +58,6 @@ const HospitalLocation = ({ reviewData }) => {
       <a style="padding:5px; text-align: center;" href=https://map.kakao.com/link/search/${placeName}> 길찾기 바로가기</a>
       </div>`);
       infowindow.open(map4, marker);
-      if (placeName !== place.place_name) {
-        setIsMatched(false);
-      }
     };
 
     // 범위를 재설정 하는 함수
@@ -76,7 +72,6 @@ const HospitalLocation = ({ reviewData }) => {
 
     if (placeName !== undefined && container !== undefined) {
       keywordSearch(placeName);
-      setIsMatched(false);
     }
   });
 
@@ -89,7 +84,6 @@ const HospitalLocation = ({ reviewData }) => {
           style={{ width: '780px', height: '295px' }}
         ></div>
       </SLayout>
-      {isMatched ? <span>일치한 장소가 없어용</span> : <></>}
     </>
   );
 };
