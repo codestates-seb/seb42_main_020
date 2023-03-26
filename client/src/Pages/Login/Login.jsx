@@ -15,7 +15,6 @@ import {
 import axios from 'axios';
 import { useSetRecoilState, useRecoilState } from 'recoil';
 import { loginState, loggedUserInfo, adminState } from '../../atoms/atoms';
-// import GoolgeButton from '../../Components/Login/GoolgeButton';
 
 const Login = () => {
   const setIsLogged = useSetRecoilState(loginState);
@@ -143,7 +142,7 @@ const Login = () => {
   useEffect(() => {
     if (isFocus)
       messageApi.open({
-        type: 'warning',
+        type: '다나아',
         content: emailMsg || passwordMsg || '이메일과 비밀번호를 입력해 주세요',
       });
   }, [isFocus]);
@@ -152,7 +151,7 @@ const Login = () => {
   useEffect(() => {
     if (isError)
       noticeApi.info({
-        message: `Notification`,
+        message: `다나아`,
         description: '이메일과 비밀번호를 다시 확인하여 주십시오',
         placement: 'top',
       });
@@ -206,9 +205,6 @@ const Login = () => {
               로그인
             </SSubmitBtn>
           </div>
-          {/* <GoogleOAuthProvider clientId={`${process.env.GOOGLE_API_KEY}`}>
-            <GoolgeButton />
-          </GoogleOAuthProvider> */}
         </SFormSection>
         <SSignupInfo>
           <div>
