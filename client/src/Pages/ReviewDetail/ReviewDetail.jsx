@@ -12,8 +12,8 @@ import HospitalLocation from '../../Components/HospitalLocation/HospitalLocation
 import {
   SReviewDetailContainer,
   SReviewDetailBlock,
-  SReviewHeader,
-  SReviewUserInfo,
+  SReviewHeaderTitleBlock,
+  SReviewInfoBlock,
   SReviewHospitalInfo,
   SReviewContent,
   SReviewButtonBlock,
@@ -149,15 +149,15 @@ const ReviewDetail = () => {
         />
       )}
       <SReviewDetailBlock>
-        <SReviewHeader className="review-header">
-          <img src="/images/Swear.png" alt="사진" />
-          <SReviewUserInfo className="review-info">
-            <span>{reviewFrom?.displayName}</span>
-            <span>
-              {reviewData?.modifiedAt?.replace('T', ' ').slice(0, -7)}
-            </span>
-          </SReviewUserInfo>
-        </SReviewHeader>
+        <SReviewHeaderTitleBlock>
+          <h1>{reviewData?.title}</h1>
+        </SReviewHeaderTitleBlock>
+        <SReviewInfoBlock className="info-block">
+          <span>
+            {reviewFrom?.displayName} [{reviewData?.regionName}]
+          </span>
+          <span>{reviewData?.modifiedAt?.replace('T', ' ').slice(0, -7)}</span>
+        </SReviewInfoBlock>
         <SReviewHospitalInfo className="hopital-info">
           <span>{reviewData?.hospitalName}</span>
           <span>
