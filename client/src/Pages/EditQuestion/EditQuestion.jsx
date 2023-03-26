@@ -158,6 +158,10 @@ const EditQuestion = () => {
     });
   };
 
+  const handlePostCancel = () => {
+    navigate(`/home/question/${postId}`);
+  };
+
   return (
     <SAskQuestionContainer>
       <Space wrap></Space>
@@ -194,7 +198,7 @@ const EditQuestion = () => {
         <TextEditor handleText={handleText} value={questionContent} />
         <SValidFail> {textValid ? null : textMessage}</SValidFail>
         <SButtonBlock>
-          <SCancalButton>취소</SCancalButton>
+          <SCancalButton onClick={handlePostCancel}>취소</SCancalButton>
           <SSubmitButton onClick={submitDataHandler}>작성</SSubmitButton>
         </SButtonBlock>
       </SAskQuestionBlock>
