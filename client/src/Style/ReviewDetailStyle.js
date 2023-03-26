@@ -143,3 +143,33 @@ export const SReviewButtonBlock = styled.div`
     background-color: white;
   }
 `;
+
+export const SReviewHeaderTitleBlock = styled.div`
+  font-family: 'TheJamsil5Bold';
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  font-size: 25px;
+  margin-bottom: 15px;
+  > svg {
+    color: var(--blue-800);
+  }
+`;
+
+export const SReviewInfoBlock = styled.div`
+  font-family: 'TheJamsil5Bold';
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+  padding-top: 15px;
+  font-size: 20px;
+  border-top: 1px solid var(--gray-200);
+
+  > span:last-child {
+    font-size: 13px;
+    opacity: 0.7;
+  }
+`;
