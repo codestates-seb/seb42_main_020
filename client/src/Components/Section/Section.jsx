@@ -17,7 +17,6 @@ function Section({ path }) {
     case '/home/review':
       topicName = '리뷰';
       break;
-
     //지역별
     case '/home/location/1':
       topicName = '강남구';
@@ -48,6 +47,42 @@ function Section({ path }) {
       break;
     case '/home/location/10':
       topicName = '서대문구';
+      break;
+    case '/home/location/11':
+      topicName = '성동구';
+      break;
+    case '/home/location/12':
+      topicName = '은평구';
+      break;
+    case '/home/location/13':
+      topicName = '동대문구';
+      break;
+    case '/home/location/14':
+      topicName = '동작구';
+      break;
+    case '/home/location/15':
+      topicName = '노원구';
+      break;
+    case '/home/location/16':
+      topicName = '도봉구';
+      break;
+    case '/home/location/17':
+      topicName = '영등포구';
+      break;
+    case '/home/location/18':
+      topicName = '중랑구';
+      break;
+    case '/home/location/19':
+      topicName = '금천구';
+      break;
+    case '/home/location/20':
+      topicName = '광진구';
+      break;
+    case '/home/location/21':
+      topicName = '성북구';
+      break;
+    case '/home/location/22':
+      topicName = '구로구';
       break;
 
     //과목별

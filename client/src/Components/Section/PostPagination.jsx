@@ -115,6 +115,42 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
       case '서대문구':
         locationGetPost();
         break;
+      case '성동구':
+        locationGetPost();
+        break;
+      case '은평구':
+        locationGetPost();
+        break;
+      case '동대문구':
+        locationGetPost();
+        break;
+      case '동작구':
+        locationGetPost();
+        break;
+      case '노원구':
+        locationGetPost();
+        break;
+      case '도봉구':
+        locationGetPost();
+        break;
+      case '영등포구':
+        locationGetPost();
+        break;
+      case '중랑구':
+        locationGetPost();
+        break;
+      case '금천구':
+        locationGetPost();
+        break;
+      case '광진구':
+        locationGetPost();
+        break;
+      case '성북구':
+        locationGetPost();
+        break;
+      case '구로구':
+        locationGetPost();
+        break;
       case '치과':
         subjectGetPost();
         break;
