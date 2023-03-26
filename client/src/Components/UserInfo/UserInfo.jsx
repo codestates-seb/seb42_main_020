@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { getAccessTokenFromLocal } from '../../util/Token';
-import UserInfoStyle from '../../Style/UserInfoStyle';
+import { SUserInfoBlock, UserInfoStyle } from '../../Style/UserInfoStyle';
 import UserCardProfile from './UserCardProfile';
 import UserMainProfile from './UserMainProfile';
 
@@ -26,18 +26,12 @@ function UserInfo() {
   }, []);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
+    <SUserInfoBlock>
       <UserInfoStyle>
         <UserCardProfile userInfo={userInfo} />
         <UserMainProfile userInfo={userInfo} />
       </UserInfoStyle>
-    </div>
+    </SUserInfoBlock>
   );
 }
 
