@@ -28,6 +28,6 @@ mail:
   address:
     admin: admin@mail.com
 jwt:
-  secret: ${JWT_SECRET_KEY}
+  secret: "abcedesdfsdftest32322333333ddssssss"
   access-token-expiration-minutes: 60
   refresh-token-expiration-minutes: 360
