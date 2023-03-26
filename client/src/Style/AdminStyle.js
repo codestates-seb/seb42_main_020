@@ -3,7 +3,7 @@ import styled from 'styled-components';
 // Admin.jsx
 export const SMain = styled.main`
   width: 1920px;
-  height: 1330px;
+  height: 2150px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -12,7 +12,7 @@ export const SMain = styled.main`
 
 export const SLayout = styled.div`
   width: 1500px;
-  height: 1100px;
+  height: 1850px;
   margin-top: 50px;
   display: flex;
   flex-direction: column;
@@ -115,7 +115,7 @@ export const SCallBtnSection = styled.div`
 // PendingMemberItem.jsx
 
 export const SItemListLayout = styled.div`
-  height: 400px;
+  height: 600px;
   margin: 50px 0 50px 0;
 `;
 
