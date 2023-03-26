@@ -213,7 +213,7 @@ const QuestionDetail = () => {
         onOk={likeHandler}
         onCancel={likeHandleCancel}
       >
-        <p>해당 댓글이 맘에 드시나요???</p>
+        <p>해당 게시글이 맘에 드시나요???</p>
       </Modal>
       <Modal
         title="다나아"
