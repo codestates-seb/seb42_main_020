@@ -75,14 +75,14 @@ function PostList({ posts, topicName }) {
             <li className="title">
               {item?.postType === 'question' ? (
                 <Link
-                  to={`${process.env.PUBLIC_URL}/home/question/${item?.postId}`}
+                  to={`/home/question/${item?.postId}`}
                   style={{ color: 'black', textDecoration: 'none' }}
                 >
                   <div>{item?.title}</div>
                 </Link>
               ) : (
                 <Link
-                  to={`${process.env.PUBLIC_URL}/home/review/${item?.postId}`}
+                  to={`/home/review/${item?.postId}`}
                   style={{ color: 'black', textDecoration: 'none' }}
                 >
                   <div>{item?.title}</div>
