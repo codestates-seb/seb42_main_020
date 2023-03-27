@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SOfferInfoLayout = styled.div`
-  width: 100vw;
+  width: 100%;
   background-color: var(--gray-700);
   > div {
     display: flex;
@@ -20,7 +20,7 @@ export const SOfferInfoLayout = styled.div`
 `;
 
 export const SGradiant = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 150px;
   background: linear-gradient(360deg, var(--gray-900), rgb(255 255 255 / 0%));
 `;

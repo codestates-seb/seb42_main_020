@@ -44,6 +44,7 @@ const FooterStyle = styled.footer`
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
     height: 50px;
     background-color: var(--blackalpha-900);
     color: var(--gray-600);

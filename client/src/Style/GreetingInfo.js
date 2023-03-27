@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 const landingTitle = `${process.env.PUBLIC_URL}/images/landing-title.jpg`;
 
 export const SBackgroundLayout = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 900px;
   background-image: url(${landingTitle});
   background-size: cover;
@@ -22,7 +22,7 @@ export const SBackgroundLayout = styled.div`
 `;
 
 export const SGradiant = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 180px;
   background: linear-gradient(180deg, var(--white), rgb(255 255 255 / 9%));
   position: absolute;
