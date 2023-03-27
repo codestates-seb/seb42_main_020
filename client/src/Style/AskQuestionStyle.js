@@ -4,9 +4,10 @@ export const SAskQuestionContainer = styled.div`
   font-family: 'TheJamsil5Bold';
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   width: 100%;
-  height: 1000vh;
+  height: 100%;
   background-color: var(--blue-200);
   * {
     font-family: 'TheJamsil5Bold';
