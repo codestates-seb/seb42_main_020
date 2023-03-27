@@ -94,7 +94,9 @@ function Header() {
           </div>
         </SLayout>
       </SHeader>
-      {isOpenNav ? <Nav /> : null}
+      {isOpenNav ? (
+        <Nav isOpenNav={isOpenNav} setIsOpenNav={setIsOpenNav} />
+      ) : null}
     </>
   );
 }
