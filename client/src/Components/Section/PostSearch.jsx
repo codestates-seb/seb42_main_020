@@ -105,6 +105,7 @@ function PostSearch({ topicName }) {
   const onSearch = (e) => {
     setKeyword(e);
     handleCategory(category);
+    window.scrollTo(0, 0);
   };
 
   return (

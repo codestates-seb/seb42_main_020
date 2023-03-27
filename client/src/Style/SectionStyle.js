@@ -16,7 +16,7 @@ export const SectionStyle = styled.div`
   width: 75%;
   height: 100%;
   min-height: 100%;
-  margin-bottom: 100px;
+  margin-bottom: 200px;
   margin-top: 100px;
   background-color: var(--white);
   padding: 30px 25px;
