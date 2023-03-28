@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const SHeader = styled.header`
   font-family: 'TheJamsil5Bold';
-  width: 100vw;
+  width: 100%;
   height: 80px;
   display: flex;
   flex-direction: row;
@@ -11,7 +11,7 @@ export const SHeader = styled.header`
   border-bottom: 1px solid var(--gray-200);
   box-shadow: 0 1px 3px 0 var(--gray-200);
   @media only screen and (max-width: 500px) {
-    width: 460px;
+    width: 100%;
   }
 `;
 
@@ -27,7 +27,7 @@ export const SLayout = styled.div`
   align-items: center;
   justify-content: space-between;
   @media only screen and (max-width: 500px) {
-    width: 460px;
+    width: 100%;
   }
 `;
 

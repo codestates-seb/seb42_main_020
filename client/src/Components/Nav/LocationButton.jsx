@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { items } from '../../Pages/home/LocationPosts';
 import { Dropdown } from 'antd';
 
-const LocationButton = () => {
+const LocationButton = ({ isOpenNav, setIsOpenNav }) => {
   return (
     <>
       <Dropdown
@@ -13,7 +13,12 @@ const LocationButton = () => {
         }}
       >
         <SNavContents>
-          <Link to="/home/location/1">지역별</Link>
+          <Link
+            to="/home/location/1"
+            onClick={() => setIsOpenNav(() => !isOpenNav)}
+          >
+            지역별
+          </Link>
         </SNavContents>
       </Dropdown>
     </>

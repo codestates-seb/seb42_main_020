@@ -241,6 +241,7 @@ function PostPagination({ keyword, isFiltered, setIsFiltered, topicName }) {
 
   useEffect(() => {
     getPost();
+    window.scrollTo(0, 0);
   }, [currentPage, pageSize]);
 
   const handlePageChange = (page, pageSize) => {
