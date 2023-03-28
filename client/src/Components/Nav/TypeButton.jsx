@@ -2,7 +2,7 @@ import { SNavContents } from '../../Style/NavStyle';
 import { Link } from 'react-router-dom';
 import { Dropdown } from 'antd';
 
-const TypeButton = () => {
+const TypeButton = ({ isOpenNav, setIsOpenNav }) => {
   const items = [
     {
       key: '1',
@@ -94,7 +94,12 @@ const TypeButton = () => {
         }}
       >
         <SNavContents onClick={(e) => e.preventDefault()}>
-          <Link to="/home/subject/1">과목별</Link>
+          <Link
+            to="/home/subject/1"
+            onClick={() => setIsOpenNav(() => !isOpenNav)}
+          >
+            과목별
+          </Link>
         </SNavContents>
       </Dropdown>
     </>

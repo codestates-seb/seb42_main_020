@@ -7,8 +7,11 @@ import {
   SBtnSection,
   SNavigateBtnSection,
 } from '../../Style/GreetingInfo';
+import { loginState } from '../../atoms/atoms';
+import { useRecoilValue } from 'recoil';
 
 const GreetingInfo = ({ scrollToDown }) => {
+  const isLogin = useRecoilValue(loginState);
   return (
     <>
       <SBackgroundLayout>
@@ -20,7 +23,7 @@ const GreetingInfo = ({ scrollToDown }) => {
           </h2>
         </STextInfoSection>
         <SBtnSection>
-          <Link to="/login">로그인</Link>
+          {isLogin ? null : <Link to="/login">로그인</Link>}
           <Link to="/home">커뮤니티</Link>
         </SBtnSection>
         <SNavigateBtnSection onClick={scrollToDown}>

@@ -105,6 +105,7 @@ function PostSearch({ topicName }) {
   const onSearch = (e) => {
     setKeyword(e);
     handleCategory(category);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -144,9 +145,9 @@ function PostSearch({ topicName }) {
         </Space>
         <Space direction="vertical">
           <Search
-            placeholder="input search text"
+            placeholder="키워드 검색"
             allowClear
-            enterButton="Search"
+            enterButton="확인"
             onSearch={onSearch}
             size="large"
           />
