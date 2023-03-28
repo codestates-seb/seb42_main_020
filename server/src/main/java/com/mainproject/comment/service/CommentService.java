@@ -54,6 +54,8 @@ public class CommentService {
         comment.setCreatedAt(LocalDateTime.now());
         comment.setModifiedAt(LocalDateTime.now());
 
+        noticeComment(comment);
+
         return commentRepository.save(comment);
     }
 
@@ -163,6 +165,6 @@ public class CommentService {
 
         // 게시글 작성한 회원에게 알림 전송
         messageTemplate.convertAndSendToUser(comment.getPost().getMember().getEmail(),
-                "/member/queue/post-replies", payload);
+                "/members", payload);
     }
 }
