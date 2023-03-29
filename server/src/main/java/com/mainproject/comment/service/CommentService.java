@@ -54,8 +54,6 @@ public class CommentService {
         comment.setCreatedAt(LocalDateTime.now());
         comment.setModifiedAt(LocalDateTime.now());
 
-        noticeComment(comment);
-
         return commentRepository.save(comment);
     }
 

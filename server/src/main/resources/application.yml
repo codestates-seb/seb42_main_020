@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://main-project.csjzjz2589lr.ap-northeast-2.rds.amazonaws.com:3306/mainproject?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: admin
-    password: qwer1234
+    username:
+    password:
   jpa:
     hibernate:
       ddl-auto: none
@@ -28,6 +28,6 @@ mail:
   address:
     admin: admin@mail.com
 jwt:
-  secret: "abcedesdfsdftest32322333333ddssssss"
+  secret:
   access-token-expiration-minutes: 60
   refresh-token-expiration-minutes: 360
