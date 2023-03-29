@@ -7,7 +7,8 @@
 **`팀 명` :** 도원결의 </br>
 **`프로젝트 명` :** 다나아 </br>
 **`프로젝트 기간` :** 2023.03.03 - 2023.04.03 </br>
-`배포링크` :  [🌐 다나아 ](http://main-project-020.s3-website.ap-northeast-2.amazonaws.com)
+**`배포 링크` :**  [🌐 다나아 ](http://main-project-020.s3-website.ap-northeast-2.amazonaws.com) </br>
+**`소개영상 링크` :**  [📽️ 개인기술 발표 ](https://www.youtube.com/watch?v=0h-MSy6-j9M)
 
 </div>
 <br />
