@@ -129,6 +129,10 @@ const ReviewDetail = () => {
     setReportModal((prev) => !prev);
   };
 
+  // 출력 시간 수정
+  const time = new Date(reviewData?.modifiedAt + 'z');
+  const modifiedTime = time.toLocaleString();
+
   return (
     <SReviewDetailContainer>
       {contextHolder}
@@ -156,7 +160,7 @@ const ReviewDetail = () => {
           <span>
             {reviewFrom?.displayName} [{reviewData?.regionName}]
           </span>
-          <span>{reviewData?.modifiedAt?.replace('T', ' ').slice(0, -7)}</span>
+          <span>{modifiedTime.slice(0, -3)}</span>
         </SReviewInfoBlock>
         <SReviewHospitalInfo className="hopital-info">
           <span>{reviewData?.hospitalName}</span>

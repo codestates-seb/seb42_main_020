@@ -14,6 +14,12 @@ export const SNavBlock = styled.div`
   align-items: center;
   justify-content: space-around;
   width: 50%;
+  a {
+    text-decoration: none;
+    color: var(--gray-800);
+    font-size: 16px;
+    font-weight: 600;
+  }
 `;
 
 export const SNavContents = styled.div`

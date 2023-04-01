@@ -93,14 +93,14 @@ const TypeButton = ({ isOpenNav, setIsOpenNav }) => {
           items,
         }}
       >
-        <SNavContents onClick={(e) => e.preventDefault()}>
-          <Link
-            to="/home/subject/1"
-            onClick={() => setIsOpenNav(() => !isOpenNav)}
-          >
+        <Link
+          to="/home/subject/1"
+          onClick={() => setIsOpenNav(() => !isOpenNav)}
+        >
+          <SNavContents onClick={(e) => e.preventDefault()}>
             과목별
-          </Link>
-        </SNavContents>
+          </SNavContents>
+        </Link>
       </Dropdown>
     </>
   );

@@ -166,7 +166,6 @@ const Review = () => {
 
   // 병원명 받아오기
   const hospitalChangeHandler = (e) => {
-    console.log(e);
     setHospitalName(e.target.value);
     setHospitalValid(true);
   };
