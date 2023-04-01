@@ -7,27 +7,18 @@ const Nav = ({ isOpenNav, setIsOpenNav }) => {
   return (
     <SNavContainer>
       <SNavBlock>
-        <SNavContents>
-          <Link to="/home" onClick={() => setIsOpenNav(() => !isOpenNav)}>
-            전체
-          </Link>
-        </SNavContents>
-        <SNavContents>
-          <Link
-            to="/home/question"
-            onClick={() => setIsOpenNav(() => !isOpenNav)}
-          >
-            질문
-          </Link>
-        </SNavContents>
-        <SNavContents>
-          <Link
-            to="/home/review"
-            onClick={() => setIsOpenNav(() => !isOpenNav)}
-          >
-            리뷰
-          </Link>
-        </SNavContents>
+        <Link to="/home" onClick={() => setIsOpenNav(() => !isOpenNav)}>
+          <SNavContents>전체 </SNavContents>
+        </Link>
+        <Link
+          to="/home/question"
+          onClick={() => setIsOpenNav(() => !isOpenNav)}
+        >
+          <SNavContents>질문 </SNavContents>
+        </Link>
+        <Link to="/home/review" onClick={() => setIsOpenNav(() => !isOpenNav)}>
+          <SNavContents>리뷰 </SNavContents>
+        </Link>
         <LocationButton isOpenNav={isOpenNav} setIsOpenNav={setIsOpenNav} />
         <TypeButton isOpenNav={isOpenNav} setIsOpenNav={setIsOpenNav} />
       </SNavBlock>

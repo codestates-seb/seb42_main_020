@@ -12,14 +12,12 @@ const LocationButton = ({ isOpenNav, setIsOpenNav }) => {
           items,
         }}
       >
-        <SNavContents>
-          <Link
-            to="/home/location/1"
-            onClick={() => setIsOpenNav(() => !isOpenNav)}
-          >
-            지역별
-          </Link>
-        </SNavContents>
+        <Link
+          to="/home/location/1"
+          onClick={() => setIsOpenNav(() => !isOpenNav)}
+        >
+          <SNavContents>지역별</SNavContents>
+        </Link>
       </Dropdown>
     </>
   );
