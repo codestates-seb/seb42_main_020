@@ -196,6 +196,10 @@ const QuestionDetail = () => {
     }
   };
 
+  // 출력 시간 수정
+  const time = new Date(questionData?.modifiedAt + 'z');
+  const modifiedTime = time.toLocaleString();
+
   return (
     <SQuestionDetailContainer className="detail-block">
       {contextHolder}
@@ -244,9 +248,7 @@ const QuestionDetail = () => {
             <span>
               {writerInfo?.displayName} [{questionData?.regionName}]
             </span>
-            <span>
-              {questionData?.modifiedAt?.replace('T', ' ').slice(0, -7)}
-            </span>
+            <span>{modifiedTime.slice(0, -3)}</span>
           </SQuestionInfoBlock>
         </SQuestionHeaderBlock>
         <SQuestionTextBlock className="contents-block">
