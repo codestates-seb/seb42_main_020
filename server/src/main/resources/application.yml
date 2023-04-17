@@ -4,6 +4,14 @@ spring:
     url: jdbc:mysql://main-project.csjzjz2589lr.ap-northeast-2.rds.amazonaws.com:3306/mainproject?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username:
     password:
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
   jpa:
     hibernate:
       ddl-auto: none
@@ -18,6 +26,11 @@ logging:
         orm:
           jpa: DEBUG
 server:
+  tomcat:
+    threads:
+      max: 200
+      min-spare: 10
+    accept-count: 100
   servlet:
     multipart:
       maxFileSize: 10MB
