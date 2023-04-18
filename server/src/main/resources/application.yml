@@ -5,11 +5,11 @@ spring:
     username:
     password:
     hikari:
-      maximum-pool-size: 10
-      connection-timeout: 5000
+      maximum-pool-size: 50
+      connection-timeout: 30000
       connection-init-sql: SELECT 1
       validation-timeout: 2000
-      minimum-idle: 10
+      minimum-idle: 25
       idle-timeout: 600000
       max-lifetime: 1800000
   jpa:
