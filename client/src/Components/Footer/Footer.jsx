@@ -71,13 +71,13 @@ function Footer() {
                 <li>
                   <span>박무승 (DTL)</span>
                   <a
-                    href="https://github.com/bblack-apple"
+                    href="https://github.com/mason-park96"
                     target="_blank"
                     rel="noreferrer"
                   >
                     <img
                       className="profile-icon"
-                      src="https://github.com/bblack-apple.png"
+                      src="https://github.com/mason-park96.png"
                       alt="Profile icon"
                     />
                   </a>
