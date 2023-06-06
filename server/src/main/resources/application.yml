@@ -29,8 +29,8 @@ server:
   tomcat:
     threads:
       max: 200
-      min-spare: 10
-    accept-count: 100
+      min-spare: 20
+    accept-count: 190
   servlet:
     multipart:
       maxFileSize: 10MB
@@ -42,5 +42,5 @@ mail:
     admin: admin@mail.com
 jwt:
   secret:
-  access-token-expiration-minutes: 60
-  refresh-token-expiration-minutes: 360
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 240
